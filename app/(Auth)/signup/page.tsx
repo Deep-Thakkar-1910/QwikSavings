@@ -1,6 +1,12 @@
 import Link from "next/link";
 import SignUpForm from "../_components/SignUpForm";
+import { Metadata } from "next";
 
+// Metadata for the page
+export const metadata: Metadata = {
+  title: "Sign up",
+  description: "Signin page for Qwik Saving",
+};
 const SignUpPage = () => {
   return (
     <article className="flex flex-col items-center gap-4 pt-20">

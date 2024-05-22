@@ -1,5 +1,12 @@
 import Link from "next/link";
 import SignInForm from "../_components/SignInForm";
+import { Metadata } from "next";
+
+// Metadata for the page
+export const metadata: Metadata = {
+  title: "Sign in",
+  description: "Signin page for Qwik Saving",
+};
 
 const SignInPage = () => {
   return (
