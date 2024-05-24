@@ -2,7 +2,7 @@
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { SignUpFormSchema } from "@/lib/SignupFormSchema";
+import { SignUpFormSchema } from "@/lib/FormSchemas/SignupFormSchema";
 import {
   Form,
   FormControl,
@@ -17,6 +17,10 @@ import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { registerUser } from "@/lib/Actions/AuthActions";
 import { toast } from "@/components/ui/use-toast";
+import GoogleIcon from "@/public/Logos/GoogleIcon";
+import { signIn } from "next-auth/react";
+import { ToastAction } from "@radix-ui/react-toast";
+import Link from "next/link";
 
 // This is the type of the form data
 type InputType = z.infer<typeof SignUpFormSchema>;
@@ -35,19 +39,33 @@ const SignUpForm = () => {
 
   //   This function will be called when the form is submitted
   const onSubmit: SubmitHandler<InputType> = async (data) => {
-    console.log("hello");
     const { confirmPassword, ...userData } = data;
     try {
       const result = await registerUser(userData);
-      if (result) {
+      if (typeof result !== "string") {
         form.reset();
         toast({
           title: "Success",
           description: "Account Creaeted Successfully",
+          action: (
+            <ToastAction altText="sign In">
+              <Link href={"/signin"}>Sign In</Link>
+            </ToastAction>
+          ),
+        });
+      } else if (result === "This Email is already registered") {
+        toast({
+          title: "Uh oh!",
+          description: "This email is already registered",
+          action: (
+            <ToastAction altText="sign In">
+              <Link href={"/signin"}>Sign In Instead?</Link>
+            </ToastAction>
+          ),
         });
       }
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      console.error(error);
     }
   };
   // States to Toggle password visibilities.
@@ -160,15 +178,20 @@ const SignUpForm = () => {
         </p>
         <Button
           type="submit"
-          className="w-full place-self-center rounded-full hover:shadow-md"
+          className="w-full place-self-center rounded-lg hover:shadow-md"
         >
-          Sign Up
+          {form.formState.isSubmitting ? "Signing Up..." : "Sign Up"}
         </Button>
         <div className="mx-auto flex w-full items-center justify-evenly before:mr-4 before:block before:h-px before:flex-grow before:bg-gray-500 after:ml-4 after:block after:h-px after:flex-grow after:bg-gray-500">
           or
         </div>
-        <Button className="w-full place-self-center rounded-full hover:shadow-md">
-          Sign Up with Google
+        <Button
+          type="button"
+          className="flex w-full items-center gap-x-4 place-self-center rounded-lg bg-slate-100 text-black hover:bg-white hover:shadow-md dark:bg-app-dark dark:text-slate-200 dark:hover:bg-zinc-950"
+          onClick={() => signIn("google")}
+        >
+          Sign In with Google
+          <GoogleIcon />
         </Button>
       </form>
     </Form>

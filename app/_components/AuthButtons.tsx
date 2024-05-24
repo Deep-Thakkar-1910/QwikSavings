@@ -31,7 +31,7 @@ const AuthButtons = () => {
             size={"default"}
             className="hidden transition-transform duration-200 ease-out hover:-translate-y-1 lg:block"
           >
-            <Link href="/api/auth/signin">Sign In</Link>
+            <Link href="/signin">Sign In</Link>
           </Button>
         </>
       )}

@@ -10,14 +10,16 @@ import {
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { SignInFormSchema } from "@/lib/SignInFormSchema";
+import { SignInFormSchema } from "@/lib/FormSchemas/SignInFormSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff } from "lucide-react";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";
 import { toast } from "@/components/ui/use-toast";
+import GoogleIcon from "@/public/Logos/GoogleIcon";
+import Link from "next/link";
 
 interface SignInFormProps {
   callbackUrl?: string;
@@ -40,7 +42,7 @@ const SignInForm = ({ callbackUrl }: SignInFormProps) => {
   // States to Toggle password visibilities.
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
-  const onSubmit = async (data: InputType) => {
+  const onSubmit: SubmitHandler<InputType> = async (data: InputType) => {
     const result = await signIn("credentials", {
       redirect: false,
       /*  
@@ -49,23 +51,23 @@ const SignInForm = ({ callbackUrl }: SignInFormProps) => {
       */
       ...data,
     });
-    if (result?.ok) {
-      router.push(callbackUrl || "/");
-      form.reset();
-    } else if (result?.error) {
+    if (!result?.ok) {
       toast({
         variant: "destructive",
         title: "Error",
-        description: result.error,
+        description: result?.error,
       });
-      if (result.error === "Given Email is not Registered") {
+      if (result?.error === "Given Email is not Registered") {
         // if error is related to email not found, then reset the form
         form.reset();
-      } else if (result.error === "Incorrect Password!") {
+      } else if (result?.error === "Incorrect Password!") {
         // if error is related to password, then reset the password field
         form.resetField("password");
       }
+      return;
     }
+    // if the user is successfully signed in, then redirect to the callback url or home page.
+    router.push(callbackUrl || "/");
   };
 
   return (
@@ -118,21 +120,28 @@ const SignInForm = ({ callbackUrl }: SignInFormProps) => {
             </FormItem>
           )}
         />
-        {/* TODO: make forgot password work*/}
-        <p className="cursor-pointer text-sm font-medium text-app-main underline sm:text-base">
+        <Link
+          className="cursor-pointer text-sm font-medium text-app-main underline sm:text-base"
+          href={"/forgotpassword"}
+        >
           Forgot Password?
-        </p>
+        </Link>
         <Button
           type="submit"
-          className="w-full place-self-center rounded-full hover:shadow-md"
+          className="w-full place-self-center rounded-lg hover:shadow-md"
         >
           {form.formState.isSubmitting ? "Signing In..." : "Sign In"}
         </Button>
         <div className="mx-auto flex w-full items-center justify-evenly before:mr-4 before:block before:h-px before:flex-grow before:bg-gray-500 after:ml-4 after:block after:h-px after:flex-grow after:bg-gray-500">
           or
         </div>
-        <Button className="w-full place-self-center rounded-full hover:shadow-md">
+        <Button
+          type="button"
+          className="flex w-full items-center gap-x-4 place-self-center rounded-lg bg-slate-100 text-black hover:bg-white hover:shadow-md dark:bg-app-dark dark:text-slate-200 dark:hover:bg-zinc-950"
+          onClick={() => signIn("google")}
+        >
           Sign In with Google
+          <GoogleIcon />
         </Button>
       </form>
     </Form>
