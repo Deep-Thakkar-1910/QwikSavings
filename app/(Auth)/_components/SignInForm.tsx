@@ -54,7 +54,7 @@ const SignInForm = ({ callbackUrl }: SignInFormProps) => {
     if (!result?.ok) {
       toast({
         variant: "destructive",
-        title: "Error",
+        title: "OOPS!",
         description: result?.error,
       });
       if (result?.error === "Given Email is not Registered") {

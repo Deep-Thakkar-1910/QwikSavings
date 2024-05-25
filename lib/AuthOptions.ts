@@ -1,6 +1,6 @@
 import db from "@/lib/prisma";
 import { User } from "@prisma/client";
-import { compare, hash } from "bcryptjs";
+import { compare } from "bcryptjs";
 import { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import Google from "next-auth/providers/google";

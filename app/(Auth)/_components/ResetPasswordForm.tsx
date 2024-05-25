@@ -71,87 +71,82 @@ const ResetPasswordForm = ({ jwtUserId }: { jwtUserId: string }) => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center gap-y-4">
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="w-full space-y-4"
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-4">
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Password</FormLabel>
+              <sup className="text-app-main">*</sup>
+              <FormControl>
+                <div className="flex items-center">
+                  <Input
+                    placeholder="Your Password"
+                    {...field}
+                    type={!showPassword ? "password" : "text"}
+                    className="mr-2"
+                    autoComplete="off"
+                  />
+                  <div
+                    onClick={() => {
+                      setShowPassword((prev) => !prev);
+                    }}
+                  >
+                    {!showPassword ? (
+                      <Eye className="cursor-pointer" />
+                    ) : (
+                      <EyeOff className="cursor-pointer" />
+                    )}
+                  </div>
+                </div>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="confirmPassword"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Confirm Password</FormLabel>
+              <sup className="text-app-main">*</sup>
+              <FormControl>
+                <div className="flex items-center">
+                  <Input
+                    placeholder="Your Password"
+                    {...field}
+                    type={!showConfirmPassword ? "password" : "text"}
+                    className="mr-2"
+                    autoComplete="off"
+                  />
+                  <div
+                    onClick={() => {
+                      setShowConfirmPassword((prev) => !prev);
+                    }}
+                  >
+                    {!showConfirmPassword ? (
+                      <Eye className="cursor-pointer" />
+                    ) : (
+                      <EyeOff className="cursor-pointer" />
+                    )}
+                  </div>
+                </div>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button
+          type="submit"
+          className="w-full place-self-center rounded-lg hover:shadow-md"
         >
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Password</FormLabel>
-                <sup className="text-app-main">*</sup>
-                <FormControl>
-                  <div className="flex items-center">
-                    <Input
-                      placeholder="Your Password"
-                      {...field}
-                      type={!showPassword ? "password" : "text"}
-                      className="mr-2"
-                      autoComplete="off"
-                    />
-                    <div
-                      onClick={() => {
-                        setShowPassword((prev) => !prev);
-                      }}
-                    >
-                      {!showPassword ? (
-                        <Eye className="cursor-pointer" />
-                      ) : (
-                        <EyeOff className="cursor-pointer" />
-                      )}
-                    </div>
-                  </div>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="confirmPassword"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Confirm Password</FormLabel>
-                <sup className="text-app-main">*</sup>
-                <FormControl>
-                  <div className="flex items-center">
-                    <Input
-                      placeholder="Your Password"
-                      {...field}
-                      type={!showConfirmPassword ? "password" : "text"}
-                      className="mr-2"
-                      autoComplete="off"
-                    />
-                    <div
-                      onClick={() => {
-                        setShowConfirmPassword((prev) => !prev);
-                      }}
-                    >
-                      {!showConfirmPassword ? (
-                        <Eye className="cursor-pointer" />
-                      ) : (
-                        <EyeOff className="cursor-pointer" />
-                      )}
-                    </div>
-                  </div>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <Button
-            type="submit"
-            className="w-full place-self-center rounded-lg hover:shadow-md"
-          >
-            {form.formState.isSubmitting ? "Reseting" : "Reset "}
-          </Button>
-        </form>
-      </Form>
-    </div>
+          {form.formState.isSubmitting ? "Reseting" : "Reset "}
+        </Button>
+      </form>
+    </Form>
   );
 };
 
