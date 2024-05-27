@@ -1,5 +1,6 @@
 "use client";
 
+import { toast } from "@/components/ui/use-toast";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -11,7 +12,11 @@ using the signout function from next-auth
 const SignOutPage = () => {
   const router = useRouter();
   useEffect(() => {
-    signOut({ callbackUrl: "/", redirect: false });
+    signOut({ redirect: false });
+    toast({
+      title: "Success",
+      description: "You have been signed out",
+    });
     router.push("/");
   }, [router]);
   return null;

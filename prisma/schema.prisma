@@ -14,24 +14,25 @@ datasource db {
   url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
   directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
- 
+
 model User {
-  id            String          @id @default(cuid())
+  id            String    @id @default(cuid())
   name          String
   password      String?
-  email         String          @unique
+  email         String    @unique
   emailVerified DateTime?
-  role          String?          @default("user")
+  role          String?   @default("user")
   image         String?
   accounts      Account[]
   sessions      Session[]
-  
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  @@index([email], type: Hash)
   @@map("users")
 }
- 
+
 model Account {
   userId            String
   type              String
@@ -44,31 +45,85 @@ model Account {
   scope             String?
   id_token          String?
   session_state     String?
- 
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
- 
+
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   @@id([provider, providerAccountId])
   @@map("accounts")
 }
- 
+
 model Session {
   sessionToken String   @unique
   userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
- 
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
   @@map("sessions")
 }
- 
+
 model VerificationToken {
   identifier String
   token      String
   expires    DateTime
- 
+
   @@id([identifier, token])
   @@map("verification_tokens")
+}
+
+model Store {
+  id               Int      @id @default(autoincrement())
+  name             String
+  title            String?
+  logo_url         String?
+  ref_link         String
+  type             Type
+  description      String?
+  moreAbout        String?
+  hint             String?
+  faq              Json?
+  total_ratings    Int      @default(0)
+  ratings_count    Int      @default(0)
+  best_offer       String   @default("0")
+  average_discount String   @default("0")
+  offers           Int      @default(0)
+  coupons          Coupon[]
+
+  @@map("stores")
+}
+
+model Category {
+  id      Int      @id @default(autoincrement())
+  name    String   @unique
+  coupons Coupon[]
+}
+
+model Coupon {
+  id          Int      @id @default(autoincrement())
+  store_id    Int
+  title       String
+  coupon_code String
+  type        Type
+  category_id Int
+  ref_link    String
+  due_date    DateTime
+  user_count  Int      @default(0)
+  createdAt   DateTime @default(now())
+  description String
+  isVerified  Boolean  @default(false)
+
+  store    Store    @relation(fields: [store_id], references: [id])
+  category Category @relation(fields: [category_id], references: [id])
+
+  @@map("coupons")
+}
+
+enum Type {
+  Deal
+  Offer
 }

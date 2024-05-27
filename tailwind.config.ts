@@ -17,8 +17,12 @@ const config = {
         "2xl": "1400px",
       },
     },
+    fontFamily: {
+      sans: ["Open Sans", "sans-serif"],
+    },
     extend: {
       colors: {
+        "app-bg-main": "#faf9f5",
         "app-main": "#c22c50",
         "app-dark": "#121212",
         "app-dark-navbar": "#181818",

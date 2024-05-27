@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "./_components/Navbar";
+import Navbar from "./(Home)/_components/Navbar";
 import Providers from "./Providers";
 import { Toaster } from "@/components/ui/toaster";
 
@@ -23,7 +23,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.className} text-gray-700 dark:text-slate-200`}>
+      <body
+        className={`${inter.className} bg-app-bg-main text-black dark:bg-app-dark dark:text-slate-200`}
+      >
         <Providers>
           <Navbar />
           {children}
