@@ -1,13 +1,16 @@
+"use client";
 import Link from "next/link";
 import Image from "next/image";
 import { Search } from "lucide-react";
 import { NavLinks } from "@/lib/utilities/Navlinks";
 import MobileSidebar from "./MobileSidebar";
 import ProfileDropDown from "./ProfileDropDown";
-
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 const Navbar = () => {
+  const pathname = usePathname();
   return (
-    <nav className="fixed left-0 top-0 z-50 flex h-16 w-full items-center justify-between border-b border-b-app-main bg-white p-4 px-2  dark:bg-app-dark-navbar md:px-6 lg:h-20 lg:px-8">
+    <nav className="fixed left-0 top-0 z-50 flex h-16 w-full items-center justify-between border-b border-b-app-main bg-white p-4 px-2 dark:bg-app-dark-navbar sm:px-4 md:px-6 lg:h-20 xl:px-12">
       {/* Branding */}
       <Link href={"/"}>
         <Image
@@ -31,7 +34,12 @@ const Navbar = () => {
           return (
             <li key={index} role="tab">
               <Link href={link.href}>
-                <button className="font-medium transition-all duration-300 ease-in-out hover:-translate-y-1 hover:border-b-2 hover:border-b-app-main hover:text-app-main">
+                <button
+                  className={cn(
+                    "font-medium transition-all duration-300 ease-in-out hover:-translate-y-1 hover:border-b-2 hover:border-b-app-main hover:text-app-main",
+                    pathname === link.href && "text-app-main",
+                  )}
+                >
                   {link.title}
                 </button>
               </Link>

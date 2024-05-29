@@ -7,4 +7,22 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-export default cloudinary;
+// this will take the image in the form of buffer and give us an image url to store in database
+export const UploadStoreImage = (buffer: Buffer): Promise<unknown> => {
+  return new Promise(async (resolve, reject) => {
+    cloudinary.uploader
+      .upload_stream(
+        {
+          folder: "store_images",
+          resource_type: "image",
+        },
+        async (err, result) => {
+          if (err) {
+            return reject(err.message);
+          }
+          resolve(result?.secure_url);
+        },
+      )
+      .end(buffer);
+  });
+};

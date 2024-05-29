@@ -19,7 +19,7 @@ const ImageCarousel = ({ data }: ImageCarouselProps) => {
   const plugin = useRef(Autoplay({ delay: 5000 }));
   return (
     <Carousel
-      className="w-full lg:w-2/3 "
+      className="w-full lg:w-2/3"
       opts={{ loop: true }}
       plugins={[plugin.current]}
       onMouseEnter={() => plugin.current.stop()}

@@ -11,14 +11,24 @@ import { NavLinks } from "@/lib/utilities/Navlinks";
 import { Menu } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import AuthButtons from "./AuthButtons";
+// import AuthButtons from "./AuthButtons";
 import ProfileDropDown from "./ProfileDropDown";
+import { usePathname } from "next/navigation";
+import { useEffect } from "react";
+import { cn } from "@/lib/utils";
 
 const MobileSidebar = () => {
+  // extracting the pathname to observer route changes
+  const pathname = usePathname();
   // sidebar states
   const onOpen = useMobileSidebar((state) => state.onOpen);
   const onClose = useMobileSidebar((state) => state.onClose);
   const isOpen = useMobileSidebar((state) => state.isOpen);
+
+  useEffect(() => {
+    // will manually close the sidebar once the route changes and display acitve links
+    onClose();
+  }, [pathname, onClose]);
 
   return (
     <aside>
@@ -33,14 +43,18 @@ const MobileSidebar = () => {
             <ProfileDropDown />
           </SheetHeader>
           <div className="before: after: mx-auto mb-4 flex w-full items-center justify-center before:block before:h-px before:flex-grow before:bg-gray-500 after:block after:h-px after:flex-grow after:bg-gray-500"></div>
-
           <div className="mb-20">
             <ul role="tablist" className="flex flex-col items-center gap-y-4">
               {NavLinks.map((link, index) => {
                 return (
                   <li key={index} role="tab">
                     <Link href={link.href}>
-                      <button className="text-2xl font-medium">
+                      <button
+                        className={cn(
+                          "text-2xl font-medium",
+                          pathname === link.href && "text-app-main",
+                        )}
+                      >
                         {link.title}
                       </button>
                     </Link>

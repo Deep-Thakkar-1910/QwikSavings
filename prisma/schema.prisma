@@ -78,7 +78,7 @@ model VerificationToken {
 
 model Store {
   id               Int      @id @default(autoincrement())
-  name             String
+  name             String   @unique
   title            String?
   logo_url         String?
   ref_link         String

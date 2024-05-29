@@ -69,3 +69,12 @@ input:-webkit-autofill:focus {
   background-color: transparent !important;
   background-clip: text;
 }
+
+/* for date picker */
+.rdp-vhidden {
+  @apply hidden;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}

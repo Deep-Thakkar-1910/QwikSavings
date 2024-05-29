@@ -8,8 +8,8 @@ export const NavLinks = [
     href: "/categories",
   },
   {
-    title: "Codes",
-    href: "/codes",
+    title: "Our Codes",
+    href: "/ourcodes",
   },
   {
     title: "Events",
