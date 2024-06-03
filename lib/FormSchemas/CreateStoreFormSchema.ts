@@ -10,7 +10,7 @@ export const CreateStoreFormScehma = z.object({
   title: z.string(),
   logo: z.any().optional(),
   ref_link: z.string().url("Reference link must be a valid URL"),
-  type: z.enum(["Deal", "Offer"]),
+  addToHomePage: z.enum(["yes", "no"]).default("no"),
   description: z.string(),
   moreAbout: z.string(),
   hint: z.string(),
@@ -18,4 +18,6 @@ export const CreateStoreFormScehma = z.object({
   best_offer: z.string().default("0"),
   average_discount: z.string().default("0"),
   offers: z.number().default(0),
+  categories: z.array(z.string()),
+  similarStores: z.array(z.string()),
 });

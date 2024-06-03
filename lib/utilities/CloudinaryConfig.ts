@@ -8,12 +8,15 @@ cloudinary.config({
 });
 
 // this will take the image in the form of buffer and give us an image url to store in database
-export const UploadStoreImage = (buffer: Buffer): Promise<unknown> => {
+export const UploadStoreImage = (
+  buffer: Buffer,
+  folder: string,
+): Promise<unknown> => {
   return new Promise(async (resolve, reject) => {
     cloudinary.uploader
       .upload_stream(
         {
-          folder: "store_images",
+          folder: folder,
           resource_type: "image",
         },
         async (err, result) => {

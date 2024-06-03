@@ -12,7 +12,7 @@ const IntroSection = () => {
         <CardStackFlipper data={CardFlipperData} autoplay />
       </div>
       {/* Intro heading div */}
-      <div className="flex w-full flex-col items-center justify-center bg-white p-8 dark:bg-popover lg:px-16">
+      <div className="flex w-full flex-col items-center justify-center bg-popover p-8 lg:px-16">
         <h1 className="mx-auto mb-6 text-center text-lg font-bold md:text-xl xl:text-2xl">
           Qwik Savings - Your one stop shop for quick savings.
         </h1>

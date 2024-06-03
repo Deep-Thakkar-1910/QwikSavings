@@ -68,6 +68,10 @@ const SignInForm = ({ callbackUrl }: SignInFormProps) => {
     }
     // if the user is successfully signed in, then redirect to the callback url or home page.
     router.push(callbackUrl || "/");
+    toast({
+      title: "Welcome",
+      description: `You are signed in as ${data.email}`,
+    });
   };
 
   return (

@@ -24,16 +24,73 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, useRef } from "react";
 import Image from "next/image";
 import { MinusCircle } from "lucide-react";
 import { AxiosError } from "axios";
+import Resizer from "react-image-file-resizer";
+import {
+  MultiSelector,
+  MultiSelectorContent,
+  MultiSelectorInput,
+  MultiSelectorItem,
+  MultiSelectorList,
+  MultiSelectorTrigger,
+} from "@/components/ui/MultipleSelector";
+import { revalidatePath } from "next/cache";
 
 type InputType = z.infer<typeof CreateStoreFormScehma>;
 
-const CreateStoreForm = () => {
+interface StoreFormProps {
+  categories?: { name: string; categoryId: number }[];
+  similarStores?: { name: string; storeId: number }[];
+}
+
+const CreateStoreForm = ({
+  categories = [],
+  similarStores = [],
+}: StoreFormProps) => {
+  // for creating  categoryOptions
+  const categoryOptions = categories.map((category) => {
+    return {
+      label: category.name,
+      id: `${category.categoryId}`,
+    };
+  });
+
+  //
+  const similarStoreOptions = similarStores.map((store) => {
+    return {
+      label: store.name,
+      id: `${store.storeId}`,
+    };
+  });
+
   // for image preview
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+
+  // reference to the image input field
+  const imageRef = useRef<HTMLInputElement>(null);
+
+  // function to resize images for proper resolution
+
+  const resizeFile = (file: File) =>
+    new Promise((resolve) => {
+      Resizer.imageFileResizer(
+        file,
+        400,
+        400,
+        "JPEG",
+        100,
+        0,
+        (uri) => {
+          resolve(uri);
+        },
+        "blob",
+        400,
+        400,
+      );
+    });
 
   const form = useForm<InputType>({
     resolver: zodResolver(CreateStoreFormScehma),
@@ -42,13 +99,15 @@ const CreateStoreForm = () => {
       title: "",
       logo: undefined,
       ref_link: "",
-      type: "Deal",
+      addToHomePage: "no",
       average_discount: "",
       best_offer: "",
       description: "",
       hint: "",
       moreAbout: "",
       faq: [],
+      categories: [],
+      similarStores: [],
     },
     mode: "all",
     shouldFocusError: true,
@@ -61,10 +120,11 @@ const CreateStoreForm = () => {
   });
 
   // handle logo image onChange event
-  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      setValue("logo", file);
+      const resizedFile = await resizeFile(file);
+      setValue("logo", resizedFile);
       setSelectedImage(URL.createObjectURL(file));
     }
   };
@@ -77,6 +137,10 @@ const CreateStoreForm = () => {
   const removeImage = () => {
     setSelectedImage(null);
     setValue("logo", undefined);
+    if (imageRef.current) {
+      imageRef.current.src = "";
+      imageRef.current.value = "";
+    }
   };
 
   // form submission handler
@@ -91,7 +155,6 @@ const CreateStoreForm = () => {
     formData.append("data", JSON.stringify(restData));
 
     try {
-      // Handle the form submission, e.g., send data to the server
       const response = await axios.post("/createstore", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
@@ -103,6 +166,7 @@ const CreateStoreForm = () => {
         });
         form.reset();
         setSelectedImage(null); // Reset the selected image
+        revalidatePath("/admin/stores");
       }
     } catch (error) {
       console.error(error);
@@ -113,6 +177,7 @@ const CreateStoreForm = () => {
           variant: "destructive",
         });
         form.reset();
+        setSelectedImage(null);
       }
     }
   };
@@ -151,7 +216,7 @@ const CreateStoreForm = () => {
           )}
         />
         <FormItem>
-          <div className="mt-3 flex items-center gap-x-3">
+          <div className="my-4 flex items-center gap-x-3 ">
             <FormLabel>
               <span className="cursor-pointer rounded-lg border border-muted bg-transparent p-2 px-4 transition-colors duration-300 ease-out hover:bg-accent">
                 {selectedImage ? "Change" : "Add"} Logo
@@ -159,6 +224,7 @@ const CreateStoreForm = () => {
             </FormLabel>
             <FormControl>
               <input
+                ref={imageRef}
                 type="file"
                 accept="image/*"
                 onChange={handleFileChange}
@@ -175,7 +241,7 @@ const CreateStoreForm = () => {
                   className="aspect-square"
                 />
                 <MinusCircle
-                  className="size-6 cursor-pointer text-destructive"
+                  className="size-6 translate-y-1/2 cursor-pointer text-destructive"
                   onClick={removeImage}
                 />
               </>
@@ -203,10 +269,10 @@ const CreateStoreForm = () => {
         />
         <FormField
           control={control}
-          name="type"
+          name="addToHomePage"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Type</FormLabel>
+              <FormLabel>Add to home page?</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger className="w-[180px]">
@@ -214,8 +280,8 @@ const CreateStoreForm = () => {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="Deal">Deal</SelectItem>
-                  <SelectItem value="Offer">Offer</SelectItem>
+                  <SelectItem value="yes">Yes</SelectItem>
+                  <SelectItem value="no">No</SelectItem>
                 </SelectContent>
               </Select>
               <FormMessage />
@@ -261,6 +327,91 @@ const CreateStoreForm = () => {
             </FormItem>
           )}
         />
+        <FormField
+          control={control}
+          name="categories"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Related Categories</FormLabel>
+              <MultiSelector
+                options={categoryOptions}
+                onValuesChange={field.onChange}
+                values={field.value}
+                loop={false}
+                emptyIndicator="No Categories Found"
+              >
+                <FormControl>
+                  <MultiSelectorTrigger>
+                    <MultiSelectorInput
+                      placeholder={
+                        field.value.length <= 0
+                          ? "Select Related Catrgories"
+                          : ""
+                      }
+                    />
+                  </MultiSelectorTrigger>
+                </FormControl>
+                <MultiSelectorContent>
+                  <MultiSelectorList>
+                    {categories.map((category) => (
+                      <MultiSelectorItem
+                        key={category.categoryId}
+                        value={`${category.categoryId}`}
+                        id={category.categoryId.toString()}
+                        label={category.name}
+                      >
+                        {category.name}
+                      </MultiSelectorItem>
+                    ))}
+                  </MultiSelectorList>
+                </MultiSelectorContent>
+                <FormMessage />
+              </MultiSelector>
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={control}
+          name="similarStores"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Related Stores</FormLabel>
+              <MultiSelector
+                onValuesChange={field.onChange}
+                values={field.value}
+                loop={false}
+                options={similarStoreOptions}
+                emptyIndicator="No Stores Found"
+              >
+                <FormControl>
+                  <MultiSelectorTrigger>
+                    <MultiSelectorInput
+                      placeholder={
+                        field.value.length <= 0 ? "Select Related Stores" : ""
+                      }
+                    />
+                  </MultiSelectorTrigger>
+                </FormControl>
+                <MultiSelectorContent>
+                  <MultiSelectorList>
+                    {similarStores.map((store) => (
+                      <MultiSelectorItem
+                        key={store.storeId}
+                        value={`${store.storeId}`}
+                        id={store.storeId.toString()}
+                        label={store.name}
+                      >
+                        {store.name}
+                      </MultiSelectorItem>
+                    ))}
+                  </MultiSelectorList>
+                </MultiSelectorContent>
+                <FormMessage />
+              </MultiSelector>
+            </FormItem>
+          )}
+        />
+
         {fields.map((field, index) => (
           <div key={field.id} className="space-y-4">
             <div className="flex items-center gap-x-2">
@@ -283,7 +434,7 @@ const CreateStoreForm = () => {
               />
 
               <MinusCircle
-                className="size-6 cursor-pointer text-destructive"
+                className="size-6 translate-y-1/2 cursor-pointer text-destructive"
                 onClick={() => remove(index)}
               />
             </div>

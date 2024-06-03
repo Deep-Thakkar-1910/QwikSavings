@@ -4,24 +4,40 @@ import { UploadStoreImage } from "@/lib/utilities/CloudinaryConfig";
 import db from "@/lib/prisma";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
-// api handler to create store
+// API handler to create store
 export async function POST(req: Request) {
+  const formData = await req.formData();
+  const logo = (formData.get("logo") as File) ?? null;
+  const request = (await formData.get("data")) as string;
+  const body = await JSON.parse(request);
+  // extracting required properties
+  const {
+    name,
+    title,
+    ref_link,
+    addToHomePage,
+    description,
+    moreAbout,
+    hint,
+    faq,
+    categories,
+    similarStores,
+  } = body;
+
   try {
-    const formData = await req.formData();
-    const logo = (formData.get("logo") as File) ?? null;
-    const request = (await formData.get("data")) as string;
-    const body = await JSON.parse(request);
     let logoUrl;
 
+    // if there is a logo in the form data
     if (logo) {
-      console.log("entered upload function");
-      // if there is a logo in the form data
       // converting the image to a buffer
       const buffer = await logo.arrayBuffer();
       // converting buffer to bytes string for uploading to cloudinary
       const bytes = Buffer.from(buffer);
       // passing buffer to Cloudinary to get image-url for storing in database
-      logoUrl = (await UploadStoreImage(bytes)) as unknown as string;
+      logoUrl = (await UploadStoreImage(
+        bytes,
+        "store_images",
+      )) as unknown as string;
       if (!logoUrl) {
         return NextResponse.json(
           {
@@ -33,10 +49,6 @@ export async function POST(req: Request) {
       }
     }
 
-    // extracting required properties
-    const { name, title, ref_link, type, description, moreAbout, hint, faq } =
-      body;
-
     // creating a new store
     const store = await db.store.create({
       data: {
@@ -44,11 +56,21 @@ export async function POST(req: Request) {
         title,
         logo_url: logoUrl,
         ref_link,
-        type,
-        description,
-        moreAbout,
-        hint,
+        addToHomePage: addToHomePage === "yes" ? true : false,
+        description: description ? description : null,
+        moreAbout: moreAbout ? moreAbout : null,
+        hint: hint ? hint : null,
         faq: JSON.stringify(faq),
+        categories: {
+          connect: categories.map((category: string) => ({
+            categoryId: Number(category),
+          })),
+        },
+        similarStores: {
+          connect: similarStores.map((store: string) => ({
+            storeId: Number(store),
+          })),
+        },
       },
     });
 
@@ -63,7 +85,7 @@ export async function POST(req: Request) {
       return NextResponse.json(
         {
           success: false,
-          error: "Store Already Exists",
+          error: `Store with the name ${name} already exists`,
         },
         { status: 400 },
       );

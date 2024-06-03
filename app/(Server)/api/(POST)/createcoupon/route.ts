@@ -1,11 +1,10 @@
+import db from "@/lib/prisma";
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
 
 export async function POST(req: Request) {
   try {
-    const body = await req.json();
+    const request = await req.json();
+    const body = JSON.parse(request.body);
 
     // extracting the required properties out of body
     const {
@@ -20,16 +19,16 @@ export async function POST(req: Request) {
     } = body;
 
     // creating a new coupon
-    const coupon = await prisma.coupon.create({
+    const coupon = await db.coupon.create({
       data: {
-        store_id,
+        store_id: Number(store_id),
         title,
-        coupon_code,
+        coupon_code: coupon_code ? coupon_code : null,
         type,
-        category_id,
+        category_id: Number(category_id),
         ref_link,
         due_date: new Date(due_date),
-        description,
+        description: description ? description : null,
       },
     });
 

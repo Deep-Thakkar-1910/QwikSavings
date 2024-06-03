@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider        = "prisma-client-js"
   previewFeatures = ["driverAdapters"]
@@ -11,8 +5,8 @@ generator client {
 
 datasource db {
   provider  = "postgresql"
-  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
-  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+  url       = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
 model User {
@@ -47,7 +41,7 @@ model Account {
   session_state     String?
 
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime @default(now())
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -62,7 +56,7 @@ model Session {
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime @default(now())
 
   @@map("sessions")
 }
@@ -77,48 +71,58 @@ model VerificationToken {
 }
 
 model Store {
-  id               Int      @id @default(autoincrement())
-  name             String   @unique
+  storeId          Int        @id @default(autoincrement())
+  name             String     @unique
   title            String?
   logo_url         String?
   ref_link         String
-  type             Type
   description      String?
   moreAbout        String?
   hint             String?
   faq              Json?
-  total_ratings    Int      @default(0)
-  ratings_count    Int      @default(0)
-  best_offer       String   @default("0")
-  average_discount String   @default("0")
-  offers           Int      @default(0)
+  total_ratings    Int        @default(0)
+  ratings_count    Int        @default(0)
+  best_offer       String     @default("0")
+  average_discount String     @default("0")
+  offers           Int        @default(0)
+  addToHomePage    Boolean    @default(false)
+  categories       Category[] @relation("StoreCategories")
   coupons          Coupon[]
+  similarStores    Store[]    @relation("SimilarStores")
+  storeIsSimilarTo Store[]    @relation("SimilarStores")
 
   @@map("stores")
 }
 
 model Category {
-  id      Int      @id @default(autoincrement())
-  name    String   @unique
-  coupons Coupon[]
+  categoryId          Int        @id @default(autoincrement())
+  logo_url            String?
+  name                String     @unique
+  description         String?
+  stores              Store[]    @relation("StoreCategories")
+  coupons             Coupon[]
+  similarCategories   Category[] @relation("SimilarCategories")
+  categoryIsSimilarTo Category[] @relation("SimilarCategories")
+
+  @@map("categories")
 }
 
 model Coupon {
-  id          Int      @id @default(autoincrement())
-  store_id    Int
+  couponId    Int      @id @default(autoincrement())
   title       String
-  coupon_code String
+  description String?
+  coupon_code String?
   type        Type
+  store_id    Int
   category_id Int
   ref_link    String
   due_date    DateTime
   user_count  Int      @default(0)
   createdAt   DateTime @default(now())
-  description String
   isVerified  Boolean  @default(false)
 
-  store    Store    @relation(fields: [store_id], references: [id])
-  category Category @relation(fields: [category_id], references: [id])
+  store    Store    @relation(fields: [store_id], references: [storeId])
+  category Category @relation(fields: [category_id], references: [categoryId])
 
   @@map("coupons")
 }
