@@ -19,6 +19,7 @@ export const registerUser = async (
     const newUser = await db.user.create({
       data: {
         ...userData,
+        email: userData.email.toLowerCase(),
         password: await hash(userData.password!, 11),
       },
     });

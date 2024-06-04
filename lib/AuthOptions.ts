@@ -48,7 +48,7 @@ export const authOptions: AuthOptions = {
       async authorize(credentials) {
         const user = await db.user.findUnique({
           where: {
-            email: credentials?.email,
+            email: credentials?.email.toLowerCase(),
           },
         });
         // If no user is found, throw an error
