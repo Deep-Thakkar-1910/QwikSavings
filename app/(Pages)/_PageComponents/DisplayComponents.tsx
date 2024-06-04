@@ -31,17 +31,17 @@ const DisplayItems = <
   emptyMessage,
 }: DisplayItemsProps<T>) => {
   return (
-    <div className="mt-6 min-h-[50vh] w-full bg-popover p-8 lg:px-16">
+    <div className="mt-6 min-h-[40vh] w-full bg-popover p-8 lg:px-16 lg:py-16">
       {isLoading ? (
-        <div className="flex justify-center">
+        <div className="flex h-[40vh] w-full items-center justify-center">
           <Spinner />
         </div>
       ) : error ? (
-        <div className="flex justify-center">
+        <div className="flex h-[40vh] w-full items-center justify-center">
           <p>{error}</p>
         </div>
       ) : data.length === 0 ? (
-        <div className="flex justify-center">
+        <div className="flex h-[40vh] w-full items-center justify-center">
           <p>{emptyMessage}</p>
         </div>
       ) : (

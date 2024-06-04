@@ -15,7 +15,7 @@ const BreadCrumbNavigation = () => {
   // getting all the url paths and converting them to array
   const paths = usePathname().split("/").slice(1);
   return (
-    <Breadcrumb className="mb-8 place-self-start px-8  lg:px-16">
+    <Breadcrumb className="my-4 place-self-start px-8  lg:px-16">
       <BreadcrumbList className="text-black dark:text-slate-200">
         <BreadcrumbItem>
           <BreadcrumbLink href="/">
@@ -23,7 +23,7 @@ const BreadCrumbNavigation = () => {
           </BreadcrumbLink>
         </BreadcrumbItem>
         {/* Show initial seperator only if not on homepage */}
-        {paths.length > 0 && (
+        {paths[0] && (
           <BreadcrumbSeparator>
             <Slash />
           </BreadcrumbSeparator>

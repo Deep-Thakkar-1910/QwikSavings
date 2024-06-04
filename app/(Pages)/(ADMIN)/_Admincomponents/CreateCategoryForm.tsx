@@ -29,8 +29,8 @@ import {
   MultiSelectorList,
   MultiSelectorTrigger,
 } from "@/components/ui/MultipleSelector";
-import { set } from "date-fns";
 import { revalidatePath } from "next/cache";
+import { useRouter } from "next/navigation";
 
 type InputType = z.infer<typeof CreateCategoryFormSchema>;
 
@@ -39,7 +39,12 @@ interface CategoryFormProps {
   stores: { name: string; storeId: number }[];
 }
 
-const CreateCouponForm = ({ similarCategories, stores }: CategoryFormProps) => {
+const CreateCategoryForm = ({
+  similarCategories,
+  stores,
+}: CategoryFormProps) => {
+  const router = useRouter();
+
   // creating similarCategoryOptions for multiselector
   const similarCategoryOptions = similarCategories.map((category) => ({
     label: category.name,
@@ -133,14 +138,15 @@ const CreateCouponForm = ({ similarCategories, stores }: CategoryFormProps) => {
         });
         form.reset();
         setSelectedImage(null);
-        revalidatePath("/admin/categories");
+        revalidatePath("/admin");
+        router.refresh();
       }
     } catch (err) {
       console.log(err);
       if (err instanceof AxiosError) {
         toast({
           title: "Uh Oh!",
-          description: err.response?.data.message,
+          description: err.response?.data.error,
           variant: "destructive",
         });
       }
@@ -317,4 +323,4 @@ const CreateCouponForm = ({ similarCategories, stores }: CategoryFormProps) => {
   );
 };
 
-export default CreateCouponForm;
+export default CreateCategoryForm;

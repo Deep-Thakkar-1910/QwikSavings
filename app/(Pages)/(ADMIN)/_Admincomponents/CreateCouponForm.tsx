@@ -52,7 +52,7 @@ interface CouponFormProps {
   stores: { name: string; storeId: number }[];
 }
 
-const CreateCategoryForm = ({ categories, stores }: CouponFormProps) => {
+const CreateCouponForm = ({ categories, stores }: CouponFormProps) => {
   // date picker state
   const [date, setDate] = useState<Date | undefined>(new Date());
   const form = useForm<InputType>({
@@ -407,4 +407,4 @@ const CreateCategoryForm = ({ categories, stores }: CouponFormProps) => {
   );
 };
 
-export default CreateCategoryForm;
+export default CreateCouponForm;

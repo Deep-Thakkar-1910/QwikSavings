@@ -3,13 +3,6 @@
 import FilterBlocks from "../../_PageComponents/FilterBlocks";
 import { useFilter } from "@/hooks/useFilter";
 import DisplayItems from "../../_PageComponents/DisplayComponents";
-import Image from "next/image";
-
-interface Category {
-  categoryId: number;
-  name: string;
-  logo_url?: string;
-}
 
 const CategoriesPage = () => {
   const { setPage, setLike, data, page, like, isLoading, error } =

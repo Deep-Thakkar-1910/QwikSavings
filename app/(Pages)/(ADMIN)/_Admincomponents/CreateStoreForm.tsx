@@ -38,6 +38,7 @@ import {
   MultiSelectorTrigger,
 } from "@/components/ui/MultipleSelector";
 import { revalidatePath } from "next/cache";
+import { useRouter } from "next/navigation";
 
 type InputType = z.infer<typeof CreateStoreFormScehma>;
 
@@ -50,6 +51,8 @@ const CreateStoreForm = ({
   categories = [],
   similarStores = [],
 }: StoreFormProps) => {
+  const router = useRouter();
+
   // for creating  categoryOptions
   const categoryOptions = categories.map((category) => {
     return {
@@ -166,7 +169,8 @@ const CreateStoreForm = ({
         });
         form.reset();
         setSelectedImage(null); // Reset the selected image
-        revalidatePath("/admin/stores");
+        revalidatePath("/admin");
+        router.refresh();
       }
     } catch (error) {
       console.error(error);

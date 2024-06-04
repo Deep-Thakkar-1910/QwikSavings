@@ -54,6 +54,9 @@ export const authOptions: AuthOptions = {
         // If no user is found, throw an error
         if (!user) throw new Error("Given Email is not Registered");
 
+        if (!user.password)
+          throw new Error("Please Sign in with your existing Google account");
+
         // If no password is provided, throw an error
         if (!credentials?.password)
           throw new Error("Please Provide Your Password");
