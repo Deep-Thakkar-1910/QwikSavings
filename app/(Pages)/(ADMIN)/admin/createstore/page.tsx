@@ -4,15 +4,15 @@ const CreateStorePage = async () => {
   let categories = [];
   let similarStores = [];
   try {
+    // for prod
     const categoriesResult = await fetch(
-      `${process.env.NEXTAUTH_URL}/api/getcategories`,
+      `${process.env.BASE_URL}/api/getcategories`,
       { cache: "no-store" },
     );
     const categoriesData = await categoriesResult.json();
-    const storesResult = await fetch(
-      `${process.env.NEXTAUTH_URL}/api/getstores`,
-      { cache: "no-store" },
-    );
+    const storesResult = await fetch(`${process.env.BASE_URL}/api/getstores`, {
+      cache: "no-store",
+    });
     const storesData = await storesResult.json();
     categories = categoriesData.categories || [];
     similarStores = storesData.stores || [];
