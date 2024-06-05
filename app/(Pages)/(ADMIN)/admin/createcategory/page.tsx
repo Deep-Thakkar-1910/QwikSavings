@@ -1,7 +1,7 @@
 import CreateCategoryForm from "../../_Admincomponents/CreateCategoryForm";
 
 export const dynamic = "force-dynamic";
-
+export const revalidate = 0;
 const CreateCatrgoryPage = async () => {
   let similarCategories = [];
   let stores = [];
@@ -9,11 +9,11 @@ const CreateCatrgoryPage = async () => {
     // fetching available stores and categories for related store and category fields
     const categoriesResult = await fetch(
       `${process.env.BASE_URL}/api/getcategories`,
-      { cache: "no-store" },
+      { cache: "no-cache" },
     );
     const categoriesData = await categoriesResult.json();
     const storesResult = await fetch(`${process.env.BASE_URL}/api/getstores`, {
-      cache: "no-store",
+      cache: "no-cache",
     });
     const storesData = await storesResult.json();
     similarCategories = categoriesData.categories || [];

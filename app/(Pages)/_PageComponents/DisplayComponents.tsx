@@ -1,6 +1,5 @@
 // DisplayItems.tsx
 import Image from "next/image";
-import { cn } from "@/lib/utils";
 import Spinner from "./Spinner";
 
 interface DisplayItemsProps<
@@ -51,7 +50,7 @@ const DisplayItems = <
               key={item.storeId || item.categoryId}
               className="group flex max-h-28 max-w-xs flex-col items-center rounded-md border p-4 transition-transform duration-300 ease-linear hover:scale-105"
             >
-              <div className="flex h-28 w-full min-w-64 items-center justify-around gap-x-4">
+              <div className="flex h-28 w-full min-w-64 items-center justify-start gap-x-4">
                 <Image
                   src={item.logo_url ?? "https://via.placeholder.com/600x400"}
                   alt={item.name}

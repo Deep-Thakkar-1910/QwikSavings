@@ -1,5 +1,6 @@
 import CreateCouponForm from "../../_Admincomponents/CreateCouponForm";
-
+export const revalidate = 0;
+export const dynamic = "force dynamic";
 const CreateCouponPage = async () => {
   let categories = [];
   let stores = [];
@@ -8,11 +9,11 @@ const CreateCouponPage = async () => {
     const categoriesResult = await fetch(
       `${process.env.BASE_URL}/api/getcategories`,
       {
-        cache: "no-store",
+        cache: "no-cache",
       },
     );
     const storesResult = await fetch(`${process.env.BASE_URL}/api/getstores`, {
-      cache: "no-store",
+      cache: "no-cache",
     });
     const categoriesData = await categoriesResult.json();
     const storesData = await storesResult.json();

@@ -9,7 +9,6 @@ export async function POST(req: Request) {
   const logo: File | null = (formData.get("logo") as File) ?? null;
   const request = (await formData.get("data")) as string;
   const body = await JSON.parse(request);
-  console.log(logo);
   // extracting the name out of body
   const { name, stores, description, similarCategories } = body;
   try {
