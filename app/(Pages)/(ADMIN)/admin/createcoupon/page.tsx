@@ -1,20 +1,22 @@
 import CreateCouponForm from "../../_Admincomponents/CreateCouponForm";
-export const revalidate = 0;
-export const dynamic = "force-dynamic";
+
 const CreateCouponPage = async () => {
   let categories = [];
   let stores = [];
   try {
     // fetching available stores and categories for related store and category fields
     const categoriesResult = await fetch(
-      `${process.env.BASE_URL}/api/getcategories`,
+      `${process.env.BASE_URL}/api/getcategories?_=${new Date().getTime()}`,
       {
         cache: "no-cache",
       },
     );
-    const storesResult = await fetch(`${process.env.BASE_URL}/api/getstores`, {
-      cache: "no-cache",
-    });
+    const storesResult = await fetch(
+      `${process.env.BASE_URL}/api/getstores?_=${new Date().getTime()}`,
+      {
+        cache: "no-cache",
+      },
+    );
     const categoriesData = await categoriesResult.json();
     const storesData = await storesResult.json();
     categories = categoriesData.categories || [];
