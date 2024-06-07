@@ -12,7 +12,7 @@ import axios from "axios";
 
 // For production
 export default axios.create({
-  baseURL: `https://qwikky-savings.vercel.app/api`,
+  baseURL: `https://qwik-savings-eta.vercel.app/api`,
   headers: {
     "Cache-Control": "no-cache",
     Pragma: "no-cache",
