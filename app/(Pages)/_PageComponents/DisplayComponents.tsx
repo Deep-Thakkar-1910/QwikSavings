@@ -1,6 +1,7 @@
 // DisplayItems.tsx
 import Image from "next/image";
 import Spinner from "./Spinner";
+import Link from "next/link";
 
 interface DisplayItemsProps<
   T extends {
@@ -46,23 +47,28 @@ const DisplayItems = <
       ) : (
         <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-4 md:gap-x-8 lg:justify-start lg:gap-x-12">
           {data.map((item) => (
-            <div
+            <Link
               key={item.storeId || item.categoryId}
-              className="group flex max-h-28 max-w-xs flex-col items-center rounded-md border p-4 transition-transform duration-300 ease-linear hover:scale-105"
+              href={`${item.storeId ? `/stores/${item.storeId}` : `/categories/${item.categoryId}`}`}
             >
-              <div className="flex h-28 w-full min-w-64 items-center justify-start gap-x-4">
-                <Image
-                  src={item.logo_url ?? "https://via.placeholder.com/600x400"}
-                  alt={item.name}
-                  width={400}
-                  height={400}
-                  className="h-20 w-20 rounded-full object-cover transition-shadow duration-300 ease-linear group-hover:shadow-md"
-                />
-                <p className="transition-colors duration-300 ease-linear group-hover:text-app-main">
-                  {item.name}
-                </p>
+              <div
+                key={item.storeId || item.categoryId}
+                className="group flex max-h-28 max-w-xs cursor-pointer flex-col items-center rounded-md border p-4 transition-transform duration-300 ease-linear hover:scale-105"
+              >
+                <div className="flex h-28 w-full min-w-64 items-center justify-start gap-x-4">
+                  <Image
+                    src={item.logo_url ?? "https://via.placeholder.com/600x400"}
+                    alt={item.name}
+                    width={400}
+                    height={400}
+                    className="h-20 w-20 rounded-full object-cover transition-shadow duration-300 ease-linear group-hover:shadow-md"
+                  />
+                  <p className="transition-colors duration-300 ease-linear group-hover:text-app-main">
+                    {item.name}
+                  </p>
+                </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       )}

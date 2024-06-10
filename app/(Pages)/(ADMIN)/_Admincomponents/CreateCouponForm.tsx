@@ -167,7 +167,7 @@ const CreateCouponForm = ({ categories, stores }: CouponFormProps) => {
                 </FormControl>
                 <SelectContent>
                   <SelectItem value="Deal">Deal</SelectItem>
-                  <SelectItem value="Offer">Offer</SelectItem>
+                  <SelectItem value="Coupon">Coupon</SelectItem>
                 </SelectContent>
               </Select>
               <FormMessage />
@@ -175,7 +175,7 @@ const CreateCouponForm = ({ categories, stores }: CouponFormProps) => {
           )}
         />
 
-        {form.getValues("type") === "Offer" && (
+        {form.getValues("type") === "Coupon" && (
           <FormField
             control={control}
             name="coupon_code"

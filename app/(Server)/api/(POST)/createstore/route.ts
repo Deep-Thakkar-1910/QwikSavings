@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import { UploadStoreImage } from "@/lib/utilities/CloudinaryConfig";
 import db from "@/lib/prisma";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import { MAX_FEATURED_STORE_LIMITS } from "@/lib/Constants";
 
 // API handler to create store
 export async function POST(req: Request) {
@@ -15,6 +16,7 @@ export async function POST(req: Request) {
     name,
     title,
     ref_link,
+    isFeatured,
     addToHomePage,
     description,
     moreAbout,
@@ -26,6 +28,25 @@ export async function POST(req: Request) {
 
   try {
     let logoUrl;
+
+    // check max isFeatured limit is reached or not
+    if (isFeatured === "yes") {
+      const featuredStores = await db.store.findMany({
+        where: {
+          isFeatured: true,
+        },
+      });
+
+      if (featuredStores.length >= MAX_FEATURED_STORE_LIMITS) {
+        return NextResponse.json(
+          {
+            success: false,
+            error: "Maximum limit of Featured stores reached",
+          },
+          { status: 400 },
+        );
+      }
+    }
 
     // if there is a logo in the form data
     if (logo) {
@@ -56,6 +77,7 @@ export async function POST(req: Request) {
         title,
         logo_url: logoUrl,
         ref_link,
+        isFeatured: isFeatured === "yes" ? true : false,
         addToHomePage: addToHomePage === "yes" ? true : false,
         description: description ? description : null,
         moreAbout: moreAbout ? moreAbout : null,

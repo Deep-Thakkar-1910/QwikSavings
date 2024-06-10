@@ -7,6 +7,7 @@ import MobileSidebar from "./MobileSidebar";
 import ProfileDropDown from "./ProfileDropDown";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import AuthButtons from "./AuthButtons";
 const Navbar = () => {
   const pathname = usePathname();
   return (
@@ -49,9 +50,6 @@ const Navbar = () => {
       </ul>
 
       <div className="flex items-center gap-x-2 sm:gap-x-3">
-        <div className="hidden lg:block">
-          <ProfileDropDown />
-        </div>
         {/* Search bar */}
         <div className="flex w-56 items-center justify-between rounded-full border-2 border-app-main p-1 sm:w-64 sm:px-3 sm:py-2">
           <label htmlFor="search">
@@ -66,6 +64,10 @@ const Navbar = () => {
         </div>
         <div className="lg:hidden">
           <MobileSidebar />
+        </div>
+        <div className="hidden items-center gap-x-4 lg:flex">
+          <AuthButtons />
+          <ProfileDropDown />
         </div>
       </div>
     </nav>

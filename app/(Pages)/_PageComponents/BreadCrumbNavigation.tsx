@@ -40,7 +40,15 @@ const BreadCrumbNavigation = () => {
                     index === paths.length - 1 && "text-app-main",
                   )}
                 >
-                  {path}
+                  {/* This logic is to show the final item as store or category instead of id in breadcrumb navigation */}
+                  {index === paths.length - 1 &&
+                  typeof Number(path) === "number"
+                    ? paths.at(-2) === "stores"
+                      ? "store"
+                      : paths.at(-2) === "categories"
+                        ? "category"
+                        : path
+                    : path}
                 </BreadcrumbLink>
               </BreadcrumbItem>
               {index < paths.length - 1 && (

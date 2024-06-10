@@ -16,6 +16,8 @@ import ProfileDropDown from "./ProfileDropDown";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 import { cn } from "@/lib/utils";
+import AuthButtons from "./AuthButtons";
+import Seperator from "./Seperator";
 
 const MobileSidebar = () => {
   // extracting the pathname to observer route changes
@@ -37,14 +39,16 @@ const MobileSidebar = () => {
       <Sheet open={isOpen} onOpenChange={onClose}>
         <SheetContent
           side="right"
-          className="flex w-10/12 flex-col items-center border-l  bg-white dark:bg-app-dark-navbar sm:w-2/3 md:w-2/5 lg:hidden"
+          className="flex w-10/12 flex-col items-center justify-around border-l bg-white dark:bg-app-dark-navbar sm:w-2/3 md:w-2/5 lg:hidden"
         >
-          <SheetHeader>
-            <ProfileDropDown />
+          <SheetHeader className="w-full ">
+            <div className="mx-auto">
+              <ProfileDropDown />
+            </div>
+            <Seperator />
           </SheetHeader>
-          <div className="before: after: mx-auto mb-4 flex w-full items-center justify-center before:block before:h-px before:flex-grow before:bg-gray-500 after:block after:h-px after:flex-grow after:bg-gray-500"></div>
           <div className="mb-20">
-            <ul role="tablist" className="flex flex-col items-center gap-y-4">
+            <ul role="tablist" className="flex flex-col items-center gap-y-4 ">
               {NavLinks.map((link, index) => {
                 return (
                   <li key={index} role="tab">
@@ -64,12 +68,7 @@ const MobileSidebar = () => {
             </ul>
           </div>
           <SheetFooter>
-            <Image
-              alt="Logo"
-              src={"/Logos/FooterLogo.png"}
-              width={1920}
-              height={1080}
-            />
+            <AuthButtons />
           </SheetFooter>
         </SheetContent>
       </Sheet>

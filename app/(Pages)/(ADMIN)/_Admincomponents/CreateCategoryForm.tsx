@@ -138,7 +138,7 @@ const CreateCategoryForm = ({
         });
         form.reset();
         setSelectedImage(null);
-        revalidatePath("/admin");
+        revalidatePath("/api/getcategories");
         router.refresh();
       }
     } catch (err) {

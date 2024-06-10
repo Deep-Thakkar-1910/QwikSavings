@@ -26,7 +26,6 @@ export async function GET(req: Request) {
       take: limit,
       skip: (page - 1) * limit,
     });
-
     return NextResponse.json({ success: true, stores }, { status: 200 });
   } catch (err) {
     console.log(err);

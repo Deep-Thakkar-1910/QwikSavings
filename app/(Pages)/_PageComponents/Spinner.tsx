@@ -1,6 +1,6 @@
 const Spinner = () => {
   return (
-    <div className="h-16 w-16 animate-spin rounded-full border-8 border-dashed border-app-main"></div>
+    <div className="h-12 w-12 animate-spin rounded-full border-4 border-app-main border-r-transparent"></div>
   );
 };
 

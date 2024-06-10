@@ -12,13 +12,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  ArrowLeftFromLine,
-  ArrowRightFromLine,
-  Moon,
-  Sun,
-  UserPlusIcon,
-} from "lucide-react";
+import { ArrowLeftFromLine, Moon, Sun, UserCircle2 } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useTheme } from "next-themes";
@@ -30,41 +24,30 @@ const ProfileDropDown = () => {
 
   // extracting first name and last name initals from the user name
   const name = session?.user?.name.split(" ");
-  const AvatarName = name
-    ? name[0][0].toUpperCase() + name[1][0].toUpperCase()
-    : null;
+  const AvatarName =
+    name && name.length > 1
+      ? name[0][0]?.toUpperCase() + name[1][0]?.toUpperCase()
+      : name && name[0][0]?.toUpperCase();
   //   return the dropdown menu
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="rounded-full outline-0">
+      <DropdownMenuTrigger
+        className={`rounded-full outline-0 ${session?.user ? "" : "hidden"}`}
+      >
         <Avatar>
           <AvatarImage src={session?.user?.image!} />
-          <AvatarFallback>{AvatarName ?? "QS"}</AvatarFallback>
+          <AvatarFallback>
+            {AvatarName ?? <UserCircle2 className="size-full" />}
+          </AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuLabel className="text-center">Profile</DropdownMenuLabel>
-        <DropdownMenuSeparator />
+        <DropdownMenuSeparator className={`${session?.user ? "" : "hidden"}`} />
         {session?.user?.email && (
           <DropdownMenuItem className="overflow-x-auto text-sky-700 dark:text-sky-500">
             <p className="text-balance">{session?.user?.email}</p>
           </DropdownMenuItem>
-        )}
-        {!session && (
-          <>
-            <Link href={"signup"}>
-              <DropdownMenuItem>
-                <UserPlusIcon className="mr-2 size-4" />
-                <span>Sign up</span>
-              </DropdownMenuItem>
-            </Link>
-            <Link href={"/signin"}>
-              <DropdownMenuItem>
-                <ArrowRightFromLine className="mr-2 size-4" />
-                <span>Sign In</span>
-              </DropdownMenuItem>
-            </Link>
-          </>
         )}
         <DropdownMenuGroup>
           <DropdownMenuSeparator className="sm:hidden" />

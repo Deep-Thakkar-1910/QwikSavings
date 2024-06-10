@@ -79,6 +79,7 @@ model Store {
   description      String?
   moreAbout        String?
   hint             String?
+  isFeatured       Boolean    @default(false)
   faq              Json?
   total_ratings    Int        @default(0)
   ratings_count    Int        @default(0)
@@ -90,6 +91,8 @@ model Store {
   coupons          Coupon[]
   similarStores    Store[]    @relation("SimilarStores")
   storeIsSimilarTo Store[]    @relation("SimilarStores")
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @default(now()) @updatedAt
 
   @@map("stores")
 }
@@ -103,6 +106,8 @@ model Category {
   coupons             Coupon[]
   similarCategories   Category[] @relation("SimilarCategories")
   categoryIsSimilarTo Category[] @relation("SimilarCategories")
+  createdAt           DateTime   @default(now())
+  updatedAt           DateTime   @default(now()) @updatedAt
 
   @@map("categories")
 }
@@ -120,14 +125,14 @@ model Coupon {
   user_count  Int      @default(0)
   createdAt   DateTime @default(now())
   isVerified  Boolean  @default(false)
-
-  store    Store    @relation(fields: [store_id], references: [storeId])
-  category Category @relation(fields: [category_id], references: [categoryId])
+  updatedAt   DateTime @default(now()) @updatedAt
+  store       Store    @relation(fields: [store_id], references: [storeId])
+  category    Category @relation(fields: [category_id], references: [categoryId])
 
   @@map("coupons")
 }
 
 enum Type {
+  Coupon
   Deal
-  Offer
 }

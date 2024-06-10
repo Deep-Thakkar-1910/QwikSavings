@@ -10,6 +10,7 @@ export const CreateStoreFormScehma = z.object({
   title: z.string(),
   logo: z.any().optional(),
   ref_link: z.string().url("Reference link must be a valid URL"),
+  isFeatured: z.enum(["yes", "no"]).default("no"),
   addToHomePage: z.enum(["yes", "no"]).default("no"),
   description: z.string(),
   moreAbout: z.string(),

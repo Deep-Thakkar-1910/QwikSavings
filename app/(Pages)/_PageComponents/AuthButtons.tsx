@@ -7,16 +7,7 @@ const AuthButtons = () => {
   const { data: session } = useSession();
   return (
     <div className="flex gap-x-4">
-      {session?.user ? (
-        <Button
-          variant={"outline"}
-          asChild
-          size={"default"}
-          className="transition-transform duration-200 ease-out hover:-translate-y-1 hover:text-app-main lg:block"
-        >
-          <Link href={"/api/auth/signout"}>Sign Out</Link>
-        </Button>
-      ) : (
+      {!session?.user && (
         <>
           <Button
             variant={"outline"}

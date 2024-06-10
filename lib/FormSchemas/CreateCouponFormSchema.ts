@@ -3,7 +3,7 @@ import { z } from "zod";
 export const CreateCouponFormSchema = z.object({
   title: z.string().min(1, "Title is required"),
   store_id: z.string(),
-  type: z.enum(["Deal", "Offer"]),
+  type: z.enum(["Deal", "Coupon"]),
   category_id: z.string(),
   coupon_code: z.string().optional(),
   ref_link: z.string().min(1, "Reference link is required"),

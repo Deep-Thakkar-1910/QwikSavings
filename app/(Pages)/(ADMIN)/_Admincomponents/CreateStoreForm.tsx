@@ -102,6 +102,7 @@ const CreateStoreForm = ({
       title: "",
       logo: undefined,
       ref_link: "",
+      isFeatured: "no",
       addToHomePage: "no",
       average_discount: "",
       best_offer: "",
@@ -169,7 +170,7 @@ const CreateStoreForm = ({
         });
         form.reset();
         setSelectedImage(null); // Reset the selected image
-        revalidatePath("/admin");
+        revalidatePath("/api/getstores");
         router.refresh();
       }
     } catch (error) {
@@ -267,6 +268,27 @@ const CreateStoreForm = ({
                   type="url"
                 />
               </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={control}
+          name="isFeatured"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Feature Store </FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger className="w-[180px]">
+                    <SelectValue placeholder="No" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="no">No</SelectItem>
+                  <SelectItem value="yes">Yes</SelectItem>
+                </SelectContent>
+              </Select>
               <FormMessage />
             </FormItem>
           )}
