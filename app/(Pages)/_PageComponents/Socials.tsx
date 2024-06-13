@@ -10,7 +10,7 @@ import Link from "next/link";
 
 const Socials = () => {
   const socialClassname =
-    "hover:text-app-main dark:text-muted-foreground transition-colors duration-300 ease-linear";
+    "hover:text-app-main dark:text-muted-foreground dark:hover:text-app-main transition-colors duration-300 ease-linear";
   const iconClassname = "size-6";
   return (
     <div className="flex items-center gap-x-6 sm:gap-x-8">

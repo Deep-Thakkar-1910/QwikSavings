@@ -67,12 +67,14 @@ const Footer = () => {
           </div>
           <p className="text-md mx-auto text-center text-muted-foreground lg:mx-0 lg:text-start">
             We&apos;ll never share your details.See our{" "}
-            <span className="font-semibold text-black">Privacy Policy.</span>
+            <span className="font-semibold text-black dark:font-bold dark:text-muted-foreground">
+              Privacy Policy.
+            </span>
           </p>
           <Socials />
         </div>
       </div>
-      <div className="mx-auto h-px w-full max-w-screen-xl border-t border-dashed border-zinc-800"></div>
+      <div className="mx-auto h-px w-full max-w-screen-xl border-t border-dashed border-zinc-800 dark:border-muted-foreground"></div>
       <p className="mx-auto max-w-screen-xl text-center">
         Disclosure: If you buy a product or service through Qwik Savings, we may
         earn a commission
