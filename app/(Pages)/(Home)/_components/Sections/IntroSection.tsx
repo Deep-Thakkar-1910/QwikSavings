@@ -1,18 +1,20 @@
-import { CardFlipperData } from "@/lib/utilities/CardFlipperData";
-import { ImageCarouselData } from "@/lib/utilities/ImageCarouselData";
 import ImageCarousel from "../ImageCarousel";
 import CardStackFlipper from "../CardStackFlipper";
+import { fetchImageCarouselData } from "@/lib/utilities/ImageCarouselData";
+import { fetchCardFlipperData } from "@/lib/utilities/CardFlipperData";
 
-const IntroSection = () => {
+const IntroSection = async () => {
+  const ImageCarouselData = (await fetchImageCarouselData()) ?? [];
+  const CardFlipperData = (await fetchCardFlipperData()) ?? [];
   return (
-    <section className="flex w-full  flex-col items-center" id="Intro">
+    <section className="flex w-full flex-col items-center" id="Intro">
       {/* Image slider and flipper div */}
-      <div className="mb-10 flex max-w-screen-xl items-start px-8 md:w-4/5 lg:mb-14 lg:gap-x-16 lg:px-16 xl:mb-10  xl:gap-x-20">
+      <div className="mb-10 flex max-w-screen-xl items-start px-8 lg:mb-14 lg:gap-x-6 lg:px-16 xl:px-10 2xl:gap-x-0 ">
         <ImageCarousel data={ImageCarouselData} />
         <CardStackFlipper data={CardFlipperData} autoplay />
       </div>
       {/* Intro heading div */}
-      <div className="flex w-full flex-col items-center justify-center bg-popover p-8 lg:px-16">
+      <div className="flex w-full flex-col items-center justify-center bg-popover p-8 lg:px-16 xl:px-4 2xl:px-0">
         <h1 className="mx-auto mb-6 text-center text-lg font-bold md:text-xl xl:text-2xl">
           Qwik Savings - Your one stop shop for quick savings.
         </h1>

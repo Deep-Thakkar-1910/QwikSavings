@@ -32,7 +32,7 @@ const ProfileDropDown = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
-        className={`rounded-full outline-0 ${session?.user ? "" : "hidden"}`}
+        className={`rounded-full outline-0 ${session?.user ? "" : "lg:hidden"}`}
       >
         <Avatar>
           <AvatarImage src={session?.user?.image!} />

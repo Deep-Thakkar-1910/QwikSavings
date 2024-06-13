@@ -24,11 +24,7 @@ export const GET = async (req: Request) => {
                 logo_url: true,
               },
             },
-            category: {
-              select: {
-                logo_url: true,
-              },
-            },
+            thumbnail_url: true,
             coupon_code: true,
             title: true,
             isVerified: true,
@@ -38,7 +34,7 @@ export const GET = async (req: Request) => {
           orderBy: {
             createdAt: "desc",
           },
-          take: 4,
+          take: categoryName === "Clothings" ? 8 : 4,
         },
       },
     });

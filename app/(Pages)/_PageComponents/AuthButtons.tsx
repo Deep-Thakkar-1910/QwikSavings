@@ -13,14 +13,14 @@ const AuthButtons = () => {
             variant={"outline"}
             asChild
             size={"default"}
-            className="transition-transform duration-200 ease-out hover:-translate-y-1 hover:text-app-main lg:block"
+            className="cursor-pointer transition-transform duration-200 ease-out hover:-translate-y-1 hover:text-app-main lg:block"
           >
             <Link href="/signup">Sign Up</Link>
           </Button>
           <Button
             asChild
             size={"default"}
-            className="transition-transform duration-200 ease-out hover:-translate-y-1 lg:block"
+            className="cursor-pointer transition-transform duration-200 ease-out hover:-translate-y-1 lg:block"
           >
             <Link href="/signin">Sign In</Link>
           </Button>

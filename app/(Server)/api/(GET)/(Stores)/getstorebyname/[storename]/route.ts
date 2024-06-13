@@ -3,25 +3,19 @@ import { NextResponse } from "next/server";
 
 export async function GET(
   req: Request,
-  context: { params: { storeId: string } },
+  context: { params: { storename: string } },
 ) {
   try {
-    const { storeId } = context.params;
+    const { storename } = context.params;
     const storeDetails = await db.store.findUnique({
       where: {
-        storeId: Number(storeId),
+        name: storename,
       },
       include: {
         similarStores: {
           select: {
             name: true,
             storeId: true,
-          },
-        },
-        categories: {
-          select: {
-            name: true,
-            categoryId: true,
           },
         },
         coupons: {
@@ -38,6 +32,9 @@ export async function GET(
                 logo_url: true,
               },
             },
+          },
+          orderBy: {
+            createdAt: "desc",
           },
         },
       },

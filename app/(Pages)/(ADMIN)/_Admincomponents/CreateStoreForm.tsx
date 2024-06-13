@@ -43,23 +43,11 @@ import { useRouter } from "next/navigation";
 type InputType = z.infer<typeof CreateStoreFormScehma>;
 
 interface StoreFormProps {
-  categories?: { name: string; categoryId: number }[];
   similarStores?: { name: string; storeId: number }[];
 }
 
-const CreateStoreForm = ({
-  categories = [],
-  similarStores = [],
-}: StoreFormProps) => {
+const CreateStoreForm = ({ similarStores = [] }: StoreFormProps) => {
   const router = useRouter();
-
-  // for creating  categoryOptions
-  const categoryOptions = categories.map((category) => {
-    return {
-      label: category.name,
-      id: `${category.categoryId}`,
-    };
-  });
 
   //
   const similarStoreOptions = similarStores.map((store) => {
@@ -83,7 +71,7 @@ const CreateStoreForm = ({
         file,
         400,
         400,
-        "JPEG",
+        "PNG",
         100,
         0,
         (uri) => {
@@ -103,14 +91,13 @@ const CreateStoreForm = ({
       logo: undefined,
       ref_link: "",
       isFeatured: "no",
-      addToHomePage: "no",
+      addToPopularStores: "no",
       average_discount: "",
       best_offer: "",
       description: "",
       hint: "",
       moreAbout: "",
       faq: [],
-      categories: [],
       similarStores: [],
     },
     mode: "all",
@@ -295,10 +282,10 @@ const CreateStoreForm = ({
         />
         <FormField
           control={control}
-          name="addToHomePage"
+          name="addToPopularStores"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Add to home page?</FormLabel>
+              <FormLabel>Add to Popular Stores?</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger className="w-[180px]">
@@ -319,9 +306,9 @@ const CreateStoreForm = ({
           name="description"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Description</FormLabel>
+              <FormLabel>About Us</FormLabel>
               <FormControl>
-                <Textarea placeholder="Description" {...field} />
+                <Textarea placeholder="About Us" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -345,7 +332,7 @@ const CreateStoreForm = ({
           name="hint"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Hint</FormLabel>
+              <FormLabel>Hints and Tips</FormLabel>
               <FormControl>
                 <Textarea placeholder="Hint" {...field} />
               </FormControl>
@@ -353,55 +340,13 @@ const CreateStoreForm = ({
             </FormItem>
           )}
         />
-        <FormField
-          control={control}
-          name="categories"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Related Categories</FormLabel>
-              <MultiSelector
-                options={categoryOptions}
-                onValuesChange={field.onChange}
-                values={field.value}
-                loop={false}
-                emptyIndicator="No Categories Found"
-              >
-                <FormControl>
-                  <MultiSelectorTrigger>
-                    <MultiSelectorInput
-                      placeholder={
-                        field.value.length <= 0
-                          ? "Select Related Catrgories"
-                          : ""
-                      }
-                    />
-                  </MultiSelectorTrigger>
-                </FormControl>
-                <MultiSelectorContent>
-                  <MultiSelectorList>
-                    {categories.map((category) => (
-                      <MultiSelectorItem
-                        key={category.categoryId}
-                        value={`${category.categoryId}`}
-                        id={category.categoryId.toString()}
-                        label={category.name}
-                      >
-                        {category.name}
-                      </MultiSelectorItem>
-                    ))}
-                  </MultiSelectorList>
-                </MultiSelectorContent>
-                <FormMessage />
-              </MultiSelector>
-            </FormItem>
-          )}
-        />
+
         <FormField
           control={control}
           name="similarStores"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Related Stores</FormLabel>
+              <FormLabel>Similar Stores</FormLabel>
               <MultiSelector
                 onValuesChange={field.onChange}
                 values={field.value}

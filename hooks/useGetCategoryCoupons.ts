@@ -8,6 +8,7 @@ export interface Coupon {
   coupon_code: string;
   type: string;
   title: string;
+  thumbnail_url: string;
   isVerified: boolean;
   user_count: number;
 }

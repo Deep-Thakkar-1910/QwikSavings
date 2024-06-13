@@ -1,4 +1,5 @@
 "use client";
+import { ChangeEvent, useRef, useState } from "react";
 import {
   Form,
   FormControl,
@@ -30,10 +31,9 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { CalendarIcon, CheckIcon } from "lucide-react";
+import { CalendarIcon, CheckIcon, MinusCircle } from "lucide-react";
 import { Calendar } from "@/components/ui/Calendar";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
 import { format } from "date-fns";
 import { CaretSortIcon } from "@radix-ui/react-icons";
 import {
@@ -44,6 +44,8 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
+import Resizer from "react-image-file-resizer";
+import Image from "next/image";
 
 type InputType = z.infer<typeof CreateCouponFormSchema>;
 
@@ -53,6 +55,75 @@ interface CouponFormProps {
 }
 
 const CreateCouponForm = ({ categories, stores }: CouponFormProps) => {
+  // // thumbnail resizer
+  // const resizeThumbnailImage = (file: File) =>
+  //   new Promise((resolve) => {
+  //     Resizer.imageFileResizer(
+  //       file,
+  //       1920,
+  //       1080,
+  //       "JPEG",
+  //       100,
+  //       0,
+  //       (uri) => {
+  //         resolve(uri);
+  //       },
+  //       "blob",
+  //       400,
+  //       400,
+  //     );
+  //   });
+  // const resizeFlipperImage = (file: File) =>
+  //   new Promise((resolve) => {
+  //     Resizer.imageFileResizer(
+  //       file,
+  //       1920,
+  //       1080,
+  //       "JPEG",
+  //       100,
+  //       0,
+  //       (uri) => {
+  //         resolve(uri);
+  //       },
+  //       "blob",
+  //       400,
+  //       400,
+  //     );
+  //   });
+  // const resizeCarouselPoster = (file: File) =>
+  //   new Promise((resolve) => {
+  //     Resizer.imageFileResizer(
+  //       file,
+  //       1920,
+  //       1080,
+  //       "JPEG",
+  //       100,
+  //       0,
+  //       (uri) => {
+  //         resolve(uri);
+  //       },
+  //       "blob",
+  //       400,
+  //       400,
+  //     );
+  //   });
+
+  // for image preview
+  const [selectedThumbnailImage, setSelectedThumbnailImage] = useState<
+    string | null
+  >(null);
+  const [selectedFlipperImage, setSelectedFlipperImage] = useState<
+    string | null
+  >(null);
+  const [selectedCarouselImage, setSelectedCarouselImage] = useState<
+    string | null
+  >(null);
+
+  // reference to the image input field
+  const thumbnailRef = useRef<HTMLInputElement>(null);
+  const flipperRef = useRef<HTMLInputElement>(null);
+  const carouselRef = useRef<HTMLInputElement>(null);
+
   // date picker state
   const [date, setDate] = useState<Date | undefined>(new Date());
   const form = useForm<InputType>({
@@ -62,6 +133,14 @@ const CreateCouponForm = ({ categories, stores }: CouponFormProps) => {
       coupon_code: "",
       description: "",
       ref_link: "",
+      thumbnail_url: "",
+      flipperImage_url: "",
+      carouselPosterUrl: "",
+      addToCarousel: "no",
+      addToHomePage: "no",
+      addToFlipper: "no",
+      category_id: "",
+      store_id: "",
       type: "Deal",
       due_date: undefined,
     },
@@ -69,15 +148,82 @@ const CreateCouponForm = ({ categories, stores }: CouponFormProps) => {
     shouldFocusError: true,
   });
 
-  const { control, handleSubmit, formState } = form;
+  const { control, setValue, handleSubmit, formState } = form;
+
+  // handle thumbnail image onChange event
+  const handleThumbnailChange = async (
+    event: ChangeEvent<HTMLInputElement>,
+  ) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      // const resizedFile = await resizeThumbnailImage(file);
+      setValue("thumbnail_url", file);
+      setSelectedThumbnailImage(URL.createObjectURL(file));
+    }
+  };
+  // handle Flipper image onChange event
+  const handleFliperChange = async (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      // const resizedFile = await resizeFlipperImage(file);
+      setValue("flipperImage_url", file);
+      setSelectedFlipperImage(URL.createObjectURL(file));
+    }
+  };
+  // handle Carousel image onChange event
+  const handleCarouselChange = async (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      // const resizedFile = await resizeCarouselPoster(file);
+      setValue("carouselPosterUrl", file);
+      setSelectedCarouselImage(URL.createObjectURL(file));
+    }
+  };
+
+  const removeThumbnail = () => {
+    setSelectedThumbnailImage(null);
+    setValue("thumbnail_url", undefined);
+    if (thumbnailRef.current) {
+      thumbnailRef.current.src = "";
+      thumbnailRef.current.value = "";
+    }
+  };
+  const removeFlipper = () => {
+    setSelectedFlipperImage(null);
+    setValue("flipperImage_url", undefined);
+    if (flipperRef.current) {
+      flipperRef.current.src = "";
+      flipperRef.current.value = "";
+    }
+  };
+  const removeCarousel = () => {
+    setSelectedCarouselImage(null);
+    setValue("carouselPosterUrl", undefined);
+    if (carouselRef.current) {
+      carouselRef.current.src = "";
+      carouselRef.current.value = "";
+    }
+  };
   // form submission handler
   const onSubmit: SubmitHandler<InputType> = async (data) => {
+    const formData = new FormData();
+    if (data.thumbnail_url) {
+      formData.append("thumbnail_url", data.thumbnail_url);
+    }
+    if (data.flipperImage_url) {
+      formData.append("flipperImage_url", data.flipperImage_url);
+    }
+    if (data.carouselPosterUrl) {
+      formData.append("carouselPosterUrl", data.carouselPosterUrl);
+    }
+    // extracting the thumbnail from rest of data to not clutter api request
+    const { thumbnail_url, carouselPosterUrl, flipperImage_url, ...restData } =
+      data;
+    formData.append("data", JSON.stringify(restData));
     try {
-      const result = await axios.post(
-        "/createcoupon",
-        { body: JSON.stringify(data) },
-        { headers: { "Content-Type": "application/json" } },
-      );
+      const result = await axios.post("/createcoupon", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
 
       if (result.data.success) {
         toast({
@@ -85,6 +231,12 @@ const CreateCouponForm = ({ categories, stores }: CouponFormProps) => {
           description: "Coupon created successfully",
         });
         form.reset();
+        removeCarousel();
+        removeFlipper();
+        removeThumbnail();
+        setValue("addToHomePage", "no");
+        setValue("addToCarousel", "no");
+        setValue("addToFlipper", "no");
         setDate(undefined);
       }
     } catch (err) {
@@ -195,7 +347,183 @@ const CreateCouponForm = ({ categories, stores }: CouponFormProps) => {
             )}
           />
         )}
+        <FormField
+          control={control}
+          name="addToHomePage"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Add to Home Page?</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger className="w-[180px]">
+                    <SelectValue placeholder="Select a Type" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="no">No</SelectItem>
+                  <SelectItem value="yes">Yes</SelectItem>
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        {/* IF add to homepage is yes conditionally render this field */}
+        {form.getValues("addToHomePage") === "yes" && (
+          <FormItem>
+            <div className="my-4 flex items-center gap-x-3 ">
+              <FormLabel>
+                <span className="cursor-pointer rounded-lg border border-muted bg-transparent p-2 px-4 transition-colors duration-300 ease-out hover:bg-accent">
+                  {selectedThumbnailImage ? "Change" : "Add"} Thumbnail
+                </span>
+              </FormLabel>
+              <FormControl>
+                <input
+                  ref={thumbnailRef}
+                  type="file"
+                  accept="image/*"
+                  onChange={handleThumbnailChange}
+                  className="hidden"
+                />
+              </FormControl>
+              {selectedThumbnailImage && (
+                <>
+                  <Image
+                    src={selectedThumbnailImage}
+                    alt="Upload Image"
+                    width={80}
+                    height={80}
+                    className="aspect-square"
+                  />
+                  <MinusCircle
+                    className="size-6 translate-y-1/2 cursor-pointer text-destructive"
+                    onClick={removeThumbnail}
+                  />
+                </>
+              )}
+            </div>
+            <FormMessage />
+          </FormItem>
+        )}
+        {/* Carousel Field */}
+        <FormField
+          control={control}
+          name="addToCarousel"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Add to Carousel?</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger className="w-[180px]">
+                    <SelectValue placeholder="Select a Type" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="no">No</SelectItem>
+                  <SelectItem value="yes">Yes</SelectItem>
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        {/* IF add to Carousel is yes conditionally render this field */}
+        {form.getValues("addToCarousel") === "yes" && (
+          <FormItem>
+            <div className="my-4 flex items-center gap-x-3 ">
+              <FormLabel>
+                <span className="cursor-pointer rounded-lg border border-muted bg-transparent p-2 px-4 transition-colors duration-300 ease-out hover:bg-accent">
+                  {selectedCarouselImage ? "Change" : "Add"} Carousel Poster
+                </span>
+              </FormLabel>
+              <FormControl>
+                <input
+                  ref={carouselRef}
+                  type="file"
+                  accept="image/*"
+                  onChange={handleCarouselChange}
+                  className="hidden"
+                />
+              </FormControl>
+              {selectedCarouselImage && (
+                <>
+                  <Image
+                    src={selectedCarouselImage}
+                    alt="Upload Image"
+                    width={80}
+                    height={80}
+                    className="aspect-square"
+                  />
+                  <MinusCircle
+                    className="size-6 translate-y-1/2 cursor-pointer text-destructive"
+                    onClick={removeCarousel}
+                  />
+                </>
+              )}
+            </div>
+            <FormMessage />
+          </FormItem>
+        )}
 
+        {/* Flipper Field */}
+        <FormField
+          control={control}
+          name="addToFlipper"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Add to Flipper?</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger className="w-[180px]">
+                    <SelectValue placeholder="Select a Type" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="no">No</SelectItem>
+                  <SelectItem value="yes">Yes</SelectItem>
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        {/* IF add to Flipper is yes conditionally render this field */}
+        {form.getValues("addToFlipper") === "yes" && (
+          <FormItem>
+            <div className="my-4 flex items-center gap-x-3 ">
+              <FormLabel>
+                <span className="cursor-pointer rounded-lg border border-muted bg-transparent p-2 px-4 transition-colors duration-300 ease-out hover:bg-accent">
+                  {selectedFlipperImage ? "Change" : "Add"} Flipper Image
+                </span>
+              </FormLabel>
+              <FormControl>
+                <input
+                  ref={flipperRef}
+                  type="file"
+                  accept="image/*"
+                  onChange={handleFliperChange}
+                  className="hidden"
+                />
+              </FormControl>
+              {selectedFlipperImage && (
+                <>
+                  <Image
+                    src={selectedFlipperImage}
+                    alt="Upload Image"
+                    width={80}
+                    height={80}
+                    className="aspect-square"
+                  />
+                  <MinusCircle
+                    className="size-6 translate-y-1/2 cursor-pointer text-destructive"
+                    onClick={removeThumbnail}
+                  />
+                </>
+              )}
+            </div>
+            <FormMessage />
+          </FormItem>
+        )}
         <FormField
           control={control}
           name="category_id"
@@ -235,7 +563,7 @@ const CreateCouponForm = ({ categories, stores }: CouponFormProps) => {
                     }}
                   >
                     <CommandInput
-                      placeholder="Select a Category..."
+                      placeholder="Search Category..."
                       className="h-9"
                     />
                     <CommandEmpty>No Category found.</CommandEmpty>

@@ -71,28 +71,28 @@ model VerificationToken {
 }
 
 model Store {
-  storeId          Int        @id @default(autoincrement())
-  name             String     @unique
-  title            String?
-  logo_url         String?
-  ref_link         String
-  description      String?
-  moreAbout        String?
-  hint             String?
-  isFeatured       Boolean    @default(false)
-  faq              Json?
-  total_ratings    Int        @default(0)
-  ratings_count    Int        @default(0)
-  best_offer       String     @default("0")
-  average_discount String     @default("0")
-  offers           Int        @default(0)
-  addToHomePage    Boolean    @default(false)
-  categories       Category[] @relation("StoreCategories")
-  coupons          Coupon[]
-  similarStores    Store[]    @relation("SimilarStores")
-  storeIsSimilarTo Store[]    @relation("SimilarStores")
-  createdAt        DateTime   @default(now())
-  updatedAt        DateTime   @default(now()) @updatedAt
+  storeId            Int        @id @default(autoincrement())
+  name               String     @unique
+  title              String?
+  logo_url           String?
+  ref_link           String
+  description        String?
+  moreAbout          String?
+  hint               String?
+  isFeatured         Boolean    @default(false)
+  addToPopularStores Boolean    @default(false)
+  faq                Json?
+  total_ratings      Int        @default(0)
+  ratings_count      Int        @default(0)
+  best_offer         String     @default("0")
+  average_discount   String     @default("0")
+  offers             Int        @default(0)
+  coupons            Coupon[]
+  categories         Category[] @relation("StoreCategories")
+  similarStores      Store[]    @relation("SimilarStores")
+  storeIsSimilarTo   Store[]    @relation("SimilarStores")
+  createdAt          DateTime   @default(now())
+  updatedAt          DateTime   @default(now()) @updatedAt
 
   @@map("stores")
 }
@@ -102,8 +102,8 @@ model Category {
   logo_url            String?
   name                String     @unique
   description         String?
-  stores              Store[]    @relation("StoreCategories")
   coupons             Coupon[]
+  stores              Store[]    @relation("StoreCategories")
   similarCategories   Category[] @relation("SimilarCategories")
   categoryIsSimilarTo Category[] @relation("SimilarCategories")
   createdAt           DateTime   @default(now())
@@ -113,21 +113,27 @@ model Category {
 }
 
 model Coupon {
-  couponId    Int      @id @default(autoincrement())
-  title       String
-  description String?
-  coupon_code String?
-  type        Type
-  store_id    Int
-  category_id Int
-  ref_link    String
-  due_date    DateTime
-  user_count  Int      @default(0)
-  createdAt   DateTime @default(now())
-  isVerified  Boolean  @default(false)
-  updatedAt   DateTime @default(now()) @updatedAt
-  store       Store    @relation(fields: [store_id], references: [storeId])
-  category    Category @relation(fields: [category_id], references: [categoryId])
+  couponId          Int      @id @default(autoincrement())
+  title             String
+  description       String?
+  coupon_code       String?
+  thumbnail_url     String?
+  flipperImage_url  String?
+  carouselPosterUrl String?
+  type              Type
+  addToHomePage     Boolean  @default(false)
+  addToCarousel     Boolean  @default(false)
+  addToFlipper      Boolean  @default(false)
+  store_id          Int
+  category_id       Int
+  ref_link          String
+  due_date          DateTime
+  user_count        Int      @default(0)
+  createdAt         DateTime @default(now())
+  isVerified        Boolean  @default(false)
+  updatedAt         DateTime @default(now()) @updatedAt
+  store             Store    @relation(fields: [store_id], references: [storeId])
+  category          Category @relation(fields: [category_id], references: [categoryId])
 
   @@map("coupons")
 }

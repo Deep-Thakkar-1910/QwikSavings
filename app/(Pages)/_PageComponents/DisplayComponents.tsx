@@ -49,7 +49,7 @@ const DisplayItems = <
           {data.map((item) => (
             <Link
               key={item.storeId || item.categoryId}
-              href={`${item.storeId ? `/stores/${item.storeId}` : `/categories/${item.categoryId}`}`}
+              href={`${item.storeId ? `/stores/${item.name}` : `/categories/${item.name}`}`}
             >
               <div
                 key={item.storeId || item.categoryId}

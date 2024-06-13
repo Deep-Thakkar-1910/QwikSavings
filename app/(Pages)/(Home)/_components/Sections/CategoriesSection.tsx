@@ -1,6 +1,4 @@
 "use client";
-import Seperator from "@/app/(Pages)/_PageComponents/Seperator";
-import Spinner from "@/app/(Pages)/_PageComponents/Spinner";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import useGetCategoryCoupons, { Coupon } from "@/hooks/useGetCategoryCoupons";
@@ -13,68 +11,88 @@ interface CategoriesSectionProps {
 }
 const CategoriesSection = ({ fetchFrom, title }: CategoriesSectionProps) => {
   const { data, error, isLoading } = useGetCategoryCoupons(fetchFrom);
-  console.log(data);
   return (
     <section
-      className={`w-full px-8 lg:px-16 ${data.coupons?.length === 0 || error ? "hidden" : ""}`}
+      className={`mx-auto w-full max-w-screen-2xl sm:px-8 lg:px-16 ${data.coupons?.length === 0 || error ? "hidden" : ""}`}
     >
-      <div className="mt-4 flex w-full flex-col items-center px-8 sm:flex-row sm:justify-between lg:px-16">
-        <h2 className="mx-auto mb-4 text-center text-2xl font-bold sm:mx-0 sm:text-2xl ">
+      <div className="mt-4 flex w-full flex-col items-center sm:flex-row sm:justify-between sm:px-8 lg:px-16">
+        <h2 className="mx-auto mb-4 place-self-center text-2xl font-bold sm:mx-0 sm:place-self-start sm:text-2xl ">
           {title}
         </h2>
         <Link
-          href={`/categories/${data.categoryId}`}
-          className="-translate-y-2 text-sm transition-all duration-300 ease-linear hover:text-app-main hover:underline sm:text-base"
+          href={`/categories/${fetchFrom}`}
+          className="place-self-center text-end text-sm font-medium hover:underline sm:-translate-y-5 sm:place-self-end  sm:text-base "
         >
           View all{" "}
           <span className="first-letter:uppercase">{fetchFrom} Coupons</span>
         </Link>
       </div>
-      {isLoading ? (
-        <div className="flex w-full justify-center">
-          <Spinner />
-        </div>
-      ) : error ? (
+      {error ? (
         <div className="flex w-full justify-center">
           <p className="text-red-500">{error}</p>
         </div>
       ) : (
-        <div className="flex min-h-[20vh] w-full snap-x snap-mandatory gap-x-4 overflow-x-auto p-8">
+        <div className="grid grid-cols-1 place-items-center gap-x-8 gap-y-6 p-8 md:grid-cols-2 lg:grid-cols-3 lg:px-16 xl:grid-cols-4">
           {data.coupons?.map((coupon: Coupon, index: number) => {
             return (
               <div
-                className="flex w-full flex-col items-center gap-4 rounded-xl bg-popover p-4 sm:w-1/2 md:w-1/3 lg:w-1/4"
+                className="flex w-full max-w-72 flex-col flex-wrap items-center rounded-lg bg-popover shadow-lg sm:w-2/3 sm:max-w-96  md:w-full"
                 key={index}
               >
-                <div className="flex w-full items-center justify-center rounded-tl-md rounded-tr-md  pt-6">
+                <div className="flex w-full items-center justify-center rounded-tl-md rounded-tr-md">
                   <Image
-                    src={coupon.store.logo_url}
-                    alt="Brand logo"
+                    src={coupon.thumbnail_url}
                     width={1920}
                     height={1080}
-                    className="size-32 rounded-full object-cover"
+                    alt="Logo"
+                    className="aspect-video h-36 rounded-tl-lg rounded-tr-lg object-cover"
                   />
                 </div>
-                <Seperator />
-                <div className="flex w-full items-center justify-between ">
-                  <span className="inline text-muted-foreground">
-                    {coupon.store.name}
-                  </span>
-                  {coupon.isVerified && (
-                    <Badge className=" bg-blue-400/50 text-black dark:text-slate-200">
+
+                <div className="flex w-full flex-col gap-y-1 p-4">
+                  <div className="flex w-full items-center justify-between ">
+                    <div className="-translate-y-2/3 rounded-full bg-white p-1 dark:bg-app-dark-navbar">
+                      <Image
+                        src={coupon.store.logo_url}
+                        alt="Brand logo"
+                        width={400}
+                        height={400}
+                        className="size-14 rounded-full object-cover"
+                      />
+                    </div>
+                    <Badge className=" -translate-y-2/3 bg-blue-400/50 text-black dark:text-slate-200">
                       VERIFIED
                     </Badge>
+                  </div>
+                  <p className=" -translate-y-8 place-self-start font-semibold first-letter:uppercase">
+                    {coupon.title}
+                  </p>
+                  <div className="flex w-full -translate-y-4 items-center justify-between text-muted-foreground">
+                    <span>{coupon.store.name}</span>
+                    <span>{coupon.user_count} Used</span>
+                  </div>
+                  {coupon.type === "Deal" && (
+                    <Button
+                      size={"lg"}
+                      className="w-full border-2 border-dashed text-base font-semibold"
+                    >
+                      Get Deal
+                    </Button>
+                  )}
+                  {coupon.type === "Coupon" && (
+                    <div className="group relative grid w-full cursor-pointer rounded-md border-2 border-dashed border-app-main bg-app-bg-main p-2 dark:bg-app-dark">
+                      <p className="translate-x-4 place-self-center text-base font-semibold uppercase tracking-widest">
+                        {coupon.coupon_code}
+                      </p>
+                      {/* wrapper */}
+                      <div className="polygon-clip absolute left-0 top-0 grid h-full w-full place-items-center bg-primary transition-all duration-200 ease-linear group-hover:w-8/12 ">
+                        <p className="font-semibold text-slate-200">
+                          Reveal code
+                        </p>
+                      </div>
+                    </div>
                   )}
                 </div>
-                <p className="place-self-start font-semibold first-letter:uppercase">
-                  {coupon.title}
-                </p>
-                <p className="place-self-end text-muted-foreground">
-                  {coupon.user_count} Used
-                </p>
-                <Button size={"lg"} className="w-full">
-                  {coupon.type === "Coupon" ? "Reveal Code" : "Get Deal"}
-                </Button>
               </div>
             );
           })}

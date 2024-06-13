@@ -58,6 +58,10 @@
     /* to remove blue box on mobile touches */
     -webkit-tap-highlight-color: transparent;
   }
+
+  .polygon-clip {
+    clip-path: polygon(0 0, 83% 0, 96% 100%, 0% 100%);
+  }
 }
 
 /* to remove autocomplete default styles */

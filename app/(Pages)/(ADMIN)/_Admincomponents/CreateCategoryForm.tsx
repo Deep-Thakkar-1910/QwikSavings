@@ -85,7 +85,7 @@ const CreateCategoryForm = ({
         file,
         400,
         400,
-        "JPEG",
+        "PNG",
         100,
         0,
         (uri) => {
@@ -217,7 +217,7 @@ const CreateCategoryForm = ({
           name="description"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Category Description</FormLabel>
+              <FormLabel>About</FormLabel>
               <FormControl>
                 <Textarea {...field} placeholder="Enter Description" />
               </FormControl>

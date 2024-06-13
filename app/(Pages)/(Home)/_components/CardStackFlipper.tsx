@@ -51,6 +51,7 @@ const CardStackFlipper = ({ data, autoplay }: CardStackFlipperProps) => {
     return map;
   }, [activeIndex, memoData]);
 
+  if (!data || data.length === 0) return null;
   return (
     <div className={`relative hidden h-fit w-fit lg:inline-block`}>
       <AnimatePresence mode="popLayout">
@@ -58,7 +59,7 @@ const CardStackFlipper = ({ data, autoplay }: CardStackFlipperProps) => {
           const factor = size - 1 - map.get(i);
           return (
             <motion.div
-              key={card.id}
+              key={card.couponId}
               initial={{
                 opacity: 1 - i,
                 scale: 0.9,
@@ -80,25 +81,28 @@ const CardStackFlipper = ({ data, autoplay }: CardStackFlipperProps) => {
               exit={{
                 scale: 0.8,
                 zIndex: -1,
+                x: "100%",
+                transition: { duration: 0.8, ease: "easeInOut" },
               }}
               className={cn(
-                `absolute h-72 w-64 rounded-lg bg-cover bg-no-repeat transition-colors duration-700 ease-in-out xl:h-80 xl:w-72 2xl:h-96 2xl:w-80`,
-                i === activeIndex
-                  ? "bg-white shadow-lg dark:bg-app-dark-navbar"
-                  : "bg-stone-200 shadow-sm dark:bg-background",
+                `absolute h-80 w-60 rounded-lg bg-cover bg-no-repeat transition-colors duration-700 ease-in-out `,
+                i === 0 && "bg-[#fff2cf]",
+                i === 1 && "bg-[#e1b9ea]",
+                i === 2 && "bg-[#b9e1ea]",
+                i === 3 && "bg-[#FFB1B1]",
               )}
             >
               <div className="mt-5 flex flex-col items-center justify-center gap-5 xl:mt-8">
                 <div className="flex flex-col items-center gap-y-4">
                   <Image
-                    src={card.logoUrl}
+                    src={card.store.logo_url}
                     alt={`Logo ${i}`}
                     width={1920}
                     height={1080}
                     className="size-12 rounded-full"
                   />
                   <Image
-                    src={card.thumbnailUrl}
+                    src={card.flipperImage_url}
                     alt={`Logo ${i}`}
                     width={1920}
                     height={1080}
@@ -106,19 +110,19 @@ const CardStackFlipper = ({ data, autoplay }: CardStackFlipperProps) => {
                   />
                 </div>
 
-                <p className="h-16 overflow-hidden text-xl dark:text-primary-foreground">
-                  {card.content}
+                <p className="h-16 overflow-hidden text-xl dark:text-zinc-900">
+                  {card.title}
                 </p>
               </div>
 
               <div
-                className="absolute bottom-5 right-5 cursor-pointer rounded-full bg-stone-100 p-2 text-secondary-foreground transition-all duration-300 ease-linear hover:bg-app-bg-main hover:text-zinc-800 hover:shadow-md dark:bg-muted dark:text-muted-foreground dark:shadow-sm dark:hover:bg-secondary dark:hover:text-popover-foreground dark:hover:shadow-zinc-600 xl:bottom-8 "
+                className="absolute bottom-5 right-5 cursor-pointer rounded-full bg-stone-100 p-2 transition-all duration-300 ease-linear hover:bg-app-bg-main hover:text-zinc-800 hover:shadow-md dark:text-background xl:bottom-8 "
                 onClick={handleNextClick}
               >
                 <ChevronRight className="size-6" />
               </div>
-              <button className="absolute bottom-5 left-5 z-10 rounded-lg bg-stone-100 p-1 px-5 text-lg text-secondary-foreground transition-all duration-300 ease-linear hover:bg-app-bg-main hover:text-zinc-800 hover:shadow-md dark:bg-muted dark:text-muted-foreground dark:shadow-sm dark:hover:bg-secondary dark:hover:text-popover-foreground dark:hover:shadow-zinc-600 xl:bottom-8 ">
-                Get now
+              <button className="ease-linearhover:shadow-md absolute bottom-5 left-5 z-10 rounded-lg bg-[#28538f] p-1 px-5 text-lg  text-slate-200 transition-all duration-300 xl:bottom-8 ">
+                GET NOW
               </button>
             </motion.div>
           );

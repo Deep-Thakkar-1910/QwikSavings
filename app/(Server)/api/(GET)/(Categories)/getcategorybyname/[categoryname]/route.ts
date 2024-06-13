@@ -3,14 +3,14 @@ import { NextResponse } from "next/server";
 
 export async function GET(
   req: Request,
-  context: { params: { categoryId: string } },
+  context: { params: { categoryname: string } },
 ) {
   try {
-    const { categoryId } = context.params;
+    const { categoryname } = context.params;
 
     const categoryDetails = await db.category.findUnique({
       where: {
-        categoryId: Number(categoryId),
+        name: categoryname,
       },
       include: {
         similarCategories: {
@@ -39,6 +39,9 @@ export async function GET(
                 logo_url: true,
               },
             },
+          },
+          orderBy: {
+            createdAt: "desc",
           },
         },
       },

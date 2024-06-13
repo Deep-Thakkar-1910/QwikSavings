@@ -5,10 +5,10 @@ import { useEffect, useState } from "react";
 
 interface useGetDetailsProps {
   fetchFrom: string;
-  id: string;
+  name: string;
 }
 
-const useGetDetails = ({ fetchFrom, id }: useGetDetailsProps) => {
+const useGetDetails = ({ fetchFrom, name }: useGetDetailsProps) => {
   const [data, setData] = useState<Record<string, any>>({});
   const [isLoading, setisLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
@@ -19,7 +19,7 @@ const useGetDetails = ({ fetchFrom, id }: useGetDetailsProps) => {
     // function to fetch page data
     const fetchPageData = async () => {
       try {
-        const ItemData = await axios.get(`/get${fetchFrom}byid/${id}`);
+        const ItemData = await axios.get(`/get${fetchFrom}byname/${name}`);
         const ItemResult = ItemData.data;
         if (ItemResult.success) {
           const details = ItemResult[`${fetchFrom}Details`];
@@ -37,7 +37,7 @@ const useGetDetails = ({ fetchFrom, id }: useGetDetailsProps) => {
     };
     // calling the function to fetch page data
     fetchPageData();
-  }, [id, fetchFrom]);
+  }, [name, fetchFrom]);
 
   return { data, isLoading, error };
 };

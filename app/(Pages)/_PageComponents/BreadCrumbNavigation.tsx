@@ -14,6 +14,9 @@ import { usePathname } from "next/navigation";
 const BreadCrumbNavigation = () => {
   // getting all the url paths and converting them to array
   const paths = usePathname().split("/").slice(1);
+
+  const decodedPaths = paths.map((path) => decodeURIComponent(path));
+
   return (
     <Breadcrumb className="my-4 place-self-start px-8  lg:px-16">
       <BreadcrumbList className="text-black dark:text-slate-200">
@@ -23,13 +26,13 @@ const BreadCrumbNavigation = () => {
           </BreadcrumbLink>
         </BreadcrumbItem>
         {/* Show initial seperator only if not on homepage */}
-        {paths[0] && (
+        {decodedPaths[0] && (
           <BreadcrumbSeparator>
             <Slash />
           </BreadcrumbSeparator>
         )}
-        {paths.map((path, index) => {
-          const href = "/" + paths.slice(0, index + 1).join("/");
+        {decodedPaths.map((path, index) => {
+          const href = "/" + decodedPaths.slice(0, index + 1).join("/");
           return (
             <Fragment key={index}>
               <BreadcrumbItem>
@@ -37,21 +40,13 @@ const BreadCrumbNavigation = () => {
                   href={href}
                   className={cn(
                     "font-semibold first-letter:uppercase",
-                    index === paths.length - 1 && "text-app-main",
+                    index === decodedPaths.length - 1 && "text-app-main",
                   )}
                 >
-                  {/* This logic is to show the final item as store or category instead of id in breadcrumb navigation */}
-                  {index === paths.length - 1 &&
-                  typeof Number(path) === "number"
-                    ? paths.at(-2) === "stores"
-                      ? "store"
-                      : paths.at(-2) === "categories"
-                        ? "category"
-                        : path
-                    : path}
+                  {path}
                 </BreadcrumbLink>
               </BreadcrumbItem>
-              {index < paths.length - 1 && (
+              {index < decodedPaths.length - 1 && (
                 <BreadcrumbSeparator>
                   <Slash />
                 </BreadcrumbSeparator>

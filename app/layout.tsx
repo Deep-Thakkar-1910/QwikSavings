@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "./(Pages)/_PageComponents/Navbar";
 import Providers from "./Providers";
 import { Toaster } from "@/components/ui/toaster";
+import Footer from "./(Pages)/_PageComponents/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,6 +30,7 @@ export default function RootLayout({
         <Providers>
           <Navbar />
           {children}
+          <Footer />
           <Toaster />
         </Providers>
       </body>

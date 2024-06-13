@@ -3,6 +3,12 @@ import { z } from "zod";
 export const CreateCouponFormSchema = z.object({
   title: z.string().min(1, "Title is required"),
   store_id: z.string(),
+  thumbnail_url: z.any().optional(),
+  flipperImage_url: z.any().optional(),
+  carouselPosterUrl: z.any().optional(),
+  addToHomePage: z.enum(["yes", "no"]).default("no"),
+  addToCarousel: z.enum(["yes", "no"]).default("no"),
+  addToFlipper: z.enum(["yes", "no"]).default("no"),
   type: z.enum(["Deal", "Coupon"]),
   category_id: z.string(),
   coupon_code: z.string().optional(),

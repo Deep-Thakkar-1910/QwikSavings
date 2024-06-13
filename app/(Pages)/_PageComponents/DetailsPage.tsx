@@ -22,9 +22,9 @@ interface DetailsPageProps {
 }
 
 const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
-  const { storeId, categoryId } = useParams();
+  const { storename, categoryname } = useParams();
   const { data: session } = useSession();
-  const id = fetchFrom === "store" ? storeId : categoryId;
+  const name = fetchFrom === "store" ? storename : categoryname;
 
   const {
     data: detailsData,
@@ -32,7 +32,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
     error,
   } = useGetDetails({
     fetchFrom,
-    id: id as string,
+    name: name as string,
   });
   const commonStyles = "w-full rounded-lg bg-popover p-4 shadow-md";
 
@@ -48,8 +48,8 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
 
   const isStore = fetchFrom === "store";
   const editLink = isStore
-    ? `/admin/editstore/${id}`
-    : `/admin/editcategory/${id}`;
+    ? `/admin/editstore/${name}`
+    : `/admin/editcategory/${name}`;
   const editLinkText = isStore ? "Edit Store" : "Edit Category";
 
   return (
@@ -203,8 +203,12 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
           </aside>
 
           {/* main coupons display */}
-          <main className="flex w-full flex-col gap-y-6 lg:w-1/2">
-            <Accordion type="single" collapsible className="w-full">
+          <main className="flex w-full flex-col gap-y-6 lg:w-2/3">
+            <Accordion
+              type="single"
+              collapsible
+              className="flex w-full flex-col gap-y-20"
+            >
               {detailsData.coupons?.map((coupon: Record<string, any>) => {
                 // Coupon
                 return (
@@ -248,7 +252,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                         <AccordionTrigger>
                           <button>Details</button>
                         </AccordionTrigger>
-                        <AccordionContent className="absolute -bottom-20 left-0 w-full rounded-bl-lg rounded-br-lg bg-popover p-6 shadow-md lg:-bottom-14">
+                        <AccordionContent className="absolute -bottom-20 left-0 z-20 w-full rounded-bl-lg rounded-br-lg bg-popover p-6 shadow-md lg:-bottom-16">
                           <Seperator />
                           {coupon.description}
                         </AccordionContent>
@@ -287,7 +291,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                       >
                         {coupon.type === "Deal" ? "Get Deal" : "Reveal Code"}
                       </Button>
-                      <p className="absolute bottom-2 right-2 tabular-nums text-muted-foreground">
+                      <p className="absolute right-2 top-5 tabular-nums text-muted-foreground">
                         {coupon.user_count} Used
                       </p>
                     </div>

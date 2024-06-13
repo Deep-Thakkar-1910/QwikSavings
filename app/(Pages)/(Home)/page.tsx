@@ -1,5 +1,7 @@
+import AboutUs from "./_components/Sections/AboutUs";
 import CategoriesSection from "./_components/Sections/CategoriesSection";
 import FeaturedStoreSection from "./_components/Sections/FeaturedStoreSection";
+import HowToUse from "./_components/Sections/HowToUse";
 import IntroSection from "./_components/Sections/IntroSection";
 
 export default async function Home() {
@@ -10,7 +12,8 @@ export default async function Home() {
       <IntroSection />
       <FeaturedStoreSection />
       <CategoriesSection title="Clothing Offers" fetchFrom="Clothings" />
-      {/*TODO: Static content */}
+      {/* How to use Qwik Savings section */}
+      <HowToUse />
       <CategoriesSection title="Travel Offers" fetchFrom="Travels" />
       <CategoriesSection title="Elelctronic Offers" fetchFrom="Electronics" />
       <CategoriesSection
@@ -22,7 +25,7 @@ export default async function Home() {
         title="Accessories Offers"
         fetchFrom="Food and Beverages"
       />
-      {/*TODO: Static content */}
+      <AboutUs />
     </>
   );
 }

@@ -17,12 +17,11 @@ export async function POST(req: Request) {
     title,
     ref_link,
     isFeatured,
-    addToHomePage,
     description,
     moreAbout,
     hint,
     faq,
-    categories,
+    addToPopularStores,
     similarStores,
   } = body;
 
@@ -78,16 +77,11 @@ export async function POST(req: Request) {
         logo_url: logoUrl,
         ref_link,
         isFeatured: isFeatured === "yes" ? true : false,
-        addToHomePage: addToHomePage === "yes" ? true : false,
+        addToPopularStores: addToPopularStores === "yes" ? true : false,
         description: description ? description : null,
         moreAbout: moreAbout ? moreAbout : null,
         hint: hint ? hint : null,
         faq: JSON.stringify(faq),
-        categories: {
-          connect: categories.map((category: string) => ({
-            categoryId: Number(category),
-          })),
-        },
         similarStores: {
           connect: similarStores.map((store: string) => ({
             storeId: Number(store),

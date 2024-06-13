@@ -17,23 +17,24 @@ interface ImageCarouselProps {
 
 const ImageCarousel = ({ data }: ImageCarouselProps) => {
   const plugin = useRef(Autoplay({ delay: 5000 }));
+  if (!data || data.length === 0) return null;
   return (
     <Carousel
-      className="w-full lg:w-2/3"
+      className="w-full lg:w-2/3 xl:w-3/4 2xl:-translate-x-6"
       opts={{ loop: true }}
       plugins={[plugin.current]}
       onMouseEnter={() => plugin.current.stop()}
       onMouseLeave={() => plugin.current.play()}
     >
-      <CarouselContent>
+      <CarouselContent className="max-h-80">
         {data.map((image, index) => (
-          <CarouselItem key={index}>
+          <CarouselItem key={image.carouselPosterUrl}>
             <Image
-              src={image.ImageUrl}
+              src={image.carouselPosterUrl}
               alt={`carousel image ${index + 1}`}
               width={1920}
               height={1080}
-              className="size-full rounded-lg object-cover"
+              className="size-full rounded-lg object-fill"
             />
           </CarouselItem>
         ))}
