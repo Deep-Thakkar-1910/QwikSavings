@@ -95,9 +95,6 @@ importers:
       lucide-react:
         specifier: ^0.378.0
         version: 0.378.0(react@18.3.1)
-      mailtrap:
-        specifier: ^3.3.0
-        version: 3.3.0(@types/nodemailer@6.4.15)(nodemailer@6.9.13)
       next:
         specifier: 14.2.3
         version: 14.2.3(@babel/core@7.24.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -2126,18 +2123,6 @@ packages:
     resolution: {integrity: sha512-u6EPU8juLUk9ytRcyapkWI18epAv3RU+6+TC23ivjR0e+glWKBobFeSgRwOIJihzktILQuy6E0E80P2jVTDR5g==}
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0
-
-  mailtrap@3.3.0:
-    resolution: {integrity: sha512-lFk7Cuv+qccAGMc9EMPwQiHp2+zG5wPorWdDn29NiLCA0YwYLEtPAKz/EvkLue3kcRA2KukgLOSwEbzL/Fj7Xw==}
-    engines: {node: '>=16.20.1', yarn: '>=1.22.17'}
-    peerDependencies:
-      '@types/nodemailer': ^6.4.9
-      nodemailer: ^6.9.4
-    peerDependenciesMeta:
-      '@types/nodemailer':
-        optional: true
-      nodemailer:
-        optional: true
 
   merge-stream@2.0.0:
     resolution: {integrity: sha512-abv/qOcuPfk3URPfDzmZU1LKmuw8kT+0nIHvKrKgFrwifol/doWcdA4ZqsWQ8ENrFKkd67Mfpo/LovbIUsbt3w==}
@@ -5278,15 +5263,6 @@ snapshots:
   lucide-react@0.378.0(react@18.3.1):
     dependencies:
       react: 18.3.1
-
-  mailtrap@3.3.0(@types/nodemailer@6.4.15)(nodemailer@6.9.13):
-    dependencies:
-      axios: 1.7.2
-    optionalDependencies:
-      '@types/nodemailer': 6.4.15
-      nodemailer: 6.9.13
-    transitivePeerDependencies:
-      - debug
 
   merge-stream@2.0.0: {}
 
