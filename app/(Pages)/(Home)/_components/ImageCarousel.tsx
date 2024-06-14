@@ -1,5 +1,4 @@
 "use client";
-import { CarouselImageItem } from "@/lib/utilities/ImageCarouselData";
 import {
   Carousel,
   CarouselContent,
@@ -10,14 +9,12 @@ import {
 import Image from "next/image";
 import { useRef } from "react";
 import Autoplay from "embla-carousel-autoplay";
-//
-interface ImageCarouselProps {
-  data: CarouselImageItem[];
-}
+import { useImageCarouselData } from "@/hooks/useImageCarouselData";
 
-const ImageCarousel = ({ data }: ImageCarouselProps) => {
+const ImageCarousel = () => {
+  const { data, isLoading, error } = useImageCarouselData();
   const plugin = useRef(Autoplay({ delay: 5000 }));
-  if (!data || data.length === 0) return null;
+  if (!data || data.length === 0 || error) return null;
   return (
     <Carousel
       className="w-full lg:w-2/3 xl:w-3/4 2xl:-translate-x-6"

@@ -12,7 +12,6 @@ export async function GET() {
         name: true,
       },
     });
-    console.log(popularStores);
     return NextResponse.json({ success: true, popularStores }, { status: 200 });
   } catch (err) {
     console.error(err);

@@ -1,5 +1,8 @@
 import CreateCouponForm from "../../_Admincomponents/CreateCouponForm";
 
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
+
 const CreateCouponPage = async () => {
   let categories = [];
   let stores = [];
@@ -30,7 +33,7 @@ const CreateCouponPage = async () => {
       <h1 className="text-2xl sm:text-4xl">Create a new Coupon</h1>
 
       {/* Form container div */}
-      <div className="mb-2 flex w-11/12 max-w-lg flex-col items-center justify-center rounded-lg border-2 bg-white p-6 dark:bg-app-dark-navbar md:w-full">
+      <div className="my-8 flex w-11/12 max-w-lg flex-col items-center justify-center rounded-lg border-2 bg-white p-6 dark:bg-app-dark-navbar md:w-full">
         <CreateCouponForm categories={categories} stores={stores} />
       </div>
     </article>

@@ -4,14 +4,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ChevronRight } from "lucide-react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import { CardData } from "@/lib/utilities/CardFlipperData";
+import { useCardFlipperData } from "@/hooks/useCardFlipperData";
 
-interface CardStackFlipperProps {
-  data: CardData[];
-  autoplay?: boolean;
-}
+const CardStackFlipper = ({ autoplay }: { autoplay: boolean }) => {
+  const { data, isLoading, error } = useCardFlipperData();
 
-const CardStackFlipper = ({ data, autoplay }: CardStackFlipperProps) => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   // memoize data array
@@ -51,7 +48,7 @@ const CardStackFlipper = ({ data, autoplay }: CardStackFlipperProps) => {
     return map;
   }, [activeIndex, memoData]);
 
-  if (!data || data.length === 0) return null;
+  if (!data || data.length === 0 || error) return null;
   return (
     <div className={`relative hidden h-fit w-fit lg:inline-block`}>
       <AnimatePresence mode="popLayout">

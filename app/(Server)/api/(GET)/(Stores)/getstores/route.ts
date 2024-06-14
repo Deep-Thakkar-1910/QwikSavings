@@ -1,6 +1,9 @@
 import db from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
+
 // API handler to get stores
 export async function GET() {
   try {

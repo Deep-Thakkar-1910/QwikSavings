@@ -1,6 +1,9 @@
 import db from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
+
 export const GET = async (req: Request) => {
   try {
     const { searchParams } = new URL(req.url);

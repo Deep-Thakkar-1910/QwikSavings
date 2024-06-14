@@ -15,7 +15,9 @@ const FeaturedStoreSection = () => {
   useEffect(() => {
     const fetchFeatureData = async () => {
       try {
-        const response = await axios.get(`/getfeaturedstores?${new Date()}`);
+        const response = await axios.get(
+          `/getfeaturedstores?_=${new Date().getTime()}`,
+        );
         if (response.data.success) {
           setFeaturedData(response.data.featuredStores);
           setIsLoading(false);
@@ -34,14 +36,12 @@ const FeaturedStoreSection = () => {
     fetchFeatureData();
   }, []);
   return (
-    <section className={`${featuredData[0] ? "" : "hidden"} mt-6`}>
-      <div className=" flex w-full justify-between px-8 lg:px-16">
-        <h2 className="mb-4 text-base font-bold sm:text-2xl ">
-          Featured Stores
-        </h2>
+    <section className={`${featuredData[0] ? "" : "hidden"} p-10`}>
+      <div className=" mx-auto flex w-full max-w-screen-xl flex-col items-center px-4 sm:flex-row sm:justify-between sm:px-8 lg:items-start lg:px-16 xl:px-2 2xl:px-0">
+        <h2 className="mb-6 text-2xl font-bold lg:text-3xl">Featured Stores</h2>
         <Link
           href={"/stores"}
-          className=" transition-all duration-300 ease-linear hover:text-app-main hover:underline"
+          className=" transition-all duration-300 ease-linear hover:text-app-main hover:underline sm:-translate-y-3 lg:translate-y-0"
         >
           View all stores
         </Link>
@@ -57,9 +57,7 @@ const FeaturedStoreSection = () => {
       ) : (
         <div
           className={cn(
-            `grid w-full grid-cols-2 place-items-center px-8 py-4 sm:grid-cols-4 lg:grid-cols-8 lg:px-16`,
-            featuredData.length < 4 &&
-              "flex flex-wrap items-center justify-center gap-4",
+            `mx-auto grid w-full max-w-screen-xl grid-cols-1 place-items-center p-10 px-8 py-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 lg:px-16`,
           )}
         >
           {featuredData.map((store) => {
@@ -70,7 +68,7 @@ const FeaturedStoreSection = () => {
                 alt={store.storeId}
                 width={400}
                 height={400}
-                className="size-16 cursor-pointer rounded-full transition-all duration-200 ease-linear hover:scale-110 hover:shadow-md sm:size-20"
+                className="max-w-32 cursor-pointer rounded-full shadow-md transition-all duration-200 ease-linear hover:scale-110 hover:shadow-lg"
               />
             );
           })}

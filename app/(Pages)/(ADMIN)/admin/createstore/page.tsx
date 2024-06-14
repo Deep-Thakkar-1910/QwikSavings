@@ -1,6 +1,8 @@
 import CreateStoreForm from "../../_Admincomponents/CreateStoreForm";
-export const revalidate = 0;
+
 export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
+
 const CreateStorePage = async () => {
   let similarStores = [];
   try {
@@ -21,7 +23,7 @@ const CreateStorePage = async () => {
       <h1 className="text-2xl sm:text-4xl">Create a new store</h1>
 
       {/* Form container div */}
-      <div className="mb-2 flex w-11/12 max-w-lg flex-col items-center justify-center rounded-lg border-2 bg-white p-6 dark:bg-app-dark-navbar md:w-full">
+      <div className="my-8 flex w-11/12 max-w-lg flex-col items-center justify-center rounded-lg border-2 bg-white p-6 dark:bg-app-dark-navbar md:w-full">
         <CreateStoreForm similarStores={similarStores} />
       </div>
     </article>

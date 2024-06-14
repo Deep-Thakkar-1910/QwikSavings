@@ -13,10 +13,10 @@ const CategoriesSection = ({ fetchFrom, title }: CategoriesSectionProps) => {
   const { data, error, isLoading } = useGetCategoryCoupons(fetchFrom);
   return (
     <section
-      className={`mx-auto w-full max-w-screen-2xl sm:px-8 lg:px-16 ${data.coupons?.length === 0 || error ? "hidden" : ""}`}
+      className={`mx-auto w-full max-w-screen-xl py-6 sm:p-10 ${data.coupons?.length === 0 || error ? "hidden" : ""}`}
     >
-      <div className="mt-4 flex w-full flex-col items-center sm:flex-row sm:justify-between sm:px-8 lg:px-16">
-        <h2 className="mx-auto mb-4 place-self-center text-2xl font-bold sm:mx-0 sm:place-self-start sm:text-2xl ">
+      <div className="mt-4 flex w-full flex-col items-center sm:flex-row sm:justify-between sm:px-8 lg:px-16 xl:px-0 2xl:px-0">
+        <h2 className="mx-auto mb-4 place-self-center text-2xl font-bold sm:mx-0 sm:place-self-start lg:text-3xl">
           {title}
         </h2>
         <Link
@@ -32,11 +32,11 @@ const CategoriesSection = ({ fetchFrom, title }: CategoriesSectionProps) => {
           <p className="text-red-500">{error}</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 place-items-center gap-x-8 gap-y-6 p-8 md:grid-cols-2 lg:grid-cols-3 lg:px-16 xl:grid-cols-4">
+        <div className="grid grid-cols-1 place-items-center gap-x-8 gap-y-6 p-8 md:grid-cols-2 lg:grid-cols-3 lg:px-16 xl:grid-cols-4 xl:px-2 2xl:px-0">
           {data.coupons?.map((coupon: Coupon, index: number) => {
             return (
               <div
-                className="flex w-full max-w-72 flex-col flex-wrap items-center rounded-lg bg-popover shadow-lg sm:w-2/3 sm:max-w-96  md:w-full"
+                className="lg::max-w-full flex w-full max-w-72 flex-col flex-wrap items-center rounded-lg bg-popover shadow-lg sm:max-w-80"
                 key={index}
               >
                 <div className="flex w-full items-center justify-center rounded-tl-md rounded-tr-md">

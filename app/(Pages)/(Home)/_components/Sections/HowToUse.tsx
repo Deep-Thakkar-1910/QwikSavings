@@ -2,11 +2,9 @@ import { HowToUseData } from "@/lib/utilities/HowToUse";
 import Image from "next/image";
 const HowToUse = () => {
   return (
-    <section
-      className={`my-12 flex flex-col bg-popover px-4 py-10 sm:px-8 lg:my-16 lg:px-16 2xl:px-0`}
-    >
-      <div className="mx-auto max-w-screen-xl xl:px-1">
-        <h2 className="mb-8 place-self-center text-xl font-bold sm:text-2xl lg:text-3xl">
+    <section className={`my-12 flex flex-col bg-popover p-10 lg:my-16 `}>
+      <div className="mx-auto flex max-w-screen-xl flex-col items-center  md:items-start lg:px-16 xl:px-2 2xl:px-0">
+        <h2 className="mb-8 text-center text-xl font-bold sm:text-2xl lg:text-3xl">
           How to use Qwik Savings
         </h2>
         <div className="grid w-full grid-cols-1 place-items-center gap-4 md:grid-cols-2 lg:grid-cols-3 ">

@@ -1,7 +1,8 @@
 import CreateCategoryForm from "../../_Admincomponents/CreateCategoryForm";
 
 export const dynamic = "force-dynamic";
-export const revalidate = 0;
+export const fetchCache = "force-no-store";
+
 const CreateCatrgoryPage = async () => {
   let similarCategories = [];
   let stores = [];
@@ -25,7 +26,7 @@ const CreateCatrgoryPage = async () => {
     console.error(e);
   }
   return (
-    <article className="mt-8 flex flex-col items-center justify-center gap-8">
+    <article className="my-8 flex flex-col items-center justify-center gap-8">
       <h1 className="text-2xl sm:text-4xl">Create a new Category</h1>
 
       {/* Form container div */}
