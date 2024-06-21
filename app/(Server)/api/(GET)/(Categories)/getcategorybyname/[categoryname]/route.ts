@@ -10,24 +10,11 @@ export async function GET(
 ) {
   try {
     const { categoryname } = context.params;
-
     const categoryDetails = await db.category.findUnique({
       where: {
         name: categoryname,
       },
       include: {
-        similarCategories: {
-          select: {
-            name: true,
-            categoryId: true,
-          },
-        },
-        stores: {
-          select: {
-            name: true,
-            storeId: true,
-          },
-        },
         coupons: {
           select: {
             couponId: true,

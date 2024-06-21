@@ -7,6 +7,7 @@ interface HookData {
   isLoading: boolean;
   like: string;
   page: number;
+  totalCount: number;
   setPage: React.Dispatch<React.SetStateAction<number>>;
   error: string | undefined;
   setLike: React.Dispatch<React.SetStateAction<string>>;
@@ -16,6 +17,7 @@ const useFilter = (fetchFrom: string): HookData => {
   const [page, setPage] = useState<number>(1);
   const [like, setLike] = useState<string>("");
   const [data, setData] = useState<Record<string, any>[]>([]);
+  const [totalCount, setTotalCount] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | undefined>(undefined);
 
@@ -28,8 +30,10 @@ const useFilter = (fetchFrom: string): HookData => {
         const response = await axios.get(
           `/getdisplay${fetchFrom}?page=${page}&like=${like}`,
         );
-        const data: Record<string, any>[] = response.data[fetchFrom];
+        const data = response.data[fetchFrom];
+        const total = response.data.totalCount;
         setData(data);
+        setTotalCount(total);
         setIsLoading(false);
       } catch (err) {
         if (err instanceof AxiosError) setError(err.response?.data.error);
@@ -39,7 +43,7 @@ const useFilter = (fetchFrom: string): HookData => {
 
     fetchData();
   }, [page, like, fetchFrom]);
-  return { data, isLoading, error, page, setPage, like, setLike };
+  return { data, isLoading, error, page, setPage, totalCount, like, setLike };
 };
 
 export { useFilter };

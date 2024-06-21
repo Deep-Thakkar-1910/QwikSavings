@@ -28,60 +28,27 @@ import { useState, ChangeEvent, useRef } from "react";
 import Image from "next/image";
 import { MinusCircle } from "lucide-react";
 import { AxiosError } from "axios";
-import Resizer from "react-image-file-resizer";
-import {
-  MultiSelector,
-  MultiSelectorContent,
-  MultiSelectorInput,
-  MultiSelectorItem,
-  MultiSelectorList,
-  MultiSelectorTrigger,
-} from "@/components/ui/MultipleSelector";
 import { revalidatePath } from "next/cache";
 import { useRouter } from "next/navigation";
+import Tiptap from "@/components/ui/RichTextEditor";
+import RichTextEditor from "@/components/ui/RichTextEditor";
 
 type InputType = z.infer<typeof CreateStoreFormScehma>;
 
-interface StoreFormProps {
-  similarStores?: { name: string; storeId: number }[];
-}
-
-const CreateStoreForm = ({ similarStores = [] }: StoreFormProps) => {
+const CreateStoreForm = () => {
   const router = useRouter();
-
-  //
-  const similarStoreOptions = similarStores.map((store) => {
-    return {
-      label: store.name,
-      id: `${store.storeId}`,
-    };
-  });
 
   // for image preview
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
+  // for tiptap
+  const [content, setContent] = useState<string>("");
+  const handleContentChange = (newContent: any) => {
+    setContent(newContent);
+  };
+
   // reference to the image input field
   const imageRef = useRef<HTMLInputElement>(null);
-
-  // function to resize images for proper resolution
-
-  const resizeFile = (file: File) =>
-    new Promise((resolve) => {
-      Resizer.imageFileResizer(
-        file,
-        400,
-        400,
-        "PNG",
-        100,
-        0,
-        (uri) => {
-          resolve(uri);
-        },
-        "blob",
-        400,
-        400,
-      );
-    });
 
   const form = useForm<InputType>({
     resolver: zodResolver(CreateStoreFormScehma),
@@ -98,7 +65,6 @@ const CreateStoreForm = ({ similarStores = [] }: StoreFormProps) => {
       hint: "",
       moreAbout: "",
       faq: [],
-      similarStores: [],
     },
     mode: "all",
     shouldFocusError: true,
@@ -114,8 +80,7 @@ const CreateStoreForm = ({ similarStores = [] }: StoreFormProps) => {
   const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      const resizedFile = await resizeFile(file);
-      setValue("logo", resizedFile);
+      setValue("logo", file);
       setSelectedImage(URL.createObjectURL(file));
     }
   };
@@ -321,7 +286,7 @@ const CreateStoreForm = ({ similarStores = [] }: StoreFormProps) => {
             <FormItem>
               <FormLabel>More About</FormLabel>
               <FormControl>
-                <Textarea placeholder="More About" {...field} />
+                <RichTextEditor {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -341,48 +306,6 @@ const CreateStoreForm = ({ similarStores = [] }: StoreFormProps) => {
           )}
         />
 
-        <FormField
-          control={control}
-          name="similarStores"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Similar Stores</FormLabel>
-              <MultiSelector
-                onValuesChange={field.onChange}
-                values={field.value}
-                loop={false}
-                options={similarStoreOptions}
-                emptyIndicator="No Stores Found"
-              >
-                <FormControl>
-                  <MultiSelectorTrigger>
-                    <MultiSelectorInput
-                      placeholder={
-                        field.value.length <= 0 ? "Select Related Stores" : ""
-                      }
-                    />
-                  </MultiSelectorTrigger>
-                </FormControl>
-                <MultiSelectorContent>
-                  <MultiSelectorList>
-                    {similarStores.map((store) => (
-                      <MultiSelectorItem
-                        key={store.storeId}
-                        value={`${store.storeId}`}
-                        id={store.storeId.toString()}
-                        label={store.name}
-                      >
-                        {store.name}
-                      </MultiSelectorItem>
-                    ))}
-                  </MultiSelectorList>
-                </MultiSelectorContent>
-                <FormMessage />
-              </MultiSelector>
-            </FormItem>
-          )}
-        />
-
         {fields.map((field, index) => (
           <div key={field.id} className="space-y-4">
             <div className="flex items-center gap-x-2">
@@ -391,7 +314,7 @@ const CreateStoreForm = ({ similarStores = [] }: StoreFormProps) => {
                 name={`faq.${index}.question`}
                 render={({ field }) => (
                   <FormItem className="flex-1">
-                    <FormLabel>Question</FormLabel>
+                    <FormLabel>Question {index + 1}</FormLabel>
                     <FormControl>
                       <Input
                         placeholder={`Question ${index + 1}`}
@@ -414,7 +337,7 @@ const CreateStoreForm = ({ similarStores = [] }: StoreFormProps) => {
               name={`faq.${index}.answer`}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Answer</FormLabel>
+                  <FormLabel>Answer {index + 1}</FormLabel>
                   <FormControl>
                     <Textarea
                       placeholder={`Answer for Q.${index + 1}`}

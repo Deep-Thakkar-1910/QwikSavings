@@ -107,7 +107,7 @@ const CardStackFlipper = ({ autoplay }: { autoplay: boolean }) => {
                   />
                 </div>
 
-                <p className="h-16 overflow-hidden text-xl dark:text-zinc-900">
+                <p className="mx-auto h-16 overflow-hidden text-center text-base font-medium dark:text-zinc-900">
                   {card.title}
                 </p>
               </div>

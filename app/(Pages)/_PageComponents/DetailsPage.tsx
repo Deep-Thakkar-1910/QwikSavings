@@ -51,18 +51,8 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
     ? `/admin/editstore/${name}`
     : `/admin/editcategory/${name}`;
   const editLinkText = isStore ? "Edit Store" : "Edit Category";
-
   return (
     <>
-      {/* Edit link only visbible to admins */}
-      {session?.user.role === "admin" && (
-        <Link
-          href={editLink}
-          className="absolute right-6 top-0  place-self-end transition-colors duration-300 ease-linear hover:text-app-main"
-        >
-          {editLinkText}
-        </Link>
-      )}
       {/* topBar for mobile */}
       <div className="flex w-full items-start gap-x-2 rounded-lg bg-popover p-4 px-4 sm:items-center sm:gap-x-4 sm:px-8 lg:hidden lg:px-16">
         <Image
@@ -93,6 +83,15 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
         </div>
       ) : (
         <section className="relative flex w-full flex-col items-start gap-10 px-8 pt-10 lg:flex-row lg:px-16">
+          {/* Edit link only visbible to admins */}
+          {session?.user.role === "admin" && (
+            <Link
+              href={editLink}
+              className="absolute right-4 top-0 place-self-end  underline transition-colors duration-300 ease-linear hover:text-app-main lg:right-20"
+            >
+              {editLinkText}
+            </Link>
+          )}
           {/* sidebar for larger screens */}
           <aside className="hidden flex-col items-center gap-y-8 lg:flex lg:w-1/4">
             <div
@@ -164,7 +163,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
             {/* Category Related Stores */}
             {detailsData.stores?.length > 0 && (
               <RelatedItems
-                title="Related Categories"
+                title="Similar Stores"
                 items={detailsData.stores.map(
                   (store: { storeId: number; name: string }) => ({
                     id: store.storeId,
@@ -178,7 +177,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
             {/* Store Related Categories */}
             {detailsData.categories?.length > 0 && (
               <RelatedItems
-                title="Related Categories"
+                title="Similar Categories"
                 items={detailsData.categories.map(
                   (category: { categoryId: number; name: string }) => ({
                     id: category.categoryId,
@@ -329,7 +328,7 @@ const RelatedItems: React.FC<RelatedItemsProps> = ({
       <div className={`flex flex-wrap gap-4`}>
         {items.map((item) => (
           <Link
-            href={isStore ? `/stores/${item.id}` : `/categories/${item.id}`}
+            href={isStore ? `/stores/${item.name}` : `/categories/${item.name}`}
             key={item.id}
           >
             <Badge className="bg-app-main/90 dark:bg-app-main/50">

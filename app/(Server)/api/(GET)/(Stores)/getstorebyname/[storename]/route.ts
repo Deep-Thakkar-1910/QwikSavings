@@ -12,12 +12,6 @@ export async function GET(
         name: storename,
       },
       include: {
-        similarStores: {
-          select: {
-            name: true,
-            storeId: true,
-          },
-        },
         coupons: {
           select: {
             couponId: true,

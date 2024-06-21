@@ -44,7 +44,6 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import Resizer from "react-image-file-resizer";
 import Image from "next/image";
 
 type InputType = z.infer<typeof CreateCouponFormSchema>;
@@ -55,59 +54,6 @@ interface CouponFormProps {
 }
 
 const CreateCouponForm = ({ categories, stores }: CouponFormProps) => {
-  // // thumbnail resizer
-  // const resizeThumbnailImage = (file: File) =>
-  //   new Promise((resolve) => {
-  //     Resizer.imageFileResizer(
-  //       file,
-  //       1920,
-  //       1080,
-  //       "JPEG",
-  //       100,
-  //       0,
-  //       (uri) => {
-  //         resolve(uri);
-  //       },
-  //       "blob",
-  //       400,
-  //       400,
-  //     );
-  //   });
-  // const resizeFlipperImage = (file: File) =>
-  //   new Promise((resolve) => {
-  //     Resizer.imageFileResizer(
-  //       file,
-  //       1920,
-  //       1080,
-  //       "JPEG",
-  //       100,
-  //       0,
-  //       (uri) => {
-  //         resolve(uri);
-  //       },
-  //       "blob",
-  //       400,
-  //       400,
-  //     );
-  //   });
-  // const resizeCarouselPoster = (file: File) =>
-  //   new Promise((resolve) => {
-  //     Resizer.imageFileResizer(
-  //       file,
-  //       1920,
-  //       1080,
-  //       "JPEG",
-  //       100,
-  //       0,
-  //       (uri) => {
-  //         resolve(uri);
-  //       },
-  //       "blob",
-  //       400,
-  //       400,
-  //     );
-  //   });
-
   // for image preview
   const [selectedThumbnailImage, setSelectedThumbnailImage] = useState<
     string | null
@@ -162,7 +108,7 @@ const CreateCouponForm = ({ categories, stores }: CouponFormProps) => {
     }
   };
   // handle Flipper image onChange event
-  const handleFliperChange = async (event: ChangeEvent<HTMLInputElement>) => {
+  const handleFlipperChange = async (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
       // const resizedFile = await resizeFlipperImage(file);
@@ -501,7 +447,7 @@ const CreateCouponForm = ({ categories, stores }: CouponFormProps) => {
                   ref={flipperRef}
                   type="file"
                   accept="image/*"
-                  onChange={handleFliperChange}
+                  onChange={handleFlipperChange}
                   className="hidden"
                 />
               </FormControl>

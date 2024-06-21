@@ -9,7 +9,6 @@ import {
 import { useMobileSidebar } from "@/hooks/useMobileSidebar";
 import { NavLinks } from "@/lib/utilities/Navlinks";
 import { Menu } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 // import AuthButtons from "./AuthButtons";
 import ProfileDropDown from "./ProfileDropDown";
@@ -18,10 +17,17 @@ import { useEffect } from "react";
 import { cn } from "@/lib/utils";
 import AuthButtons from "./AuthButtons";
 import Seperator from "./Seperator";
+import { useSession } from "next-auth/react";
 
 const MobileSidebar = () => {
   // extracting the pathname to observer route changes
   const pathname = usePathname();
+  const paths = pathname.split("/");
+  const { data: session } = useSession();
+  const isCurrent = (href: string): boolean => {
+    if (paths.includes(href)) return true;
+    return false;
+  };
   // sidebar states
   const onOpen = useMobileSidebar((state) => state.onOpen);
   const onClose = useMobileSidebar((state) => state.onClose);
@@ -49,6 +55,20 @@ const MobileSidebar = () => {
           </SheetHeader>
           <div className="mb-20">
             <ul role="tablist" className="flex flex-col items-center gap-y-4 ">
+              {session?.user.role === "admin" && (
+                <li role="tab">
+                  <Link href={"/admin"}>
+                    <button
+                      className={cn(
+                        "text-2xl font-medium",
+                        isCurrent("admin") && "text-app-main",
+                      )}
+                    >
+                      Admin
+                    </button>
+                  </Link>
+                </li>
+              )}
               {NavLinks.map((link, index) => {
                 return (
                   <li key={index} role="tab">
@@ -56,7 +76,7 @@ const MobileSidebar = () => {
                       <button
                         className={cn(
                           "text-2xl font-medium",
-                          pathname === link.href && "text-app-main",
+                          isCurrent(link.href.slice(1)) && "text-app-main",
                         )}
                       >
                         {link.title}

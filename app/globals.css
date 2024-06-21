@@ -82,3 +82,22 @@ input:-webkit-autofill:focus {
 ::-webkit-scrollbar {
   display: none;
 }
+
+/* Heading styles (TipTap)*/
+h1,
+h2 {
+  text-wrap: pretty;
+}
+
+h1,
+h2 {
+  margin: 1.5rem 0;
+}
+
+h1 {
+  font-size: 1.4rem;
+}
+
+h2 {
+  font-size: 1.2rem;
+}

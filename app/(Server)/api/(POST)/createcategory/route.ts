@@ -10,7 +10,7 @@ export async function POST(req: Request) {
   const request = (await formData.get("data")) as string;
   const body = await JSON.parse(request);
   // extracting the name out of body
-  const { name, stores, description, similarCategories } = body;
+  const { name, description, addToTodaysTopCategories } = body;
   try {
     let logoUrl;
 
@@ -42,22 +42,8 @@ export async function POST(req: Request) {
         name,
         description: description ? description : null,
         logo_url: logoUrl,
-        stores:
-          stores.length > 0
-            ? {
-                connect: stores.map((store: string) => ({
-                  storeId: Number(store),
-                })),
-              }
-            : undefined,
-        similarCategories:
-          similarCategories.length > 0
-            ? {
-                connect: similarCategories.map((category: string) => ({
-                  categoryId: Number(category),
-                })),
-              }
-            : undefined,
+        addToTodaysTopCategories:
+          addToTodaysTopCategories === "yes" ? true : false,
       },
     });
 

@@ -5,6 +5,7 @@ import Navbar from "./(Pages)/_PageComponents/Navbar";
 import Providers from "./Providers";
 import { Toaster } from "@/components/ui/toaster";
 import Footer from "./(Pages)/_PageComponents/Footer";
+import AdminNavbar from "./(Pages)/(ADMIN)/_Admincomponents/AdminNavbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,6 +29,7 @@ export default function RootLayout({
         className={`${inter.className} bg-app-bg-main text-black dark:bg-app-dark dark:text-slate-200`}
       >
         <Providers>
+          <AdminNavbar />
           <Navbar />
           {children}
           <Footer />

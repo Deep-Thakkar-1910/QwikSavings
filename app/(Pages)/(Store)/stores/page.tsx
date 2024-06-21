@@ -5,9 +5,8 @@ import { useFilter } from "@/hooks/useFilter";
 import DisplayItems from "../../_PageComponents/DisplayComponents";
 
 const StoresPage = () => {
-  const { setPage, setLike, data, page, like, isLoading, error } =
+  const { setPage, setLike, data, page, like, isLoading, totalCount, error } =
     useFilter("stores");
-
   return (
     <section className="w-full">
       <h1 className="mb-4 ml-8 text-2xl font-semibold lg:ml-16">
@@ -19,6 +18,7 @@ const StoresPage = () => {
           storeId: item.storeId,
           name: item.name,
           logo_url: item.logo_url,
+          coupons: item.coupons,
         }))}
         isLoading={isLoading}
         error={error}

@@ -22,12 +22,23 @@ export async function GET(req: Request) {
         categoryId: true,
         name: true,
         logo_url: true,
+        coupons: {
+          select: {
+            type: true,
+          },
+        },
+      },
+      orderBy: {
+        name: "asc",
       },
       take: limit,
       skip: (page - 1) * limit,
     });
-
-    return NextResponse.json({ success: true, categories }, { status: 200 });
+    const totalCount = await db.category.count();
+    return NextResponse.json(
+      { success: true, categories, totalCount },
+      { status: 200 },
+    );
   } catch (err) {
     console.log(err);
 

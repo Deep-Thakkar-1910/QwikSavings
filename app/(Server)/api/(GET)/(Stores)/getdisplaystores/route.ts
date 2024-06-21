@@ -22,11 +22,25 @@ export async function GET(req: Request) {
         storeId: true,
         name: true,
         logo_url: true,
+        coupons: {
+          select: {
+            type: true,
+          },
+        },
+      },
+      orderBy: {
+        name: "asc",
       },
       take: limit,
       skip: (page - 1) * limit,
     });
-    return NextResponse.json({ success: true, stores }, { status: 200 });
+    // to get total number of stores
+    const totalCount = await db.store.count();
+
+    return NextResponse.json(
+      { success: true, stores, totalCount },
+      { status: 200 },
+    );
   } catch (err) {
     console.log(err);
 

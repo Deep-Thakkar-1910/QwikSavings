@@ -16,46 +16,25 @@ import { toast } from "@/components/ui/use-toast";
 import { Textarea } from "@/components/ui/textarea";
 import axios from "@/app/api/axios/axios";
 import { AxiosError } from "axios";
-import Resizer from "react-image-file-resizer";
 import { CreateCategoryFormSchema } from "@/lib/FormSchemas/CreateCategoryFormSchema";
 import Image from "next/image";
 import { MinusCircle } from "lucide-react";
 import { ChangeEvent, useRef, useState } from "react";
-import {
-  MultiSelector,
-  MultiSelectorContent,
-  MultiSelectorInput,
-  MultiSelectorItem,
-  MultiSelectorList,
-  MultiSelectorTrigger,
-} from "@/components/ui/MultipleSelector";
+
 import { revalidatePath } from "next/cache";
 import { useRouter } from "next/navigation";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 type InputType = z.infer<typeof CreateCategoryFormSchema>;
 
-interface CategoryFormProps {
-  similarCategories: { name: string; categoryId: number }[];
-  stores: { name: string; storeId: number }[];
-}
-
-const CreateCategoryForm = ({
-  similarCategories,
-  stores,
-}: CategoryFormProps) => {
+const CreateCategoryForm = () => {
   const router = useRouter();
-
-  // creating similarCategoryOptions for multiselector
-  const similarCategoryOptions = similarCategories.map((category) => ({
-    label: category.name,
-    id: `${category.categoryId}`,
-  }));
-
-  // creating storeOptions for multiselector
-  const storeOptions = stores.map((store) => ({
-    label: store.name,
-    id: `${store.storeId}`,
-  }));
 
   // decalring the form object
   const form = useForm<InputType>({
@@ -64,8 +43,7 @@ const CreateCategoryForm = ({
       name: "",
       description: "",
       logo: undefined,
-      stores: [],
-      similarCategories: [],
+      addToTodaysTopCategories: "no",
     },
     mode: "all",
     shouldFocusError: true,
@@ -78,31 +56,12 @@ const CreateCategoryForm = ({
 
   // Image ref
   const imageRef = useRef<HTMLInputElement>(null);
-  // function to resize images for proper resolution
-  const resizeFile = (file: File) =>
-    new Promise((resolve) => {
-      Resizer.imageFileResizer(
-        file,
-        400,
-        400,
-        "PNG",
-        100,
-        0,
-        (uri) => {
-          resolve(uri);
-        },
-        "blob",
-        400,
-        400,
-      );
-    });
 
   // handle logo image onChange event
   const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      const resizedFile = await resizeFile(file);
-      setValue("logo", resizedFile);
+      setValue("logo", file);
       setSelectedImage(URL.createObjectURL(file));
     }
   };
@@ -219,89 +178,30 @@ const CreateCategoryForm = ({
             <FormItem>
               <FormLabel>About</FormLabel>
               <FormControl>
-                <Textarea {...field} placeholder="Enter Description" />
+                <Textarea {...field} placeholder="About Category" />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-
         <FormField
           control={control}
-          name="stores"
+          name="addToTodaysTopCategories"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Related Stores</FormLabel>
-              <MultiSelector
-                onValuesChange={field.onChange}
-                values={field.value}
-                loop={false}
-                options={storeOptions}
-              >
+              <FormLabel>Add to Today&apos;s Top Categrories?</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                  <MultiSelectorTrigger>
-                    <MultiSelectorInput
-                      placeholder="Select Related Stores"
-                      className={`${field.value.length > 0 ? "placeholder:hidden" : ""}`}
-                    />
-                  </MultiSelectorTrigger>
+                  <SelectTrigger className="w-[180px]">
+                    <SelectValue placeholder="Select a Type" />
+                  </SelectTrigger>
                 </FormControl>
-                <MultiSelectorContent>
-                  <MultiSelectorList>
-                    {stores.map((store) => (
-                      <MultiSelectorItem
-                        key={store.storeId}
-                        value={`${store.storeId}`}
-                        id={store.storeId.toString()}
-                        label={store.name}
-                      >
-                        {store.name}
-                      </MultiSelectorItem>
-                    ))}
-                  </MultiSelectorList>
-                </MultiSelectorContent>
-                <FormMessage />
-              </MultiSelector>
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={control}
-          name="similarCategories"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Related categories</FormLabel>
-              <MultiSelector
-                onValuesChange={field.onChange}
-                values={field.value}
-                loop={false}
-                options={similarCategoryOptions}
-              >
-                <FormControl>
-                  <MultiSelectorTrigger>
-                    <MultiSelectorInput
-                      placeholder="Select Related Categories"
-                      className={`${field.value.length > 0 ? "placeholder:hidden" : ""}`}
-                    />
-                  </MultiSelectorTrigger>
-                </FormControl>
-                <MultiSelectorContent>
-                  <MultiSelectorList>
-                    {similarCategories.map((category) => (
-                      <MultiSelectorItem
-                        key={category.categoryId}
-                        value={`${category.categoryId}`}
-                        id={category.categoryId.toString()}
-                        label={category.name}
-                      >
-                        {category.name}
-                      </MultiSelectorItem>
-                    ))}
-                  </MultiSelectorList>
-                </MultiSelectorContent>
-                <FormMessage />
-              </MultiSelector>
+                <SelectContent>
+                  <SelectItem value="yes">Yes</SelectItem>
+                  <SelectItem value="no">No</SelectItem>
+                </SelectContent>
+              </Select>
+              <FormMessage />
             </FormItem>
           )}
         />

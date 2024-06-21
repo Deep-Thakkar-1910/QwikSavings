@@ -10,11 +10,13 @@ import Image from "next/image";
 import { useRef } from "react";
 import Autoplay from "embla-carousel-autoplay";
 import { useImageCarouselData } from "@/hooks/useImageCarouselData";
-
+import { Skeleton } from "@/components/ui/skeleton";
 const ImageCarousel = () => {
   const { data, isLoading, error } = useImageCarouselData();
   const plugin = useRef(Autoplay({ delay: 5000 }));
   if (!data || data.length === 0 || error) return null;
+  if (isLoading)
+    return <Skeleton className="w-full lg:w-2/3 xl:w-3/4 2xl:-translate-x-6" />;
   return (
     <Carousel
       className="w-full lg:w-2/3 xl:w-3/4 2xl:-translate-x-6"
@@ -32,6 +34,8 @@ const ImageCarousel = () => {
               width={1920}
               height={1080}
               className="size-full rounded-lg object-fill"
+              loading="eager"
+              priority
             />
           </CarouselItem>
         ))}

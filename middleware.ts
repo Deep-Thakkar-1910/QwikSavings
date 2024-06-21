@@ -7,7 +7,7 @@ export async function middleware(req: NextRequest) {
     secret: process.env.NEXTAUTH_SECRET,
     secureCookie: process.env.NODE_ENV === "production",
   });
-  console.log(session);
+
   const { pathname, origin } = req.nextUrl;
 
   // prevent signed in users from accessing the sign in and sign up pages

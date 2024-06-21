@@ -13,6 +13,7 @@ export async function GET() {
       select: {
         storeId: true,
         logo_url: true,
+        name: true,
       },
       take: 8,
       orderBy: [

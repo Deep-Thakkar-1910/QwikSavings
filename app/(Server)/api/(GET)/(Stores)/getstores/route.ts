@@ -13,6 +13,9 @@ export async function GET() {
         storeId: true,
         name: true,
       },
+      orderBy: {
+        name: "asc",
+      },
     });
 
     // returning response on success

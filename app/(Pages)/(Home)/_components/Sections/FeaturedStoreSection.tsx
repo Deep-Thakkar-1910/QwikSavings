@@ -62,14 +62,15 @@ const FeaturedStoreSection = () => {
         >
           {featuredData.map((store) => {
             return (
-              <Image
-                key={store.storeId}
-                src={store.logo_url ?? "https://via.placeholder.com/600x400"}
-                alt={store.storeId}
-                width={400}
-                height={400}
-                className="max-w-32 cursor-pointer rounded-full shadow-md transition-all duration-200 ease-linear hover:scale-110 hover:shadow-lg"
-              />
+              <Link key={store.storeId} href={`/stores/${store.name}`}>
+                <Image
+                  src={store.logo_url ?? "https://via.placeholder.com/600x400"}
+                  alt={store.storeId}
+                  width={400}
+                  height={400}
+                  className="size-20 cursor-pointer rounded-full shadow-md transition-all duration-200 ease-linear hover:scale-110 hover:shadow-lg sm:size-24 md:size-28"
+                />
+              </Link>
             );
           })}
         </div>

@@ -13,6 +13,9 @@ export async function GET() {
         categoryId: true,
         name: true,
       },
+      orderBy: {
+        name: "asc",
+      },
     });
 
     // return response
