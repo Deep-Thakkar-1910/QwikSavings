@@ -28,24 +28,13 @@ import { useState, ChangeEvent, useRef } from "react";
 import Image from "next/image";
 import { MinusCircle } from "lucide-react";
 import { AxiosError } from "axios";
-import { revalidatePath } from "next/cache";
-import { useRouter } from "next/navigation";
-import Tiptap from "@/components/ui/RichTextEditor";
 import RichTextEditor from "@/components/ui/RichTextEditor";
 
 type InputType = z.infer<typeof CreateStoreFormScehma>;
 
 const CreateStoreForm = () => {
-  const router = useRouter();
-
   // for image preview
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-
-  // for tiptap
-  const [content, setContent] = useState<string>("");
-  const handleContentChange = (newContent: any) => {
-    setContent(newContent);
-  };
 
   // reference to the image input field
   const imageRef = useRef<HTMLInputElement>(null);
@@ -122,8 +111,6 @@ const CreateStoreForm = () => {
         });
         form.reset();
         setSelectedImage(null); // Reset the selected image
-        revalidatePath("/api/getstores");
-        router.refresh();
       }
     } catch (error) {
       console.error(error);
@@ -286,7 +273,12 @@ const CreateStoreForm = () => {
             <FormItem>
               <FormLabel>More About</FormLabel>
               <FormControl>
-                <RichTextEditor {...field} />
+                <RichTextEditor
+                  value={field.value || ""}
+                  onChange={(newContent) => {
+                    field.onChange(newContent);
+                  }}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

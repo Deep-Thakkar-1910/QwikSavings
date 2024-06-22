@@ -16,29 +16,26 @@ import { toast } from "@/components/ui/use-toast";
 import { Textarea } from "@/components/ui/textarea";
 import axios from "@/app/api/axios/axios";
 import { AxiosError } from "axios";
-import { CreateCategoryFormSchema } from "@/lib/FormSchemas/CreateCategoryFormSchema";
+
 import Image from "next/image";
 import { MinusCircle } from "lucide-react";
 import { ChangeEvent, useRef, useState } from "react";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 
-type InputType = z.infer<typeof CreateCategoryFormSchema>;
+import { useRouter } from "next/navigation";
+import { CreateEventFormSchema } from "@/lib/FormSchemas/CreateEventFormSchema";
 
-const CreateCategoryForm = () => {
+type InputType = z.infer<typeof CreateEventFormSchema>;
+
+const CreateEventForm = () => {
   // decalring the form object
   const form = useForm<InputType>({
-    resolver: zodResolver(CreateCategoryFormSchema),
+    resolver: zodResolver(CreateEventFormSchema),
     defaultValues: {
       name: "",
+      title: "",
       description: "",
-      logo: undefined,
-      addToTodaysTopCategories: "no",
+      cover_url: "",
+      logo_url: "",
     },
     mode: "all",
     shouldFocusError: true,
@@ -47,40 +44,62 @@ const CreateCategoryForm = () => {
   const { control, handleSubmit, formState, setValue } = form;
 
   // for image preview
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [selectedLogo, setSelectedLogo] = useState<string | null>(null);
+  const [selectedCover, setSelectedCover] = useState<string | null>(null);
 
   // Image ref
-  const imageRef = useRef<HTMLInputElement>(null);
+  const logoRef = useRef<HTMLInputElement>(null);
+  const coverRef = useRef<HTMLInputElement>(null);
 
   // handle logo image onChange event
-  const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
+  const handleLogoChange = async (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      setValue("logo", file);
-      setSelectedImage(URL.createObjectURL(file));
+      setValue("logo_url", file);
+      setSelectedLogo(URL.createObjectURL(file));
+    }
+  };
+  // handle logo image onChange event
+  const handleCoverChange = async (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setValue("cover_url", file);
+      setSelectedCover(URL.createObjectURL(file));
     }
   };
 
-  // function to remove the selected image
-  const removeImage = () => {
-    setSelectedImage(null);
-    setValue("logo", undefined);
-    if (imageRef.current) {
-      imageRef.current.src = "";
-      imageRef.current.value = "";
+  // function to remove the selected Logo Image
+  const removeLogo = () => {
+    setSelectedLogo(null);
+    setValue("logo_url", undefined);
+    if (logoRef.current) {
+      logoRef.current.src = "";
+      logoRef.current.value = "";
+    }
+  };
+  // function to remove the selected Cover Image
+  const removeCover = () => {
+    setSelectedCover(null);
+    setValue("cover_url", undefined);
+    if (coverRef.current) {
+      coverRef.current.src = "";
+      coverRef.current.value = "";
     }
   };
 
   // form submission handler
   const onSubmit: SubmitHandler<InputType> = async (data) => {
     const formData = new FormData();
-    if (data.logo) {
-      formData.append("logo", data.logo);
+    if (data.logo_url) {
+      formData.append("logo_url", data.logo_url);
     }
-    const { logo, ...restData } = data;
+    if (data.cover_url) {
+      formData.append("cover_url", data.cover_url);
+    }
+    const { logo_url, cover_url, ...restData } = data;
     formData.append("data", JSON.stringify(restData));
     try {
-      const result = await axios.post("/createcategory", formData, {
+      const result = await axios.post("/createevent", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -88,10 +107,11 @@ const CreateCategoryForm = () => {
       if (result.data.success) {
         toast({
           title: "Success",
-          description: "Category Created Successfully",
+          description: "Event Created Successfully",
         });
         form.reset();
-        setSelectedImage(null);
+        setSelectedLogo(null);
+        setSelectedCover(null);
       }
     } catch (err) {
       console.log(err);
@@ -102,7 +122,7 @@ const CreateCategoryForm = () => {
           variant: "destructive",
         });
       }
-      setSelectedImage(null);
+      setSelectedLogo(null);
     }
   };
 
@@ -130,26 +150,27 @@ const CreateCategoryForm = () => {
             </FormItem>
           )}
         />
+        {/* Logo Image field */}
         <FormItem>
           <div className="my-4 flex items-center gap-x-3">
             <FormLabel>
               <span className="cursor-pointer rounded-lg border border-muted bg-transparent p-2 px-4 transition-colors duration-300 ease-out hover:bg-accent">
-                {selectedImage ? "Change" : "Add"} Logo
+                {selectedLogo ? "Change" : "Add"} Logo
               </span>
             </FormLabel>
             <FormControl>
               <input
                 type="file"
                 accept="image/*"
-                ref={imageRef}
-                onChange={handleFileChange}
+                ref={logoRef}
+                onChange={handleLogoChange}
                 className="hidden"
               />
             </FormControl>
-            {selectedImage && (
+            {selectedLogo && (
               <>
                 <Image
-                  src={selectedImage}
+                  src={selectedLogo}
                   alt="Upload Image"
                   width={80}
                   height={80}
@@ -157,7 +178,42 @@ const CreateCategoryForm = () => {
                 />
                 <MinusCircle
                   className="size-6 translate-y-1/2 cursor-pointer text-destructive"
-                  onClick={removeImage}
+                  onClick={removeLogo}
+                />
+              </>
+            )}
+          </div>
+          <FormMessage />
+        </FormItem>
+        {/* Cover Image field */}
+        <FormItem>
+          <div className="my-4 flex items-center gap-x-3">
+            <FormLabel>
+              <span className="cursor-pointer rounded-lg border border-muted bg-transparent p-2 px-4 transition-colors duration-300 ease-out hover:bg-accent">
+                {selectedCover ? "Change" : "Add"} Cover
+              </span>
+            </FormLabel>
+            <FormControl>
+              <input
+                type="file"
+                accept="image/*"
+                ref={coverRef}
+                onChange={handleCoverChange}
+                className="hidden"
+              />
+            </FormControl>
+            {selectedCover && (
+              <>
+                <Image
+                  src={selectedCover}
+                  alt="Upload Image"
+                  width={80}
+                  height={80}
+                  className="aspect-square"
+                />
+                <MinusCircle
+                  className="size-6 translate-y-1/2 cursor-pointer text-destructive"
+                  onClick={removeCover}
                 />
               </>
             )}
@@ -171,29 +227,8 @@ const CreateCategoryForm = () => {
             <FormItem>
               <FormLabel>About</FormLabel>
               <FormControl>
-                <Textarea {...field} placeholder="About Category" />
+                <Textarea {...field} placeholder="About Event" />
               </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={control}
-          name="addToTodaysTopCategories"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Add to Today&apos;s Top Categrories?</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="Select a Type" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <SelectItem value="yes">Yes</SelectItem>
-                  <SelectItem value="no">No</SelectItem>
-                </SelectContent>
-              </Select>
               <FormMessage />
             </FormItem>
           )}
@@ -209,11 +244,11 @@ const CreateCategoryForm = () => {
           className="w-full place-self-center rounded-lg hover:shadow-md"
           disabled={formState.isSubmitting}
         >
-          {formState.isSubmitting ? "Creating..." : "Create Category"}
+          {formState.isSubmitting ? "Creating..." : "Create Event"}
         </Button>
       </form>
     </Form>
   );
 };
 
-export default CreateCategoryForm;
+export default CreateEventForm;

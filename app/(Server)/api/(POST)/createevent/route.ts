@@ -6,14 +6,15 @@ import { NextResponse } from "next/server";
 // API handler for creating a category
 export async function POST(req: Request) {
   const formData = await req.formData();
-  const logo: File | null = (formData.get("logo") as File) ?? null;
+  const logo: File | null = (formData.get("logo_url") as File) ?? null;
+  const cover: File | null = (formData.get("cover_url") as File) ?? null;
   const request = (await formData.get("data")) as string;
   const body = await JSON.parse(request);
   // extracting the name out of body
-  const { name, description, addToTodaysTopCategories } = body;
+  const { name, description, title } = body;
   try {
     let logoUrl;
-
+    let coverUrl;
     // if there is a logo in the form data
     if (logo) {
       // converting the image to a buffer
@@ -23,7 +24,7 @@ export async function POST(req: Request) {
       // passing buffer to Cloudinary to get image-url for storing in database
       logoUrl = (await UploadStoreImage(
         bytes,
-        "category_images",
+        "event_images",
       )) as unknown as string;
       if (!logoUrl) {
         return NextResponse.json(
@@ -36,14 +37,36 @@ export async function POST(req: Request) {
       }
     }
 
-    // creating the categroy
-    const category = await db.category.create({
+    // if there is a cover in the form data
+    if (cover) {
+      // converting the image to a buffer
+      const buffer = await cover.arrayBuffer();
+      // converting buffer to bytes string for uploading to cloudinary
+      const bytes = Buffer.from(buffer);
+      // passing buffer to Cloudinary to get image-url for storing in database
+      coverUrl = (await UploadStoreImage(
+        bytes,
+        "event_images",
+      )) as unknown as string;
+      if (!coverUrl) {
+        return NextResponse.json(
+          {
+            success: false,
+            error: "Error uploading image",
+          },
+          { status: 500 },
+        );
+      }
+    }
+
+    // creating the event
+    const event = await db.event.create({
       data: {
         name,
-        description: description ? description : null,
-        logo_url: logoUrl,
-        addToTodaysTopCategories:
-          addToTodaysTopCategories === "yes" ? true : false,
+        description,
+        title,
+        logo_url: logoUrl ? logoUrl : null,
+        cover_url: coverUrl ? coverUrl : null,
       },
     });
 
@@ -51,7 +74,7 @@ export async function POST(req: Request) {
     return NextResponse.json(
       {
         success: true,
-        message: "Category created successfully",
+        message: "Event created successfully",
       },
       { status: 201 },
     );
@@ -62,7 +85,7 @@ export async function POST(req: Request) {
         return NextResponse.json(
           {
             success: false,
-            error: `Category with the name ${name} already exists`,
+            error: `Event with the name ${name} already exists`,
           },
           { status: 400 },
         );

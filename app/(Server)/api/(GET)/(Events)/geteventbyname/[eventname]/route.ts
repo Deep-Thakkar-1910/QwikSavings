@@ -6,13 +6,13 @@ export const fetchCache = "force-no-store";
 
 export async function GET(
   req: Request,
-  context: { params: { categoryname: string } },
+  context: { params: { eventname: string } },
 ) {
   try {
-    const { categoryname } = context.params;
-    const categoryDetails = await db.category.findUnique({
+    const { eventname } = context.params;
+    const eventDetails = await db.event.findUnique({
       where: {
-        name: categoryname,
+        name: eventname,
       },
       include: {
         coupons: {
@@ -37,14 +37,11 @@ export async function GET(
       },
     });
 
-    return NextResponse.json(
-      { success: true, categoryDetails },
-      { status: 200 },
-    );
+    return NextResponse.json({ success: true, eventDetails }, { status: 200 });
   } catch (err) {
     console.log(err);
     return NextResponse.json(
-      { success: false, error: "Error fetching category details" },
+      { success: false, error: "Error fetching Event details" },
       { status: 500 },
     );
   }

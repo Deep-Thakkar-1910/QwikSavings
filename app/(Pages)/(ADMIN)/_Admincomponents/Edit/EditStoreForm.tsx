@@ -100,7 +100,7 @@ const EditStoreForm = () => {
         logo: undefined,
         addToPopularStores: storeDetails.addToPopularStores ? "yes" : "no",
         description: storeDetails.description ?? undefined,
-        moreAbout: storeDetails.moreAbout ?? undefined,
+        moreAbout: storeDetails.moreAbout ?? "",
         hint: storeDetails.hint ?? undefined,
         faq: JSON.parse(storeDetails.faq as unknown as string),
       });
@@ -326,7 +326,12 @@ const EditStoreForm = () => {
             <FormItem>
               <FormLabel>More About Store</FormLabel>
               <FormControl>
-                <RichTextEditor {...field} />
+                <RichTextEditor
+                  value={field.value || ""}
+                  onChange={(newContent) => {
+                    field.onChange(newContent);
+                  }}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

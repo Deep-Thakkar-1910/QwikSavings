@@ -149,7 +149,6 @@ export async function POST(req: Request) {
     // returning response on success
     return NextResponse.json({
       success: true,
-      coupon,
       message: "Coupon created successfuly",
     });
   } catch (error) {

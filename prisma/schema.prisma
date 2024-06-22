@@ -94,6 +94,20 @@ model Store {
   @@map("stores")
 }
 
+model Event {
+  eventId     Int      @id @default(autoincrement())
+  name        String   @unique
+  title       String
+  description String?
+  logo_url    String?
+  cover_url   String?
+  coupons     Coupon[] @relation("EventCoupon")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now()) @updatedAt
+
+  @@map("events")
+}
+
 model Category {
   categoryId               Int      @id @default(autoincrement())
   logo_url                 String?
@@ -127,6 +141,7 @@ model Coupon {
   createdAt         DateTime @default(now())
   isVerified        Boolean  @default(false)
   updatedAt         DateTime @default(now()) @updatedAt
+  events            Event[]  @relation("EventCoupon")
   store             Store    @relation(fields: [store_id], references: [storeId], onDelete: Cascade)
   category          Category @relation(fields: [category_id], references: [categoryId], onDelete: Cascade)
 

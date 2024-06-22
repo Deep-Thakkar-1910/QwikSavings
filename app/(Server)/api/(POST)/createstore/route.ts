@@ -85,7 +85,10 @@ export async function POST(req: Request) {
     });
 
     // returning response on success
-    return NextResponse.json({ success: true, store }, { status: 201 });
+    return NextResponse.json(
+      { success: true, message: "Store Created successfully" },
+      { status: 201 },
+    );
   } catch (error) {
     // unique constraint failed
     if (

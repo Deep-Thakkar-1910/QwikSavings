@@ -11,6 +11,7 @@ const AdminNavbar = () => {
   const adminNavlinks = [
     { href: "/admin/createstore", title: "Create Store" },
     { href: "/admin/createcategory", title: "Create Category" },
+    { href: "/admin/createevent", title: "Create Event" },
     { href: "/admin/createcoupon", title: "Create Coupon" },
   ];
 

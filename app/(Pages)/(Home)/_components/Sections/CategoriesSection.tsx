@@ -13,7 +13,7 @@ const CategoriesSection = ({ fetchFrom, title }: CategoriesSectionProps) => {
   const { data, error, isLoading } = useGetCategoryCoupons(fetchFrom);
   return (
     <section
-      className={`mx-auto w-full max-w-screen-xl py-6 sm:p-10 ${data.coupons?.length === 0 || error ? "hidden" : ""}`}
+      className={`mx-auto w-full max-w-screen-xl py-6 sm:p-10 ${data.coupons?.length === 0 || error || isLoading ? "hidden" : ""}`}
     >
       <div className="mt-4 flex w-full flex-col items-center sm:flex-row sm:justify-between sm:px-8 lg:px-16 xl:px-0 2xl:px-0">
         <h2 className="mx-auto mb-4 place-self-center text-2xl font-bold sm:mx-0 sm:place-self-start lg:text-3xl">
