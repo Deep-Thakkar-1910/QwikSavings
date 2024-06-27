@@ -2,7 +2,7 @@ import EditEventForm from "@/app/(Pages)/(ADMIN)/_Admincomponents/Edit/EditEvent
 
 const EditEventPage = () => {
   return (
-    <article className="my-8 flex flex-col items-center justify-center gap-8">
+    <article className="mb-8 flex flex-col items-center justify-center gap-8">
       <h1 className="text-2xl sm:text-4xl">Edit Event</h1>
 
       {/* Form container div */}

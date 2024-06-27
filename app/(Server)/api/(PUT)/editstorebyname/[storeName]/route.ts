@@ -22,6 +22,8 @@ export async function PUT(
     moreAbout,
     hint,
     faq,
+    best_offer,
+    average_discount,
     addToPopularStores,
     logo_url,
   } = body;
@@ -67,6 +69,8 @@ export async function PUT(
         moreAbout: moreAbout ? moreAbout : null,
         hint: hint ? hint : null,
         faq: JSON.stringify(faq),
+        average_discount: average_discount,
+        best_offer: best_offer,
       },
     });
 

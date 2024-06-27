@@ -1,4 +1,5 @@
 "use client";
+import CustomPaginationComponent from "@/app/(Pages)/_PageComponents/CustomPaginationComponent";
 import DisplayItems from "@/app/(Pages)/_PageComponents/DisplayComponents";
 import FilterBlocks from "@/app/(Pages)/_PageComponents/FilterBlocks";
 import { useFilter } from "@/hooks/useFilter";
@@ -8,6 +9,11 @@ import Link from "next/link";
 const AllCategories = () => {
   const { setPage, setLike, data, page, like, isLoading, totalCount, error } =
     useFilter("categories");
+  const totalPages = Math.ceil(totalCount / 20);
+
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage);
+  };
   return (
     <section className="mt-10 flex w-full flex-col items-center">
       <h1 className="mb-6 text-2xl font-bold">Categories</h1>
@@ -35,6 +41,13 @@ const AllCategories = () => {
         error={error}
         emptyMessage="No Categories Found"
       />
+      {totalPages > 1 && (
+        <CustomPaginationComponent
+          currentPage={page}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
+      )}
     </section>
   );
 };

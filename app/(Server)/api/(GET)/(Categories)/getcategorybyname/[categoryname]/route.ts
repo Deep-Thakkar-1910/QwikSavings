@@ -21,6 +21,7 @@ export async function GET(
             due_date: true,
             description: true,
             ref_link: true,
+            coupon_code: true,
             type: true,
             title: true,
             user_count: true,

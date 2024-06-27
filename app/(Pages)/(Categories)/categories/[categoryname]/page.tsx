@@ -1,4 +1,3 @@
-"use client";
 import DetailsPage from "@/app/(Pages)/_PageComponents/DetailsPage";
 
 const CategoryDetailPage = () => {

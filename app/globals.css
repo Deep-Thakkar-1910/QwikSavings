@@ -84,20 +84,17 @@ input:-webkit-autofill:focus {
 }
 
 /* Heading styles (TipTap)*/
-.ProseMirror h1,
-.ProseMirror h2 {
+h1,
+h2 {
   text-wrap: pretty;
 }
 
-.ProseMirror h1,
-.ProseMirror h2 {
-  margin: 1.5rem 0;
-}
-
-.ProseMirror h1 {
+h1 {
+  font-weight: 600;
   font-size: 1.4rem;
 }
 
-.ProseMirror h2 {
+h2 {
+  font-weight: 500;
   font-size: 1.2rem;
 }

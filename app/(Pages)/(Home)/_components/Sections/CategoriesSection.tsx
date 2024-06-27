@@ -85,7 +85,7 @@ const CategoriesSection = ({ fetchFrom, title }: CategoriesSectionProps) => {
                         {coupon.coupon_code}
                       </p>
                       {/* wrapper */}
-                      <div className="polygon-clip absolute left-0 top-0 grid h-full w-full place-items-center bg-primary transition-all duration-200 ease-linear group-hover:w-8/12 ">
+                      <div className="polygon-clip absolute left-0 top-0 grid h-full w-full place-items-center bg-app-main  transition-all duration-200 ease-linear group-hover:w-8/12 ">
                         <p className="font-semibold text-slate-200">
                           Reveal code
                         </p>

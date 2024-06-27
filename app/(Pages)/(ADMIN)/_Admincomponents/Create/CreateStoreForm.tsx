@@ -289,9 +289,36 @@ const CreateStoreForm = () => {
           name="hint"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Hints and Tips</FormLabel>
+              <FormLabel>How To Apply</FormLabel>
               <FormControl>
-                <Textarea placeholder="Hint" {...field} />
+                <Textarea placeholder="How To Apply" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={control}
+          name="best_offer"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Best Offer</FormLabel>
+              <FormControl>
+                <Input placeholder="40$" {...field} type="text" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={control}
+          name="average_discount"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Average Discount</FormLabel>
+              <FormControl>
+                <Input placeholder="20%" {...field} type="text" />
               </FormControl>
               <FormMessage />
             </FormItem>

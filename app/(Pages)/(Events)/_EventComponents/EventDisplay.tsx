@@ -3,6 +3,7 @@ import useGetEvents from "@/hooks/useGetEvents";
 import Image from "next/image";
 import Spinner from "../../_PageComponents/Spinner";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 const EventDisplay = () => {
   const { data, error, isLoading } = useGetEvents();
@@ -32,8 +33,8 @@ const EventDisplay = () => {
                 height={600}
                 className="size-32 object-contain"
               />
-              <Button className="w-full rounded-lg bg-app-main">
-                Reveal Deals
+              <Button className="w-full rounded-lg bg-app-main" asChild>
+                <Link href={`/events/${event.name}`}>Reveal Deals</Link>
               </Button>
             </div>
           ))}

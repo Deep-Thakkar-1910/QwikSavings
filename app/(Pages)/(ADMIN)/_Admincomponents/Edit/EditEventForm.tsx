@@ -22,13 +22,6 @@ import Image from "next/image";
 import { MinusCircle } from "lucide-react";
 import { ChangeEvent, useRef, useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { CreateEventFormSchema } from "@/lib/FormSchemas/CreateEventFormSchema";
 
 type InputType = z.infer<typeof CreateEventFormSchema>;
@@ -44,7 +37,6 @@ const EditEventForm = () => {
     const fetchCategoryDetails = async () => {
       try {
         const response = await axios.get(`/geteventbyname/${eventName}`);
-        console.log(response.data);
         if (response.data.success) {
           setEventDetails(response.data.eventDetails);
         }
@@ -82,10 +74,10 @@ const EditEventForm = () => {
   const { control, handleSubmit, formState, setValue } = form;
 
   const [selectedLogo, setSelectedLogo] = useState<string | null>(
-    eventDetails.logo_url ?? null,
+    eventDetails?.logo_url ?? null,
   );
   const [selectedCover, setSelectedCover] = useState<string | null>(
-    eventDetails.cover_url ?? null,
+    eventDetails?.cover_url ?? null,
   );
 
   // Image ref

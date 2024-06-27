@@ -19,6 +19,8 @@ export async function POST(req: Request) {
     isFeatured,
     description,
     moreAbout,
+    best_offer,
+    average_discount,
     hint,
     faq,
     addToPopularStores,
@@ -81,6 +83,8 @@ export async function POST(req: Request) {
         moreAbout: moreAbout ? moreAbout : null,
         hint: hint ? hint : null,
         faq: JSON.stringify(faq),
+        best_offer: best_offer,
+        average_discount: average_discount,
       },
     });
 

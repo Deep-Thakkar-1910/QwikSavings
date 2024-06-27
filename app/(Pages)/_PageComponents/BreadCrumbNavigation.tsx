@@ -8,7 +8,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { cn } from "@/lib/utils";
-import { Home, Slash } from "lucide-react";
+import { Home, ChevronRight } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 const BreadCrumbNavigation = () => {
@@ -18,8 +18,8 @@ const BreadCrumbNavigation = () => {
   const decodedPaths = paths.map((path) => decodeURIComponent(path));
 
   return (
-    <Breadcrumb className="my-4 place-self-start px-8  lg:px-16">
-      <BreadcrumbList className="text-black dark:text-slate-200">
+    <Breadcrumb className="my-4 place-self-start px-8 lg:px-16">
+      <BreadcrumbList className="flex gap-0 text-xs text-black dark:text-slate-200 sm:text-sm lg:text-base">
         <BreadcrumbItem>
           <BreadcrumbLink href="/">
             <Home />
@@ -28,7 +28,7 @@ const BreadCrumbNavigation = () => {
         {/* Show initial seperator only if not on homepage */}
         {decodedPaths[0] && (
           <BreadcrumbSeparator>
-            <Slash />
+            <ChevronRight className="size-4 sm:size-6 lg:size-8" />
           </BreadcrumbSeparator>
         )}
         {decodedPaths.map((path, index) => {
@@ -48,7 +48,7 @@ const BreadCrumbNavigation = () => {
               </BreadcrumbItem>
               {index < decodedPaths.length - 1 && (
                 <BreadcrumbSeparator>
-                  <Slash />
+                  <ChevronRight className="size-4 sm:size-6 lg:size-8" />
                 </BreadcrumbSeparator>
               )}
             </Fragment>

@@ -2,6 +2,7 @@
 import Image from "next/image";
 import Spinner from "./Spinner";
 import Link from "next/link";
+import React from "react";
 
 interface DisplayItemsProps<
   T extends {
@@ -32,6 +33,24 @@ const DisplayItems = <
   error,
   emptyMessage,
 }: DisplayItemsProps<T>) => {
+  // Function to group items by their starting character
+  const groupByCharacter = (items: T[]) => {
+    return items.reduce((acc: Record<string, T[]>, item) => {
+      const char = item.name[0].toUpperCase();
+      if (!acc[char]) {
+        acc[char] = [];
+      }
+      acc[char].push(item);
+      return acc;
+    }, {});
+  };
+
+  // Sort the data alphabetically by name
+  const sortedData = data.sort((a, b) => a.name.localeCompare(b.name));
+
+  // Group the sorted data by their starting character
+  const groupedData = groupByCharacter(sortedData);
+
   return (
     <div className="my-6 min-h-[40vh] w-full bg-popover p-8 lg:px-16 lg:py-16">
       {isLoading ? (
@@ -47,50 +66,60 @@ const DisplayItems = <
           <p>{emptyMessage}</p>
         </div>
       ) : (
-        <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-4 md:gap-x-8 lg:justify-start lg:gap-x-12">
-          {data.map((item) => (
-            <Link
-              key={item.storeId ?? item.categoryId}
-              href={`${item.storeId ? `/stores/${item.name}` : `/categories/${item.name}`}`}
-            >
-              <div className="group flex max-h-28 max-w-xs cursor-pointer flex-col items-center rounded-md border p-4 transition-transform duration-300 ease-linear hover:scale-105">
-                <div className="flex h-28 w-full min-w-64 items-center justify-start gap-x-4">
-                  <Image
-                    src={item.logo_url ?? "https://via.placeholder.com/600x400"}
-                    alt={item.name}
-                    width={400}
-                    height={400}
-                    className="h-20 w-20 rounded-full object-cover transition-shadow duration-300 ease-linear group-hover:shadow-md"
-                  />
-                  <div className="flex flex-col items-start gap-y-2">
-                    <p className="tracking-wide transition-colors duration-300 ease-linear group-hover:text-app-main">
-                      {item.name}
-                    </p>
-                    <p className="text-sm text-muted-foreground">
-                      <span>
-                        {
-                          item.coupons.filter(
-                            (coupon) => coupon.type === "Deal",
-                          ).length
-                        }{" "}
-                        Deals
-                      </span>{" "}
-                      |{" "}
-                      <span>
-                        {
-                          item.coupons.filter(
-                            (coupon) => coupon.type === "Coupon",
-                          ).length
-                        }{" "}
-                        Coupons
-                      </span>
-                    </p>
-                  </div>
-                </div>
+        Object.keys(groupedData).map((char) => (
+          <div key={char} className="my-4">
+            <h2 className="mb-2 text-xl font-bold">{char}</h2>
+            <div className="w-full border-0 border-muted-foreground sm:border-2 sm:p-4">
+              <div className=" grid grid-cols-1 place-items-center gap-x-6 gap-y-4 md:grid-cols-2  md:place-items-start md:gap-x-8 lg:grid-cols-3 lg:gap-x-12 xl:grid-cols-4">
+                {groupedData[char].map((item) => (
+                  <Link
+                    key={item.storeId ?? item.categoryId}
+                    href={`${item.storeId ? `/stores/${item.name}` : `/categories/${item.name}`}`}
+                  >
+                    <div className="group flex max-h-28 max-w-xs cursor-pointer flex-col items-center rounded-md border p-4 transition-transform duration-300 ease-linear hover:scale-105">
+                      <div className="flex h-28 w-full min-w-64 items-center justify-start gap-x-4">
+                        <Image
+                          src={
+                            item.logo_url ??
+                            "https://via.placeholder.com/600x400"
+                          }
+                          alt={item.name}
+                          width={400}
+                          height={400}
+                          className="h-20 w-20 rounded-full object-cover transition-shadow duration-300 ease-linear group-hover:shadow-md"
+                        />
+                        <div className="flex flex-col items-start gap-y-2">
+                          <p className="tracking-wide transition-colors duration-300 ease-linear group-hover:text-app-main">
+                            {item.name}
+                          </p>
+                          <p className="text-sm text-muted-foreground">
+                            <span>
+                              {
+                                item.coupons.filter(
+                                  (coupon) => coupon.type === "Deal",
+                                ).length
+                              }{" "}
+                              Deals
+                            </span>{" "}
+                            |{" "}
+                            <span>
+                              {
+                                item.coupons.filter(
+                                  (coupon) => coupon.type === "Coupon",
+                                ).length
+                              }{" "}
+                              Coupons
+                            </span>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                ))}
               </div>
-            </Link>
-          ))}
-        </div>
+            </div>
+          </div>
+        ))
       )}
     </div>
   );

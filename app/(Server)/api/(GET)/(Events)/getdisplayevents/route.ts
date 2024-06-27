@@ -14,13 +14,21 @@ export async function GET() {
         eventId: true,
         name: true,
         logo_url: true,
+        coupons: {
+          select: {
+            type: true,
+          },
+        },
       },
       orderBy: {
         name: "asc",
       },
     });
-
-    return NextResponse.json({ success: true, events }, { status: 200 });
+    const totalCount = await db.event.count();
+    return NextResponse.json(
+      { success: true, events, totalCount },
+      { status: 200 },
+    );
   } catch (err) {
     console.log(err);
 
