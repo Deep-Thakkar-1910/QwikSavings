@@ -30,12 +30,29 @@ import { MinusCircle } from "lucide-react";
 import { AxiosError } from "axios";
 import { useRouter, useParams } from "next/navigation";
 import RichTextEditor from "@/components/ui/RichTextEditor";
+import {
+  MultiSelector,
+  MultiSelectorContent,
+  MultiSelectorInput,
+  MultiSelectorItem,
+  MultiSelectorList,
+  MultiSelectorTrigger,
+} from "@/components/ui/MultipleSelector";
 
 type InputType = z.infer<typeof CreateStoreFormScehma>;
-
-const EditStoreForm = () => {
+interface StoreFormProps {
+  similarStores?: { name: string; storeId: number }[];
+}
+const EditStoreForm = ({ similarStores = [] }: StoreFormProps) => {
   const router = useRouter();
   const { storeName } = useParams();
+
+  const similarStoreOptions = similarStores.map((store) => {
+    return {
+      label: store.name,
+      id: `${store.storeId}`,
+    };
+  });
 
   // for image preview
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -92,6 +109,7 @@ const EditStoreForm = () => {
 
   useEffect(() => {
     if (storeDetails) {
+      console.log(storeDetails);
       reset({
         name: storeDetails.name,
         title: storeDetails.title,
@@ -103,6 +121,9 @@ const EditStoreForm = () => {
         moreAbout: storeDetails.moreAbout ?? "",
         hint: storeDetails.hint ?? undefined,
         best_offer: storeDetails.best_offer,
+        similarStores: storeDetails.similarStores.map(
+          (store: any) => store.storeId,
+        ),
         average_discount: storeDetails.average_discount,
         faq: JSON.parse(storeDetails.faq as unknown as string),
       });
@@ -315,7 +336,12 @@ const EditStoreForm = () => {
             <FormItem>
               <FormLabel>How To Apply</FormLabel>
               <FormControl>
-                <Textarea placeholder="How To Apply" {...field} />
+                <RichTextEditor
+                  value={field.value || ""}
+                  onChange={(newContent) => {
+                    field.onChange(newContent);
+                  }}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -362,6 +388,47 @@ const EditStoreForm = () => {
                 <Input placeholder="20%" {...field} type="text" />
               </FormControl>
               <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={control}
+          name="similarStores"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Similar Stores</FormLabel>
+              <MultiSelector
+                onValuesChange={field.onChange}
+                values={field?.value}
+                loop={false}
+                options={similarStoreOptions}
+                emptyIndicator="No Stores Found"
+              >
+                <FormControl>
+                  <MultiSelectorTrigger>
+                    <MultiSelectorInput
+                      placeholder={
+                        field?.value?.length <= 0 ? "Select Related Stores" : ""
+                      }
+                    />
+                  </MultiSelectorTrigger>
+                </FormControl>
+                <MultiSelectorContent>
+                  <MultiSelectorList>
+                    {similarStores.map((store) => (
+                      <MultiSelectorItem
+                        key={store.storeId}
+                        value={`${store.storeId}`}
+                        id={store.storeId.toString()}
+                        label={store.name}
+                      >
+                        {store.name}
+                      </MultiSelectorItem>
+                    ))}
+                  </MultiSelectorList>
+                </MultiSelectorContent>
+                <FormMessage />
+              </MultiSelector>
             </FormItem>
           )}
         />

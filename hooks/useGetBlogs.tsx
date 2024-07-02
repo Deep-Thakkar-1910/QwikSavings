@@ -2,20 +2,20 @@ import axios from "@/app/api/axios/axios";
 import { AxiosError } from "axios";
 import { useState, useEffect } from "react";
 
-type EventData = Record<string, any>;
-
-const useGetEventDetails = (eventName: string) => {
-  const [data, setData] = useState<EventData | null>(null);
+const useGetBlogs = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [initialCoupon, setInitialCoupon] = useState<string>("");
+  const [data, setData] = useState([]);
+  const [totalCount, setTotalCount] = useState<number>(0);
   useEffect(() => {
     const fetchData = async () => {
+      setError(null);
+      setIsLoading(true);
       try {
-        const response = await axios.get(`geteventbyname/${eventName}`);
+        const response = await axios.get("/getblogs");
         if (response.data.success) {
-          setData(response.data.eventDetails);
-          setInitialCoupon(response.data?.eventDetails?.coupon[0]?.due_date);
+          setData(response.data.blogs);
+          setTotalCount(response.data.totalCount);
         }
       } catch (error) {
         if (error instanceof AxiosError) setError(error.response?.data.error);
@@ -25,9 +25,9 @@ const useGetEventDetails = (eventName: string) => {
     };
 
     fetchData();
-  }, [eventName]);
+  }, []);
 
-  return { data, isLoading, error, initialCoupon };
+  return { isLoading, error, data, totalCount };
 };
 
-export default useGetEventDetails;
+export default useGetBlogs;

@@ -1,5 +1,5 @@
 "use client";
-import { useEditor, EditorContent, type Editor, Content } from "@tiptap/react";
+import { useEditor, EditorContent, type Editor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
 import Superscript from "@tiptap/extension-superscript";
@@ -28,7 +28,7 @@ import {
   TextAlignLeftIcon,
   TextAlignRightIcon,
 } from "@radix-ui/react-icons";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 const RichTextEditor = ({
   value,
@@ -37,6 +37,7 @@ const RichTextEditor = ({
   value: string;
   onChange: (value: string) => void;
 }) => {
+  const initialValueSet = useRef<boolean>(false);
   const editor = useEditor({
     editorProps: {
       attributes: {
@@ -76,10 +77,10 @@ const RichTextEditor = ({
 
   // for setting inital value from props
   useEffect(() => {
-    if (editor) {
+    if (editor && editor.getHTML() !== value) {
       editor.commands.setContent(value);
     }
-  }, [editor, value]);
+  }, [value, editor]);
 
   return (
     <>

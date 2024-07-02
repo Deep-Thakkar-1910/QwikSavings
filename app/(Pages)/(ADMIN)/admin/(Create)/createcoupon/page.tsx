@@ -6,6 +6,7 @@ export const fetchCache = "force-no-store";
 const CreateCouponPage = async () => {
   let categories = [];
   let stores = [];
+  let events = [];
   try {
     // fetching available stores and categories for related store and category fields
     const categoriesResult = await fetch(
@@ -27,6 +28,19 @@ const CreateCouponPage = async () => {
   } catch (e) {
     console.error(e);
   }
+  try {
+    const storesResult = await fetch(
+      `${process.env.BASE_URL}/api/getevents?_=${new Date().getTime()}`,
+      {
+        cache: "no-cache",
+      },
+    );
+
+    const eventsData = await storesResult.json();
+    events = eventsData.events || [];
+  } catch (e) {
+    console.error(e);
+  }
 
   return (
     <article className="flex flex-col items-center justify-center gap-4">
@@ -34,7 +48,11 @@ const CreateCouponPage = async () => {
 
       {/* Form container div */}
       <div className="my-8 flex w-11/12 max-w-lg flex-col items-center justify-center rounded-lg border-2 bg-white p-6 dark:bg-app-dark-navbar md:w-full">
-        <CreateCouponForm categories={categories} stores={stores} />
+        <CreateCouponForm
+          categories={categories}
+          stores={stores}
+          events={events}
+        />
       </div>
     </article>
   );

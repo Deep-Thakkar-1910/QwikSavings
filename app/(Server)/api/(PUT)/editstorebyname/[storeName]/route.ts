@@ -26,6 +26,7 @@ export async function PUT(
     average_discount,
     addToPopularStores,
     logo_url,
+    similarStores,
   } = body;
 
   try {
@@ -71,6 +72,11 @@ export async function PUT(
         faq: JSON.stringify(faq),
         average_discount: average_discount,
         best_offer: best_offer,
+        similarStores: {
+          connect: similarStores.map((store: string) => ({
+            storeId: Number(store),
+          })),
+        },
       },
     });
 

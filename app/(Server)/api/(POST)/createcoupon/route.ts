@@ -30,6 +30,7 @@ export async function POST(req: Request) {
       addToHomePage,
       addToCarousel,
       addToFlipper,
+      events,
     } = body;
     // checking if the carousel limit is reached
     if (addToCarousel === "yes") {
@@ -143,6 +144,11 @@ export async function POST(req: Request) {
         ref_link,
         due_date: new Date(due_date),
         description: description ? description : null,
+        events: {
+          connect: events.map((event: string) => ({
+            eventId: Number(event),
+          })),
+        },
       },
     });
 

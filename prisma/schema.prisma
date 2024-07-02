@@ -101,22 +101,37 @@ model Store {
   average_discount   String   @default("0")
   coupons            Coupon[]
   Rating             Rating[]
+  similarStores      Store[]  @relation("SimilarStores")
+  storeIsSimilarTo   Store[]  @relation("SimilarStores")
   createdAt          DateTime @default(now())
   updatedAt          DateTime @default(now()) @updatedAt
 
   @@map("stores")
 }
 
+model Blog {
+  blogId        Int      @id @default(autoincrement())
+  title         String
+  thumbnail_url String
+  content       String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @default(now()) @updatedAt
+
+  @@map("blogs")
+}
+
 model Event {
-  eventId     Int      @id @default(autoincrement())
-  name        String   @unique
-  title       String
-  description String?
-  logo_url    String?
-  cover_url   String?
-  coupons     Coupon[] @relation("EventCoupon")
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @default(now()) @updatedAt
+  eventId          Int      @id @default(autoincrement())
+  name             String   @unique
+  title            String
+  description      String?
+  logo_url         String?
+  cover_url        String?
+  best_offer       String   @default("0")
+  average_discount String   @default("0")
+  coupons          Coupon[] @relation("EventCoupon")
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @default(now()) @updatedAt
 
   @@map("events")
 }
@@ -167,6 +182,8 @@ model Coupon {
   createdAt         DateTime   @default(now())
   isVerified        Boolean    @default(false)
   updatedAt         DateTime   @default(now()) @updatedAt
+  like_count        Int        @default(0)
+  dislike_count     Int        @default(0)
   events            Event[]    @relation("EventCoupon")
   store             Store      @relation(fields: [store_id], references: [storeId], onDelete: Cascade)
   category          Category   @relation(fields: [category_id], references: [categoryId], onDelete: Cascade)

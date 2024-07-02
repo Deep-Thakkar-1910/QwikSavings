@@ -6,6 +6,7 @@ const AdminDisplayLayout = ({ children }: { children: ReactNode }) => {
     { href: "/admin/categories", title: "All Categories" },
     { href: "/admin/coupons", title: "All Coupons" },
     { href: "admin/events", title: "All Events" },
+    { href: "admin/blogs", title: "All Blogs" },
   ];
 
   return (

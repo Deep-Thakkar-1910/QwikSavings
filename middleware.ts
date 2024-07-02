@@ -19,6 +19,5 @@ export async function middleware(req: NextRequest) {
   if (session?.user.role !== "admin" && pathname.startsWith("/admin")) {
     return NextResponse.rewrite(new URL("/denied", req.url));
   }
-
   return NextResponse.next();
 }

@@ -11,6 +11,7 @@ export async function GET() {
     const events = await db.event.findMany({
       select: {
         name: true,
+        eventId: true,
       },
       orderBy: {
         name: "asc",

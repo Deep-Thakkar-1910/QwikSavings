@@ -13,7 +13,7 @@ interface HookData {
   setLike: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const useFilter = (fetchFrom: string): HookData => {
+const useFilter = (fetchFrom: string, initialLike?: string): HookData => {
   const [page, setPage] = useState<number>(1);
   const [like, setLike] = useState<string>("");
   const [data, setData] = useState<Record<string, any>[]>([]);
@@ -28,7 +28,7 @@ const useFilter = (fetchFrom: string): HookData => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `/getdisplay${fetchFrom}?page=${page}&like=${like}`,
+          `/getdisplay${fetchFrom}?page=${page}&like=${initialLike ? initialLike : like}`,
         );
         const data = response.data[fetchFrom];
         const total = response.data.totalCount;
@@ -42,7 +42,7 @@ const useFilter = (fetchFrom: string): HookData => {
     };
 
     fetchData();
-  }, [page, like, fetchFrom]);
+  }, [page, like, fetchFrom, initialLike]);
   return { data, isLoading, error, page, setPage, totalCount, like, setLike };
 };
 

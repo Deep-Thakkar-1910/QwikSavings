@@ -21,7 +21,7 @@ import React, {
 
 type MultiSelectorProps = {
   values: string[];
-  onValuesChange: (value: string[]) => void;
+  onValuesChange: (value: string[] | undefined) => void;
   options: { id: string; label: string }[];
   loop?: boolean;
   hidePlaceholderWhenSelected?: boolean;
@@ -189,7 +189,7 @@ const MultiSelectorTrigger = forwardRef<
       )}
       {...props}
     >
-      {value.map((id, index) => (
+      {value?.map((id, index) => (
         <Badge
           key={id}
           className={cn(

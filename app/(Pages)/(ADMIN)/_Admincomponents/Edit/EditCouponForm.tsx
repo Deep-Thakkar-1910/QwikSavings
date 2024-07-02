@@ -46,15 +46,24 @@ import {
 } from "@/components/ui/command";
 import Image from "next/image";
 import { useParams } from "next/navigation";
+import {
+  MultiSelector,
+  MultiSelectorContent,
+  MultiSelectorInput,
+  MultiSelectorItem,
+  MultiSelectorList,
+  MultiSelectorTrigger,
+} from "@/components/ui/MultipleSelector";
 
 type InputType = z.infer<typeof CreateCouponFormSchema>;
 
 interface CouponFormProps {
   categories: { name: string; categoryId: number }[];
   stores: { name: string; storeId: number }[];
+  events: { name: string; eventId: number }[];
 }
 
-const EditCouponForm = ({ categories, stores }: CouponFormProps) => {
+const EditCouponForm = ({ categories, stores, events }: CouponFormProps) => {
   const { couponId } = useParams();
   // for image preview
   const [selectedThumbnailImage, setSelectedThumbnailImage] = useState<
@@ -66,6 +75,13 @@ const EditCouponForm = ({ categories, stores }: CouponFormProps) => {
   const [selectedCarouselImage, setSelectedCarouselImage] = useState<
     string | null
   >(null);
+
+  const eventOptions = events?.map((event) => {
+    return {
+      label: event.name,
+      id: `${event?.eventId}`,
+    };
+  });
 
   // reference to the image input field
   const thumbnailRef = useRef<HTMLInputElement>(null);
@@ -93,6 +109,7 @@ const EditCouponForm = ({ categories, stores }: CouponFormProps) => {
       category_id: "",
       store_id: "",
       type: "Deal",
+      events: [],
       due_date: undefined,
     },
     mode: "all",
@@ -130,6 +147,7 @@ const EditCouponForm = ({ categories, stores }: CouponFormProps) => {
         type: couponDetails.type,
         category_id: `${couponDetails.category_id}`,
         store_id: `${couponDetails.store_id}`,
+        events: couponDetails.events.map((event: any) => event.eventId),
       });
       // Set date
       if (couponDetails.due_date) {
@@ -654,6 +672,47 @@ const EditCouponForm = ({ categories, stores }: CouponFormProps) => {
                 </PopoverContent>
               </Popover>
               <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={control}
+          name="events"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Similar Stores</FormLabel>
+              <MultiSelector
+                onValuesChange={field.onChange}
+                values={field.value}
+                loop={false}
+                options={eventOptions}
+                emptyIndicator="No Stores Found"
+              >
+                <FormControl>
+                  <MultiSelectorTrigger>
+                    <MultiSelectorInput
+                      placeholder={
+                        field.value.length <= 0 ? "Select Related Stores" : ""
+                      }
+                    />
+                  </MultiSelectorTrigger>
+                </FormControl>
+                <MultiSelectorContent>
+                  <MultiSelectorList>
+                    {events?.map((event) => (
+                      <MultiSelectorItem
+                        key={event.eventId}
+                        value={`${event.eventId}`}
+                        id={event.eventId.toString()}
+                        label={event.name}
+                      >
+                        {event.name}
+                      </MultiSelectorItem>
+                    ))}
+                  </MultiSelectorList>
+                </MultiSelectorContent>
+                <FormMessage />
+              </MultiSelector>
             </FormItem>
           )}
         />

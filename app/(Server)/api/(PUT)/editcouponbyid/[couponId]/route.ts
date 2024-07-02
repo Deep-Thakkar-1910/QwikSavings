@@ -33,6 +33,7 @@ export async function PUT(
       addToHomePage,
       addToCarousel,
       addToFlipper,
+      events,
     } = body;
 
     const existingCoupon = await db.coupon.findUnique({
@@ -149,6 +150,11 @@ export async function PUT(
         ref_link,
         due_date: new Date(due_date),
         description: description ? description : null,
+        events: {
+          connect: events.map((event: string) => ({
+            eventId: Number(event),
+          })),
+        },
       },
     });
 

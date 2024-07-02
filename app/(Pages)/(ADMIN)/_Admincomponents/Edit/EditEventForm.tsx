@@ -68,6 +68,7 @@ const EditEventForm = () => {
         cover_url: undefined,
       });
       setSelectedLogo(eventDetails.logo_url);
+      setSelectedCover(eventDetails.cover_url);
     }
   }, [eventDetails, form]);
 

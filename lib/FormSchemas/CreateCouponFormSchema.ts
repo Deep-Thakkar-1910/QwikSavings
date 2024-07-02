@@ -17,5 +17,6 @@ export const CreateCouponFormSchema = z.object({
   coupon_code: z.string().optional(),
   ref_link: z.string().min(1, "Reference link is required"),
   due_date: z.date({ message: "Expiry date is required" }).default(new Date()),
+  events: z.array(z.string()),
   description: z.string().optional(),
 });

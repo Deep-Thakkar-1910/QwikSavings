@@ -45,15 +45,24 @@ import {
   CommandList,
 } from "@/components/ui/command";
 import Image from "next/image";
+import {
+  MultiSelector,
+  MultiSelectorContent,
+  MultiSelectorInput,
+  MultiSelectorItem,
+  MultiSelectorList,
+  MultiSelectorTrigger,
+} from "@/components/ui/MultipleSelector";
 
 type InputType = z.infer<typeof CreateCouponFormSchema>;
 
 interface CouponFormProps {
   categories: { name: string; categoryId: number }[];
   stores: { name: string; storeId: number }[];
+  events: { name: string; eventId: number }[];
 }
 
-const CreateCouponForm = ({ categories, stores }: CouponFormProps) => {
+const CreateCouponForm = ({ categories, stores, events }: CouponFormProps) => {
   // for image preview
   const [selectedThumbnailImage, setSelectedThumbnailImage] = useState<
     string | null
@@ -88,6 +97,7 @@ const CreateCouponForm = ({ categories, stores }: CouponFormProps) => {
       category_id: "",
       store_id: "",
       type: "Deal",
+      events: [],
       due_date: undefined,
     },
     mode: "all",
@@ -95,6 +105,13 @@ const CreateCouponForm = ({ categories, stores }: CouponFormProps) => {
   });
 
   const { control, setValue, handleSubmit, formState } = form;
+
+  const eventOptions = events?.map((event) => {
+    return {
+      label: event.name,
+      id: `${event?.eventId}`,
+    };
+  });
 
   // handle thumbnail image onChange event
   const handleThumbnailChange = async (
@@ -615,6 +632,47 @@ const CreateCouponForm = ({ categories, stores }: CouponFormProps) => {
                 </PopoverContent>
               </Popover>
               <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={control}
+          name="events"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Similar Stores</FormLabel>
+              <MultiSelector
+                onValuesChange={field.onChange}
+                values={field.value}
+                loop={false}
+                options={eventOptions}
+                emptyIndicator="No Stores Found"
+              >
+                <FormControl>
+                  <MultiSelectorTrigger>
+                    <MultiSelectorInput
+                      placeholder={
+                        field.value.length <= 0 ? "Select Related Stores" : ""
+                      }
+                    />
+                  </MultiSelectorTrigger>
+                </FormControl>
+                <MultiSelectorContent>
+                  <MultiSelectorList>
+                    {events?.map((event) => (
+                      <MultiSelectorItem
+                        key={event.eventId}
+                        value={`${event.eventId}`}
+                        id={event.eventId.toString()}
+                        label={event.name}
+                      >
+                        {event.name}
+                      </MultiSelectorItem>
+                    ))}
+                  </MultiSelectorList>
+                </MultiSelectorContent>
+                <FormMessage />
+              </MultiSelector>
             </FormItem>
           )}
         />

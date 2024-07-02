@@ -57,7 +57,7 @@ const FeaturedStoreSection = () => {
       ) : (
         <div
           className={cn(
-            `mx-auto grid w-full max-w-screen-xl grid-cols-1 place-items-center p-10 px-8 py-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 lg:px-16`,
+            `mx-auto flex w-full max-w-screen-xl flex-wrap items-center justify-center gap-6 p-10 px-8 py-4  sm:justify-start lg:px-16`,
           )}
         >
           {featuredData.map((store) => {
@@ -68,7 +68,7 @@ const FeaturedStoreSection = () => {
                   alt={store.storeId}
                   width={400}
                   height={400}
-                  className="size-20 cursor-pointer rounded-full shadow-md transition-all duration-200 ease-linear hover:scale-110 hover:shadow-lg sm:size-24 md:size-28"
+                  className="size-16 cursor-pointer rounded-full shadow-md transition-all duration-200 ease-linear hover:scale-110 hover:shadow-lg sm:size-24 md:size-28"
                 />
               </Link>
             );

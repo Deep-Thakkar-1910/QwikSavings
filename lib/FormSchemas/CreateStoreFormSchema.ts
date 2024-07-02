@@ -19,5 +19,6 @@ export const CreateStoreFormScehma = z.object({
   faq: z.array(FAQSchema), // Assuming faq is a JSON string
   best_offer: z.string().default("0"),
   average_discount: z.string().default("0"),
+  similarStores: z.array(z.string()),
   offers: z.number().default(0),
 });

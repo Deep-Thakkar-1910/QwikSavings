@@ -29,12 +29,29 @@ import Image from "next/image";
 import { MinusCircle } from "lucide-react";
 import { AxiosError } from "axios";
 import RichTextEditor from "@/components/ui/RichTextEditor";
+import {
+  MultiSelector,
+  MultiSelectorContent,
+  MultiSelectorInput,
+  MultiSelectorItem,
+  MultiSelectorList,
+  MultiSelectorTrigger,
+} from "@/components/ui/MultipleSelector";
 
 type InputType = z.infer<typeof CreateStoreFormScehma>;
-
-const CreateStoreForm = () => {
+interface StoreFormProps {
+  similarStores?: { name: string; storeId: number }[];
+}
+const CreateStoreForm = ({ similarStores = [] }: StoreFormProps) => {
   // for image preview
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+
+  const similarStoreOptions = similarStores.map((store) => {
+    return {
+      label: store.name,
+      id: `${store.storeId}`,
+    };
+  });
 
   // reference to the image input field
   const imageRef = useRef<HTMLInputElement>(null);
@@ -53,6 +70,7 @@ const CreateStoreForm = () => {
       description: "",
       hint: "",
       moreAbout: "",
+      similarStores: [],
       faq: [],
     },
     mode: "all",
@@ -291,7 +309,12 @@ const CreateStoreForm = () => {
             <FormItem>
               <FormLabel>How To Apply</FormLabel>
               <FormControl>
-                <Textarea placeholder="How To Apply" {...field} />
+                <RichTextEditor
+                  value={field.value || ""}
+                  onChange={(newContent) => {
+                    field.onChange(newContent);
+                  }}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -324,7 +347,47 @@ const CreateStoreForm = () => {
             </FormItem>
           )}
         />
-
+        <FormField
+          control={control}
+          name="similarStores"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Similar Stores</FormLabel>
+              <MultiSelector
+                onValuesChange={field.onChange}
+                values={field.value}
+                loop={false}
+                options={similarStoreOptions}
+                emptyIndicator="No Stores Found"
+              >
+                <FormControl>
+                  <MultiSelectorTrigger>
+                    <MultiSelectorInput
+                      placeholder={
+                        field.value.length <= 0 ? "Select Related Stores" : ""
+                      }
+                    />
+                  </MultiSelectorTrigger>
+                </FormControl>
+                <MultiSelectorContent>
+                  <MultiSelectorList>
+                    {similarStores.map((store) => (
+                      <MultiSelectorItem
+                        key={store.storeId}
+                        value={`${store.storeId}`}
+                        id={store.storeId.toString()}
+                        label={store.name}
+                      >
+                        {store.name}
+                      </MultiSelectorItem>
+                    ))}
+                  </MultiSelectorList>
+                </MultiSelectorContent>
+                <FormMessage />
+              </MultiSelector>
+            </FormItem>
+          )}
+        />
         {fields.map((field, index) => (
           <div key={field.id} className="space-y-4">
             <div className="flex items-center gap-x-2">
