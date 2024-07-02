@@ -60,13 +60,13 @@ export const authOptions: AuthOptions = {
         // If no password is provided, throw an error
         if (!credentials?.password)
           throw new Error("Please Provide Your Password");
-        const isPassowrdCorrect = await compare(
+        const isPassowordCorrect = await compare(
           credentials.password,
           user.password!,
         );
 
         // If password is incorrect, throw an error
-        if (!isPassowrdCorrect) throw new Error("Incorrect Password!");
+        if (!isPassowordCorrect) throw new Error("Incorrect Password!");
 
         // If user is not verified, throw an error
         if (!user.emailVerified)

@@ -9,10 +9,10 @@ interface sendmailParams {
 }
 
 export async function sendmail({ to, subject, body }: sendmailParams) {
-  const { SMTP_USER, SMTP_PASS, SMTP_GMAIL, SMTP_PASS_PERSONAL } = process.env;
+  const { SMTP_USER, SMTP_PASS } = process.env;
   var transport = nodemailer.createTransport({
-    host: "sandbox.smtp.mailtrap.io",
-    port: 2525,
+    host: "live.smtp.mailtrap.io",
+    port: 587,
     auth: {
       user: SMTP_USER,
       pass: SMTP_PASS,
@@ -30,6 +30,7 @@ export async function sendmail({ to, subject, body }: sendmailParams) {
   // send mail with defined transport object
   try {
     const sendMailResult = await transport.sendMail({
+      from: { name: "Qwiksavings", address: "qwiksavings@qwiksavings.com" },
       to,
       subject,
       html: body,

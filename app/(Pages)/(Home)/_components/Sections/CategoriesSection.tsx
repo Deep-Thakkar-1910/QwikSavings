@@ -36,17 +36,21 @@ const CategoriesSection = ({ fetchFrom, title }: CategoriesSectionProps) => {
           {data.coupons?.map((coupon: Coupon, index: number) => {
             return (
               <div
-                className="lg::max-w-full flex w-full max-w-72 flex-col flex-wrap items-center rounded-lg bg-popover shadow-lg sm:max-w-80"
+                className="flex w-full max-w-72 flex-col flex-wrap items-center rounded-lg bg-popover shadow-lg sm:max-w-80 lg:max-w-full"
                 key={index}
               >
                 <div className="flex w-full items-center justify-center rounded-tl-md rounded-tr-md">
-                  <Image
-                    src={coupon.thumbnail_url}
-                    width={1920}
-                    height={1080}
-                    alt="Logo"
-                    className="aspect-video h-36 rounded-tl-lg rounded-tr-lg object-cover"
-                  />
+                  {coupon.thumbnail_url ? (
+                    <Image
+                      src={coupon.thumbnail_url}
+                      width={1920}
+                      height={1080}
+                      alt="Logo"
+                      className="aspect-video h-36 rounded-tl-lg rounded-tr-lg object-cover"
+                    />
+                  ) : (
+                    <div className="aspect-video h-36 bg-popover" />
+                  )}
                 </div>
 
                 <div className="flex w-full flex-col gap-y-1 p-4">

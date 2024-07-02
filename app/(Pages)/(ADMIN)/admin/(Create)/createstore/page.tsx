@@ -1,7 +1,7 @@
 import CreateStoreForm from "../../../_Admincomponents/Create/CreateStoreForm";
 
 const CreateStorePage = async () => {
-  let similarStores = [];
+  let similarStores: any[] = [];
   try {
     const storesResult = await fetch(
       `${process.env.BASE_URL}/api/getstores?_=${new Date().getTime()}`,
@@ -9,7 +9,7 @@ const CreateStorePage = async () => {
         cache: "no-cache",
       },
     );
-
+    console.log(storesResult);
     const storesData = await storesResult.json();
     similarStores = storesData.stores || [];
   } catch (e) {
