@@ -1087,7 +1087,10 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                   <h2 className="mb-4 text-xl font-bold sm:text-2xl">
                     How to Apply
                   </h2>
-                  <div dangerouslySetInnerHTML={{ __html: detailsData.hint }} />
+                  <div
+                    dangerouslySetInnerHTML={{ __html: detailsData.hint }}
+                    className="w-full"
+                  />
                 </div>
               </section>
             )}
@@ -1099,6 +1102,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                   </h2>
                   <div
                     dangerouslySetInnerHTML={{ __html: detailsData.moreAbout }}
+                    className="w-full"
                   />
                 </div>
               </section>
