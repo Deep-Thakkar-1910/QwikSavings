@@ -4,6 +4,16 @@ import axios from "@/app/api/axios/axios";
 export interface CarouselImageItem {
   couponId: number;
   carouselPosterUrl: string;
+  coupon_code: string;
+  ref_link: string;
+  title: string;
+  isVerified: boolean;
+  user_count: number;
+  type: string;
+  store: {
+    name: string;
+    logo_url: string;
+  };
 }
 
 export function useImageCarouselData(): {

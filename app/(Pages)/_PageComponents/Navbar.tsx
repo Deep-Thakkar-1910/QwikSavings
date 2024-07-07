@@ -9,6 +9,7 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import AuthButtons from "./AuthButtons";
 import { useSession } from "next-auth/react";
+import SearchBar from "./SearchBar";
 const Navbar = () => {
   const pathname = usePathname();
   const paths = pathname.split("/");
@@ -77,17 +78,7 @@ const Navbar = () => {
 
       <div className="flex items-center gap-x-2 sm:gap-x-3">
         {/* Search bar */}
-        <div className="flex w-56 items-center justify-between rounded-full border-2 border-app-main p-1 sm:w-64 sm:px-3 sm:py-2">
-          <label htmlFor="search">
-            <Search className=" mr-2 size-6 text-app-main" />
-          </label>
-          <input
-            id="search"
-            type="text"
-            className="w-full border-none bg-transparent caret-rose-600 outline-none placeholder:text-xs md:placeholder:text-sm"
-            placeholder="Search for brands, categories"
-          />
-        </div>
+        <SearchBar />
         <div className="lg:hidden">
           <MobileSidebar />
         </div>

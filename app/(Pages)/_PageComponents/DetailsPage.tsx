@@ -31,6 +31,7 @@ import { format } from "date-fns";
 import { useEffect, useMemo, useState } from "react";
 import axios from "@/app/api/axios/axios";
 import { PiSmileySadBold } from "react-icons/pi";
+import { FaExternalLinkAlt } from "react-icons/fa";
 import { FaQuestionCircle } from "react-icons/fa";
 import {
   Dialog,
@@ -83,15 +84,14 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
 
   // to get search params
   const searchParams = useSearchParams();
-  // states for coupon clicks
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isCouponDialogOpen, setIsCouponDialogOpen] = useState(false);
+  const [isDealDialogOpen, setIsDealDialogOpen] = useState(false);
   const [dialogInfo, setDialogInfo] = useState({
+    title: "",
     logoUrl: "",
     couponCode: "",
     couponId: 0,
     ref_link: "",
-    likeCount: 0,
-    dislikeCount: 0,
   });
 
   // to store like and dislike count of a coupon
@@ -180,7 +180,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
     );
 
     try {
-      await axios.post("createbookmarks", { couponId });
+      await axios.post("/createbookmarks", { couponId });
     } catch (error) {
       // Revert optimistic update on error
       setBookmarkedCoupons((prev) =>
@@ -245,61 +245,47 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
 
   // NOTE: this is for handling coupon use
   useEffect(() => {
-    // Check if this window has coupon parameters
     const encodedCouponData = searchParams.get("coupon");
 
     if (encodedCouponData) {
-      const couponData = JSON.parse(decodeURIComponent(encodedCouponData));
+      let couponData;
+      try {
+        // First, try to parse it as JSON directly
+        couponData = JSON.parse(encodedCouponData);
+      } catch (e) {
+        // If that fails, it's likely URI encoded, so decode and then parse
+        couponData = JSON.parse(decodeURIComponent(encodedCouponData));
+      }
+
       setDialogInfo({
-        logoUrl: detailsData.logo_url,
-        couponCode: couponData.coupon_code,
+        title: couponData.title || "",
+        logoUrl: couponData.logo || detailsData?.logo_url || "",
+        couponCode: couponData.coupon_code || "",
         couponId: couponData.couponId,
-        ref_link: couponData.ref_link,
-        likeCount: couponReactions[couponData.couponId]?.like_count || 0,
-        dislikeCount: couponReactions[couponData.couponId]?.dislike_count || 0,
+        ref_link: couponData.ref_link || "",
       });
 
-      // Open the dialog
-      setIsDialogOpen(true);
+      if (couponData.type === "Deal") {
+        setIsDealDialogOpen(true);
+      } else {
+        // If type is "Coupon" or not specified, open the coupon dialog
+        setIsCouponDialogOpen(true);
+      }
 
-      // Optionally, you can remove the coupon parameter from the URL
+      // Remove the coupon parameter from the URL
       const newUrl = new URL(window.location.href);
       newUrl.searchParams.delete("coupon");
       window.history.replaceState({}, "", newUrl);
     }
-  }, [searchParams, detailsData.logo_url, couponReactions]);
+  }, [searchParams, detailsData?.logo_url]);
 
   const handleDeal = (coupon: Record<string, any>) => {
-    setDialogInfo({
-      logoUrl: detailsData.logo_url,
-      couponCode: coupon.coupon_code,
-      couponId: coupon.couponId,
-      ref_link: coupon.ref_link,
-      likeCount: couponReactions[coupon.couponId]?.like_count || 0,
-      dislikeCount: couponReactions[coupon.couponId]?.dislike_count || 0,
-    });
-    setIsDialogOpen(true);
-
     setTimeout(() => {
       window.open(coupon.ref_link, "_blank");
-      setIsDialogOpen(false);
-    }, 2000);
+    }, 1000);
   };
 
   const handleCoupon = (coupon: Record<string, any>) => {
-    // Set dialog info
-    setDialogInfo({
-      logoUrl: detailsData.logo_url,
-      couponCode: coupon.coupon_code,
-      couponId: coupon.couponId,
-      ref_link: coupon.ref_link,
-      likeCount: couponReactions[coupon.couponId]?.like_count || 0,
-      dislikeCount: couponReactions[coupon.couponId]?.dislike_count || 0,
-    });
-
-    // Open the dialog
-    setIsDialogOpen(true);
-
     // Encode coupon data in URL
     const encodedCoupon = encodeURIComponent(
       JSON.stringify({
@@ -332,9 +318,18 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
 
     try {
       await axios.post("/updatecouponusercount", { couponId });
+      setDialogInfo({
+        logoUrl: detailsData.logo_url,
+        couponCode: coupon.coupon_code,
+        couponId: coupon.couponId,
+        ref_link: coupon.ref_link,
+        title: coupon.title,
+      });
       if (type === "Coupon") {
+        setIsCouponDialogOpen(true);
         handleCoupon(coupon);
       } else if (type === "Deal") {
+        setIsDealDialogOpen(true);
         handleDeal(coupon);
       }
     } catch (error) {
@@ -448,8 +443,8 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
       {/* topBar for mobile */}
       <div className="flex w-full items-start gap-x-2 rounded-lg bg-popover p-4 px-4 sm:items-center sm:gap-x-4 sm:px-8 lg:hidden lg:px-16">
         <Image
-          src={detailsData.logo_url ?? "https://via.placeholder.com/600x400"}
-          alt={detailsData.name + " Logo"}
+          src={detailsData?.logo_url ?? "https://via.placeholder.com/600x400"}
+          alt={detailsData?.name + " Logo"}
           width={400}
           height={400}
           className="size-32 rounded-full object-cover"
@@ -481,16 +476,18 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
         <section className="relative mb-6 flex w-full flex-col items-start gap-6 px-8 pt-10 lg:flex-row lg:px-16">
           {/* Edit link only visbible to admins */}
           {session?.user.role === "admin" ? (
-            <Link
-              href={editLink}
-              className="absolute right-4 top-0 place-self-end  underline transition-colors duration-300 ease-linear hover:text-app-main lg:right-20"
-            >
-              {editLinkText}
-            </Link>
+            <div className="absolute right-4 top-0 flex flex-col gap-y-2 place-self-end lg:right-20">
+              <Link
+                href={editLink}
+                className="underline transition-colors duration-300 ease-linear hover:text-app-main"
+              >
+                {editLinkText}
+              </Link>
+            </div>
           ) : (
             <Link
-              href={editLink}
-              className="absolute right-4 top-0 flex items-center place-self-end  underline transition-colors duration-300 ease-linear hover:text-app-main lg:right-20"
+              href={"/submitacoupon"}
+              className="absolute right-4 top-0 flex items-center gap-x-1 place-self-end  underline transition-colors duration-300 ease-linear hover:text-app-main lg:right-20"
             >
               Submit a coupon <Tag className="size-4" />
             </Link>
@@ -558,14 +555,18 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                     {detailsData.coupons?.length || 0}
                   </p>
                 </div>
-                <div className="flex items-center justify-between">
-                  <p>Best Offer:</p>
-                  <p>{detailsData.best_offer} Off</p>
-                </div>
-                <div className="flex items-center justify-between">
-                  <p>Average Discount:</p>
-                  <p>{detailsData.average_discount}</p>
-                </div>
+                {isStore && (
+                  <>
+                    <div className="flex items-center justify-between">
+                      <p>Best Offer:</p>
+                      <p>{detailsData.best_offer} Off</p>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <p>Average Discount:</p>
+                      <p>{detailsData.average_discount}</p>
+                    </div>
+                  </>
+                )}
               </div>
             </div>
             {isStore && (
@@ -730,9 +731,9 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                           <Badge
                             className={cn(
                               coupon.type === "Deal"
-                                ? "bg-amber-400 hover:bg-amber-400"
-                                : "bg-blue-400/50 hover:bg-blue-400/50",
-                              "m-0 text-black dark:text-slate-200",
+                                ? "bg-amber-500 hover:bg-amber-600"
+                                : "bg-blue-400/50 hover:bg-blue-500/50",
+                              "mt-1 grid w-full place-items-center text-black dark:text-slate-200 ",
                             )}
                           >
                             {coupon.type}
@@ -755,7 +756,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                           className={`absolute right-2 top-2 size-4 cursor-pointer text-app-main transition-all duration-300 ease-linear ${
                             bookmarkedCoupons.includes(coupon.couponId)
                               ? "fill-app-main text-app-main"
-                              : "opacity-0 hover:fill-app-main group-hover/accordion:opacity-100"
+                              : "opacity-100 hover:fill-app-main group-hover/accordion:opacity-100 lg:opacity-0"
                           }`}
                           onClick={() => handleBookmark(coupon.couponId)}
                         />
@@ -770,16 +771,29 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                           </p>
                         </div>
                         <Dialog
-                          open={isDialogOpen}
-                          onOpenChange={setIsDialogOpen}
+                          open={isCouponDialogOpen}
+                          onOpenChange={setIsCouponDialogOpen}
                         >
                           <CouponDialog
                             logoUrl={dialogInfo.logoUrl}
                             title={coupon.title}
                             couponCode={dialogInfo.couponCode}
                             couponId={dialogInfo.couponId}
-                            expiry={format(coupon.due_date, "dd-MMM-yyy")}
-                            isCoupon={coupon.type === "Coupon"}
+                            expiry={format(coupon.due_date, "dd-MMM-yyyy")}
+                            ref_link={coupon.ref_link}
+                            handleReaction={handleReaction}
+                            userReaction={userReactions[dialogInfo.couponId]}
+                          />
+                        </Dialog>
+                        <Dialog
+                          open={isDealDialogOpen}
+                          onOpenChange={setIsDealDialogOpen}
+                        >
+                          <DealDialog
+                            logoUrl={dialogInfo.logoUrl}
+                            title={dialogInfo.title}
+                            couponId={dialogInfo.couponId}
+                            expiry={format(coupon.due_date, "dd-MMM-yyyy")}
                             ref_link={coupon.ref_link}
                             handleReaction={handleReaction}
                             userReaction={userReactions[dialogInfo.couponId]}
@@ -787,8 +801,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                         </Dialog>
                         {coupon.type === "Deal" && (
                           <Button
-                            size={"lg"}
-                            className="w-full border-2 border-dashed text-base font-semibold"
+                            className="min-h-10 w-full border-2 border-dashed bg-app-main  text-base font-semibold"
                             onClick={() => {
                               handleCouponUse(coupon.couponId, "Deal", coupon);
                             }}
@@ -798,7 +811,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                         )}
                         {coupon.type === "Coupon" && (
                           <div
-                            className="group relative grid min-h-16 w-fit min-w-28 cursor-pointer rounded-md border-2 border-dashed border-app-main bg-app-bg-main p-2 dark:bg-app-dark sm:min-h-fit  sm:min-w-40"
+                            className="group relative grid min-h-10 w-full min-w-28 cursor-pointer rounded-md border-2 border-dashed border-app-main bg-app-bg-main p-2 dark:bg-app-dark sm:min-h-fit  sm:min-w-40"
                             onClick={() => {
                               handleCouponUse(
                                 coupon.couponId,
@@ -807,7 +820,9 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                               );
                             }}
                           >
-                            <p className="translate-x-2 place-self-center text-base font-semibold uppercase tracking-widest">
+                            <p
+                              className={`translate-x-2 place-self-center text-base font-semibold uppercase tracking-widest ${!coupon.coupon_code && "min-h-5"}`}
+                            >
                               {coupon.coupon_code}
                             </p>
                             {/* wrapper */}
@@ -901,7 +916,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                             />
                             <Badge
                               className={
-                                "m-0 bg-neutral-500 text-black hover:bg-neutral-500 dark:text-slate-200"
+                                "m-0 mt-1 grid w-full place-items-center bg-neutral-500 text-black hover:bg-neutral-500 dark:text-slate-200"
                               }
                             >
                               {coupon.type}
@@ -924,7 +939,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                             className={`absolute right-2 top-2 size-4 cursor-pointer text-app-main transition-all duration-300 ease-linear ${
                               bookmarkedCoupons.includes(coupon.couponId)
                                 ? "fill-app-main text-app-main"
-                                : "opacity-0 hover:fill-app-main group-hover/accordion:opacity-100"
+                                : "opacity-100 hover:fill-app-main group-hover/accordion:opacity-100 lg:opacity-0"
                             }`}
                             onClick={() => handleBookmark(coupon.couponId)}
                           />
@@ -939,16 +954,15 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                             </p>
                           </div>
                           {coupon.type === "Deal" && (
-                            <Button
-                              size={"lg"}
-                              className="w-full border-2 border-dashed text-base font-semibold"
-                            >
+                            <Button className="min-h-10  w-full border-2 border-dashed bg-neutral-500 text-base font-semibold hover:bg-neutral-500">
                               Get Deal
                             </Button>
                           )}
                           {coupon.type === "Coupon" && (
-                            <div className="group relative grid min-h-16 w-fit min-w-28 cursor-pointer rounded-md border-2 border-dashed border-neutral-500 bg-app-bg-main p-2 dark:bg-app-dark sm:min-h-fit  sm:min-w-40">
-                              <p className="translate-x-2 place-self-center text-base font-semibold uppercase tracking-widest">
+                            <div className="group relative grid min-h-10 w-full min-w-28 cursor-pointer rounded-md border-2 border-dashed border-neutral-500 bg-app-bg-main p-2 dark:bg-app-dark sm:min-h-fit  sm:min-w-40">
+                              <p
+                                className={`translate-x-2 place-self-center text-base font-semibold uppercase tracking-widest ${!coupon.coupon_code && "min-h-5"}`}
+                              >
                                 {coupon.coupon_code}
                               </p>
                               {/* wrapper */}
@@ -1010,6 +1024,19 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
               <p>{detailsData.description}</p>
             </div>
 
+            {/* Popular Stores for mobile */}
+            {popularData?.length > 0 && (
+              <PopularItems
+                title="Popular Stores"
+                items={popularData.map((store, index) => ({
+                  id: index,
+                  name: store.name,
+                }))}
+                isHidden
+                isStore
+              />
+            )}
+
             {/* Store Related Stores */}
             {detailsData.similarStores?.length > 0 && (
               <PopularItems
@@ -1024,20 +1051,6 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                 isHidden
               />
             )}
-
-            {/* Popular Stores for mobile */}
-            {popularData?.length > 0 && (
-              <PopularItems
-                title="Popular Stores"
-                items={popularData.map((store, index) => ({
-                  id: index,
-                  name: store.name,
-                }))}
-                isHidden
-                isStore
-              />
-            )}
-
             {/* Top Categories for mobile */}
             {!isStore && topCategories?.length > 0 && (
               <PopularItems
@@ -1161,7 +1174,6 @@ const CouponDialog: React.FC<{
   title: string;
   couponCode: string;
   couponId: number;
-  isCoupon?: boolean;
   ref_link: string;
   expiry: string;
   handleReaction: (couponId: number, reaction: ReactionType) => void;
@@ -1172,7 +1184,6 @@ const CouponDialog: React.FC<{
   couponCode,
   couponId,
   expiry,
-  isCoupon,
   ref_link,
   handleReaction,
   userReaction,
@@ -1184,8 +1195,9 @@ const CouponDialog: React.FC<{
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
+
   return (
-    <DialogContent className="sm:max-w-[425px]">
+    <DialogContent className="w-11/12 sm:max-w-[425px]">
       <DialogHeader>
         <DialogTitle>Coupon Details</DialogTitle>
       </DialogHeader>
@@ -1211,14 +1223,82 @@ const CouponDialog: React.FC<{
             {copied ? "Copied!" : "Copy"}
           </Button>
         </div>
-        {isCoupon && (
-          <p className="flex items-center gap-x-1 text-emerald-500">
-            Copy and Paste Coupon code at{" "}
-            <Link href={ref_link}>
-              <span className="text-app-main underline">Product</span>
-            </Link>
-          </p>
-        )}
+        <p className="flex items-center gap-x-1 text-center text-emerald-500">
+          Copy and Paste Coupon code at{" "}
+          <Link href={ref_link} target="_blank">
+            <span className="flex items-center gap-x-1 text-app-main underline">
+              Product <FaExternalLinkAlt className="size-3" />
+            </span>
+          </Link>
+        </p>
+        <div className="flex items-center gap-4">
+          <button
+            onClick={() => handleReaction(couponId, "LIKE")}
+            className="flex items-center gap-2"
+          >
+            <ThumbsUp
+              className={
+                userReaction === "LIKE"
+                  ? "size-4 fill-emerald-500 text-emerald-500"
+                  : "size-4 text-emerald-500 transition-colors duration-200 ease-linear hover:fill-emerald-500"
+              }
+            />
+          </button>
+          <button
+            onClick={() => handleReaction(couponId, "DISLIKE")}
+            className="flex items-center gap-2"
+          >
+            <ThumbsDown
+              className={
+                userReaction === "DISLIKE"
+                  ? "size-4 fill-app-main text-app-main"
+                  : "size-4 text-app-main transition-colors duration-300 ease-linear hover:fill-app-main"
+              }
+            />
+          </button>
+        </div>
+      </div>
+    </DialogContent>
+  );
+};
+
+const DealDialog: React.FC<{
+  logoUrl: string;
+  title: string;
+  couponId: number;
+  ref_link: string;
+  expiry: string;
+  handleReaction: (couponId: number, reaction: ReactionType) => void;
+  userReaction: ReactionType | null;
+}> = ({
+  logoUrl,
+  title,
+  couponId,
+  expiry,
+  ref_link,
+  handleReaction,
+  userReaction,
+}) => {
+  return (
+    <DialogContent className="w-11/12 sm:max-w-[425px]">
+      <DialogHeader>
+        <DialogTitle>About Deal</DialogTitle>
+      </DialogHeader>
+      <div className="flex flex-col items-center gap-4">
+        <Image
+          src={logoUrl ?? "https://via.placeholder.com/100x100"}
+          width={100}
+          height={100}
+          alt="Store logo"
+          className="rounded-full"
+        />
+        <p className="text-sm font-medium">{title}</p>
+        <p className="text-sm font-medium text-muted-foreground">
+          Ends on {expiry}
+        </p>
+        <Link href={ref_link} target="_blank">
+          <Button className="bg-app-main">Go to Deal</Button>
+        </Link>
         <div className="flex items-center gap-4">
           <button
             onClick={() => handleReaction(couponId, "LIKE")}

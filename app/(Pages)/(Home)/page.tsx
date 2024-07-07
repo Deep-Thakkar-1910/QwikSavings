@@ -21,10 +21,7 @@ export default async function Home() {
         fetchFrom="Home and Garden"
       />
       <CategoriesSection title="Beauty Offer" fetchFrom="Beauty" />
-      <CategoriesSection
-        title="Accessories Offers"
-        fetchFrom="Food and Beverages"
-      />
+      <CategoriesSection title="Food Offers" fetchFrom="Food" />
       <AboutUs />
     </>
   );

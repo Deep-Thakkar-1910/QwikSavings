@@ -152,7 +152,7 @@ const CreateEventForm = () => {
         />
         {/* Logo Image field */}
         <FormItem>
-          <div className="my-4 flex items-center gap-x-3">
+          <div className="my-4 flex flex-col items-center gap-x-3 gap-y-4 sm:flex-row">
             <FormLabel>
               <span className="cursor-pointer rounded-lg border border-muted bg-transparent p-2 px-4 transition-colors duration-300 ease-out hover:bg-accent">
                 {selectedLogo ? "Change" : "Add"} Logo

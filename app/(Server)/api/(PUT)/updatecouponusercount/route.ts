@@ -4,7 +4,6 @@ import { NextResponse } from "next/server";
 export async function POST(req: Request) {
   try {
     const { couponId } = await req.json();
-
     if (!couponId) {
       return NextResponse.json(
         { success: false, error: "Coupon ID is required" },
@@ -22,7 +21,11 @@ export async function POST(req: Request) {
         },
       },
     });
-    return NextResponse.json({ success: true, message: "User Incremented" });
+    return NextResponse.json({
+      success: true,
+      message: "User Incremented",
+      updatedCouponUserCount,
+    });
   } catch (error) {
     console.error("Error incrementing users:", error);
     return NextResponse.json(

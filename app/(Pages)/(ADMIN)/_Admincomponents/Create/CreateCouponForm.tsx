@@ -334,7 +334,7 @@ const CreateCouponForm = ({ categories, stores, events }: CouponFormProps) => {
         {/* IF add to homepage is yes conditionally render this field */}
         {form.getValues("addToHomePage") === "yes" && (
           <FormItem>
-            <div className="my-4 flex items-center gap-x-3 ">
+            <div className="my-4 flex flex-col items-center gap-x-3 gap-y-4 sm:flex-row">
               <FormLabel>
                 <span className="cursor-pointer rounded-lg border border-muted bg-transparent p-2 px-4 transition-colors duration-300 ease-out hover:bg-accent">
                   {selectedThumbnailImage ? "Change" : "Add"} Thumbnail
@@ -393,7 +393,7 @@ const CreateCouponForm = ({ categories, stores, events }: CouponFormProps) => {
         {/* IF add to Carousel is yes conditionally render this field */}
         {form.getValues("addToCarousel") === "yes" && (
           <FormItem>
-            <div className="my-4 flex items-center gap-x-3 ">
+            <div className="my-4 flex flex-col items-center gap-x-3 gap-y-4 sm:flex-row">
               <FormLabel>
                 <span className="cursor-pointer rounded-lg border border-muted bg-transparent p-2 px-4 transition-colors duration-300 ease-out hover:bg-accent">
                   {selectedCarouselImage ? "Change" : "Add"} Carousel Poster
@@ -453,7 +453,7 @@ const CreateCouponForm = ({ categories, stores, events }: CouponFormProps) => {
         {/* IF add to Flipper is yes conditionally render this field */}
         {form.getValues("addToFlipper") === "yes" && (
           <FormItem>
-            <div className="my-4 flex items-center gap-x-3 ">
+            <div className="my-4 flex flex-col items-center gap-x-3 gap-y-4 sm:flex-row">
               <FormLabel>
                 <span className="cursor-pointer rounded-lg border border-muted bg-transparent p-2 px-4 transition-colors duration-300 ease-out hover:bg-accent">
                   {selectedFlipperImage ? "Change" : "Add"} Flipper Image
@@ -640,19 +640,19 @@ const CreateCouponForm = ({ categories, stores, events }: CouponFormProps) => {
           name="events"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Similar Stores</FormLabel>
+              <FormLabel>Related Events</FormLabel>
               <MultiSelector
                 onValuesChange={field.onChange}
                 values={field.value}
                 loop={false}
                 options={eventOptions}
-                emptyIndicator="No Stores Found"
+                emptyIndicator="No Events Found"
               >
                 <FormControl>
                   <MultiSelectorTrigger>
                     <MultiSelectorInput
                       placeholder={
-                        field.value.length <= 0 ? "Select Related Stores" : ""
+                        field.value.length <= 0 ? "Select Related Events" : ""
                       }
                     />
                   </MultiSelectorTrigger>

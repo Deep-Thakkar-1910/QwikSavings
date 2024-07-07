@@ -75,9 +75,12 @@ const EventDetails = () => {
 
   // to get search params
   const searchParams = useSearchParams();
-  // states for coupon clicks
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const [isCouponDialogOpen, setIsCouponDialogOpen] = useState(false);
+  const [isDealDialogOpen, setIsDealDialogOpen] = useState(false);
+
   const [dialogInfo, setDialogInfo] = useState({
+    title: "",
     logoUrl: "",
     couponCode: "",
     couponId: 0,
@@ -179,55 +182,47 @@ const EventDetails = () => {
 
   // NOTE: this is for handling coupon use
   useEffect(() => {
-    // Check if this window has coupon parameters
     const encodedCouponData = searchParams.get("coupon");
 
     if (encodedCouponData) {
-      const couponData = JSON.parse(decodeURIComponent(encodedCouponData));
+      let couponData;
+      try {
+        // First, try to parse it as JSON directly
+        couponData = JSON.parse(encodedCouponData);
+      } catch (e) {
+        // If that fails, it's likely URI encoded, so decode and then parse
+        couponData = JSON.parse(decodeURIComponent(encodedCouponData));
+      }
+
       setDialogInfo({
-        logoUrl: data?.logo_url,
-        couponCode: couponData.coupon_code,
+        title: couponData.title || "",
+        logoUrl: couponData.logo || data?.logo_url || "",
+        couponCode: couponData.coupon_code || "",
         couponId: couponData.couponId,
-        ref_link: couponData.ref_link,
+        ref_link: couponData.ref_link || "",
       });
 
-      // Open the dialog
-      setIsDialogOpen(true);
+      if (couponData.type === "Deal") {
+        setIsDealDialogOpen(true);
+      } else {
+        // If type is "Coupon" or not specified, open the coupon dialog
+        setIsCouponDialogOpen(true);
+      }
 
-      // Optionally, you can remove the coupon parameter from the URL
+      // Remove the coupon parameter from the URL
       const newUrl = new URL(window.location.href);
       newUrl.searchParams.delete("coupon");
       window.history.replaceState({}, "", newUrl);
     }
-  }, [searchParams, data?.logo_url, couponReactions]);
+  }, [searchParams, data?.logo_url]);
 
   const handleDeal = (coupon: Record<string, any>) => {
-    setDialogInfo({
-      logoUrl: data?.logo_url,
-      couponCode: coupon.coupon_code,
-      couponId: coupon.couponId,
-      ref_link: coupon.ref_link,
-    });
-    setIsDialogOpen(true);
-
     setTimeout(() => {
       window.open(coupon.ref_link, "_blank");
-      setIsDialogOpen(false);
-    }, 2000);
+    }, 1000);
   };
 
   const handleCoupon = (coupon: Record<string, any>) => {
-    // Set dialog info
-    setDialogInfo({
-      logoUrl: data?.logo_url,
-      couponCode: coupon.coupon_code,
-      couponId: coupon.couponId,
-      ref_link: coupon.ref_link,
-    });
-
-    // Open the dialog
-    setIsDialogOpen(true);
-
     // Encode coupon data in URL
     const encodedCoupon = encodeURIComponent(
       JSON.stringify({
@@ -260,9 +255,18 @@ const EventDetails = () => {
 
     try {
       await axios.post("/updatecouponusercount", { couponId });
+      setDialogInfo({
+        logoUrl: data?.logo_url,
+        couponCode: coupon.coupon_code,
+        couponId: coupon.couponId,
+        ref_link: coupon.ref_link,
+        title: coupon.title,
+      });
       if (type === "Coupon") {
+        setIsCouponDialogOpen(true);
         handleCoupon(coupon);
       } else if (type === "Deal") {
+        setIsDealDialogOpen(true);
         handleDeal(coupon);
       }
     } catch (error) {
@@ -387,7 +391,7 @@ const EventDetails = () => {
           <p>No Events Found</p>
         </div>
       ) : (
-        <div className="relative">
+        <div className="relative w-full">
           {session?.user.role === "admin" ? (
             <Link
               href={`/admin/editevent/${eventName}`}
@@ -425,7 +429,7 @@ const EventDetails = () => {
               {data?.name}
             </h1>
           </div>
-          <section className="relative mb-6 flex w-full flex-col items-start gap-6 px-8 pt-10 lg:flex-row lg:px-16">
+          <section className="relative mb-6 flex w-full flex-col items-start gap-6 px-0 pt-10 sm:px-8 lg:flex-row lg:px-16">
             <aside className="hidden flex-col items-center gap-y-8 lg:flex lg:w-1/4">
               <Image
                 src={
@@ -532,7 +536,7 @@ const EventDetails = () => {
                 {activeCoupons.map((coupon: any) => (
                   <AccordionItem
                     key={coupon.couponId}
-                    value={coupon.couponId.toString()}
+                    value={coupon.couponId}
                     className="rounded-lg bg-popover shadow-md"
                   >
                     <div className="group/accordion relative flex w-full items-center justify-between gap-x-6 gap-y-4 p-6">
@@ -552,9 +556,9 @@ const EventDetails = () => {
                           <Badge
                             className={cn(
                               coupon.type === "Deal"
-                                ? "bg-amber-400 hover:bg-amber-400"
-                                : "bg-blue-400/50 hover:bg-blue-400/50",
-                              "m-0 text-black dark:text-slate-200",
+                                ? "bg-amber-500 hover:bg-amber-600"
+                                : "bg-blue-400/50 hover:bg-blue-500/50",
+                              "mt-1 grid w-full place-items-center text-black dark:text-slate-200 ",
                             )}
                           >
                             {coupon.type}
@@ -577,7 +581,7 @@ const EventDetails = () => {
                           className={`absolute right-2 top-2 size-4 cursor-pointer text-app-main transition-all duration-300 ease-linear ${
                             bookmarkedCoupons.includes(coupon.couponId)
                               ? "fill-app-main text-app-main"
-                              : "opacity-0 hover:fill-app-main group-hover/accordion:opacity-100 "
+                              : "opacity-100 hover:fill-app-main group-hover/accordion:opacity-100 lg:opacity-0"
                           }`}
                           onClick={() => handleBookmark(coupon.couponId)}
                         />
@@ -592,16 +596,29 @@ const EventDetails = () => {
                           </p>
                         </div>
                         <Dialog
-                          open={isDialogOpen}
-                          onOpenChange={setIsDialogOpen}
+                          open={isCouponDialogOpen}
+                          onOpenChange={setIsCouponDialogOpen}
                         >
                           <CouponDialog
                             logoUrl={dialogInfo.logoUrl}
                             title={coupon.title}
                             couponCode={dialogInfo.couponCode}
                             couponId={dialogInfo.couponId}
-                            expiry={format(coupon.due_date, "dd-MMM-yyy")}
-                            isCoupon={coupon.type === "Coupon"}
+                            expiry={format(coupon.due_date, "dd-MMM-yyyy")}
+                            ref_link={coupon.ref_link}
+                            handleReaction={handleReaction}
+                            userReaction={userReactions[dialogInfo.couponId]}
+                          />
+                        </Dialog>
+                        <Dialog
+                          open={isDealDialogOpen}
+                          onOpenChange={setIsDealDialogOpen}
+                        >
+                          <DealDialog
+                            logoUrl={dialogInfo.logoUrl}
+                            title={dialogInfo.title}
+                            couponId={dialogInfo.couponId}
+                            expiry={format(coupon.due_date, "dd-MMM-yyyy")}
                             ref_link={coupon.ref_link}
                             handleReaction={handleReaction}
                             userReaction={userReactions[dialogInfo.couponId]}
@@ -609,8 +626,7 @@ const EventDetails = () => {
                         </Dialog>
                         {coupon.type === "Deal" && (
                           <Button
-                            size={"lg"}
-                            className="w-full border-2 border-dashed text-base font-semibold"
+                            className="min-h-10 w-full border-2 border-dashed bg-app-main  text-base font-semibold"
                             onClick={() => {
                               handleCouponUse(coupon.couponId, "Deal", coupon);
                             }}
@@ -620,7 +636,7 @@ const EventDetails = () => {
                         )}
                         {coupon.type === "Coupon" && (
                           <div
-                            className="group relative grid min-h-16 w-fit min-w-28 cursor-pointer rounded-md border-2 border-dashed border-app-main bg-app-bg-main p-2 dark:bg-app-dark sm:min-h-fit  sm:min-w-40"
+                            className="group relative grid min-h-10 w-full min-w-28 cursor-pointer rounded-md border-2 border-dashed border-app-main bg-app-bg-main p-2 dark:bg-app-dark sm:min-h-fit  sm:min-w-40"
                             onClick={() => {
                               handleCouponUse(
                                 coupon.couponId,
@@ -629,7 +645,9 @@ const EventDetails = () => {
                               );
                             }}
                           >
-                            <p className="translate-x-2 place-self-center text-base font-semibold uppercase tracking-widest">
+                            <p
+                              className={`translate-x-2 place-self-center text-base font-semibold uppercase tracking-widest ${!coupon.coupon_code && "min-h-5"}`}
+                            >
                               {coupon.coupon_code}
                             </p>
                             {/* wrapper */}
@@ -724,7 +742,7 @@ const EventDetails = () => {
                               />
                               <Badge
                                 className={
-                                  "m-0 bg-neutral-500 text-black hover:bg-neutral-500 dark:text-slate-200"
+                                  "m-0 mt-1 grid w-full place-items-center bg-neutral-500 text-black hover:bg-neutral-500 dark:text-slate-200"
                                 }
                               >
                                 {coupon.type}
@@ -747,35 +765,85 @@ const EventDetails = () => {
                               className={`absolute right-2 top-2 size-4 cursor-pointer text-app-main transition-all duration-300 ease-linear ${
                                 bookmarkedCoupons.includes(coupon.couponId)
                                   ? "fill-app-main text-app-main"
-                                  : "opacity-0 hover:fill-app-main group-hover/accordion:opacity-100 "
+                                  : "opacity-100 hover:fill-app-main group-hover/accordion:opacity-100 lg:opacity-0"
                               }`}
                               onClick={() => handleBookmark(coupon.couponId)}
                             />
                             <div className=" flex flex-col items-center gap-x-4 sm:flex-row">
-                              <p className="flex w-fit items-center gap-x-2 text-sm">
-                                <PiSmileySadBold className="inline-flex size-4 text-app-main" />
-                                Expired
+                              <p className="flex w-fit items-center gap-x-2 text-sm text-emerald-500">
+                                <Verified className="inline-flex size-4 text-emerald-500" />
+                                Verified
                               </p>
                               <p className="flex items-center gap-x-2 tabular-nums text-muted-foreground">
                                 <User className="size-4" />
                                 {couponUserCounts[coupon.couponId] || 0} Used
                               </p>
                             </div>
+                            <Dialog
+                              open={isCouponDialogOpen}
+                              onOpenChange={setIsCouponDialogOpen}
+                            >
+                              <CouponDialog
+                                logoUrl={dialogInfo.logoUrl}
+                                title={coupon.title}
+                                couponCode={dialogInfo.couponCode}
+                                couponId={dialogInfo.couponId}
+                                expiry={format(coupon.due_date, "dd-MMM-yyyy")}
+                                ref_link={coupon.ref_link}
+                                handleReaction={handleReaction}
+                                userReaction={
+                                  userReactions[dialogInfo.couponId]
+                                }
+                              />
+                            </Dialog>
+                            <Dialog
+                              open={isDealDialogOpen}
+                              onOpenChange={setIsDealDialogOpen}
+                            >
+                              <DealDialog
+                                logoUrl={dialogInfo.logoUrl}
+                                title={dialogInfo.title}
+                                couponId={dialogInfo.couponId}
+                                expiry={format(coupon.due_date, "dd-MMM-yyyy")}
+                                ref_link={coupon.ref_link}
+                                handleReaction={handleReaction}
+                                userReaction={
+                                  userReactions[dialogInfo.couponId]
+                                }
+                              />
+                            </Dialog>
                             {coupon.type === "Deal" && (
                               <Button
-                                size={"lg"}
-                                className="w-full border-2 border-dashed text-base font-semibold"
+                                className="min-h-10 w-full border-2 border-dashed bg-app-main  text-base font-semibold"
+                                onClick={() => {
+                                  handleCouponUse(
+                                    coupon.couponId,
+                                    "Deal",
+                                    coupon,
+                                  );
+                                }}
                               >
                                 Get Deal
                               </Button>
                             )}
                             {coupon.type === "Coupon" && (
-                              <div className="group relative grid min-h-16 w-fit min-w-28 cursor-pointer rounded-md border-2 border-dashed border-neutral-500 bg-app-bg-main p-2 dark:bg-app-dark sm:min-h-fit  sm:min-w-40">
-                                <p className="translate-x-2 place-self-center text-base font-semibold uppercase tracking-widest">
+                              <div
+                                className="group relative grid min-h-10 w-full min-w-28 cursor-pointer rounded-md border-2 border-dashed border-app-main bg-app-bg-main p-2 dark:bg-app-dark sm:min-h-fit  sm:min-w-40"
+                                onClick={() => {
+                                  handleCouponUse(
+                                    coupon.couponId,
+                                    "Coupon",
+                                    coupon,
+                                  );
+                                }}
+                              >
+                                <p
+                                  className={`translate-x-2 place-self-center text-base font-semibold uppercase tracking-widest ${!coupon.coupon_code && "min-h-5"}`}
+                                >
                                   {coupon.coupon_code}
                                 </p>
                                 {/* wrapper */}
-                                <div className="polygon-clip absolute left-0 top-0 grid h-full w-full place-items-center bg-neutral-500  transition-all duration-200 ease-linear group-hover:w-8/12 ">
+                                <div className="polygon-clip absolute left-0 top-0 grid h-full w-full place-items-center bg-app-main  transition-all duration-200 ease-linear group-hover:w-8/12 ">
                                   <p className="text-sm font-semibold text-slate-200">
                                     Reveal code
                                   </p>
@@ -783,12 +851,17 @@ const EventDetails = () => {
                               </div>
                             )}
                             <div className="flex items-center gap-x-4">
-                              <button className="flex items-center gap-x-2">
+                              <button
+                                onClick={() =>
+                                  handleReaction(coupon.couponId, "LIKE")
+                                }
+                                className="flex items-center gap-x-2"
+                              >
                                 <ThumbsUp
                                   className={
                                     userReactions[coupon.couponId] === "LIKE"
-                                      ? "size-4 text-neutral-500"
-                                      : "size-4 text-neutral-500"
+                                      ? "size-4 fill-emerald-500 text-emerald-500"
+                                      : "size-4 text-emerald-500 transition-colors duration-200 ease-linear hover:fill-emerald-500"
                                   }
                                 />
                                 <span className="text-muted-foreground">
@@ -796,12 +869,17 @@ const EventDetails = () => {
                                     ?.like_count || 0}
                                 </span>
                               </button>
-                              <button className="flex items-center gap-x-2">
+                              <button
+                                onClick={() =>
+                                  handleReaction(coupon.couponId, "DISLIKE")
+                                }
+                                className="flex items-center gap-x-2"
+                              >
                                 <ThumbsDown
                                   className={
                                     userReactions[coupon.couponId] === "DISLIKE"
-                                      ? "size-4 text-neutral-500"
-                                      : "size-4 text-neutral-500"
+                                      ? "size-4 fill-app-main text-app-main"
+                                      : "size-4 text-app-main transition-colors duration-300 ease-linear hover:fill-app-main"
                                   }
                                 />
                                 <span className="text-muted-foreground">
@@ -901,7 +979,6 @@ const CouponDialog: React.FC<{
   title: string;
   couponCode: string;
   couponId: number;
-  isCoupon?: boolean;
   ref_link: string;
   expiry: string;
   handleReaction: (couponId: number, reaction: ReactionType) => void;
@@ -912,7 +989,6 @@ const CouponDialog: React.FC<{
   couponCode,
   couponId,
   expiry,
-  isCoupon,
   ref_link,
   handleReaction,
   userReaction,
@@ -924,6 +1000,7 @@ const CouponDialog: React.FC<{
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
+
   return (
     <DialogContent className="sm:max-w-[425px]">
       <DialogHeader>
@@ -945,20 +1022,86 @@ const CouponDialog: React.FC<{
           <span className="">{couponCode}</span>
           <Button
             size="sm"
-            className="rounded-full rounded-bl-none rounded-tl-none bg-app-main p-3"
+            className="ml-auto min-w-16 rounded-full rounded-bl-none rounded-tl-none bg-app-main p-3"
             onClick={copyToClipboard}
           >
             {copied ? "Copied!" : "Copy"}
           </Button>
         </div>
-        {isCoupon && (
-          <p className="flex items-center gap-x-1 text-emerald-500">
-            Copy and Paste Coupon code at{" "}
-            <Link href={ref_link}>
-              <span className="text-app-main underline">Product</span>
-            </Link>
-          </p>
-        )}
+        <p className="flex items-center gap-x-1 text-emerald-500">
+          Copy and Paste Coupon code at{" "}
+          <Link href={ref_link}>
+            <span className="text-app-main underline">Product</span>
+          </Link>
+        </p>
+        <div className="flex items-center gap-4">
+          <button
+            onClick={() => handleReaction(couponId, "LIKE")}
+            className="flex items-center gap-2"
+          >
+            <ThumbsUp
+              className={
+                userReaction === "LIKE"
+                  ? "size-4 fill-emerald-500 text-emerald-500"
+                  : "size-4 text-emerald-500 transition-colors duration-200 ease-linear hover:fill-emerald-500"
+              }
+            />
+          </button>
+          <button
+            onClick={() => handleReaction(couponId, "DISLIKE")}
+            className="flex items-center gap-2"
+          >
+            <ThumbsDown
+              className={
+                userReaction === "DISLIKE"
+                  ? "size-4 fill-app-main text-app-main"
+                  : "size-4 text-app-main transition-colors duration-300 ease-linear hover:fill-app-main"
+              }
+            />
+          </button>
+        </div>
+      </div>
+    </DialogContent>
+  );
+};
+
+const DealDialog: React.FC<{
+  logoUrl: string;
+  title: string;
+  couponId: number;
+  ref_link: string;
+  expiry: string;
+  handleReaction: (couponId: number, reaction: ReactionType) => void;
+  userReaction: ReactionType | null;
+}> = ({
+  logoUrl,
+  title,
+  couponId,
+  expiry,
+  ref_link,
+  handleReaction,
+  userReaction,
+}) => {
+  return (
+    <DialogContent className="sm:max-w-[425px]">
+      <DialogHeader>
+        <DialogTitle>About Deal</DialogTitle>
+      </DialogHeader>
+      <div className="flex flex-col items-center gap-4">
+        <Image
+          src={logoUrl ?? "https://via.placeholder.com/100x100"}
+          width={100}
+          height={100}
+          alt="Store logo"
+          className="rounded-full"
+        />
+        <p className="text-sm font-medium">{title}</p>
+        <p className="text-sm font-medium text-muted-foreground">
+          Ends on {expiry}
+        </p>
+        <Link href={ref_link}>
+          <Button className="bg-app-main">Go to Deal</Button>
+        </Link>
         <div className="flex items-center gap-4">
           <button
             onClick={() => handleReaction(couponId, "LIKE")}

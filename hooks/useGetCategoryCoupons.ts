@@ -6,6 +6,8 @@ export interface Coupon {
   store: Record<string, any>;
   category: Record<string, any>;
   coupon_code: string;
+  ref_link: string;
+  couponId: number;
   type: string;
   title: string;
   thumbnail_url: string;

@@ -24,7 +24,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useState, ChangeEvent, useRef } from "react";
+import { useState, ChangeEvent, useRef, useEffect } from "react";
 import Image from "next/image";
 import { MinusCircle } from "lucide-react";
 import { AxiosError } from "axios";
@@ -39,14 +39,38 @@ import {
 } from "@/components/ui/MultipleSelector";
 
 type InputType = z.infer<typeof CreateStoreFormScehma>;
-interface StoreFormProps {
-  similarStores?: { name: string; storeId: number }[];
+interface similarStoresType {
+  storeId: number;
+  name: string;
 }
-const CreateStoreForm = ({ similarStores = [] }: StoreFormProps) => {
+const CreateStoreForm = () => {
   // for image preview
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-
-  const similarStoreOptions = similarStores.map((store) => {
+  const [similarStores, setSimilarStores] = useState<similarStoresType[]>([]);
+  useEffect(() => {
+    // Fetch similar stores from the API
+    const fetchSimilarStores = async () => {
+      try {
+        const response = await axios.get("/getstores");
+        const result = response.data;
+        if (result.success) {
+          setSimilarStores(result?.stores);
+        }
+      } catch (error) {
+        console.error(error);
+        if (error instanceof AxiosError) {
+          toast({
+            title: "Uh Oh!",
+            description: error.response?.data.error || "An error occurred.",
+            variant: "destructive",
+          });
+        }
+      }
+    };
+    fetchSimilarStores();
+  }, []);
+  console.log(similarStores);
+  const similarStoreOptions = similarStores?.map((store) => {
     return {
       label: store.name,
       id: `${store.storeId}`,
@@ -178,7 +202,7 @@ const CreateStoreForm = ({ similarStores = [] }: StoreFormProps) => {
           )}
         />
         <FormItem>
-          <div className="my-4 flex items-center gap-x-3 ">
+          <div className="my-4 flex flex-col items-center gap-x-3 gap-y-4 sm:flex-row">
             <FormLabel>
               <span className="cursor-pointer rounded-lg border border-muted bg-transparent p-2 px-4 transition-colors duration-300 ease-out hover:bg-accent">
                 {selectedImage ? "Change" : "Add"} Logo

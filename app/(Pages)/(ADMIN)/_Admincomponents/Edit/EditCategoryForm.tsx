@@ -169,7 +169,7 @@ const EditCategoryForm = () => {
           )}
         />
         <FormItem>
-          <div className="my-4 flex items-center gap-x-3">
+          <div className="my-4 flex flex-col items-center gap-x-3 gap-y-4 sm:flex-row">
             <FormLabel>
               <span className="cursor-pointer rounded-lg border border-muted bg-transparent p-2 px-4 transition-colors duration-300 ease-out hover:bg-accent">
                 {selectedImage ? "Change" : "Add"} Logo
@@ -223,7 +223,12 @@ const EditCategoryForm = () => {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Add to Today&apos;s Top Categrories?</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+                value={field.value}
+                key={field.value}
+              >
                 <FormControl>
                   <SelectTrigger className="w-[180px]">
                     <SelectValue placeholder="Select a Type" />

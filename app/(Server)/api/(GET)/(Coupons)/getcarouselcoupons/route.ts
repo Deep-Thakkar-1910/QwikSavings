@@ -13,6 +13,17 @@ export async function GET() {
       select: {
         carouselPosterUrl: true,
         couponId: true,
+        coupon_code: true,
+        title: true,
+        isVerified: true,
+        user_count: true,
+        type: true,
+        store: {
+          select: {
+            name: true,
+            logo_url: true,
+          },
+        },
       },
       orderBy: {
         updatedAt: "desc",

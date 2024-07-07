@@ -24,6 +24,8 @@ export async function GET(
             type: true,
             title: true,
             user_count: true,
+            like_count: true,
+            dislike_count: true,
             store: {
               select: {
                 logo_url: true,

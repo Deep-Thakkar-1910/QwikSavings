@@ -1,14 +1,14 @@
 import Link from "next/link";
 import { ReactNode } from "react";
-const AdminDisplayLayout = ({ children }: { children: ReactNode }) => {
+const AdminDisplayLayout = async ({ children }: { children: ReactNode }) => {
   const adminNavlinks = [
     { href: "/admin/", title: "All Stores" },
     { href: "/admin/categories", title: "All Categories" },
     { href: "/admin/coupons", title: "All Coupons" },
     { href: "admin/events", title: "All Events" },
     { href: "admin/blogs", title: "All Blogs" },
+    { href: "admin/usercoupons", title: "Submitted Coupons" },
   ];
-
   return (
     <section className="flex w-full flex-col items-center">
       <h1 className="text-center text-3xl font-semibold sm:text-4xl">

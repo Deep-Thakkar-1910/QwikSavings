@@ -93,7 +93,7 @@ const MultiSelector = ({
         setActiveIndex(prevIndex < 0 ? value.length - 1 : prevIndex);
       };
 
-      if ((e.key === "Backspace" || e.key === "Delete") && value.length > 0) {
+      if ((e.key === "Backspace" || e.key === "Delete") && value?.length > 0) {
         if (inputValue.length === 0) {
           if (activeIndex !== -1 && activeIndex < value.length) {
             onValueChange(value.filter((item) => item !== value[activeIndex]));
@@ -303,7 +303,7 @@ const MultiSelectorItem = forwardRef<
     e.stopPropagation();
   }, []);
 
-  const isIncluded = Options.includes(id);
+  const isIncluded = Options?.includes(id);
   return (
     <CommandItem
       ref={ref}

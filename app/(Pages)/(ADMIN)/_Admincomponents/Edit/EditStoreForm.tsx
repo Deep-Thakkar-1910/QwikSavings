@@ -86,7 +86,7 @@ const EditStoreForm = ({ similarStores = [] }: StoreFormProps) => {
     name: "faq",
   });
 
-  const [storeDetails, setStoreDetails] = useState<InputType>();
+  const [storeDetails, setStoreDetails] = useState<Record<string, any>>();
 
   // Fetch store data for editing
   useEffect(() => {
@@ -105,27 +105,28 @@ const EditStoreForm = ({ similarStores = [] }: StoreFormProps) => {
       }
     };
     fetchStoreData();
-  }, [reset, storeName]);
+  }, [storeName]);
 
   useEffect(() => {
     if (storeDetails) {
-      console.log(storeDetails);
+      const storeIds =
+        storeDetails?.similarStores?.map((store: any) =>
+          store?.storeId?.toString(),
+        ) || [];
       reset({
         name: storeDetails.name,
         title: storeDetails.title,
         ref_link: storeDetails.ref_link,
-        isFeatured: storeDetails.isFeatured ? "yes" : "no",
         logo: undefined,
-        addToPopularStores: storeDetails.addToPopularStores ? "yes" : "no",
         description: storeDetails.description ?? undefined,
         moreAbout: storeDetails.moreAbout ?? "",
         hint: storeDetails.hint ?? undefined,
         best_offer: storeDetails.best_offer,
-        similarStores: storeDetails.similarStores.map(
-          (store: any) => store.storeId,
-        ),
         average_discount: storeDetails.average_discount,
         faq: JSON.parse(storeDetails.faq as unknown as string),
+        similarStores: storeIds,
+        isFeatured: storeDetails.isFeatured ? "yes" : "no",
+        addToPopularStores: storeDetails.addToPopularStores ? "yes" : "no",
       });
       setSelectedImage(storeDetails.logo_url ?? null);
     }
@@ -223,7 +224,7 @@ const EditStoreForm = ({ similarStores = [] }: StoreFormProps) => {
           )}
         />
         <FormItem>
-          <div className="my-4 flex items-center gap-x-3 ">
+          <div className="my-4 flex flex-col items-center gap-x-3 gap-y-4 sm:flex-row">
             <FormLabel>
               <span className="cursor-pointer rounded-lg border border-muted bg-transparent p-2 px-4 transition-colors duration-300 ease-out hover:bg-accent">
                 {selectedImage ? "Change" : "Add"} Logo
@@ -280,7 +281,11 @@ const EditStoreForm = ({ similarStores = [] }: StoreFormProps) => {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Feature Store </FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+                value={field.value}
+              >
                 <FormControl>
                   <SelectTrigger className="w-[180px]">
                     <SelectValue placeholder="No" />
@@ -301,7 +306,11 @@ const EditStoreForm = ({ similarStores = [] }: StoreFormProps) => {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Add to Popular Stores?</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+                value={field.value}
+              >
                 <FormControl>
                   <SelectTrigger className="w-[180px]">
                     <SelectValue placeholder="Select a Type" />
@@ -399,7 +408,7 @@ const EditStoreForm = ({ similarStores = [] }: StoreFormProps) => {
               <FormLabel>Similar Stores</FormLabel>
               <MultiSelector
                 onValuesChange={field.onChange}
-                values={field?.value}
+                values={field?.value || []}
                 loop={false}
                 options={similarStoreOptions}
                 emptyIndicator="No Stores Found"

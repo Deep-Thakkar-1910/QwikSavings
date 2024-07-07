@@ -10,19 +10,20 @@ datasource db {
 }
 
 model User {
-  id            String     @id @default(cuid())
-  name          String
-  password      String?
-  email         String     @unique
-  emailVerified DateTime?
-  role          String?    @default("user")
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
-  bookmarks     Bookmark[]
-  createdAt     DateTime   @default(now())
-  updatedAt     DateTime   @updatedAt
-  Rating        Rating[]
+  id                   String                @id @default(cuid())
+  name                 String
+  password             String?
+  email                String                @unique
+  emailVerified        DateTime?
+  role                 String?               @default("user")
+  image                String?
+  accounts             Account[]
+  sessions             Session[]
+  bookmarks            Bookmark[]
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
+  Rating               Rating[]
+  UserSubmittedCoupons UserSubmittedCoupon[]
 
   @@index([email], type: Hash)
   @@map("users")
@@ -84,27 +85,28 @@ model Bookmark {
 }
 
 model Store {
-  storeId            Int      @id @default(autoincrement())
-  name               String   @unique
-  title              String?
-  logo_url           String?
-  ref_link           String
-  description        String?
-  moreAbout          String?
-  hint               String?
-  isFeatured         Boolean  @default(false)
-  addToPopularStores Boolean  @default(false)
-  faq                Json?
-  ratings_count      Int      @default(0)
-  average_rating     Float    @default(0)
-  best_offer         String   @default("0")
-  average_discount   String   @default("0")
-  coupons            Coupon[]
-  Rating             Rating[]
-  similarStores      Store[]  @relation("SimilarStores")
-  storeIsSimilarTo   Store[]  @relation("SimilarStores")
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @default(now()) @updatedAt
+  storeId              Int                   @id @default(autoincrement())
+  name                 String                @unique
+  title                String?
+  logo_url             String?
+  ref_link             String
+  description          String?
+  moreAbout            String?
+  hint                 String?
+  isFeatured           Boolean               @default(false)
+  addToPopularStores   Boolean               @default(false)
+  faq                  Json?
+  ratings_count        Int                   @default(0)
+  average_rating       Float                 @default(0)
+  best_offer           String                @default("0")
+  average_discount     String                @default("0")
+  coupons              Coupon[]
+  Rating               Rating[]
+  UserSubmittedCoupons UserSubmittedCoupon[]
+  similarStores        Store[]               @relation("SimilarStores")
+  storeIsSimilarTo     Store[]               @relation("SimilarStores")
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @default(now()) @updatedAt
 
   @@map("stores")
 }
@@ -150,46 +152,69 @@ model Rating {
 }
 
 model Category {
-  categoryId               Int      @id @default(autoincrement())
+  categoryId               Int                   @id @default(autoincrement())
   logo_url                 String?
-  addToTodaysTopCategories Boolean  @default(false)
-  name                     String   @unique
+  addToTodaysTopCategories Boolean               @default(false)
+  name                     String                @unique
   description              String?
   coupons                  Coupon[]
-  createdAt                DateTime @default(now())
-  updatedAt                DateTime @default(now()) @updatedAt
+  UserSubmittedCoupon      UserSubmittedCoupon[]
+  createdAt                DateTime              @default(now())
+  updatedAt                DateTime              @default(now()) @updatedAt
 
   @@map("categories")
 }
 
 model Coupon {
-  couponId          Int        @id @default(autoincrement())
-  title             String
-  description       String?
-  coupon_code       String?
-  thumbnail_url     String?
-  flipperImage_url  String?
-  carouselPosterUrl String?
-  type              Type
-  addToHomePage     Boolean    @default(false)
-  addToCarousel     Boolean    @default(false)
-  addToFlipper      Boolean    @default(false)
-  store_id          Int
-  category_id       Int
-  ref_link          String
-  due_date          DateTime
-  user_count        Int        @default(0)
-  createdAt         DateTime   @default(now())
-  isVerified        Boolean    @default(false)
-  updatedAt         DateTime   @default(now()) @updatedAt
-  like_count        Int        @default(0)
-  dislike_count     Int        @default(0)
-  events            Event[]    @relation("EventCoupon")
-  store             Store      @relation(fields: [store_id], references: [storeId], onDelete: Cascade)
-  category          Category   @relation(fields: [category_id], references: [categoryId], onDelete: Cascade)
-  bookmarks         Bookmark[]
+  couponId             Int        @id @default(autoincrement())
+  title                String
+  description          String?
+  coupon_code          String?
+  thumbnail_url        String?
+  flipperImage_url     String?
+  carouselPosterUrl    String?
+  type                 Type
+  addToHomePage        Boolean    @default(false)
+  addToCarousel        Boolean    @default(false)
+  addToFlipper         Boolean    @default(false)
+  store_id             Int
+  category_id          Int
+  ref_link             String
+  due_date             DateTime
+  user_count           Int        @default(0)
+  createdAt            DateTime   @default(now())
+  isVerified           Boolean    @default(false)
+  updatedAt            DateTime   @default(now()) @updatedAt
+  like_count           Int        @default(0)
+  dislike_count        Int        @default(0)
+  originalSubmissionId Int?
+  store                Store      @relation(fields: [store_id], references: [storeId], onDelete: Cascade)
+  category             Category   @relation(fields: [category_id], references: [categoryId], onDelete: Cascade)
+  events               Event[]    @relation("EventCoupon")
+  bookmarks            Bookmark[]
 
   @@map("coupons")
+}
+
+model UserSubmittedCoupon {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String?
+  coupon_code String?
+  type        Type
+  store_id    Int
+  category_id Int
+  ref_link    String
+  due_date    DateTime
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  userId      String
+  isVerified  Boolean  @default(false)
+  user        User     @relation(fields: [userId], references: [id])
+  store       Store    @relation(fields: [store_id], references: [storeId])
+  category    Category @relation(fields: [category_id], references: [categoryId])
+
+  @@map("user_submitted_coupons")
 }
 
 enum Type {

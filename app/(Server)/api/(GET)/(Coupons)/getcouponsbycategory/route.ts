@@ -27,6 +27,7 @@ export const GET = async (req: Request) => {
                 logo_url: true,
               },
             },
+            couponId: true,
             thumbnail_url: true,
             coupon_code: true,
             title: true,

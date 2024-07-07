@@ -12,12 +12,18 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ArrowLeftFromLine, Moon, Sun, UserCircle2 } from "lucide-react";
+import {
+  ArrowLeftFromLine,
+  Bookmark,
+  Heart,
+  Moon,
+  Sun,
+  UserCircle2,
+} from "lucide-react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useTheme } from "next-themes";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { AvatarImage } from "@radix-ui/react-avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 const ProfileDropDown = () => {
   const { resolvedTheme, setTheme } = useTheme();
   const { data: session } = useSession();
@@ -94,6 +100,13 @@ const ProfileDropDown = () => {
         </DropdownMenuGroup>
         {session?.user && (
           <>
+            <DropdownMenuSeparator />
+            <Link href="/bookmarks">
+              <DropdownMenuItem>
+                <Heart className="mr-2 size-4" />
+                <span>My Bookmarks</span>
+              </DropdownMenuItem>
+            </Link>
             <DropdownMenuSeparator />
             <Link href={"/api/auth/signout"}>
               <DropdownMenuItem>

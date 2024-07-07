@@ -1,5 +1,5 @@
 "use client";
-import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { ChangeEvent, use, useEffect, useRef, useState } from "react";
 import {
   Form,
   FormControl,
@@ -103,12 +103,12 @@ const EditCouponForm = ({ categories, stores, events }: CouponFormProps) => {
       thumbnail_url: undefined,
       flipperImage_url: undefined,
       carouselPosterUrl: undefined,
+      category_id: "",
+      type: "Deal",
       addToCarousel: "no",
       addToHomePage: "no",
       addToFlipper: "no",
-      category_id: "",
       store_id: "",
-      type: "Deal",
       events: [],
       due_date: undefined,
     },
@@ -116,7 +116,7 @@ const EditCouponForm = ({ categories, stores, events }: CouponFormProps) => {
     shouldFocusError: true,
   });
 
-  const { control, setValue, handleSubmit, formState } = form;
+  const { control, setValue, handleSubmit, formState, reset } = form;
 
   useEffect(() => {
     // Fetch initial data
@@ -135,26 +135,30 @@ const EditCouponForm = ({ categories, stores, events }: CouponFormProps) => {
 
   useEffect(() => {
     if (couponDetails) {
+      const eventIds =
+        couponDetails?.events?.map((event: any) =>
+          event?.eventId?.toString(),
+        ) || [];
       // Set form values
-      form.reset({
+      reset({
+        coupon_code: couponDetails.coupon_code ?? "",
+        description: couponDetails.description ?? undefined,
+        ref_link: couponDetails.ref_link ?? "",
+        title: couponDetails.title ?? "",
+        category_id: `${couponDetails.category_id}` ?? "",
+        store_id: `${couponDetails.store_id}` ?? "",
+        events: eventIds,
+        type: couponDetails.type === "Deal" ? "Deal" : "Coupon",
         addToCarousel: couponDetails.addToCarousel ? "yes" : "no",
         addToHomePage: couponDetails.addToHomePage ? "yes" : "no",
         addToFlipper: couponDetails.addToFlipper ? "yes" : "no",
-        coupon_code: couponDetails.coupon_code,
-        description: couponDetails.description ?? undefined,
-        ref_link: couponDetails.ref_link,
-        title: couponDetails.title,
-        type: couponDetails.type,
-        category_id: `${couponDetails.category_id}`,
-        store_id: `${couponDetails.store_id}`,
-        events: couponDetails.events.map((event: any) => event.eventId),
       });
       // Set date
       if (couponDetails.due_date) {
-        setDate(new Date(couponDetails.due_date));
-        form.setValue("due_date", new Date(couponDetails.due_date));
+        const date = new Date(couponDetails.due_date);
+        setDate(date);
+        setValue("due_date", date);
       }
-
       // Set image previews
       if (couponDetails.thumbnail_url)
         setSelectedThumbnailImage(couponDetails.thumbnail_url);
@@ -163,7 +167,7 @@ const EditCouponForm = ({ categories, stores, events }: CouponFormProps) => {
       if (couponDetails.carouselPosterUrl)
         setSelectedCarouselImage(couponDetails.carouselPosterUrl);
     }
-  }, [couponDetails, form]);
+  }, [couponDetails, reset, setValue]);
 
   // handle thumbnail image onChange event
   const handleThumbnailChange = async (
@@ -314,7 +318,12 @@ const EditCouponForm = ({ categories, stores, events }: CouponFormProps) => {
               <FormLabel>
                 Coupon Type <sup className="text-app-main">*</sup>
               </FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+                value={field.value}
+                key={field.value}
+              >
                 <FormControl>
                   <SelectTrigger className="w-[180px]">
                     <SelectValue placeholder="Select a Type" />
@@ -337,7 +346,6 @@ const EditCouponForm = ({ categories, stores, events }: CouponFormProps) => {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Coupon Code</FormLabel>
-                <sup className="text-app-main">*</sup>
                 <FormControl>
                   <Input
                     placeholder="Enter coupon code"
@@ -356,7 +364,12 @@ const EditCouponForm = ({ categories, stores, events }: CouponFormProps) => {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Add to Home Page?</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+                value={field.value}
+                key={field.value}
+              >
                 <FormControl>
                   <SelectTrigger className="w-[180px]">
                     <SelectValue placeholder="Select a Type" />
@@ -374,7 +387,7 @@ const EditCouponForm = ({ categories, stores, events }: CouponFormProps) => {
         {/* IF add to homepage is yes conditionally render this field */}
         {form.getValues("addToHomePage") === "yes" && (
           <FormItem>
-            <div className="my-4 flex items-center gap-x-3 ">
+            <div className="my-4 flex flex-col items-center gap-x-3 gap-y-4 sm:flex-row">
               <FormLabel>
                 <span className="cursor-pointer rounded-lg border border-muted bg-transparent p-2 px-4 transition-colors duration-300 ease-out hover:bg-accent">
                   {selectedThumbnailImage ? "Change" : "Add"} Thumbnail
@@ -415,7 +428,12 @@ const EditCouponForm = ({ categories, stores, events }: CouponFormProps) => {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Add to Carousel?</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+                value={field.value}
+                key={field.value}
+              >
                 <FormControl>
                   <SelectTrigger className="w-[180px]">
                     <SelectValue placeholder="Select a Type" />
@@ -433,7 +451,7 @@ const EditCouponForm = ({ categories, stores, events }: CouponFormProps) => {
         {/* IF add to Carousel is yes conditionally render this field */}
         {form.getValues("addToCarousel") === "yes" && (
           <FormItem>
-            <div className="my-4 flex items-center gap-x-3 ">
+            <div className="my-4 flex flex-col items-center gap-x-3 gap-y-4 sm:flex-row">
               <FormLabel>
                 <span className="cursor-pointer rounded-lg border border-muted bg-transparent p-2 px-4 transition-colors duration-300 ease-out hover:bg-accent">
                   {selectedCarouselImage ? "Change" : "Add"} Carousel Poster
@@ -475,7 +493,12 @@ const EditCouponForm = ({ categories, stores, events }: CouponFormProps) => {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Add to Flipper?</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+                value={field.value}
+                key={field.value}
+              >
                 <FormControl>
                   <SelectTrigger className="w-[180px]">
                     <SelectValue placeholder="Select a Type" />
@@ -493,7 +516,7 @@ const EditCouponForm = ({ categories, stores, events }: CouponFormProps) => {
         {/* IF add to Flipper is yes conditionally render this field */}
         {form.getValues("addToFlipper") === "yes" && (
           <FormItem>
-            <div className="my-4 flex items-center gap-x-3 ">
+            <div className="my-4 flex flex-col items-center gap-x-3 gap-y-4 sm:flex-row">
               <FormLabel>
                 <span className="cursor-pointer rounded-lg border border-muted bg-transparent p-2 px-4 transition-colors duration-300 ease-out hover:bg-accent">
                   {selectedFlipperImage ? "Change" : "Add"} Flipper Image
@@ -680,19 +703,19 @@ const EditCouponForm = ({ categories, stores, events }: CouponFormProps) => {
           name="events"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Similar Stores</FormLabel>
+              <FormLabel>Similar Events</FormLabel>
               <MultiSelector
                 onValuesChange={field.onChange}
-                values={field.value}
+                values={field.value || []}
                 loop={false}
                 options={eventOptions}
-                emptyIndicator="No Stores Found"
+                emptyIndicator="No Events Found"
               >
                 <FormControl>
                   <MultiSelectorTrigger>
                     <MultiSelectorInput
                       placeholder={
-                        field.value.length <= 0 ? "Select Related Stores" : ""
+                        field.value.length <= 0 ? "Select Related Events" : ""
                       }
                     />
                   </MultiSelectorTrigger>

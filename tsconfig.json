@@ -21,7 +21,14 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts","src/**/*.hbs",
-  "src/**/*.handlebars"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "src/**/*.hbs",
+    "src/**/*.handlebars",
+    "app/(Server)/api/(POST)/createsubmittedcoupon"
+  ],
   "exclude": ["node_modules"]
 }

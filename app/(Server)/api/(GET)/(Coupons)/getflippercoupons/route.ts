@@ -14,6 +14,10 @@ export async function GET() {
         couponId: true,
         flipperImage_url: true,
         title: true,
+        isVerified: true,
+        user_count: true,
+        type: true,
+        coupon_code: true,
         store: {
           select: {
             name: true,

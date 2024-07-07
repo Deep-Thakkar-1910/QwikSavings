@@ -2,7 +2,8 @@
 import { ThemeProvider } from "next-themes";
 import { SessionProvider } from "next-auth/react";
 import { type ThemeProviderProps } from "next-themes/dist/types";
-
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+const queryClient = new QueryClient();
 const Providers = ({ children, ...props }: ThemeProviderProps) => {
   return (
     <SessionProvider>
@@ -12,7 +13,9 @@ const Providers = ({ children, ...props }: ThemeProviderProps) => {
         enableSystem
         {...props}
       >
-        {children}
+        <QueryClientProvider client={queryClient}>
+          {children}
+        </QueryClientProvider>
       </ThemeProvider>
     </SessionProvider>
   );

@@ -1,9 +1,11 @@
 "use client";
+import axios from "@/app/api/axios/axios";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import useGetCategoryCoupons, { Coupon } from "@/hooks/useGetCategoryCoupons";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 interface CategoriesSectionProps {
   fetchFrom: string;
@@ -11,6 +13,26 @@ interface CategoriesSectionProps {
 }
 const CategoriesSection = ({ fetchFrom, title }: CategoriesSectionProps) => {
   const { data, error, isLoading } = useGetCategoryCoupons(fetchFrom);
+  const router = useRouter();
+  const handleCouponUse = async (coupon: Coupon) => {
+    try {
+      await axios.post("/updatecouponusercount", { couponId: coupon.couponId });
+      const encodedCoupon = encodeURIComponent(
+        JSON.stringify({
+          couponId: coupon.couponId,
+          coupon_code: coupon.coupon_code,
+          logo: coupon.store.logo_url,
+          type: coupon.type,
+          title: coupon.title,
+        }),
+      );
+      console.log(encodedCoupon);
+      const storeUrl = `/stores/${coupon.store.name}?coupon=${encodedCoupon}`;
+      router.push(storeUrl);
+    } catch (error) {
+      console.error("Error updating coupon use count:", error);
+    }
+  };
   return (
     <section
       className={`mx-auto w-full max-w-screen-xl py-6 sm:p-10 ${data.coupons?.length === 0 || error || isLoading ? "hidden" : ""}`}
@@ -78,13 +100,22 @@ const CategoriesSection = ({ fetchFrom, title }: CategoriesSectionProps) => {
                   {coupon.type === "Deal" && (
                     <Button
                       size={"lg"}
-                      className="w-full border-2 border-dashed text-base font-semibold"
+                      className="w-full border-2 border-dashed bg-app-main text-base font-semibold"
+                      onClick={() => {
+                        handleCouponUse(coupon);
+                      }}
                     >
                       Get Deal
                     </Button>
                   )}
+
                   {coupon.type === "Coupon" && (
-                    <div className="group relative grid w-full cursor-pointer rounded-md border-2 border-dashed border-app-main bg-app-bg-main p-2 dark:bg-app-dark">
+                    <div
+                      className="group relative grid w-full cursor-pointer rounded-md border-2 border-dashed border-app-main bg-app-bg-main p-2 dark:bg-app-dark"
+                      onClick={() => {
+                        handleCouponUse(coupon);
+                      }}
+                    >
                       <p className="translate-x-4 place-self-center text-base font-semibold uppercase tracking-widest">
                         {coupon.coupon_code}
                       </p>

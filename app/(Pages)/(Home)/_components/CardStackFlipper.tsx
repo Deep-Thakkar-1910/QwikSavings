@@ -5,10 +5,12 @@ import { ChevronRight } from "lucide-react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { useCardFlipperData } from "@/hooks/useCardFlipperData";
+import axios from "@/app/api/axios/axios";
+import { useRouter } from "next/navigation";
 
 const CardStackFlipper = ({ autoplay }: { autoplay: boolean }) => {
-  const { data, isLoading, error } = useCardFlipperData();
-
+  const { data, error } = useCardFlipperData();
+  const router = useRouter();
   const [activeIndex, setActiveIndex] = useState(0);
 
   // memoize data array
@@ -17,6 +19,33 @@ const CardStackFlipper = ({ autoplay }: { autoplay: boolean }) => {
   // set active index of the card
   const handleNextClick = () => {
     setActiveIndex((cur) => (cur + 1) % memoData.length);
+  };
+
+  const handleCardGetClick = async (coupon: any) => {
+    try {
+      console.log(coupon);
+      // Update coupon user count
+      await axios.post("/updatecouponusercount", { couponId: coupon.couponId });
+
+      // Encode coupon data
+      const encodedCoupon = encodeURIComponent(
+        JSON.stringify({
+          couponId: coupon.couponId,
+          coupon_code: coupon.coupon_code,
+          logo: coupon.store.logo_url,
+          type: coupon.type,
+          title: coupon.title,
+        }),
+      );
+
+      // Construct store URL with encoded coupon data
+      const storeUrl = `/stores/${coupon.store.name}?coupon=${encodedCoupon}`;
+
+      // Redirect to the store page
+      router.push(storeUrl);
+    } catch (error) {
+      console.error("Error handling image click:", error);
+    }
   };
 
   // memoize the size of the data array
@@ -51,7 +80,7 @@ const CardStackFlipper = ({ autoplay }: { autoplay: boolean }) => {
   if (!data || data.length === 0 || error) return null;
   return (
     <div className={`relative hidden h-fit w-fit lg:inline-block`}>
-      <AnimatePresence mode="popLayout">
+      <AnimatePresence mode="sync" initial>
         {memoData.map((card, i) => {
           const factor = size - 1 - map.get(i);
           return (
@@ -118,7 +147,12 @@ const CardStackFlipper = ({ autoplay }: { autoplay: boolean }) => {
               >
                 <ChevronRight className="size-6" />
               </div>
-              <button className="ease-linearhover:shadow-md absolute bottom-5 left-5 z-10 rounded-lg bg-[#28538f] p-1 px-5 text-lg  text-slate-200 transition-all duration-300 xl:bottom-8 ">
+              <button
+                className="ease-linearhover:shadow-md absolute bottom-5 left-5 z-10 rounded-lg bg-[#28538f] p-1 px-5 text-lg  text-slate-200 transition-all duration-300 xl:bottom-8 "
+                onClick={() => {
+                  handleCardGetClick(card);
+                }}
+              >
                 GET NOW
               </button>
             </motion.div>
