@@ -46,8 +46,8 @@ const AdvertiseWithUsPage = () => {
             </h1>
             <p className="text-center lg:text-justify">
               Fill out the form below to kickstart your advertising journey with
-              Qwik Savings. Let's collaborate and create impactful campaigns
-              that drive results. Your success is our priority, and we're here
+              Qwik Savings. Let&apos;s collaborate and create impactful campaigns
+              that drive results. Your success is our priority, and we&apos;re here
               to help you achieve your advertising goals. Join us today to
               unlock a world of advertising possibilities!
             </p>
