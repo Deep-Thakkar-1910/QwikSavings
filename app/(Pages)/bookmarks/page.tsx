@@ -71,7 +71,7 @@ const BookmarksPage = () => {
 
       {bookmarkedCoupons.length === 0 && expiredCoupons.length === 0 ? (
         <p className="py-8 text-center">
-          You haven't bookmarked any coupons yet.
+          You haven&apos;t bookmarked any coupons yet.
         </p>
       ) : (
         <>
