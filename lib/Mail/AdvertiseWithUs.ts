@@ -1,14 +1,16 @@
 "use server";
 import nodemailer from "nodemailer";
 
-interface EmailData {
+interface AdvertiseWithUsEmailData {
   fullName: string;
+  companyName: string;
+  websiteUrl: string;
   email: string;
-  subject: string;
+  isAffiliateNetwork: "Yes" | "No";
   message: string;
 }
 
-export async function sendContactMail(data: EmailData) {
+export async function sendAdvertiseWithUsMail(data: AdvertiseWithUsEmailData) {
   const { SMTP_USER, SMTP_PASS } = process.env;
 
   const transporter = nodemailer.createTransport({
@@ -23,14 +25,17 @@ export async function sendContactMail(data: EmailData) {
   try {
     await transporter.sendMail({
       from: {
-        name: "QwikSavings Contact Form",
+        name: "QwikSavings Advertise With Us Form",
         address: "qwiksavings@qwiksavings.com",
       },
-      to: "contact@qwiksavings.com",
-      subject: data.subject,
+      to: "dthakkar477@gmail.com",
+      subject: "New Advertising Inquiry",
       text: `
         Name: ${data.fullName}
+        Company Name: ${data.companyName}
+        Website URL: ${data.websiteUrl}
         Email: ${data.email}
+        Affiliate Network: ${data.isAffiliateNetwork}
         Message: ${data.message}
       `,
     });

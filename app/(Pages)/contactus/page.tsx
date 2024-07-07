@@ -1,11 +1,12 @@
 import Link from "next/link";
 import ContactForm from "./_ContactusComponents/ContactForm";
 import Socials from "../_PageComponents/Socials";
+import Image from "next/image";
 
 const ContactUsPage = () => {
   return (
-    <article className="my-8 flex flex-col items-center justify-center gap-8 px-4 sm:px-8 lg:px-16 ">
-      <div className="mb-2 flex w-11/12 max-w-screen-lg flex-col items-center justify-center rounded-lg border-2 bg-white p-6 dark:bg-app-dark-navbar md:w-full lg:flex-row lg:items-start lg:justify-start">
+    <article className="my-8 flex  flex-col items-center justify-center gap-8 px-4 sm:px-8 lg:px-16 ">
+      <div className="mb-2 flex  w-11/12 max-w-screen-lg flex-col items-center justify-center rounded-lg border-2 bg-white p-6 dark:bg-app-dark-navbar md:w-full lg:flex-row lg:items-center lg:justify-between ">
         {/* Form container div */}
         <div className="flex w-full flex-col gap-y-4 lg:w-7/12">
           <h1 className="text-xl font-bold sm:text-2xl">Contact Us</h1>
@@ -27,9 +28,14 @@ const ContactUsPage = () => {
           </p>
           <ContactForm />
         </div>
-        <div className="flex h-full w-full flex-col items-center justify-between lg:w-1/3 lg:items-end">
-          {/* PLaceholder for image */}
-          <div className="h-[90%]" />
+        <div className="flex  w-full flex-col items-center gap-y-6 lg:w-1/3 lg:items-end lg:gap-y-10">
+          <Image
+            src={"/ContactUs/ContactUs.png"}
+            alt="Contact Us Image"
+            width={2000}
+            height={2000}
+            className="aspect-square w-full"
+          />
           <Socials />
         </div>
       </div>

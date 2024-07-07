@@ -134,14 +134,14 @@ export const StarRating: React.FC<StarRatingProps> = ({ storeId }) => {
         ))}
       </div>
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent>
+        <DialogContent className="w-11/12 sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>Confirm Rating</DialogTitle>
             <DialogDescription>
               Are you sure you want to rate this store {selectedRating} stars?
             </DialogDescription>
           </DialogHeader>
-          <DialogFooter>
+          <DialogFooter className="flex flex-col gap-x-2 gap-y-4 lg:flex-row">
             <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
               Cancel
             </Button>
