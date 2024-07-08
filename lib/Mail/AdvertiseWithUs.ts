@@ -28,7 +28,7 @@ export async function sendAdvertiseWithUsMail(data: AdvertiseWithUsEmailData) {
         name: "QwikSavings Advertise With Us Form",
         address: "qwiksavings@qwiksavings.com",
       },
-      to: "dthakkar477@gmail.com",
+      to: "advertise@qwiksavings.com",
       subject: "New Advertising Inquiry",
       text: `
         Name: ${data.fullName}
