@@ -756,7 +756,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                           className={`absolute right-2 top-2 size-4 cursor-pointer text-app-main transition-all duration-300 ease-linear ${
                             bookmarkedCoupons.includes(coupon.couponId)
                               ? "fill-app-main text-app-main"
-                              : "opacity-100 hover:fill-app-main group-hover/accordion:opacity-100 lg:opacity-0"
+                              : "opacity-100 group-hover/accordion:opacity-100 lg:opacity-0 lg:hover:fill-app-main"
                           }`}
                           onClick={() => handleBookmark(coupon.couponId)}
                         />
@@ -939,7 +939,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                             className={`absolute right-2 top-2 size-4 cursor-pointer text-app-main transition-all duration-300 ease-linear ${
                               bookmarkedCoupons.includes(coupon.couponId)
                                 ? "fill-app-main text-app-main"
-                                : "opacity-100 hover:fill-app-main group-hover/accordion:opacity-100 lg:opacity-0"
+                                : "opacity-100 group-hover/accordion:opacity-100 lg:opacity-0 lg:hover:fill-app-main"
                             }`}
                             onClick={() => handleBookmark(coupon.couponId)}
                           />

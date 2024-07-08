@@ -18,7 +18,7 @@ const Footer = () => {
             loading="eager"
             className="w-full max-w-64"
           />
-          <p className="text-md mx-auto text-center lg:text-justify">
+          <p className="text-md mx-auto hyphens-auto text-justify">
             Qwik Savings, as the name suggests, is your go-to destination for
             quick savings. It helps you save faster than other websites in the
             market by providing hand-tested coupon codes or offers. We guarantee
@@ -26,7 +26,7 @@ const Footer = () => {
             you a gift card so you can treat yourself on us.
           </p>
         </div>
-        <div className="flex flex-col items-center gap-y-2 lg:translate-y-16 lg:items-start">
+        <div className="flex flex-col items-start gap-y-2 lg:translate-y-16">
           <h3 className="text-xl font-bold">Useful Reads</h3>
           {FooterNavlinks["Useful Reads"].map((link) => (
             <Link
@@ -38,7 +38,7 @@ const Footer = () => {
             </Link>
           ))}
         </div>
-        <div className="flex flex-col items-center gap-y-2 lg:translate-y-16 lg:items-start">
+        <div className="flex flex-col items-start gap-y-2 lg:translate-y-16">
           <h3 className="text-xl font-bold">Legal</h3>
           {FooterNavlinks.Legal.map((link) => (
             <Link
@@ -66,9 +66,9 @@ const Footer = () => {
             </Button>
           </div>
           <p className="text-md mx-auto text-center text-muted-foreground lg:mx-0 lg:text-start">
-            We&apos;ll never share your details.See our{" "}
+            We&apos;ll never share your details. See our{" "}
             <span className="font-semibold text-black dark:font-bold dark:text-muted-foreground">
-              Privacy Policy.
+              <Link href={"/privacypolicy"}>Privacy Policy.</Link>
             </span>
           </p>
           <Socials />

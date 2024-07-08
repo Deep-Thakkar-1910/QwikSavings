@@ -6,6 +6,8 @@ import Providers from "./Providers";
 import { Toaster } from "@/components/ui/toaster";
 import Footer from "./(Pages)/_PageComponents/Footer";
 import AdminNavbar from "./(Pages)/(ADMIN)/_Admincomponents/AdminNavbar";
+import { Scroll } from "lucide-react";
+import ScrollToTop from "./(Pages)/_PageComponents/ScrollToTop";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -32,6 +34,7 @@ export default function RootLayout({
           <AdminNavbar />
           <Navbar />
           {children}
+          <ScrollToTop />
           <Footer />
           <Toaster />
         </Providers>

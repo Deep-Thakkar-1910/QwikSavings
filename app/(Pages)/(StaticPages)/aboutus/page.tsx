@@ -6,7 +6,7 @@ import Link from "next/link";
 
 const page = () => {
   return (
-    <section className="flex w-full flex-col items-start gap-y-4 lg:gap-y-6">
+    <section className="mb-10 flex w-full flex-col items-start gap-y-4 lg:gap-y-6">
       <div className="mx-auto mt-6 w-full max-w-screen-xl p-10 px-4 sm:px-8 sm:text-2xl lg:px-16 xl:px-8 2xl:px-0">
         <h1 className="text-xl font-bold sm:text-2xl">About Qwik Savings</h1>
       </div>

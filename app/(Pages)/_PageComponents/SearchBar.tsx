@@ -150,6 +150,7 @@ const SearchBar = () => {
           placeholder="Search for brands, categories"
           onChange={(e) => debouncedSetQuery(e.target.value)}
           onFocus={handleInputFocus}
+          autoComplete="off"
         />
       </div>
       {showSuggestions && (
@@ -176,7 +177,7 @@ const SearchBar = () => {
                       href={`/${getTypePlural(suggestion.type)}/${encodeURIComponent(
                         suggestion.name,
                       )}`}
-                      className="block px-4 py-2 hover:bg-primary-foreground"
+                      className="block px-4 py-2 hover:bg-primary-foreground dark:hover:bg-primary/50"
                     >
                       {highlightMatch(suggestion.name, query)}
                     </Link>

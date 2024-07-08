@@ -25,13 +25,14 @@ const AdvertiseWithUsPage = () => {
           <div className="my-5 text-xl font-semibold lg:text-2xl">
             Why Advertise With Us?
           </div>
-          <ul className="ml-5 list-disc text-justify">
+          <ul className="list-disc pl-5 text-justify">
             {Ads.map((ele, index) => (
               <li key={index} className="my-5">
-                <span className="inline whitespace-nowrap font-semibold">
-                  {ele.text}:
+                <span className="inline font-semibold">{ele.text}:</span>
+                <span className="whitespace-wrap hyphens-auto">
+                  {" "}
+                  {ele.content}
                 </span>
-                <span className="whitespace-wrap"> {ele.content}</span>
               </li>
             ))}
           </ul>
@@ -44,12 +45,12 @@ const AdvertiseWithUsPage = () => {
             <h1 className="text-xl font-bold sm:text-2xl">
               Ready To Get Started?
             </h1>
-            <p className="text-center lg:text-justify">
+            <p className="text-justify">
               Fill out the form below to kickstart your advertising journey with
-              Qwik Savings. Let&apos;s collaborate and create impactful campaigns
-              that drive results. Your success is our priority, and we&apos;re here
-              to help you achieve your advertising goals. Join us today to
-              unlock a world of advertising possibilities!
+              Qwik Savings. Let&apos;s collaborate and create impactful
+              campaigns that drive results. Your success is our priority, and
+              we&apos;re here to help you achieve your advertising goals. Join
+              us today to unlock a world of advertising possibilities!
             </p>
             <AdvertiseWithUsForm />
           </div>

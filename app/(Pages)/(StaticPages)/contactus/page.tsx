@@ -1,7 +1,8 @@
 import Link from "next/link";
 import ContactForm from "./_ContactusComponents/ContactForm";
-import Socials from "../_PageComponents/Socials";
+
 import Image from "next/image";
+import Socials from "../../_PageComponents/Socials";
 
 const ContactUsPage = () => {
   return (
