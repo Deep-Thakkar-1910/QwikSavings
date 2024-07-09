@@ -4,6 +4,7 @@ import Spinner from "../../_PageComponents/Spinner";
 import {
   notFound,
   useParams,
+  usePathname,
   useRouter,
   useSearchParams,
 } from "next/navigation";
@@ -46,6 +47,7 @@ const EventDetails = () => {
   const commonStyles = "w-full rounded-lg bg-popover p-4 shadow-md";
   const { eventName } = useParams();
   const { data: session } = useSession();
+  const currentUrl = usePathname();
   const { data, isLoading, error, initialCoupon } = useGetEventDetails(
     eventName as string,
   );
@@ -127,7 +129,6 @@ const EventDetails = () => {
   // NOTE: this is for handling bookmarking of coupons
   const handleBookmark = async (couponId: number) => {
     if (!session?.user) {
-      const currentUrl = window.location.href;
       router.push(`/signin?callbackUrl=${currentUrl}`);
       toast({
         title: "Uh Oh!",

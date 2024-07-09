@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 import { useSession } from "next-auth/react";
 import { toast } from "@/components/ui/use-toast";
 import axios from "@/app/api/axios/axios";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 interface StarRatingProps {
   storeId: number;
@@ -27,6 +27,7 @@ export const StarRating: React.FC<StarRatingProps> = ({ storeId }) => {
   const [totalRatings, setTotalRatings] = useState<number>(0);
   const { data: session } = useSession();
   const router = useRouter();
+  const currentUrl = usePathname();
   useEffect(() => {
     const fetchUserRating = async () => {
       try {
@@ -75,7 +76,6 @@ export const StarRating: React.FC<StarRatingProps> = ({ storeId }) => {
         description: "You must be logged in to rate a store",
         variant: "destructive",
       });
-      const currentUrl = window.location.href;
       router.push(`/signin?callbackUrl=${currentUrl}`);
       return;
     }

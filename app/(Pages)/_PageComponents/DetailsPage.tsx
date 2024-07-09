@@ -7,6 +7,7 @@ import Link from "next/link";
 import {
   notFound,
   useParams,
+  usePathname,
   useRouter,
   useSearchParams,
 } from "next/navigation";
@@ -62,6 +63,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
   const router = useRouter();
   const { storename, categoryname } = useParams();
   const { data: session } = useSession();
+  const currentUrl = usePathname();
   const name = fetchFrom === "store" ? storename : categoryname;
   // to store popular store data
   const [popularData, setPopularData] = useState<Record<string, any>[]>([]);
@@ -113,7 +115,6 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
     name: name as string,
   });
 
-  console.log(detailsData);
   if (!detailsData) {
     notFound();
   }
@@ -173,7 +174,6 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
   // NOTE: this is for handling bookmarking of coupons
   const handleBookmark = async (couponId: number) => {
     if (!session?.user) {
-      const currentUrl = window.location.href;
       router.push(`/signin?callbackUrl=${currentUrl}`);
       toast({
         title: "Uh Oh!",
@@ -470,9 +470,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
           <p className="hidden lg:block">{detailsData.description}</p>
 
           <div className="pl-4">
-            {isStore &&
-            <StarRating storeId={detailsData.storeId} />
-            }
+            {isStore && <StarRating storeId={detailsData.storeId} />}
           </div>
         </div>
       </div>

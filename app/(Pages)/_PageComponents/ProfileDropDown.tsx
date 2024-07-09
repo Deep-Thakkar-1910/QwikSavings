@@ -12,22 +12,17 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  ArrowLeftFromLine,
-  Bookmark,
-  Heart,
-  Moon,
-  Sun,
-  UserCircle2,
-} from "lucide-react";
+import { ArrowLeftFromLine, Heart, Moon, Sun, UserCircle2 } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useTheme } from "next-themes";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { usePathname } from "next/navigation";
+
 const ProfileDropDown = () => {
   const { resolvedTheme, setTheme } = useTheme();
   const { data: session } = useSession();
-  const currentUrl = window.location.href;
+  const currentUrl = usePathname();
   // extracting first name and last name initals from the user name
   const name = session?.user?.name.split(" ");
   const AvatarName =
