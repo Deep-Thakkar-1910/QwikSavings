@@ -12,7 +12,7 @@ export async function GET(
     const { eventname } = context.params;
     const eventDetails = await db.event.findUnique({
       where: {
-        name: eventname,
+        name: eventname.trim(),
       },
       include: {
         coupons: {

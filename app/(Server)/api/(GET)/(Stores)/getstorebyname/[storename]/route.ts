@@ -9,7 +9,7 @@ export async function GET(
     const { storename } = context.params;
     const storeDetails = await db.store.findUnique({
       where: {
-        name: storename,
+        name: storename.trim(),
       },
       include: {
         coupons: {

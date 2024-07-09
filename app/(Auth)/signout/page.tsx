@@ -9,10 +9,15 @@ import { useEffect } from "react";
 this page will never be displayed it is just a workaround to signout the user
 using the signout function from next-auth
 */
-const SignOutPage = () => {
+const SignOutPage = ({
+  searchParams,
+}: {
+  searchParams: { callbackUrl: string };
+}) => {
   const router = useRouter();
+
   useEffect(() => {
-    signOut({ redirect: false });
+    signOut({ redirect: false, callbackUrl: searchParams.callbackUrl ?? "/" });
     toast({
       title: "Success",
       description: "You have been signed out",

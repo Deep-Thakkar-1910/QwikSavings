@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { useSession } from "next-auth/react";
 import { toast } from "@/components/ui/use-toast";
 import axios from "@/app/api/axios/axios";
+import { useRouter } from "next/navigation";
 
 interface StarRatingProps {
   storeId: number;
@@ -25,7 +26,7 @@ export const StarRating: React.FC<StarRatingProps> = ({ storeId }) => {
   const [averageRating, setAverageRating] = useState<number>(0);
   const [totalRatings, setTotalRatings] = useState<number>(0);
   const { data: session } = useSession();
-
+  const router = useRouter();
   useEffect(() => {
     const fetchUserRating = async () => {
       try {
@@ -62,10 +63,6 @@ export const StarRating: React.FC<StarRatingProps> = ({ storeId }) => {
   const handleStarClick = (value: number) => {
     if (rating === null) {
       setSelectedRating(value);
-      setAverageRating(
-        (averageRating * totalRatings + value) / (totalRatings + 1),
-      );
-      setTotalRatings(totalRatings + 1);
       setIsDialogOpen(true);
     }
   };
@@ -78,12 +75,17 @@ export const StarRating: React.FC<StarRatingProps> = ({ storeId }) => {
         description: "You must be logged in to rate a store",
         variant: "destructive",
       });
+      const currentUrl = window.location.href;
+      router.push(`/signin?callbackUrl=${currentUrl}`);
       return;
     }
 
     // Optimistically update the UI
     setRating(selectedRating);
-
+    setTotalRatings(totalRatings + 1);
+    setAverageRating(
+      (averageRating * totalRatings + selectedRating) / (totalRatings + 1),
+    );
     try {
       const response = await axios.post("/updaterating", {
         body: JSON.stringify({
@@ -115,7 +117,9 @@ export const StarRating: React.FC<StarRatingProps> = ({ storeId }) => {
 
   return (
     <div className="flex flex-col items-center">
+      <span className="mr-2 font-semibold lg:hidden">Your Rating:</span>
       <div className="flex items-center">
+        <span className="mr-2 hidden font-semibold lg:block">Your Rating:</span>
         {[1, 2, 3, 4, 5].map((star) => (
           <Star
             key={star}

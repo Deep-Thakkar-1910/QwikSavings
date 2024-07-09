@@ -27,7 +27,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 const ProfileDropDown = () => {
   const { resolvedTheme, setTheme } = useTheme();
   const { data: session } = useSession();
-
+  const currentUrl = window.location.href;
   // extracting first name and last name initals from the user name
   const name = session?.user?.name.split(" ");
   const AvatarName =
@@ -108,7 +108,7 @@ const ProfileDropDown = () => {
               </DropdownMenuItem>
             </Link>
             <DropdownMenuSeparator />
-            <Link href={"/api/auth/signout"}>
+            <Link href={`/api/auth/signout?callbackUrl=${currentUrl}`}>
               <DropdownMenuItem>
                 <ArrowLeftFromLine className="mr-2 size-4" />
                 <span>Sign Out</span>

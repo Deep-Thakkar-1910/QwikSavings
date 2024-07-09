@@ -1,7 +1,12 @@
 "use client";
 import useGetEventDetails from "@/hooks/useGetEventDetails";
 import Spinner from "../../_PageComponents/Spinner";
-import { useParams, useRouter, useSearchParams } from "next/navigation";
+import {
+  notFound,
+  useParams,
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { Heart, Tag, ThumbsDown, ThumbsUp, User, Verified } from "lucide-react";
@@ -44,6 +49,10 @@ const EventDetails = () => {
   const { data, isLoading, error, initialCoupon } = useGetEventDetails(
     eventName as string,
   );
+
+  if (!data) {
+    notFound();
+  }
 
   const dealsLength =
     data?.coupons?.filter(
@@ -118,8 +127,8 @@ const EventDetails = () => {
   // NOTE: this is for handling bookmarking of coupons
   const handleBookmark = async (couponId: number) => {
     if (!session?.user) {
-      // Redirect to login if user is not logged in
-      router.push("/signin");
+      const currentUrl = window.location.href;
+      router.push(`/signin?callbackUrl=${currentUrl}`);
       toast({
         title: "Uh Oh!",
         description: "You must be signed in to bookmark coupons",

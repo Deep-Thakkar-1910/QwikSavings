@@ -74,7 +74,7 @@ export async function POST(req: Request) {
     // creating a new store
     const store = await db.store.create({
       data: {
-        name,
+        name: name.trim(),
         title,
         logo_url: logoUrl,
         ref_link,

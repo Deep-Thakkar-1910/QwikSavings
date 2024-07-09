@@ -62,7 +62,7 @@ export async function POST(req: Request) {
     // creating the event
     const event = await db.event.create({
       data: {
-        name,
+        name: name.trim(),
         description,
         title,
         logo_url: logoUrl ? logoUrl : null,

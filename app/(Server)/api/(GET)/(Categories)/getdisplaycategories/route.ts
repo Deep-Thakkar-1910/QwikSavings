@@ -14,7 +14,7 @@ export async function GET(req: Request) {
     const categories = await db.category.findMany({
       where: {
         name: {
-          startsWith: likeQuery ? likeQuery : "",
+          startsWith: likeQuery ? likeQuery.trim() : "",
           mode: "insensitive",
         },
       },

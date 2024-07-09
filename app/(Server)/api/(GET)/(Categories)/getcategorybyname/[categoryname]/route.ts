@@ -12,7 +12,7 @@ export async function GET(
     const { categoryname } = context.params;
     const categoryDetails = await db.category.findUnique({
       where: {
-        name: categoryname,
+        name: categoryname.trim(),
       },
       include: {
         coupons: {

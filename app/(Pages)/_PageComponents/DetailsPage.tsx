@@ -4,7 +4,12 @@ import useGetDetails from "@/hooks/useGetDetails";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useParams, useRouter, useSearchParams } from "next/navigation";
+import {
+  notFound,
+  useParams,
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
 import Seperator from "./Seperator";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -108,6 +113,11 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
     name: name as string,
   });
 
+  console.log(detailsData);
+  if (!detailsData) {
+    notFound();
+  }
+
   const commonStyles = "w-full rounded-lg bg-popover p-4 shadow-md";
 
   // NOTE: this is for getting the lengths of  deals and coupons
@@ -163,7 +173,8 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
   // NOTE: this is for handling bookmarking of coupons
   const handleBookmark = async (couponId: number) => {
     if (!session?.user) {
-      router.push("/signin");
+      const currentUrl = window.location.href;
+      router.push(`/signin?callbackUrl=${currentUrl}`);
       toast({
         title: "Uh Oh!",
         description: "You must be signed in to bookmark coupons",
@@ -1062,38 +1073,40 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                 isHidden
               />
             )}
-            {isStore && detailsData.faq && (
-              <section id="faqs" className={`${commonStyles}`}>
-                <h2 className="mb-4 text-xl font-bold sm:text-2xl">FAQS</h2>
-                <Accordion
-                  type="single"
-                  collapsible
-                  className="flex w-full flex-col gap-y-6"
-                >
-                  {JSON.parse(detailsData?.faq).map(
-                    (
-                      faq: { question: string; answer: string },
-                      index: number,
-                    ) => {
-                      return (
-                        <AccordionItem
-                          value={`${index}`}
-                          key={index}
-                          className="w-full"
-                        >
-                          <AccordionTrigger className="w-full">
-                            {faq.question}
-                          </AccordionTrigger>
-                          <AccordionContent className="p-4">
-                            {faq.answer}
-                          </AccordionContent>
-                        </AccordionItem>
-                      );
-                    },
-                  )}
-                </Accordion>
-              </section>
-            )}
+            {isStore &&
+              detailsData.faq &&
+              JSON.parse(detailsData?.faq).length > 0 && (
+                <section id="faqs" className={`${commonStyles}`}>
+                  <h2 className="mb-4 text-xl font-bold sm:text-2xl">FAQS</h2>
+                  <Accordion
+                    type="single"
+                    collapsible
+                    className="flex w-full flex-col gap-y-6"
+                  >
+                    {JSON.parse(detailsData?.faq).map(
+                      (
+                        faq: { question: string; answer: string },
+                        index: number,
+                      ) => {
+                        return (
+                          <AccordionItem
+                            value={`${index}`}
+                            key={index}
+                            className="w-full"
+                          >
+                            <AccordionTrigger className="w-full text-start">
+                              {faq.question}
+                            </AccordionTrigger>
+                            <AccordionContent className="p-4">
+                              {faq.answer}
+                            </AccordionContent>
+                          </AccordionItem>
+                        );
+                      },
+                    )}
+                  </Accordion>
+                </section>
+              )}
             {isStore && (
               <section id="hints" className={`${commonStyles}`}>
                 <div className={`w-full`}>

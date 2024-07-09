@@ -39,7 +39,7 @@ export async function POST(req: Request) {
     // creating the categroy
     const category = await db.category.create({
       data: {
-        name,
+        name: name.trim(),
         description: description ? description : null,
         logo_url: logoUrl,
         addToTodaysTopCategories:
