@@ -470,7 +470,9 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
           <p className="hidden lg:block">{detailsData.description}</p>
 
           <div className="pl-4">
+            {isStore &&
             <StarRating storeId={detailsData.storeId} />
+            }
           </div>
         </div>
       </div>
