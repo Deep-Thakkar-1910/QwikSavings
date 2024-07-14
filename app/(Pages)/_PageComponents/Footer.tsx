@@ -32,7 +32,7 @@ const Footer = () => {
             <Link
               key={link.href}
               href={link.href}
-              className="text-base font-medium text-gray-800 transition-colors duration-300 ease-linear hover:text-app-main dark:text-muted-foreground"
+              className="text-base font-medium text-gray-800 transition-colors duration-300 ease-linear hover:text-app-main dark:text-muted-foreground dark:hover:text-app-main"
             >
               {link.title}
             </Link>
@@ -44,7 +44,7 @@ const Footer = () => {
             <Link
               key={link.href}
               href={link.href}
-              className="text-base font-medium text-gray-800 transition-colors duration-300 ease-linear hover:text-app-main dark:text-muted-foreground"
+              className="text-base font-medium text-gray-800 transition-colors duration-300 ease-linear hover:text-app-main dark:text-muted-foreground dark:hover:text-app-main"
             >
               {link.title}
             </Link>

@@ -48,7 +48,7 @@ export const FooterNavlinks = {
     },
     {
       title: "Sitemap",
-      href: "/sitemap",
+      href: "/sitemap.xml",
     },
   ],
 };

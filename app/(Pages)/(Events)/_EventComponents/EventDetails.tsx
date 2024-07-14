@@ -781,8 +781,8 @@ const EventDetails = () => {
                             />
                             <div className=" flex flex-col items-center gap-x-4 sm:flex-row">
                               <p className="flex w-fit items-center gap-x-2 text-sm text-emerald-500">
-                                <Verified className="inline-flex size-4 text-emerald-500" />
-                                Verified
+                                <PiSmileySadBold className="inline-flex size-4 text-app-main" />
+                                Expired
                               </p>
                               <p className="flex items-center gap-x-2 tabular-nums text-muted-foreground">
                                 <User className="size-4" />

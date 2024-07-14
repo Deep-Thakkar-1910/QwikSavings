@@ -195,7 +195,10 @@ const OurCodesPage = () => {
           <li>
             All claims should be sent to the following e-mail address:
             <span className="font-extrabold">
-              <Link href={"mailto:claims@qwiksavings.com"}>
+              <Link
+                href={"mailto:claims@qwiksavings.com"}
+                className="break-words"
+              >
                 claims@qwiksavings.com
               </Link>
             </span>

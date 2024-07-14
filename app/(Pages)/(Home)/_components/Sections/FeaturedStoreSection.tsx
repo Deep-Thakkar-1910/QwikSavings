@@ -68,7 +68,7 @@ const FeaturedStoreSection = () => {
                   alt={store.storeId}
                   width={400}
                   height={400}
-                  className="size-16 cursor-pointer rounded-full shadow-md transition-all duration-200 ease-linear hover:scale-110 hover:shadow-lg sm:size-24 md:size-28"
+                  className="size-[4.5rem] cursor-pointer rounded-full shadow-md transition-all duration-200 ease-linear hover:scale-110 hover:shadow-lg sm:size-24 md:size-28"
                 />
               </Link>
             );
