@@ -26,7 +26,6 @@ const CategoriesSection = ({ fetchFrom, title }: CategoriesSectionProps) => {
           title: coupon.title,
         }),
       );
-      console.log(encodedCoupon);
       const storeUrl = `/stores/${coupon.store.name}?coupon=${encodedCoupon}`;
       router.push(storeUrl);
     } catch (error) {
@@ -78,13 +77,17 @@ const CategoriesSection = ({ fetchFrom, title }: CategoriesSectionProps) => {
                 <div className="flex w-full flex-col gap-y-1 p-4">
                   <div className="flex w-full items-center justify-between ">
                     <div className="-translate-y-2/3 rounded-full bg-white p-1 dark:bg-app-dark-navbar">
-                      <Image
-                        src={coupon.store.logo_url}
-                        alt="Brand logo"
-                        width={400}
-                        height={400}
-                        className="size-14 rounded-full object-cover"
-                      />
+                      {coupon.store.logo_url ? (
+                        <Image
+                          src={coupon.store.logo_url}
+                          alt="Brand logo"
+                          width={400}
+                          height={400}
+                          className="size-14 rounded-full object-cover"
+                        />
+                      ) : (
+                        <div className="size-14 rounded-full bg-popover" />
+                      )}
                     </div>
                     <Badge className=" -translate-y-2/3 bg-blue-400/50 text-black dark:text-slate-200">
                       VERIFIED
