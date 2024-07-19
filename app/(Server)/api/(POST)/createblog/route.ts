@@ -1,6 +1,7 @@
 import db from "@/lib/prisma";
 import { UploadStoreImage } from "@/lib/utilities/CloudinaryConfig";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import { error } from "console";
 import { NextResponse } from "next/server";
 
 // API handler for creating a blog
@@ -13,6 +14,11 @@ export async function POST(req: Request) {
   // extracting the fields out of body
   const { title, content, category_id } = body;
 
+  if (!category_id)
+    return NextResponse.json(
+      { success: false, error: "Category Linking is Mandatory" },
+      { status: 400 },
+    );
   try {
     let thumbnailUrl;
 

@@ -21,7 +21,22 @@ export async function POST(req: Request) {
       due_date,
       description,
     } = body;
-
+    if (!category_id)
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Category Linking is Mandatory",
+        },
+        { status: 400 },
+      );
+    if (!store_id)
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Store Linking is Mandatory",
+        },
+        { status: 400 },
+      );
     const userSubmittedCoupon = await db.userSubmittedCoupon.create({
       data: {
         userId: session.user.id,

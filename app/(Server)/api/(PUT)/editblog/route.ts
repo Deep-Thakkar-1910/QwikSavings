@@ -14,6 +14,14 @@ export async function PUT(req: Request) {
 
   // extracting the fields out of body
   const { title, content, thumbnail_url, category_id } = body;
+  if (!category_id)
+    return NextResponse.json(
+      {
+        success: false,
+        error: "Category Linking is Mandatory",
+      },
+      { status: 400 },
+    );
 
   try {
     let thumbnailUrl;

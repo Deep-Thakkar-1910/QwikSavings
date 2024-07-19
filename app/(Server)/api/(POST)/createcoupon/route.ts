@@ -36,15 +36,21 @@ export async function POST(req: Request) {
     // checking if the carousel limit is reached
 
     if (!category_id)
-      return NextResponse.json({
-        success: false,
-        error: "Category Linking is Mandatory",
-      });
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Category Linking is Mandatory",
+        },
+        { status: 400 },
+      );
     if (!store_id)
-      return NextResponse.json({
-        success: false,
-        error: "Store Linking is Mandatory",
-      });
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Store Linking is Mandatory",
+        },
+        { status: 400 },
+      );
 
     if (addToCarousel === "yes") {
       const carouselCoupons = await db.coupon.findMany({

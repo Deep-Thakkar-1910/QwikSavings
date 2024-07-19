@@ -50,6 +50,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { AxiosError } from "axios";
 
 type InputType = z.infer<typeof CreateUserCouponFormSchema>;
 
@@ -101,6 +102,13 @@ const CreateUserCouponForm = ({
       }
     } catch (err) {
       console.error(err);
+      if (err instanceof AxiosError) {
+        toast({
+          title: "Error",
+          description: err?.response?.data?.error,
+          variant: "destructive",
+        });
+      }
       toast({
         title: "Error",
         description: "Failed to submit coupon. Please try again.",

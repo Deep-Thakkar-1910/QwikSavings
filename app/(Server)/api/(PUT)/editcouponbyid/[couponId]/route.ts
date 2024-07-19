@@ -36,6 +36,23 @@ export async function PUT(
       events,
     } = body;
 
+    if (!category_id)
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Category Linking is Mandatory",
+        },
+        { status: 400 },
+      );
+    if (!store_id)
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Store Linking is Mandatory",
+        },
+        { status: 400 },
+      );
+
     const existingCoupon = await db.coupon.findUnique({
       where: {
         couponId: Number(couponId),
