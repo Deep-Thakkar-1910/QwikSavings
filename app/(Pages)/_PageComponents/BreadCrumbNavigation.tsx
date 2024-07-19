@@ -43,7 +43,12 @@ const BreadCrumbNavigation = () => {
                     index === decodedPaths.length - 1 && "text-app-main",
                   )}
                 >
-                  {path}
+                  {Number.isInteger(Number(path))
+                    ? decodedPaths[0]?.substring(
+                        0,
+                        decodedPaths[0]?.length - 1,
+                      ) ?? ""
+                    : path}
                 </BreadcrumbLink>
               </BreadcrumbItem>
               {index < decodedPaths.length - 1 && (

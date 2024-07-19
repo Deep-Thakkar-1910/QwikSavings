@@ -13,7 +13,7 @@ export async function PUT(req: Request) {
   const body = await JSON.parse(request);
 
   // extracting the fields out of body
-  const { title, content, thumbnail_url } = body;
+  const { title, content, thumbnail_url, category_id } = body;
 
   try {
     let thumbnailUrl;
@@ -49,6 +49,7 @@ export async function PUT(req: Request) {
         title,
         content,
         thumbnail_url: thumbnailUrl || thumbnail_url,
+        category_id: Number(category_id),
       },
     });
 

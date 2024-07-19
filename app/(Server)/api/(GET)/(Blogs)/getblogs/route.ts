@@ -6,7 +6,15 @@ export const fetchCache = "force-no-store";
 export async function GET() {
   try {
     const blogs = await db.blog.findMany({
-      orderBy: { createdAt: "desc" },
+      include: {
+        category: {
+          select: {
+            name: true,
+            categoryId: true,
+          },
+        },
+      },
+      orderBy: { updatedAt: "desc" },
     });
     return NextResponse.json(
       { success: true, blogs, totalCount: blogs.length },

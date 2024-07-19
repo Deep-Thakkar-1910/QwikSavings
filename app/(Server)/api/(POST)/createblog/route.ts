@@ -11,7 +11,7 @@ export async function POST(req: Request) {
   const body = await JSON.parse(request);
 
   // extracting the fields out of body
-  const { title, content } = body;
+  const { title, content, category_id } = body;
 
   try {
     let thumbnailUrl;
@@ -44,6 +44,7 @@ export async function POST(req: Request) {
         title,
         content,
         thumbnail_url: thumbnailUrl || "",
+        category_id: Number(category_id),
       },
     });
 

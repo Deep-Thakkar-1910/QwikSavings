@@ -45,7 +45,7 @@ import {
   CommandList,
 } from "@/components/ui/command";
 import Image from "next/image";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import {
   MultiSelector,
   MultiSelectorContent,
@@ -65,6 +65,7 @@ interface CouponFormProps {
 
 const EditCouponForm = ({ categories, stores, events }: CouponFormProps) => {
   const { couponId } = useParams();
+  const router = useRouter();
   // for image preview
   const [selectedThumbnailImage, setSelectedThumbnailImage] = useState<
     string | null
@@ -245,6 +246,7 @@ const EditCouponForm = ({ categories, stores, events }: CouponFormProps) => {
           title: "Success",
           description: "Coupon updated successfully",
         });
+        router.push("/admin/coupons");
       }
     } catch (err) {
       console.log(err);

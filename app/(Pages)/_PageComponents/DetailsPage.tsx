@@ -452,7 +452,9 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
   return (
     <>
       {/* topBar for mobile */}
-      <div className="flex w-full items-start gap-x-2 rounded-lg bg-popover p-4 px-4 sm:items-center sm:gap-x-4 sm:px-8 lg:hidden lg:px-16">
+      <div
+        className={`flex w-full ${isStore ? "items-start" : "items-center"} gap-x-2 rounded-lg bg-popover p-4 px-4 sm:items-center sm:gap-x-4 sm:px-8 lg:hidden lg:px-16`}
+      >
         <Image
           src={detailsData?.logo_url ?? "https://via.placeholder.com/600x400"}
           alt={detailsData?.name + " Logo"}

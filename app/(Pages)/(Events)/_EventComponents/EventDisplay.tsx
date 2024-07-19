@@ -26,13 +26,17 @@ const EventDisplay = () => {
             >
               <h2 className="mt-2 text-lg font-semibold">{event.name}</h2>
 
-              <Image
-                src={event.logo_url}
-                alt={event.name}
-                width={600}
-                height={600}
-                className="size-32 object-contain"
-              />
+              {event.logo_url ? (
+                <Image
+                  src={event.logo_url}
+                  alt={event.name}
+                  width={600}
+                  height={600}
+                  className="size-32 object-contain"
+                />
+              ) : (
+                <div className="aspect-video size-32" />
+              )}
               <Button className="w-full rounded-lg bg-app-main" asChild>
                 <Link href={`/events/${event.name}`}>Reveal Deals</Link>
               </Button>

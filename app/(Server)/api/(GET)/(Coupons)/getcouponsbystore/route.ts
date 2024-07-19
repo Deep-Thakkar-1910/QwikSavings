@@ -53,8 +53,8 @@ export const GET = async (req: Request) => {
     return NextResponse.json(
       {
         success: true,
-        coupons: store.coupons,
-        totalCount: store.coupons.length,
+        coupons: store?.coupons,
+        totalCount: store?.coupons.length,
       },
       { status: 200 },
     );

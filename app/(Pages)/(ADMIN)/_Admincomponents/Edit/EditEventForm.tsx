@@ -148,7 +148,7 @@ const EditEventForm = () => {
           title: "Success",
           description: "Event Updated Successfully",
         });
-        router.refresh();
+        router.push("/admin/events");
       }
     } catch (err) {
       console.log(err);

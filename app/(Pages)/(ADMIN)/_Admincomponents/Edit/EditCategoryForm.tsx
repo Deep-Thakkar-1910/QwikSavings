@@ -129,7 +129,7 @@ const EditCategoryForm = () => {
           title: "Success",
           description: "Category Updated Successfully",
         });
-        router.refresh();
+        router.push("/admin/categories");
       }
     } catch (err) {
       console.log(err);

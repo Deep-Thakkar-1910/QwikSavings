@@ -14,21 +14,40 @@ import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "@/components/ui/use-toast";
-import { Textarea } from "@/components/ui/textarea";
+
 import axios from "@/app/api/axios/axios";
 import { AxiosError } from "axios";
 import Image from "next/image";
-import { MinusCircle } from "lucide-react";
+import { CheckIcon, MinusCircle } from "lucide-react";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { CreateBlogFormSchema } from "@/lib/FormSchemas/CreateBlogFormSchema";
 import RichTextEditor from "@/components/ui/RichTextEditor";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
+import { CaretSortIcon } from "@radix-ui/react-icons";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
 
 type InputType = z.infer<typeof CreateBlogFormSchema>;
 
-const EditBlogForm = () => {
+const EditBlogForm = ({
+  categories,
+}: {
+  categories: { name: string; categoryId: number }[];
+}) => {
   const { blogId } = useParams();
-
+  const router = useRouter();
   const [blogDetails, setBlogDetails] = useState<any>(null);
 
   // Fetch category details on component mount
@@ -53,6 +72,7 @@ const EditBlogForm = () => {
       content: "",
       thumbnail: undefined,
       thumbnail_url: "",
+      category_id: "",
     },
     mode: "all",
     shouldFocusError: true,
@@ -67,6 +87,7 @@ const EditBlogForm = () => {
         thumbnail: undefined,
         thumbnail_url: blogDetails.thumbnail_url ?? "",
         content: blogDetails.content,
+        category_id: `${blogDetails.category_id}` ?? "",
       });
       setSelectedImage(blogDetails.logo_url);
     }
@@ -109,8 +130,7 @@ const EditBlogForm = () => {
           title: "Success",
           description: "Blog Updated Successfully",
         });
-        form.reset();
-        setSelectedImage(null);
+        router.push("/admin/blogs");
       }
     } catch (err) {
       console.log(err);
@@ -196,6 +216,82 @@ const EditBlogForm = () => {
                   onChange={field.onChange}
                 />
               </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={control}
+          name="category_id"
+          render={({ field }) => (
+            <FormItem className="flex w-fit flex-col gap-2">
+              <FormLabel>
+                Related Category<sup className="text-app-main">*</sup>
+              </FormLabel>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <FormControl>
+                    <Button
+                      variant="outline"
+                      role="combobox"
+                      className={cn(
+                        "w-[200px] justify-between",
+                        !field.value && "text-muted-foreground",
+                      )}
+                    >
+                      {field.value
+                        ? categories.find(
+                            (category) =>
+                              `${category.categoryId}` === field.value,
+                          )?.name
+                        : "Select a Category"}
+                      <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                    </Button>
+                  </FormControl>
+                </PopoverTrigger>
+                <PopoverContent className="w-[200px] p-0">
+                  <Command
+                    filter={(value, search) => {
+                      if (value.toLowerCase().includes(search.toLowerCase())) {
+                        return 1;
+                      }
+                      return 0;
+                    }}
+                  >
+                    <CommandInput
+                      placeholder="Search Category..."
+                      className="h-9"
+                    />
+                    <CommandEmpty>No Category found.</CommandEmpty>
+                    <CommandGroup>
+                      <CommandList>
+                        {categories.map((category) => (
+                          <CommandItem
+                            key={category.categoryId}
+                            onSelect={() => {
+                              form.setValue(
+                                "category_id",
+                                `${category.categoryId}`,
+                              );
+                            }}
+                            value={`${category.name}`.toLowerCase()}
+                          >
+                            {category.name}
+                            <CheckIcon
+                              className={cn(
+                                "ml-auto h-4 w-4",
+                                `${category.categoryId}` === field.value
+                                  ? "opacity-100"
+                                  : "opacity-0",
+                              )}
+                            />
+                          </CommandItem>
+                        ))}
+                      </CommandList>
+                    </CommandGroup>
+                  </Command>
+                </PopoverContent>
+              </Popover>
               <FormMessage />
             </FormItem>
           )}

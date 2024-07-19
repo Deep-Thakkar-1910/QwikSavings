@@ -387,7 +387,7 @@ const EventDetails = () => {
   };
 
   return (
-    <div className="min-h-[40vh] w-full  p-8 lg:px-16 lg:py-16">
+    <div className="min-h-[40vh] w-full">
       {isLoading ? (
         <div className="flex h-[40vh] w-full items-center justify-center">
           <Spinner />

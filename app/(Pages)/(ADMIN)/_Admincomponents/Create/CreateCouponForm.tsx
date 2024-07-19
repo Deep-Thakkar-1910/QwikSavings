@@ -208,6 +208,7 @@ const CreateCouponForm = ({ categories, stores, events }: CouponFormProps) => {
         toast({
           title: "Uh Oh!",
           description: err.response?.data.error,
+          variant: "destructive",
         });
       }
     }

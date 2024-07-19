@@ -4,6 +4,7 @@ import {
 } from "@/lib/Constants";
 import db from "@/lib/prisma";
 import { UploadStoreImage } from "@/lib/utilities/CloudinaryConfig";
+import { error } from "console";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
@@ -33,6 +34,18 @@ export async function POST(req: Request) {
       events,
     } = body;
     // checking if the carousel limit is reached
+
+    if (!category_id)
+      return NextResponse.json({
+        success: false,
+        error: "Category Linking is Mandatory",
+      });
+    if (!store_id)
+      return NextResponse.json({
+        success: false,
+        error: "Store Linking is Mandatory",
+      });
+
     if (addToCarousel === "yes") {
       const carouselCoupons = await db.coupon.findMany({
         where: {

@@ -14,23 +14,42 @@ import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "@/components/ui/use-toast";
-import { Textarea } from "@/components/ui/textarea";
 import axios from "@/app/api/axios/axios";
 import { AxiosError } from "axios";
 import Image from "next/image";
-import { MinusCircle } from "lucide-react";
+import { CheckIcon, MinusCircle } from "lucide-react";
 import { ChangeEvent, useRef, useState } from "react";
 import { CreateBlogFormSchema } from "@/lib/FormSchemas/CreateBlogFormSchema";
 import RichTextEditor from "@/components/ui/RichTextEditor";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { CaretSortIcon } from "@radix-ui/react-icons";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
+import { cn } from "@/lib/utils";
 
 type InputType = z.infer<typeof CreateBlogFormSchema>;
 
-const CreateBlogForm = () => {
+const CreateBlogForm = ({
+  categories,
+}: {
+  categories: { name: string; categoryId: number }[];
+}) => {
   const form = useForm<InputType>({
     resolver: zodResolver(CreateBlogFormSchema),
     defaultValues: {
       title: "",
       content: "",
+      category_id: "",
       thumbnail: undefined,
     },
     mode: "all",
@@ -163,6 +182,83 @@ const CreateBlogForm = () => {
                   onChange={field.onChange}
                 />
               </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={control}
+          name="category_id"
+          render={({ field }) => (
+            <FormItem className="flex w-fit flex-col gap-2">
+              <FormLabel>
+                Related Category<sup className="text-app-main">*</sup>
+              </FormLabel>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <FormControl>
+                    <Button
+                      variant="outline"
+                      role="combobox"
+                      className={cn(
+                        "w-[200px] justify-between",
+                        !field.value && "text-muted-foreground",
+                      )}
+                    >
+                      {field.value
+                        ? categories.find(
+                            (category) =>
+                              `${category.categoryId}` === field.value,
+                          )?.name
+                        : "Select a Category"}
+                      <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                    </Button>
+                  </FormControl>
+                </PopoverTrigger>
+                <PopoverContent className="w-[200px] p-0">
+                  <Command
+                    filter={(value, search) => {
+                      if (value.toLowerCase().includes(search.toLowerCase())) {
+                        return 1;
+                      }
+                      return 0;
+                    }}
+                  >
+                    <CommandInput
+                      placeholder="Search Category..."
+                      className="h-9"
+                    />
+                    <CommandEmpty>No Category found.</CommandEmpty>
+                    <CommandGroup>
+                      <CommandList>
+                        {categories.map((category) => (
+                          <CommandItem
+                            key={category.categoryId}
+                            onSelect={() => {
+                              form.setValue(
+                                "category_id",
+                                `${category.categoryId}`,
+                              );
+                            }}
+                            value={`${category.name}`.toLowerCase()}
+                          >
+                            {category.name}
+                            <CheckIcon
+                              className={cn(
+                                "ml-auto h-4 w-4",
+                                `${category.categoryId}` === field.value
+                                  ? "opacity-100"
+                                  : "opacity-0",
+                              )}
+                            />
+                          </CommandItem>
+                        ))}
+                      </CommandList>
+                    </CommandGroup>
+                  </Command>
+                </PopoverContent>
+              </Popover>
               <FormMessage />
             </FormItem>
           )}

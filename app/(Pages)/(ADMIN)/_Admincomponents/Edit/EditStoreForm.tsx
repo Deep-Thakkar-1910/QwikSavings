@@ -176,7 +176,7 @@ const EditStoreForm = ({ similarStores = [] }: StoreFormProps) => {
           title: "Success",
           description: "Store updated successfully.",
         });
-        router.push("/stores"); // Redirect to store listing or details page
+        router.push("/admin"); // Redirect to store listing or details page
       }
     } catch (error) {
       console.error(error);

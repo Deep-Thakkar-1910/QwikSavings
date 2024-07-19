@@ -112,17 +112,6 @@ model Store {
   @@map("stores")
 }
 
-model Blog {
-  blogId        Int      @id @default(autoincrement())
-  title         String
-  thumbnail_url String
-  content       String
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @default(now()) @updatedAt
-
-  @@map("blogs")
-}
-
 model Event {
   eventId          Int      @id @default(autoincrement())
   name             String   @unique
@@ -159,11 +148,25 @@ model Category {
   name                     String                @unique
   description              String?
   coupons                  Coupon[]
+  blogs                    Blog[]
   UserSubmittedCoupon      UserSubmittedCoupon[]
   createdAt                DateTime              @default(now())
   updatedAt                DateTime              @default(now()) @updatedAt
 
   @@map("categories")
+}
+
+model Blog {
+  blogId        Int      @id @default(autoincrement())
+  title         String
+  thumbnail_url String
+  content       String
+  category_id   Int      @default(4)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @default(now()) @updatedAt
+  category      Category @relation(fields: [category_id], references: [categoryId], onDelete: Cascade)
+
+  @@map("blogs")
 }
 
 model Coupon {

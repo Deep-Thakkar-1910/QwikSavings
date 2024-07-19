@@ -11,7 +11,7 @@ interface HookData {
   setLike: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
-const useGetCouponsByStoreName = (): HookData => {
+const useGetBlogsByCategory = (): HookData => {
   const [like, setLike] = useState<string | null>(null);
   const [data, setData] = useState<Record<string, any>[]>([]);
   const [totalCount, setTotalCount] = useState<number>(0);
@@ -25,7 +25,7 @@ const useGetCouponsByStoreName = (): HookData => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `/getcouponsbystore?storeName=${encodeURIComponent(like as string)}`,
+          `/getblogsbycategory?categoryName=${encodeURIComponent(like as string)}`,
         );
         const data = response.data.coupons;
         const total = response.data.totalCount;
@@ -43,4 +43,4 @@ const useGetCouponsByStoreName = (): HookData => {
   return { data, isLoading, error, totalCount, like, setLike };
 };
 
-export default useGetCouponsByStoreName;
+export default useGetBlogsByCategory;
