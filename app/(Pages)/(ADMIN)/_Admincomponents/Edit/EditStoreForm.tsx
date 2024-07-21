@@ -73,6 +73,7 @@ const EditStoreForm = ({ similarStores = [] }: StoreFormProps) => {
       best_offer: "",
       description: "",
       hint: "",
+      hintHeading: "",
       moreAbout: "",
       faq: [],
     },
@@ -120,7 +121,8 @@ const EditStoreForm = ({ similarStores = [] }: StoreFormProps) => {
         logo: undefined,
         description: storeDetails.description ?? undefined,
         moreAbout: storeDetails.moreAbout ?? "",
-        hint: storeDetails.hint ?? undefined,
+        hint: storeDetails.hint ?? "",
+        hintHeading: storeDetails.hintHeading ?? "",
         best_offer: storeDetails.best_offer,
         average_discount: storeDetails.average_discount,
         faq: JSON.parse(storeDetails.faq as unknown as string),
@@ -340,10 +342,10 @@ const EditStoreForm = ({ similarStores = [] }: StoreFormProps) => {
         />
         <FormField
           control={control}
-          name="hint"
+          name="moreAbout"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>How To Apply</FormLabel>
+              <FormLabel>More About Store</FormLabel>
               <FormControl>
                 <RichTextEditor
                   value={field.value || ""}
@@ -356,12 +358,30 @@ const EditStoreForm = ({ similarStores = [] }: StoreFormProps) => {
             </FormItem>
           )}
         />
+
         <FormField
           control={control}
-          name="moreAbout"
+          name="hintHeading"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>More About Store</FormLabel>
+              <FormLabel>Heading For How to Apply</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="Heading For How to Apply"
+                  {...field}
+                  type="text"
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={control}
+          name="hint"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>How To Apply</FormLabel>
               <FormControl>
                 <RichTextEditor
                   value={field.value || ""}

@@ -93,6 +93,7 @@ model Store {
   ref_link             String
   description          String?
   moreAbout            String?
+  hintHeading          String?
   hint                 String?
   isFeatured           Boolean               @default(false)
   addToPopularStores   Boolean               @default(false)

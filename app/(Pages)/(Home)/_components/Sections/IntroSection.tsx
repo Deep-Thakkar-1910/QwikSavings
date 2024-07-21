@@ -5,7 +5,7 @@ const IntroSection = async () => {
   return (
     <section className="flex w-full flex-col items-center" id="Intro">
       {/* Image slider and flipper div */}
-      <div className="mb-10 flex min-h-[15vh] max-w-screen-xl items-start px-8 lg:mb-14 lg:min-h-[40vh] lg:gap-x-6 lg:px-16 xl:px-10 2xl:gap-x-0 ">
+      <div className="mb-10 flex min-h-[15vh] max-w-screen-xl items-start px-8 lg:mb-14 lg:min-h-[40vh] lg:gap-x-8 lg:px-12 xl:px-8 2xl:gap-x-0 ">
         <ImageCarousel />
         <CardStackFlipper autoplay />
       </div>

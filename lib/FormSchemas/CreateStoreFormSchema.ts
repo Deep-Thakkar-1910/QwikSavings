@@ -15,6 +15,7 @@ export const CreateStoreFormScehma = z.object({
   addToPopularStores: z.enum(["yes", "no"]).default("no"),
   description: z.string(),
   moreAbout: z.string(),
+  hintHeading: z.string(),
   hint: z.string(),
   faq: z.array(FAQSchema), // Assuming faq is a JSON string
   best_offer: z.string().default("0"),

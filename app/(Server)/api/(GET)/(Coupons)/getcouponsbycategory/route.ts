@@ -20,6 +20,11 @@ export const GET = async (req: Request) => {
       select: {
         categoryId: true,
         coupons: {
+          where: {
+            due_date: {
+              gt: new Date(),
+            },
+          },
           select: {
             store: {
               select: {

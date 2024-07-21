@@ -94,6 +94,7 @@ const CreateStoreForm = () => {
       description: "",
       hint: "",
       moreAbout: "",
+      hintHeading: "",
       similarStores: [],
       faq: [],
     },
@@ -308,6 +309,7 @@ const CreateStoreForm = () => {
             </FormItem>
           )}
         />
+
         <FormField
           control={control}
           name="moreAbout"
@@ -320,6 +322,23 @@ const CreateStoreForm = () => {
                   onChange={(newContent) => {
                     field.onChange(newContent);
                   }}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={control}
+          name="hintHeading"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Heading For How to Apply</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="Heading For How to Apply"
+                  {...field}
+                  type="text"
                 />
               </FormControl>
               <FormMessage />

@@ -1019,10 +1019,10 @@ const CouponDialog: React.FC<{
       <div className="flex flex-col items-center gap-4">
         <Image
           src={logoUrl ?? "https://via.placeholder.com/100x100"}
-          width={100}
-          height={100}
+          width={400}
+          height={400}
           alt="Store logo"
-          className="rounded-full"
+          className="size-28 rounded-full"
         />
         <p className="text-sm font-medium">{title}</p>
         <p className="text-sm font-medium text-muted-foreground">
@@ -1100,10 +1100,10 @@ const DealDialog: React.FC<{
       <div className="flex flex-col items-center gap-4">
         <Image
           src={logoUrl ?? "https://via.placeholder.com/100x100"}
-          width={100}
-          height={100}
+          width={400}
+          height={400}
           alt="Store logo"
-          className="rounded-full"
+          className="size-28 rounded-full"
         />
         <p className="text-sm font-medium">{title}</p>
         <p className="text-sm font-medium text-muted-foreground">

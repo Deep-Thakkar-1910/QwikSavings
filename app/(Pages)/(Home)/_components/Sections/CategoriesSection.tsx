@@ -34,7 +34,7 @@ const CategoriesSection = ({ fetchFrom, title }: CategoriesSectionProps) => {
   };
   return (
     <section
-      className={`mx-auto w-full max-w-screen-xl py-6 sm:p-10 ${data.coupons?.length === 0 || error || isLoading ? "hidden" : ""}`}
+      className={`mx-auto w-full max-w-screen-xl overflow-x-hidden py-6 sm:p-10 ${data.coupons?.length === 0 || error || isLoading ? "hidden" : ""}`}
     >
       <div className="mt-4 flex w-full flex-col items-center sm:flex-row sm:justify-between sm:px-8 lg:px-16 xl:px-0 2xl:px-0">
         <h2 className="mx-auto mb-4 place-self-center text-2xl font-bold sm:mx-0 sm:place-self-start lg:text-3xl">
@@ -53,11 +53,11 @@ const CategoriesSection = ({ fetchFrom, title }: CategoriesSectionProps) => {
           <p className="text-red-500">{error}</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 place-items-center gap-x-8 gap-y-6 p-8 md:grid-cols-2 lg:grid-cols-3 lg:px-16 xl:grid-cols-4 xl:px-2 2xl:px-0">
+        <div className="flex flex-nowrap place-items-center items-center justify-start gap-x-8 gap-y-6 overflow-x-auto p-8 md:grid-cols-2 lg:grid lg:grid-cols-3 lg:px-16 xl:grid-cols-4 xl:px-2 2xl:px-0">
           {data.coupons?.map((coupon: Coupon, index: number) => {
             return (
               <div
-                className="flex w-full max-w-72 flex-col flex-wrap items-center rounded-lg bg-popover shadow-lg sm:max-w-80 lg:max-w-full"
+                className="flex w-full max-w-72 shrink-0 flex-col flex-wrap items-center rounded-lg bg-popover shadow-lg sm:max-w-80 lg:max-w-full"
                 key={index}
               >
                 <div className="flex w-full items-center justify-center rounded-tl-md rounded-tr-md">
@@ -78,13 +78,15 @@ const CategoriesSection = ({ fetchFrom, title }: CategoriesSectionProps) => {
                   <div className="flex w-full items-center justify-between ">
                     <div className="-translate-y-2/3 rounded-full bg-white p-1 dark:bg-app-dark-navbar">
                       {coupon.store.logo_url ? (
-                        <Image
-                          src={coupon.store.logo_url}
-                          alt="Brand logo"
-                          width={400}
-                          height={400}
-                          className="size-14 rounded-full object-cover"
-                        />
+                        <Link href={`/stores/${coupon.store.name}`}>
+                          <Image
+                            src={coupon.store.logo_url}
+                            alt="Brand logo"
+                            width={400}
+                            height={400}
+                            className="size-14 cursor-pointer rounded-full object-cover"
+                          />
+                        </Link>
                       ) : (
                         <div className="size-14 rounded-full bg-popover" />
                       )}

@@ -583,23 +583,52 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
               </div>
             </div>
             {isStore && (
-              <div className={`${commonStyles}`}>
+              <div
+                className={`${commonStyles} ${
+                  isStore &&
+                  detailsData.faq &&
+                  !detailsData.hint &&
+                  !detailsData.moreAbout &&
+                  "hidden"
+                }`}
+              >
                 <h2 className="mb-2 text-base font-bold">Quick Links</h2>
                 <div className="flex flex-col gap-y-4 rounded-lg border-2 p-4">
-                  <ScrollLink to="faqs" smooth offset={-140}>
+                  <ScrollLink
+                    to="faqs"
+                    smooth
+                    offset={-140}
+                    className={`${
+                      isStore &&
+                      detailsData.faq &&
+                      JSON.parse(detailsData?.faq).length > 0
+                        ? ""
+                        : "hidden"
+                    }`}
+                  >
                     <div className="flex cursor-pointer items-center justify-between">
                       <p>FAQs</p>
                       <FaQuestionCircle className="size-4" />
                     </div>
                   </ScrollLink>
 
-                  <ScrollLink to="hints" smooth offset={-150}>
+                  <ScrollLink
+                    to="hints"
+                    smooth
+                    offset={-150}
+                    className={`${!detailsData.hint && "hidden"}`}
+                  >
                     <div className="flex cursor-pointer items-center justify-between">
                       <p>How To Apply</p>
                       <Lightbulb className="size-4" />
                     </div>
                   </ScrollLink>
-                  <ScrollLink to="moreabout" smooth offset={-150}>
+                  <ScrollLink
+                    to="moreabout"
+                    smooth
+                    offset={-150}
+                    className={`${!detailsData.moreAbout && "hidden"}`}
+                  >
                     <div
                       className={`flex cursor-pointer items-center justify-between`}
                     >
@@ -1110,10 +1139,15 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                 </section>
               )}
             {isStore && (
-              <section id="hints" className={`${commonStyles}`}>
+              <section
+                id="hints"
+                className={`${commonStyles} ${!detailsData.hint && "hidden"}`}
+              >
                 <div className={`w-full`}>
                   <h2 className="mb-4 text-xl font-bold sm:text-2xl">
-                    How to Apply
+                    {detailsData.hintHeading
+                      ? detailsData.hintHeading
+                      : "How To Apply"}
                   </h2>
                   <div
                     dangerouslySetInnerHTML={{ __html: detailsData.hint }}
@@ -1123,7 +1157,10 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
               </section>
             )}
             {isStore && (
-              <section id="moreabout" className={`${commonStyles}`}>
+              <section
+                id="moreabout"
+                className={`${commonStyles} ${!detailsData.moreAbout && "hidden"}`}
+              >
                 <div className={`w-full`}>
                   <h2 className="mb-4 text-xl font-bold sm:text-2xl">
                     More About
@@ -1219,10 +1256,10 @@ const CouponDialog: React.FC<{
       <div className="flex flex-col items-center gap-4">
         <Image
           src={logoUrl ?? "https://via.placeholder.com/100x100"}
-          width={100}
-          height={100}
+          width={400}
+          height={400}
           alt="Store logo"
-          className="rounded-full"
+          className="size-28 rounded-full"
         />
         <p className="text-sm font-medium">{title}</p>
         <p className="text-sm font-medium text-muted-foreground">
@@ -1302,10 +1339,10 @@ const DealDialog: React.FC<{
       <div className="flex flex-col items-center gap-4">
         <Image
           src={logoUrl ?? "https://via.placeholder.com/100x100"}
-          width={100}
-          height={100}
+          width={400}
+          height={400}
           alt="Store logo"
-          className="rounded-full"
+          className="size-28 rounded-full"
         />
         <p className="text-sm font-medium">{title}</p>
         <p className="text-sm font-medium text-muted-foreground">
