@@ -6,15 +6,60 @@ import FilterBlocks from "@/app/(Pages)/_PageComponents/FilterBlocks";
 import { useFilter } from "@/hooks/useFilter";
 import { Tag } from "lucide-react";
 import Link from "next/link";
+import axios from "@/app/api/axios/axios";
+import { toast } from "@/components/ui/use-toast";
+import { AxiosError } from "axios";
 
 const AdminAllStoresPage = () => {
-  const { setPage, setLike, data, page, like, isLoading, totalCount, error } =
-    useFilter("stores");
+  const {
+    setPage,
+    setLike,
+    data,
+    page,
+    like,
+    isLoading,
+    totalCount,
+    error,
+    setData,
+    setTotalCount,
+  } = useFilter("stores");
   const totalPages = Math.ceil(totalCount / 20);
 
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
   };
+
+  const handleDelete = async (id: number) => {
+    try {
+      const response = await axios.delete(`/deletestore/${id}`);
+      if (response.data.success) {
+        // Update local state
+        setData((prevData) => prevData.filter((item) => item.storeId !== id));
+        setTotalCount((prevCount) => prevCount - 1);
+        toast({
+          title: "Store deleted",
+          description: "The store has been successfully deleted.",
+        });
+      }
+    } catch (error) {
+      console.error("Error deleting store:", error);
+      if (error instanceof AxiosError) {
+        toast({
+          title: "Error",
+          description: error?.response?.data?.error,
+          variant: "destructive",
+        });
+        return;
+      }
+      toast({
+        title: "Error",
+        description: "Failed to delete the store. Please try again.",
+        variant: "destructive",
+      });
+      throw error; // Re-throw for DisplayItems to handle
+    }
+  };
+
   return (
     <section className="mt-10 flex w-full flex-col items-center">
       <h1 className="mb-6 text-2xl font-bold">Stores</h1>
@@ -39,6 +84,7 @@ const AdminAllStoresPage = () => {
         isLoading={isLoading}
         error={error}
         emptyMessage="No Stores Found"
+        onDelete={handleDelete}
       />
       {totalPages > 1 && (
         <CustomPaginationComponent

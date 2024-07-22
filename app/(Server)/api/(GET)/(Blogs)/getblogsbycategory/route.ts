@@ -21,6 +21,7 @@ export const GET = async (req: Request) => {
         blogs: {
           select: {
             blogId: true,
+            createdAt: true,
             updatedAt: true,
             thumbnail_url: true,
             content: true,

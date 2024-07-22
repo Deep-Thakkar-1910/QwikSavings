@@ -1,12 +1,14 @@
 import axios from "@/app/api/axios/axios";
 import { AxiosError } from "axios";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 interface HookData {
   data: Record<string, any>[];
+  setData: Dispatch<SetStateAction<Record<string, any>[]>>;
   isLoading: boolean;
   like: string | null;
   totalCount: number;
+  setTotalCount: Dispatch<SetStateAction<number>>;
   error: string | undefined;
   setLike: React.Dispatch<React.SetStateAction<string | null>>;
 }
@@ -40,7 +42,16 @@ const useGetCouponsByStoreName = (): HookData => {
 
     fetchData();
   }, [like]);
-  return { data, isLoading, error, totalCount, like, setLike };
+  return {
+    data,
+    setData,
+    isLoading,
+    error,
+    totalCount,
+    setTotalCount,
+    like,
+    setLike,
+  };
 };
 
 export default useGetCouponsByStoreName;

@@ -7,13 +7,23 @@ import CategoryFilterForBlogs from "../../../_Admincomponents/CategoryFilterForB
 import useGetBlogsByCategory from "@/hooks/useGetBlogsByCategory";
 import BlogsDisplay from "../../../_Admincomponents/BlogsDisplay";
 import axios from "@/app/api/axios/axios";
+import { toast } from "@/components/ui/use-toast";
+import { AxiosError } from "axios";
 
 const AllBlogsPage = () => {
   const [categories, setCategories] = useState<
     { categoryId: number; name: string }[]
   >([]);
-  const { data, error, isLoading, like, setLike, totalCount } =
-    useGetBlogsByCategory();
+  const {
+    data,
+    setData,
+    error,
+    isLoading,
+    like,
+    setLike,
+    totalCount,
+    setTotalCount,
+  } = useGetBlogsByCategory();
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -28,6 +38,33 @@ const AllBlogsPage = () => {
     };
     fetchCategories();
   }, [setLike]);
+
+  const handleDelete = async (id: number) => {
+    try {
+      const response = await axios.delete(`/deleteblog/${id}`);
+
+      if (response.data.success) {
+        // Update local state
+        setData((prevData) => prevData.filter((item) => item.blogId !== id));
+        setTotalCount((prevCount) => prevCount - 1);
+        toast({
+          title: "Blog deleted",
+          description: "The blog has been successfully deleted.",
+        });
+      }
+    } catch (error) {
+      console.error("Error deleting blog:", error);
+      if (error instanceof AxiosError) {
+        toast({
+          title: "Error",
+          description: error?.response?.data?.error,
+          variant: "destructive",
+        });
+        return;
+      }
+    }
+  };
+
   return (
     <section className="mt-10 flex w-full flex-col items-center">
       <h1 className="mb-6 text-2xl font-bold">Blogs</h1>
@@ -54,6 +91,7 @@ const AllBlogsPage = () => {
         isLoading={isLoading}
         emptyMessage="No Blogs Found"
         error={error}
+        onDelete={handleDelete}
       />
     </section>
   );

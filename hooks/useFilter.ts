@@ -1,13 +1,15 @@
 import axios from "@/app/api/axios/axios";
 import { AxiosError } from "axios";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 interface HookData {
   data: Record<string, any>[];
+  setData: Dispatch<SetStateAction<Record<string, any>[]>>;
   isLoading: boolean;
   like: string;
   page: number;
   totalCount: number;
+  setTotalCount: Dispatch<SetStateAction<number>>;
   setPage: React.Dispatch<React.SetStateAction<number>>;
   error: string | undefined;
   setLike: React.Dispatch<React.SetStateAction<string>>;
@@ -43,7 +45,18 @@ const useFilter = (fetchFrom: string, initialLike?: string): HookData => {
 
     fetchData();
   }, [page, like, fetchFrom, initialLike]);
-  return { data, isLoading, error, page, setPage, totalCount, like, setLike };
+  return {
+    data,
+    setData,
+    isLoading,
+    error,
+    page,
+    setPage,
+    totalCount,
+    setTotalCount,
+    like,
+    setLike,
+  };
 };
 
 export { useFilter };

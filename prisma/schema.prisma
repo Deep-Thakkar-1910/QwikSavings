@@ -134,8 +134,8 @@ model Rating {
   rating    Int
   userId    String
   storeId   Int
-  user      User     @relation(fields: [userId], references: [id])
-  store     Store    @relation(fields: [storeId], references: [storeId])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  store     Store    @relation(fields: [storeId], references: [storeId], onDelete: Cascade)
   createdAt DateTime @default(now())
 
   @@unique([userId, storeId])

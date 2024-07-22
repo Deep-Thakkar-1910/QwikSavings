@@ -2,18 +2,66 @@
 import CustomPaginationComponent from "@/app/(Pages)/_PageComponents/CustomPaginationComponent";
 import DisplayItems from "@/app/(Pages)/_PageComponents/DisplayComponents";
 import FilterBlocks from "@/app/(Pages)/_PageComponents/FilterBlocks";
+import axios from "@/app/api/axios/axios";
+import { toast } from "@/components/ui/use-toast";
 import { useFilter } from "@/hooks/useFilter";
+import { AxiosError } from "axios";
 import { Tag } from "lucide-react";
 import Link from "next/link";
 
 const AllCategories = () => {
-  const { setPage, setLike, data, page, like, isLoading, totalCount, error } =
-    useFilter("categories");
+  const {
+    setPage,
+    setData,
+    setLike,
+    data,
+    page,
+    like,
+    isLoading,
+    totalCount,
+    setTotalCount,
+    error,
+  } = useFilter("categories");
   const totalPages = Math.ceil(totalCount / 20);
 
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
   };
+
+  const handleDelete = async (id: number) => {
+    try {
+      const response = await axios.delete(`/deletecategory/${id}`);
+
+      if (response.data.success) {
+        // Update local state
+        setData((prevData) =>
+          prevData.filter((item) => item.categoryId !== id),
+        );
+        setTotalCount((prevCount) => prevCount - 1);
+        toast({
+          title: "Category deleted",
+          description: "The category has been successfully deleted.",
+        });
+      }
+    } catch (error) {
+      console.error("Error deleting category:", error);
+      if (error instanceof AxiosError) {
+        toast({
+          title: "Error",
+          description: error?.response?.data?.error,
+          variant: "destructive",
+        });
+        return;
+      }
+      toast({
+        title: "Error",
+        description: "Failed to delete the category. Please try again.",
+        variant: "destructive",
+      });
+      throw error; // Re-throw for DisplayItems to handle
+    }
+  };
+
   return (
     <section className="mt-10 flex w-full flex-col items-center">
       <h1 className="mb-6 text-2xl font-bold">Categories</h1>
@@ -40,6 +88,7 @@ const AllCategories = () => {
         isLoading={isLoading}
         error={error}
         emptyMessage="No Categories Found"
+        onDelete={handleDelete}
       />
       {totalPages > 1 && (
         <CustomPaginationComponent

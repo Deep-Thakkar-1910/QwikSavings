@@ -6,11 +6,21 @@ import axios from "@/app/api/axios/axios";
 import CouponDisplay from "../../../_Admincomponents/CouponDisplay";
 import Link from "next/link";
 import { Tag } from "lucide-react";
+import { toast } from "@/components/ui/use-toast";
+import { AxiosError } from "axios";
 
 const AllCouponsPage = () => {
   const [stores, setStores] = useState<{ storeId: number; name: string }[]>([]);
-  const { data, error, isLoading, like, setLike, totalCount } =
-    useGetCouponsByStoreName();
+  const {
+    data,
+    setData,
+    error,
+    isLoading,
+    like,
+    setLike,
+    totalCount,
+    setTotalCount,
+  } = useGetCouponsByStoreName();
   useEffect(() => {
     const fetchStores = async () => {
       try {
@@ -26,6 +36,36 @@ const AllCouponsPage = () => {
     };
     fetchStores();
   }, [setLike]);
+  const handleDelete = async (id: number) => {
+    try {
+      const response = await axios.delete(`/deletecoupon/${id}`);
+      if (response.data.success) {
+        // Update local state
+        setData((prevData) => prevData.filter((item) => item.couponId !== id));
+        setTotalCount((prevCount) => prevCount - 1);
+        toast({
+          title: "Coupon deleted",
+          description: "The coupon has been successfully deleted.",
+        });
+      }
+    } catch (error) {
+      console.error("Error deleting coupon:", error);
+      if (error instanceof AxiosError) {
+        toast({
+          title: "Error",
+          description: error?.response?.data?.error,
+          variant: "destructive",
+        });
+        return;
+      }
+      toast({
+        title: "Error",
+        description: "Failed to delete the coupon. Please try again.",
+        variant: "destructive",
+      });
+      throw error; // Re-throw for DisplayItems to handle
+    }
+  };
   return (
     <section className="mt-10 flex w-full flex-col items-center">
       <h1 className="mb-6 text-2xl font-bold">Coupons</h1>
@@ -47,6 +87,7 @@ const AllCouponsPage = () => {
         isLoading={isLoading}
         emptyMessage="No Coupons Found"
         error={error}
+        onDelete={handleDelete}
       />
     </section>
   );

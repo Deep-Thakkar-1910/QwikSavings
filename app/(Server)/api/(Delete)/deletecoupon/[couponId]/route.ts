@@ -3,7 +3,10 @@ import db from "@/lib/prisma";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/AuthOptions";
 
-export async function DELETE(req: Request) {
+export async function DELETE(
+  req: Request,
+  context: { params: { couponId: string } },
+) {
   try {
     const session = await getServerSession(authOptions);
     if (session?.user?.role !== "admin") {
@@ -13,17 +16,17 @@ export async function DELETE(req: Request) {
       );
     }
 
-    const id = req.json();
+    const id = context.params.couponId;
 
-    const storeId = Number(id);
+    const couponId = Number(id);
 
-    await db.store.delete({
-      where: { storeId },
+    await db.coupon.delete({
+      where: { couponId },
     });
 
     return NextResponse.json({
       success: true,
-      message: "Store deleted successfully",
+      message: "Category deleted successfully",
     });
   } catch (error) {
     console.error(error);
