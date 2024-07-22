@@ -176,7 +176,7 @@ const DisplayItems = <
             </DialogTitle>
             <DialogDescription>
               This action cannot be undone. This will permanently delete the{" "}
-              {itemToDelete?.storeId ? "store" : "category"} "
+              {itemToDelete?.storeId ? "store" : "category"}
               {itemToDelete?.name}" and remove all associated data.
             </DialogDescription>
           </DialogHeader>
