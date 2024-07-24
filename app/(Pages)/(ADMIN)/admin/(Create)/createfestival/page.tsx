@@ -1,16 +1,16 @@
-import CreateBlogForm from "../../../_Admincomponents/Create/CreateBlogForm";
+import CreateFestivalForm from "../../../_Admincomponents/Create/CreateFestivalForm";
 
-const CreateBlogPage = async () => {
+const CreateFestival = () => {
   return (
     <article className="my-8 flex flex-col items-center justify-center gap-8">
-      <h1 className="text-2xl sm:text-4xl">Create a new Blog</h1>
+      <h1 className="text-2xl sm:text-4xl">Create a new Festival</h1>
 
       {/* Form container div */}
       <div className="mb-2 flex w-11/12 max-w-lg flex-col items-center justify-center rounded-lg border-2 bg-white p-6 dark:bg-app-dark-navbar md:w-full">
-        <CreateBlogForm />
+        <CreateFestivalForm />
       </div>
     </article>
   );
 };
 
-export default CreateBlogPage;
+export default CreateFestival;

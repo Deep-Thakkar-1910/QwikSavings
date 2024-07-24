@@ -1,5 +1,5 @@
 "use client";
-
+import axios from "@/app/api/axios/axios";
 import {
   Form,
   FormControl,
@@ -14,18 +14,14 @@ import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "@/components/ui/use-toast";
-import axios from "@/app/api/axios/axios";
 import { AxiosError } from "axios";
-import Image from "next/image";
-import { CheckIcon, MinusCircle } from "lucide-react";
-import { ChangeEvent, useEffect, useRef, useState } from "react";
-import { CreateBlogFormSchema } from "@/lib/FormSchemas/CreateBlogFormSchema";
-import RichTextEditor from "@/components/ui/RichTextEditor";
+import { CreateFestivalFormSchema } from "@/lib/FormSchemas/CreateFestivalFormSchema";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
 import { CaretSortIcon } from "@radix-ui/react-icons";
 import {
   Command,
@@ -35,80 +31,76 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import { cn } from "@/lib/utils";
+import { CheckIcon } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
 
-type InputType = z.infer<typeof CreateBlogFormSchema>;
+type InputType = z.infer<typeof CreateFestivalFormSchema>;
 
-const CreateBlogForm = () => {
-  const [categories, setCategories] = useState<Record<string, any>[]>([]);
-
+const EditFestivalForm = () => {
+  const { festivalId } = useParams();
+  const [stores, setStores] = useState<{ name: string; storeId: string }[]>([]);
   useEffect(() => {
-    const fetchCategories = async () => {
+    const fetchStores = async () => {
       try {
-        const categoriesResult = await axios.get(`/getcategories`);
-        if (categoriesResult.data.success) {
-          setCategories(categoriesResult.data.categories);
+        const response = await axios.get("/getstores");
+        if (response.data.success) {
+          setStores(response.data.stores);
         }
-      } catch (e) {
-        console.error(e);
+      } catch (err) {
+        console.error(err);
       }
     };
-    fetchCategories();
+    fetchStores();
   }, []);
-
+  // decalring the form object
   const form = useForm<InputType>({
-    resolver: zodResolver(CreateBlogFormSchema),
+    resolver: zodResolver(CreateFestivalFormSchema),
     defaultValues: {
+      name: "",
+      store_id: "",
       title: "",
-      content: "",
-      category_id: "",
-      thumbnail: undefined,
     },
     mode: "all",
     shouldFocusError: true,
   });
 
-  const { control, handleSubmit, formState, setValue } = form;
+  const { control, handleSubmit, formState } = form;
+  useEffect(() => {
+    const fetchFestivalData = async () => {
+      try {
+        const response = await axios.get(
+          `/getfestivalbyid/${festivalId as string}`,
+        );
+        if (response.data.success) {
+          //   setFestivalData(response?.data?.festivalDetails);
+          form.reset({
+            name: response.data.festivalDetails.name,
+            store_id: `${response.data.festivalDetails.storeId}`,
+            title: response.data.festivalDetails.title,
+          });
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchFestivalData();
+  }, []);
 
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  const imageRef = useRef<HTMLInputElement>(null);
-
-  const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      setValue("thumbnail", file);
-      setSelectedImage(URL.createObjectURL(file));
-    }
-  };
-
-  const removeImage = () => {
-    setSelectedImage(null);
-    setValue("thumbnail", undefined);
-    if (imageRef.current) {
-      imageRef.current.value = "";
-    }
-  };
-
+  // form submission handler
   const onSubmit: SubmitHandler<InputType> = async (data) => {
-    const formData = new FormData();
-    if (data.thumbnail) {
-      formData.append("thumbnail", data.thumbnail);
-    }
-    const { thumbnail, ...restData } = data;
-    formData.append("data", JSON.stringify(restData));
     try {
-      const result = await axios.post("/createblog", formData, {
+      const result = await axios.post("/createfestival", JSON.stringify(data), {
         headers: {
-          "Content-Type": "multipart/form-data",
+          "Content-Type": "application/json",
         },
       });
       if (result.data.success) {
         toast({
           title: "Success",
-          description: "Blog Created Successfully",
+          description: "Festival Created Successfully",
         });
         form.reset();
-        setSelectedImage(null);
       }
     } catch (err) {
       console.log(err);
@@ -119,7 +111,6 @@ const CreateBlogForm = () => {
           variant: "destructive",
         });
       }
-      setSelectedImage(null);
     }
   };
 
@@ -131,14 +122,14 @@ const CreateBlogForm = () => {
       >
         <FormField
           control={control}
-          name="title"
+          name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Blog Title</FormLabel>
+              <FormLabel>Festival Name</FormLabel>
               <sup className="text-app-main">*</sup>
               <FormControl>
                 <Input
-                  placeholder="Enter a Blog Title"
+                  placeholder="Enter a Festival Name"
                   {...field}
                   type="text"
                 />
@@ -147,65 +138,31 @@ const CreateBlogForm = () => {
             </FormItem>
           )}
         />
-        <FormItem>
-          <div className="my-4 flex flex-col items-center gap-x-3 gap-y-4 sm:flex-row">
-            <FormLabel>
-              <span className="cursor-pointer rounded-lg border border-muted bg-transparent p-2 px-4 transition-colors duration-300 ease-out hover:bg-accent">
-                {selectedImage ? "Change" : "Add"} Thumbnail
-              </span>
-            </FormLabel>
-            <FormControl>
-              <input
-                type="file"
-                accept="image/*"
-                ref={imageRef}
-                onChange={handleFileChange}
-                className="hidden"
-              />
-            </FormControl>
-            {selectedImage && (
-              <>
-                <Image
-                  src={selectedImage}
-                  alt="Upload Image"
-                  width={80}
-                  height={80}
-                  className="aspect-square"
-                />
-                <MinusCircle
-                  className="size-6 translate-y-1/2 cursor-pointer text-destructive"
-                  onClick={removeImage}
-                />
-              </>
-            )}
-          </div>
-          <FormMessage />
-        </FormItem>
         <FormField
           control={control}
-          name="content"
+          name="title"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Blog Content</FormLabel>
+              <FormLabel>Festival Title</FormLabel>
               <sup className="text-app-main">*</sup>
               <FormControl>
-                <RichTextEditor
-                  value={field.value || ""}
-                  onChange={field.onChange}
+                <Input
+                  placeholder="Enter a Festival Name"
+                  {...field}
+                  type="text"
                 />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-
         <FormField
           control={control}
-          name="category_id"
+          name="store_id"
           render={({ field }) => (
             <FormItem className="flex w-fit flex-col gap-2">
               <FormLabel>
-                Related Category<sup className="text-app-main">*</sup>
+                Related Store <sup className="text-app-main">*</sup>
               </FormLabel>
               <Popover>
                 <PopoverTrigger asChild>
@@ -219,11 +176,10 @@ const CreateBlogForm = () => {
                       )}
                     >
                       {field.value
-                        ? categories.find(
-                            (category) =>
-                              `${category.categoryId}` === field.value,
+                        ? stores.find(
+                            (store) => `${store.storeId}` === field.value,
                           )?.name
-                        : "Select a Category"}
+                        : "Select a store"}
                       <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
                   </FormControl>
@@ -238,28 +194,25 @@ const CreateBlogForm = () => {
                     }}
                   >
                     <CommandInput
-                      placeholder="Search Category..."
+                      placeholder="Search Store..."
                       className="h-9"
                     />
-                    <CommandEmpty>No Category found.</CommandEmpty>
+                    <CommandEmpty>No Store found.</CommandEmpty>
                     <CommandGroup>
                       <CommandList>
-                        {categories.map((category) => (
+                        {stores.map((store) => (
                           <CommandItem
-                            key={category.categoryId}
+                            key={store.storeId}
                             onSelect={() => {
-                              form.setValue(
-                                "category_id",
-                                `${category.categoryId}`,
-                              );
+                              form.setValue("store_id", `${store.storeId}`);
                             }}
-                            value={`${category.name}`.toLowerCase()}
+                            value={`${store.name}`.toLowerCase()}
                           >
-                            {category.name}
+                            {store.name}
                             <CheckIcon
                               className={cn(
                                 "ml-auto h-4 w-4",
-                                `${category.categoryId}` === field.value
+                                `${store.storeId}` === field.value
                                   ? "opacity-100"
                                   : "opacity-0",
                               )}
@@ -275,7 +228,6 @@ const CreateBlogForm = () => {
             </FormItem>
           )}
         />
-
         <p className="mt-2 place-self-center text-xs text-gray-400">
           Fields marked with<span className="text-app-main"> * </span>are
           required
@@ -286,11 +238,11 @@ const CreateBlogForm = () => {
           className="w-full place-self-center rounded-lg hover:shadow-md"
           disabled={formState.isSubmitting}
         >
-          {formState.isSubmitting ? "Creating..." : "Create Blog"}
+          {formState.isSubmitting ? "Editing..." : "Edit Festival"}
         </Button>
       </form>
     </Form>
   );
 };
 
-export default CreateBlogForm;
+export default EditFestivalForm;

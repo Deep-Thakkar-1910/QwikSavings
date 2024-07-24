@@ -28,7 +28,7 @@ interface DisplayItemsProps<
   isLoading: boolean;
   error: string | undefined;
   emptyMessage: string;
-  onDelete: (id: number) => Promise<void>;
+  onDelete?: (id: number) => Promise<void>;
 }
 
 const DisplayItems = <
@@ -73,7 +73,7 @@ const DisplayItems = <
   };
 
   const handleConfirmDelete = async () => {
-    if (itemToDelete) {
+    if (onDelete && itemToDelete) {
       try {
         await onDelete(itemToDelete.storeId ?? itemToDelete.categoryId!);
         setIsDialogOpen(false);
