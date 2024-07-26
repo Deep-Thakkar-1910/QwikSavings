@@ -183,15 +183,28 @@ const CategoriesSection: React.FC<CategoriesSectionProps> = ({
               )}
               {coupon.type === "Coupon" && (
                 <div
-                  className="group relative grid w-full cursor-pointer rounded-md border-r-2 border-dashed border-app-main bg-app-bg-main p-2 dark:bg-app-dark"
-                  onClick={() => handleCouponUse(coupon)}
+                  className="group relative grid min-h-10 w-full min-w-28 cursor-pointer overflow-hidden rounded-md bg-app-bg-main p-2 dark:bg-app-dark sm:min-h-fit sm:min-w-40"
+                  onClick={() => {
+                    handleCouponUse(coupon);
+                  }}
                 >
-                  <p className="translate-x-4 place-self-center text-base font-semibold uppercase tracking-widest">
+                  <p
+                    className={`place-self-end text-base font-semibold uppercase tracking-widest ${
+                      !coupon.coupon_code && "min-h-5"
+                    }`}
+                  >
                     {coupon.coupon_code}
                   </p>
-                  <div className="polygon-clip absolute left-0 top-0 grid h-full w-full place-items-center bg-app-main transition-all duration-200 ease-linear group-hover:w-8/12 ">
-                    <p className="font-semibold text-slate-200">Reveal code</p>
+                  {/* wrapper */}
+                  <div className="absolute left-0 top-0 h-full w-full">
+                    <div className="polygon-clip h-full w-full rounded-md bg-app-main transition-all duration-200 ease-linear group-hover:w-11/12">
+                      <p className="absolute inset-0 grid place-items-center text-sm font-semibold text-slate-200">
+                        Reveal code
+                      </p>
+                    </div>
                   </div>
+                  {/* Border overlay */}
+                  <div className="pointer-events-none absolute inset-0 rounded-l-lg border-2 border-dashed border-app-main" />
                 </div>
               )}
             </div>

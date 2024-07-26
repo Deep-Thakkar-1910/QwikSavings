@@ -864,7 +864,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                             }}
                           >
                             <p
-                              className={`translate-x-14 place-self-center text-base font-semibold uppercase tracking-widest ${
+                              className={`place-self-end text-base font-semibold uppercase tracking-widest ${
                                 !coupon.coupon_code && "min-h-5"
                               }`}
                             >
@@ -1019,7 +1019,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                               }}
                             >
                               <p
-                                className={`translate-x-14 place-self-center text-base font-semibold uppercase tracking-widest ${
+                                className={`place-self-end text-base font-semibold uppercase tracking-widest ${
                                   !coupon.coupon_code && "min-h-5"
                                 }`}
                               >
