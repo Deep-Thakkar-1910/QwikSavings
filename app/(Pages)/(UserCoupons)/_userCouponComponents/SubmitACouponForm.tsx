@@ -138,7 +138,12 @@ const CreateUserCouponForm = ({
                   Title <sup className="text-app-main">*</sup>
                 </FormLabel>
                 <FormControl>
-                  <Input placeholder="Coupon title" {...field} type="text" />
+                  <Input
+                    placeholder="Coupon title"
+                    {...field}
+                    type="text"
+                    className="!bg-app-bg-main dark:!bg-app-dark"
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -152,7 +157,11 @@ const CreateUserCouponForm = ({
               <FormItem>
                 <FormLabel>Description</FormLabel>
                 <FormControl>
-                  <Textarea placeholder="Coupon Description" {...field} />
+                  <Textarea
+                    placeholder="Coupon Description"
+                    {...field}
+                    className="bg-app-bg-main dark:bg-app-dark"
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -172,6 +181,7 @@ const CreateUserCouponForm = ({
                     placeholder="https://example.com"
                     {...field}
                     type="url"
+                    className="!bg-app-bg-main dark:!bg-app-dark"
                   />
                 </FormControl>
                 <FormMessage />
@@ -192,7 +202,7 @@ const CreateUserCouponForm = ({
                   defaultValue={field.value}
                 >
                   <FormControl>
-                    <SelectTrigger>
+                    <SelectTrigger className="!bg-app-bg-main dark:!bg-app-dark">
                       <SelectValue placeholder="Select a Type" />
                     </SelectTrigger>
                   </FormControl>
@@ -235,7 +245,10 @@ const CreateUserCouponForm = ({
                   Related Category<sup className="text-app-main">*</sup>
                 </FormLabel>
                 <Popover>
-                  <PopoverTrigger asChild>
+                  <PopoverTrigger
+                    asChild
+                    className="!bg-app-bg-main dark:!bg-app-dark"
+                  >
                     <FormControl>
                       <Button
                         variant="outline"
@@ -314,7 +327,10 @@ const CreateUserCouponForm = ({
                   Related Store <sup className="text-app-main">*</sup>
                 </FormLabel>
                 <Popover>
-                  <PopoverTrigger asChild>
+                  <PopoverTrigger
+                    asChild
+                    className="!bg-app-bg-main dark:!bg-app-dark"
+                  >
                     <FormControl>
                       <Button
                         variant="outline"
@@ -389,7 +405,10 @@ const CreateUserCouponForm = ({
                   Expiry Date<sup className="text-app-main">*</sup>
                 </FormLabel>
                 <Popover>
-                  <PopoverTrigger asChild>
+                  <PopoverTrigger
+                    asChild
+                    className="!bg-app-bg-main dark:!bg-app-dark"
+                  >
                     <FormControl>
                       <Button
                         variant={"outline"}

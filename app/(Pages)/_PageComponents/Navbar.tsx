@@ -23,15 +23,16 @@ const Navbar = () => {
   const { data: session } = useSession();
   const isActive = useActiveFestival((state) => state.isActive);
   return (
-    <header
-      className={cn(
-        "fixed left-0 top-0 z-50 w-full -translate-y-16 transition-transform duration-200 ease-linear",
-        isActive &&
-          "translate-y-0 transition-transform duration-200 ease-linear",
-      )}
-    >
+    <header className="fixed left-0 top-0 z-50 w-full transition-transform duration-200 ease-linear">
       <FestivalStrip />
-      <nav className="flex h-16 w-full items-center justify-between border-b border-b-app-main bg-white p-4 px-2  dark:bg-app-dark-navbar sm:px-4 md:px-6 lg:h-20 xl:px-12 ">
+      <nav
+        className={cn(
+          "flex h-16 w-full items-center justify-between border-b border-b-app-main bg-white p-4 px-2  dark:bg-app-dark-navbar sm:px-4 md:px-6 lg:h-20 xl:px-12 ",
+          isActive
+            ? "translate-y-16 transition-transform duration-200 ease-linear"
+            : "translate-y-0 transition-transform duration-200 ease-linear",
+        )}
+      >
         {/* Branding */}
         <Link href={"/"}>
           <Image

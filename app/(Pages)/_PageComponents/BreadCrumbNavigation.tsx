@@ -22,7 +22,7 @@ const BreadCrumbNavigation = () => {
       <BreadcrumbList className="flex gap-0 text-xs text-black dark:text-slate-200 sm:text-sm lg:text-base">
         <BreadcrumbItem>
           <BreadcrumbLink href="/">
-            <Home />
+            {decodedPaths[0] && <Home />}
           </BreadcrumbLink>
         </BreadcrumbItem>
         {/* Show initial seperator only if not on homepage */}

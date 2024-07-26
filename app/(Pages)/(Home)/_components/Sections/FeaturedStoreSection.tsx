@@ -41,7 +41,7 @@ const FeaturedStoreSection = () => {
         <h2 className="mb-6 text-2xl font-bold lg:text-3xl">Featured Stores</h2>
         <Link
           href={"/stores"}
-          className=" transition-all duration-300 ease-linear hover:text-app-main hover:underline sm:-translate-y-3 lg:translate-y-0"
+          className="transition-all duration-300 ease-linear hover:text-app-main hover:underline sm:-translate-y-3 lg:translate-y-0"
         >
           View all stores
         </Link>
@@ -57,18 +57,22 @@ const FeaturedStoreSection = () => {
       ) : (
         <div
           className={cn(
-            `mx-auto flex w-full max-w-screen-xl flex-wrap items-center justify-center gap-6 p-10 px-8 py-4  sm:justify-start lg:px-16`,
+            `flex w-full max-w-screen-xl flex-nowrap items-center justify-start gap-2 overflow-x-auto p-10 px-0 py-4 sm:justify-start sm:px-8 lg:mx-auto lg:px-16`,
           )}
         >
           {featuredData.map((store) => {
             return (
-              <Link key={store.storeId} href={`/stores/${store.name}`}>
+              <Link
+                key={store.storeId}
+                href={`/stores/${store.name}`}
+                className="shrink-0"
+              >
                 <Image
                   src={store.logo_url ?? "https://via.placeholder.com/600x400"}
                   alt={store.storeId}
                   width={400}
                   height={400}
-                  className="size-[4.5rem] cursor-pointer rounded-full shadow-md transition-all duration-200 ease-linear hover:scale-110 hover:shadow-lg sm:size-24 md:size-28"
+                  className="size-24 cursor-pointer rounded-full shadow-md transition-all duration-200 ease-linear hover:scale-110 hover:shadow-lg md:size-28"
                 />
               </Link>
             );

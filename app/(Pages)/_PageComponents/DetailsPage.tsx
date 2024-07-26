@@ -522,7 +522,8 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
               <>
                 <Button
                   asChild
-                  className="border border-primary bg-popover font-medium text-primary hover:bg-primary hover:text-white"
+                  className="font-medium text-app-main"
+                  variant={"ghost"}
                 >
                   <Link href={`${detailsData.ref_link}`} target="_blank">
                     Visit the {detailsData.name} Store
@@ -686,7 +687,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                   {blocks.map((block) => (
                     <Button
                       key={block}
-                      className="!size-4 border border-primary bg-app-main text-xs"
+                      className="!size-4 bg-neutral-500/40 text-xs font-light text-black hover:bg-neutral-500/40 dark:text-slate-200"
                       asChild
                     >
                       <Link href={`/stores?like=${block}`}>
@@ -746,7 +747,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
             <Accordion
               type="single"
               collapsible
-              className="flex w-full flex-col gap-y-6 lg:w-11/12"
+              className="flex w-full flex-col gap-y-6 xl:w-11/12"
             >
               {filteredActiveCoupons.map((coupon: Record<string, any>) => {
                 // Coupon
@@ -759,7 +760,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                     <div className="group/accordion relative flex w-full items-center justify-between gap-x-6 gap-y-4 p-6">
                       <div className="flex flex-col items-start gap-6 sm:flex-row sm:items-center">
                         {/* Coupon image */}
-                        <div>
+                        <div className="flex w-24 flex-col items-center border">
                           <Image
                             src={
                               coupon.store.logo_url ??
@@ -767,7 +768,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                             }
                             width={400}
                             height={400}
-                            className="size-16 rounded-md border object-contain"
+                            className="aspect-square w-full rounded-md object-contain"
                             alt={detailsData.name + " Logo"}
                           />
                           <Badge
@@ -775,7 +776,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                               coupon.type === "Deal"
                                 ? "bg-amber-500 hover:bg-amber-600"
                                 : "bg-blue-400/50 hover:bg-blue-500/50",
-                              "mt-1 grid w-full place-items-center text-black dark:text-slate-200 ",
+                              "grid w-full place-items-center text-black dark:text-slate-200 ",
                             )}
                           >
                             {coupon.type}
@@ -843,7 +844,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                         </Dialog>
                         {coupon.type === "Deal" && (
                           <Button
-                            className="min-h-10 w-full border-2 border-dashed bg-app-main  text-base font-semibold"
+                            className="min-h-10 w-full bg-app-main  text-base font-semibold"
                             onClick={() => {
                               handleCouponUse(coupon.couponId, "Deal", coupon);
                             }}
@@ -853,7 +854,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                         )}
                         {coupon.type === "Coupon" && (
                           <div
-                            className="group relative grid min-h-10 w-full min-w-28 cursor-pointer rounded-md border-2 border-dashed border-app-main bg-app-bg-main p-2 dark:bg-app-dark sm:min-h-fit  sm:min-w-40"
+                            className="group relative grid min-h-10 w-full min-w-28 cursor-pointer overflow-hidden rounded-md bg-app-bg-main p-2 dark:bg-app-dark sm:min-h-fit sm:min-w-40"
                             onClick={() => {
                               handleCouponUse(
                                 coupon.couponId,
@@ -863,16 +864,22 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                             }}
                           >
                             <p
-                              className={`translate-x-2 place-self-center text-base font-semibold uppercase tracking-widest ${!coupon.coupon_code && "min-h-5"}`}
+                              className={`translate-x-14 place-self-center text-base font-semibold uppercase tracking-widest ${
+                                !coupon.coupon_code && "min-h-5"
+                              }`}
                             >
                               {coupon.coupon_code}
                             </p>
                             {/* wrapper */}
-                            <div className="polygon-clip absolute left-0 top-0 grid h-full w-full place-items-center bg-app-main  transition-all duration-200 ease-linear group-hover:w-8/12 ">
-                              <p className="text-sm font-semibold text-slate-200">
-                                Reveal code
-                              </p>
+                            <div className="absolute left-0 top-0 h-full w-full">
+                              <div className="polygon-clip h-full w-full rounded-md bg-app-main transition-all duration-200 ease-linear group-hover:w-11/12">
+                                <p className="absolute inset-0 grid place-items-center text-sm font-semibold text-slate-200">
+                                  Reveal code
+                                </p>
+                              </div>
                             </div>
+                            {/* Border overlay */}
+                            <div className="pointer-events-none absolute inset-0 rounded-l-lg border-2 border-dashed border-app-main" />
                           </div>
                         )}
                         <div className="flex items-center gap-x-4">
@@ -934,7 +941,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                 <Accordion
                   type="single"
                   collapsible
-                  className="flex w-full flex-col gap-y-6 lg:w-11/12"
+                  className="flex w-full flex-col gap-y-6 xl:w-11/12"
                 >
                   {filteredExpiredCoupons.map((coupon: Record<string, any>) => (
                     <AccordionItem
@@ -945,7 +952,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                       <div className="group/accordion relative flex w-full items-center justify-between gap-x-6 gap-y-4 p-6 text-muted-foreground">
                         <div className="flex flex-col items-start gap-6 sm:flex-row sm:items-center">
                           {/* Coupon image */}
-                          <div>
+                          <div className="flex w-24 flex-col items-center border">
                             <Image
                               src={
                                 coupon.store.logo_url ??
@@ -953,12 +960,12 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                               }
                               width={400}
                               height={400}
-                              className="size-16 rounded-md border object-contain grayscale"
+                              className="aspect-square w-full rounded-md object-contain grayscale"
                               alt={detailsData.name + " Logo"}
                             />
                             <Badge
                               className={
-                                "m-0 mt-1 grid w-full place-items-center bg-neutral-500 text-black hover:bg-neutral-500 dark:text-slate-200"
+                                "grid w-full place-items-center bg-neutral-500 text-black hover:bg-neutral-500 dark:text-slate-200"
                               }
                             >
                               {coupon.type}
@@ -996,23 +1003,38 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                             </p>
                           </div>
                           {coupon.type === "Deal" && (
-                            <Button className="min-h-10  w-full border-2 border-dashed bg-neutral-500 text-base font-semibold hover:bg-neutral-500">
+                            <Button className="min-h-10 w-full bg-neutral-500 text-base font-semibold hover:bg-neutral-500">
                               Get Deal
                             </Button>
                           )}
                           {coupon.type === "Coupon" && (
-                            <div className="group relative grid min-h-10 w-full min-w-28 cursor-pointer rounded-md border-2 border-dashed border-neutral-500 bg-app-bg-main p-2 dark:bg-app-dark sm:min-h-fit  sm:min-w-40">
+                            <div
+                              className="group relative grid min-h-10 w-full min-w-28 cursor-pointer overflow-hidden rounded-md bg-app-bg-main p-2 dark:bg-app-dark sm:min-h-fit sm:min-w-40"
+                              onClick={() => {
+                                handleCouponUse(
+                                  coupon.couponId,
+                                  "Coupon",
+                                  coupon,
+                                );
+                              }}
+                            >
                               <p
-                                className={`translate-x-2 place-self-center text-base font-semibold uppercase tracking-widest ${!coupon.coupon_code && "min-h-5"}`}
+                                className={`translate-x-14 place-self-center text-base font-semibold uppercase tracking-widest ${
+                                  !coupon.coupon_code && "min-h-5"
+                                }`}
                               >
                                 {coupon.coupon_code}
                               </p>
                               {/* wrapper */}
-                              <div className="polygon-clip absolute left-0 top-0 grid h-full w-full place-items-center bg-neutral-500  transition-all duration-200 ease-linear group-hover:w-8/12 ">
-                                <p className="text-sm font-semibold text-slate-200">
-                                  Reveal code
-                                </p>
+                              <div className="absolute left-0 top-0 h-full w-full">
+                                <div className="polygon-clip h-full w-full rounded-md bg-neutral-500 transition-all duration-200 ease-linear hover:bg-neutral-500 group-hover:w-11/12">
+                                  <p className="absolute inset-0 grid place-items-center text-sm font-semibold text-slate-200">
+                                    Reveal code
+                                  </p>
+                                </div>
                               </div>
+                              {/* Border overlay */}
+                              <div className="pointer-events-none absolute inset-0 rounded-l-lg border-2 border-dashed border-neutral-500" />
                             </div>
                           )}
                           <div className="flex items-center gap-x-4">
@@ -1107,12 +1129,14 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
             {isStore &&
               detailsData.faq &&
               JSON.parse(detailsData?.faq).length > 0 && (
-                <section id="faqs" className={`${commonStyles}`}>
-                  <h2 className="mb-4 text-xl font-bold sm:text-2xl">FAQS</h2>
+                <section id="faqs" className={`${commonStyles} xl:w-11/12`}>
+                  <h2 className="mb-4 w-full text-xl font-bold sm:text-2xl">
+                    FAQS
+                  </h2>
                   <Accordion
                     type="single"
                     collapsible
-                    className="flex w-full flex-col gap-y-6"
+                    className="flex flex-col gap-y-6"
                   >
                     {JSON.parse(detailsData?.faq).map(
                       (
@@ -1141,7 +1165,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
             {isStore && (
               <section
                 id="hints"
-                className={`${commonStyles} ${!detailsData.hint && "hidden"}`}
+                className={`${commonStyles} ${!detailsData.hint && "hidden"} xl:w-11/12`}
               >
                 <div className={`w-full`}>
                   <h2 className="mb-4 text-xl font-bold sm:text-2xl">
@@ -1159,7 +1183,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
             {isStore && (
               <section
                 id="moreabout"
-                className={`${commonStyles} ${!detailsData.moreAbout && "hidden"}`}
+                className={`${commonStyles} ${!detailsData.moreAbout && "hidden"} xl:w-11/12`}
               >
                 <div className={`w-full`}>
                   <h2 className="mb-4 text-xl font-bold sm:text-2xl">
@@ -1201,7 +1225,7 @@ const PopularItems: React.FC<PopularItemProps> = ({
   return (
     <div className={`${commonStyles} ${isHidden ? "lg:hidden" : ""}`}>
       <h2 className="text-base font-semibold">{title}</h2>
-      <div className={`mt-4 flex flex-wrap gap-4`}>
+      <div className={`mt-4 flex flex-wrap gap-2`}>
         {items.map((item) => {
           return (
             <Link
@@ -1210,7 +1234,7 @@ const PopularItems: React.FC<PopularItemProps> = ({
               }
               key={item.id}
             >
-              <Badge className="bg-app-main/90 dark:bg-app-main/50">
+              <Badge className="bg-neutral-500/40 font-light text-black hover:bg-neutral-500/40 dark:text-slate-200">
                 {item.name}
               </Badge>
             </Link>

@@ -22,6 +22,7 @@ export async function GET(
             description: true,
             ref_link: true,
             type: true,
+            coupon_code: true,
             title: true,
             user_count: true,
             like_count: true,

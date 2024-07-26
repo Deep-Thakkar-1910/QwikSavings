@@ -93,7 +93,7 @@ const BlogDetailsPage = () => {
                 {blocks.map((block) => (
                   <Button
                     key={block}
-                    className="!size-4 border border-primary bg-app-main text-xs"
+                    className="!size-4 bg-neutral-500/40 text-xs font-light text-black hover:bg-neutral-500/40 dark:text-slate-200"
                     asChild
                   >
                     <Link href={`/stores?like=${block}`}>
@@ -175,7 +175,7 @@ const PopularItems: React.FC<PopularItemProps> = ({
   return (
     <div className={`${commonStyles} ${isHidden ? "lg:hidden" : ""}`}>
       <h2 className="text-base font-semibold">{title}</h2>
-      <div className={`mt-4 flex flex-wrap gap-4`}>
+      <div className={`mt-4 flex flex-wrap gap-2`}>
         {items.map((item) => {
           return (
             <Link
@@ -184,7 +184,7 @@ const PopularItems: React.FC<PopularItemProps> = ({
               }
               key={item.id}
             >
-              <Badge className="bg-app-main/90 dark:bg-app-main/50">
+              <Badge className="bg-neutral-500/40 font-light text-black hover:bg-neutral-500/40 dark:text-slate-200">
                 {item.name}
               </Badge>
             </Link>

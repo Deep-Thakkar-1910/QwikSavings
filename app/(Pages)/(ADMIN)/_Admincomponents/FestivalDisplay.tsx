@@ -1,7 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import Spinner from "../../_PageComponents/Spinner";
 // import { format } from "date-fns";
-import { Trash2 } from "lucide-react";
+import { MinusCircle, Trash2, Verified } from "lucide-react";
 import { useState } from "react";
 import {
   Dialog,
@@ -13,6 +13,9 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import axios from "@/app/api/axios/axios";
+import { toast } from "@/components/ui/use-toast";
+import { AxiosError } from "axios";
 
 interface FestivalDisplayProps {
   like: string | null;
@@ -32,9 +35,19 @@ const FestivalDisplay = ({
   onDelete,
 }: FestivalDisplayProps) => {
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
+  const [isActivateDialogOpen, setIsActivateDialogOpen] =
+    useState<boolean>(false);
+  const [isDeactivateDialogOpen, setIsDeactivateDialogOpen] =
+    useState<boolean>(false);
   const [itemToDelete, setItemToDelete] = useState<Record<string, any> | null>(
     null,
   );
+  const [festivalToActivate, setFestivalToActivate] = useState<number | null>(
+    null,
+  );
+  const [festivalToDeactivate, setFestivalToDeactivate] = useState<
+    number | null
+  >(null);
   const router = useRouter();
 
   const handleDeleteClick = (item: Record<string, any>) => {
@@ -56,6 +69,72 @@ const FestivalDisplay = ({
     }
   };
 
+  const handleConfirmActivate = async () => {
+    if (festivalToActivate) {
+      try {
+        const response = await axios.put(
+          `/activatefestival/${festivalToActivate}`,
+        );
+        if (response.data.success) {
+          toast({
+            title: "Success",
+            description: "Festival Activated",
+          });
+        }
+        setIsActivateDialogOpen(false);
+        setFestivalToActivate(null);
+      } catch (error) {
+        console.error("Error activating item:", error);
+        setIsActivateDialogOpen(false);
+        setFestivalToActivate(null);
+        if (error instanceof AxiosError) {
+          toast({
+            title: "Oops!",
+            description: error?.response?.data?.error,
+            variant: "destructive",
+          });
+        }
+        toast({
+          title: "Error",
+          description: "Failed to activate the festival. Please try again.",
+          variant: "destructive",
+        });
+      }
+    }
+  };
+  const handleConfirmDeactivate = async () => {
+    if (festivalToDeactivate) {
+      try {
+        const response = await axios.put(
+          `/deactivatefestival/${festivalToDeactivate}`,
+        );
+        if (response.data.success) {
+          toast({
+            title: "Success",
+            description: "Festival Deactivated",
+          });
+        }
+        setIsDeactivateDialogOpen(false);
+        setFestivalToDeactivate(null);
+      } catch (error) {
+        console.error("Error activating item:", error);
+        setIsDeactivateDialogOpen(false);
+        setFestivalToDeactivate(null);
+        if (error instanceof AxiosError) {
+          toast({
+            title: "Oops!",
+            description: error?.response?.data?.error,
+            variant: "destructive",
+          });
+        }
+        toast({
+          title: "Error",
+          description: "Failed to activate the festival. Please try again.",
+          variant: "destructive",
+        });
+      }
+    }
+  };
   return (
     <div className="my-6 min-h-[40vh] w-full bg-popover p-8 px-4 sm:px-8 lg:px-16 lg:py-16">
       {isLoading ? (
@@ -80,32 +159,19 @@ const FestivalDisplay = ({
                 router.push(`/admin/editfestival/${festival.festivalId}`);
               }}
             >
-              <div className="my-2 flex w-full items-center justify-center gap-x-4">
-                <Badge className="grid w-20 place-items-center bg-purple-400/50 text-black hover:bg-purple-400/50 dark:text-slate-200">
+              <div className="mb-2 mt-4 flex w-full items-center justify-center gap-x-4">
+                <Badge className="grid w-20 place-items-center bg-purple-700/50 text-white hover:bg-purple-700/50 ">
                   Festival
                 </Badge>
-                {/* <Badge
-                  className={`grid w-20 place-items-center text-black dark:text-slate-200 ${
-                    new Date(festival.end_date).getTime() > new Date().getTime()
-                      ? "bg-emerald-500"
-                      : "bg-app-main"
-                  }`}
+                <Badge
+                  className={`grid w-20 place-items-center text-white ${festival.isActive ? "bg-emerald-500 hover:bg-emerald-500" : "bg-app-main hover:bg-app-main"}`}
                 >
-                  {new Date(festival.end_date).getTime() > new Date().getTime()
-                    ? "Active"
-                    : "Ended"}
-                </Badge> */}
+                  {festival.activated ? "Active" : "Inactive"}
+                </Badge>
               </div>
               <p>Name: {festival.name}</p>
               <p>Title: {festival.title}</p>
               <p>Store: {like}</p>
-              {/* <p>
-                Start Date:{" "}
-                {format(new Date(festival.start_date), "dd-MMM-yyyy")}
-              </p>
-              <p>
-                End Date: {format(new Date(festival.end_date), "dd-MMM-yyyy")}
-              </p> */}
               <Trash2
                 className="absolute right-2 top-2 size-4 cursor-pointer text-app-main"
                 onClick={(e) => {
@@ -113,6 +179,30 @@ const FestivalDisplay = ({
                   handleDeleteClick(festival);
                 }}
               />
+              <div className="flex space-x-4">
+                <span
+                  className="flex items-center gap-x-1 text-emerald-500"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setFestivalToActivate(festival.festivalId);
+                    setIsActivateDialogOpen(true);
+                  }}
+                >
+                  <Verified className="size-4" />
+                  Activate
+                </span>
+                <span
+                  className="flex items-center gap-x-1 text-app-main"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setFestivalToDeactivate(festival.festivalId);
+                    setIsDeactivateDialogOpen(true);
+                  }}
+                >
+                  <MinusCircle className="size-4" />
+                  Deactivate
+                </span>
+              </div>
             </div>
           ))}
         </div>
@@ -138,6 +228,58 @@ const FestivalDisplay = ({
             </Button>
             <Button className="bg-app-main" onClick={handleConfirmDelete}>
               Delete
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Festival Activate Dialog */}
+      <Dialog
+        open={isActivateDialogOpen}
+        onOpenChange={setIsActivateDialogOpen}
+      >
+        <DialogContent className="w-11/12 max-w-96">
+          <DialogHeader>
+            <DialogTitle>
+              Are you sure you want to Activate this festival?
+            </DialogTitle>
+          </DialogHeader>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              className="my-4 border-app-main sm:mx-2 sm:my-0"
+              onClick={() => setIsActivateDialogOpen(false)}
+            >
+              Cancel
+            </Button>
+            <Button className="bg-app-main" onClick={handleConfirmActivate}>
+              Activate
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Festival Deactivate Dialog */}
+      <Dialog
+        open={isDeactivateDialogOpen}
+        onOpenChange={setIsDeactivateDialogOpen}
+      >
+        <DialogContent className="w-11/12 max-w-96">
+          <DialogHeader>
+            <DialogTitle>
+              Are you sure you want to Deactivate this festival?
+            </DialogTitle>
+          </DialogHeader>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              className="my-4 border-app-main sm:mx-2 sm:my-0"
+              onClick={() => setIsDeactivateDialogOpen(false)}
+            >
+              Cancel
+            </Button>
+            <Button className="bg-app-main" onClick={handleConfirmDeactivate}>
+              Deactivate
             </Button>
           </DialogFooter>
         </DialogContent>

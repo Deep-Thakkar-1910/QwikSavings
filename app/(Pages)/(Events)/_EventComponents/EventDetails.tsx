@@ -56,6 +56,8 @@ const EventDetails = () => {
     notFound();
   }
 
+  console.log(data);
+
   const dealsLength =
     data?.coupons?.filter(
       (coupon: Record<string, any>) => coupon.type === "Deal",
@@ -423,7 +425,7 @@ const EventDetails = () => {
               alt="Event Cover url"
               width={1920}
               height={1080}
-              className="h-32 w-full rounded-md object-fill"
+              className="mx-4 h-48 w-11/12 rounded-md object-cover lg:mx-auto lg:w-2/3 lg:translate-x-28 2xl:translate-x-36"
             />
           )}
           {/* Topbar for mobile */}
@@ -439,7 +441,7 @@ const EventDetails = () => {
               {data?.name}
             </h1>
           </div>
-          <section className="relative mb-6 flex w-full flex-col items-start gap-6 px-0 pt-10 sm:px-8 lg:flex-row lg:px-16">
+          <section className="relative mb-6 flex w-full flex-col items-start gap-6 px-4 pt-10 sm:px-8 lg:flex-row lg:px-16">
             <aside className="hidden flex-col items-center gap-y-8 lg:flex lg:w-1/4">
               <Image
                 src={
@@ -514,7 +516,7 @@ const EventDetails = () => {
                   {blocks.map((block) => (
                     <Button
                       key={block}
-                      className="!size-4 border border-primary bg-app-main text-xs"
+                      className="!size-4 bg-neutral-500/40 text-xs font-light text-black hover:bg-neutral-500/40 dark:text-slate-200"
                       asChild
                     >
                       <Link href={`/stores?like=${block}`}>
@@ -541,7 +543,7 @@ const EventDetails = () => {
               <Accordion
                 type="single"
                 collapsible
-                className="flex w-full flex-col gap-y-6 lg:w-11/12"
+                className="flex w-full flex-col gap-y-6 xl:w-11/12"
               >
                 {activeCoupons.map((coupon: any) => (
                   <AccordionItem
@@ -552,7 +554,7 @@ const EventDetails = () => {
                     <div className="group/accordion relative flex w-full items-center justify-between gap-x-6 gap-y-4 p-6">
                       <div className="flex flex-col items-start gap-6 sm:flex-row sm:items-center">
                         {/* Coupon image */}
-                        <div>
+                        <div className="flex w-24 flex-col items-center border">
                           <Image
                             src={
                               coupon.store.logo_url ??
@@ -560,7 +562,7 @@ const EventDetails = () => {
                             }
                             width={400}
                             height={400}
-                            className="size-16 rounded-md border object-contain"
+                            className="aspect-square w-full rounded-md border object-contain"
                             alt={data?.name + " Logo"}
                           />
                           <Badge
@@ -568,7 +570,7 @@ const EventDetails = () => {
                               coupon.type === "Deal"
                                 ? "bg-amber-500 hover:bg-amber-600"
                                 : "bg-blue-400/50 hover:bg-blue-500/50",
-                              "mt-1 grid w-full place-items-center text-black dark:text-slate-200 ",
+                              "grid w-full place-items-center text-black dark:text-slate-200 ",
                             )}
                           >
                             {coupon.type}
@@ -636,7 +638,7 @@ const EventDetails = () => {
                         </Dialog>
                         {coupon.type === "Deal" && (
                           <Button
-                            className="min-h-10 w-full border-2 border-dashed bg-app-main  text-base font-semibold"
+                            className="min-h-10 w-full text-base font-semibold"
                             onClick={() => {
                               handleCouponUse(coupon.couponId, "Deal", coupon);
                             }}
@@ -646,7 +648,7 @@ const EventDetails = () => {
                         )}
                         {coupon.type === "Coupon" && (
                           <div
-                            className="group relative grid min-h-10 w-full min-w-28 cursor-pointer rounded-md border-2 border-dashed border-app-main bg-app-bg-main p-2 dark:bg-app-dark sm:min-h-fit  sm:min-w-40"
+                            className="group relative grid min-h-10 w-full min-w-28 cursor-pointer overflow-hidden rounded-md bg-app-bg-main p-2 dark:bg-app-dark sm:min-h-fit sm:min-w-40"
                             onClick={() => {
                               handleCouponUse(
                                 coupon.couponId,
@@ -656,16 +658,22 @@ const EventDetails = () => {
                             }}
                           >
                             <p
-                              className={`translate-x-2 place-self-center text-base font-semibold uppercase tracking-widest ${!coupon.coupon_code && "min-h-5"}`}
+                              className={`translate-x-12 place-self-center text-base font-semibold uppercase tracking-widest ${
+                                !coupon.coupon_code && "min-h-5"
+                              }`}
                             >
                               {coupon.coupon_code}
                             </p>
                             {/* wrapper */}
-                            <div className="polygon-clip absolute left-0 top-0 grid h-full w-full place-items-center bg-app-main  transition-all duration-200 ease-linear group-hover:w-8/12 ">
-                              <p className="text-sm font-semibold text-slate-200">
-                                Reveal code
-                              </p>
+                            <div className="absolute left-0 top-0 h-full w-full">
+                              <div className="polygon-clip h-full w-full rounded-md bg-app-main transition-all duration-200 ease-linear group-hover:w-11/12">
+                                <p className="absolute inset-0 grid place-items-center text-sm font-semibold text-slate-200">
+                                  Reveal code
+                                </p>
+                              </div>
                             </div>
+                            {/* Border overlay */}
+                            <div className="pointer-events-none absolute inset-0 rounded-l-lg border-2 border-dashed border-app-main" />
                           </div>
                         )}
                         <div className="flex items-center gap-x-4">
@@ -739,7 +747,7 @@ const EventDetails = () => {
                         <div className="group/accordion relative flex w-full items-center justify-between gap-x-6 gap-y-4 p-6 text-muted-foreground">
                           <div className="flex flex-col items-start gap-6 sm:flex-row sm:items-center">
                             {/* Coupon image */}
-                            <div>
+                            <div className="flex w-24 flex-col items-center border">
                               <Image
                                 src={
                                   coupon.store.logo_url ??
@@ -747,12 +755,12 @@ const EventDetails = () => {
                                 }
                                 width={400}
                                 height={400}
-                                className="size-16 rounded-md border object-contain grayscale"
+                                className="aspect-square w-full rounded-md border object-contain grayscale"
                                 alt={data?.name + " Logo"}
                               />
                               <Badge
                                 className={
-                                  "m-0 mt-1 grid w-full place-items-center bg-neutral-500 text-black hover:bg-neutral-500 dark:text-slate-200"
+                                  "grid w-full place-items-center bg-neutral-500 text-black hover:bg-neutral-500 dark:text-slate-200"
                                 }
                               >
                                 {coupon.type}
@@ -824,7 +832,7 @@ const EventDetails = () => {
                             </Dialog>
                             {coupon.type === "Deal" && (
                               <Button
-                                className="min-h-10 w-full border-2 border-dashed bg-app-main  text-base font-semibold"
+                                className="min-h-10 w-full bg-neutral-500 text-base font-semibold hover:bg-neutral-500"
                                 onClick={() => {
                                   handleCouponUse(
                                     coupon.couponId,
@@ -838,7 +846,7 @@ const EventDetails = () => {
                             )}
                             {coupon.type === "Coupon" && (
                               <div
-                                className="group relative grid min-h-10 w-full min-w-28 cursor-pointer rounded-md border-2 border-dashed border-app-main bg-app-bg-main p-2 dark:bg-app-dark sm:min-h-fit  sm:min-w-40"
+                                className="group relative grid min-h-10 w-full min-w-28 cursor-pointer overflow-hidden rounded-md bg-app-bg-main p-2 dark:bg-app-dark sm:min-h-fit sm:min-w-40"
                                 onClick={() => {
                                   handleCouponUse(
                                     coupon.couponId,
@@ -848,16 +856,22 @@ const EventDetails = () => {
                                 }}
                               >
                                 <p
-                                  className={`translate-x-2 place-self-center text-base font-semibold uppercase tracking-widest ${!coupon.coupon_code && "min-h-5"}`}
+                                  className={`translate-x-14 place-self-center text-base font-semibold uppercase tracking-widest ${
+                                    !coupon.coupon_code && "min-h-5"
+                                  }`}
                                 >
                                   {coupon.coupon_code}
                                 </p>
                                 {/* wrapper */}
-                                <div className="polygon-clip absolute left-0 top-0 grid h-full w-full place-items-center bg-app-main  transition-all duration-200 ease-linear group-hover:w-8/12 ">
-                                  <p className="text-sm font-semibold text-slate-200">
-                                    Reveal code
-                                  </p>
+                                <div className="absolute left-0 top-0 h-full w-full">
+                                  <div className="polygon-clip h-full w-full rounded-md bg-neutral-500 transition-all duration-200 ease-linear hover:bg-neutral-500 group-hover:w-11/12">
+                                    <p className="absolute inset-0 grid place-items-center text-sm font-semibold text-slate-200">
+                                      Reveal code
+                                    </p>
+                                  </div>
                                 </div>
+                                {/* Border overlay */}
+                                <div className="pointer-events-none absolute inset-0 rounded-l-lg border-2 border-dashed border-neutral-500" />
                               </div>
                             )}
                             <div className="flex items-center gap-x-4">
@@ -964,7 +978,7 @@ const PopularItems: React.FC<PopularItemProps> = ({
   return (
     <div className={`${commonStyles} ${isHidden ? "lg:hidden" : ""}`}>
       <h2 className="text-base font-semibold">{title}</h2>
-      <div className={`mt-4 flex flex-wrap gap-4`}>
+      <div className={`mt-4 flex flex-wrap gap-2`}>
         {items.map((item) => {
           return (
             <Link
@@ -973,7 +987,7 @@ const PopularItems: React.FC<PopularItemProps> = ({
               }
               key={item.id}
             >
-              <Badge className="bg-app-main/90 dark:bg-app-main/50">
+              <Badge className="bg-neutral-500/40 font-light text-black hover:bg-neutral-500/40 dark:text-slate-200">
                 {item.name}
               </Badge>
             </Link>
