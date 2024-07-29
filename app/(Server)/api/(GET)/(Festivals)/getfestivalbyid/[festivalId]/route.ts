@@ -23,7 +23,7 @@ export async function GET(
   } catch (err) {
     console.log(err);
     return NextResponse.json(
-      { success: false, error: "Error fetching category details" },
+      { success: false, error: "Error fetching festival details" },
       { status: 500 },
     );
   }

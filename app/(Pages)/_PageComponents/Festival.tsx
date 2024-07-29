@@ -17,19 +17,19 @@ const FestivalStrip: React.FC = () => {
   return (
     <div
       className={cn(
-        "fixed left-0 right-0 top-0 z-50 flex h-16 w-full items-center justify-center bg-black px-4 text-slate-200 transition-all duration-300 ease-in-out sm:px-4 md:px-6 xl:px-12",
+        "fixed left-0 right-0 top-0 z-50 flex min-h-16 w-full items-center justify-center bg-black px-4 py-2 text-slate-200 transition-all duration-300 ease-in-out sm:px-4 md:px-6 xl:px-12",
         isActive ? "translate-y-0" : "-translate-y-full",
       )}
     >
       <div className="ml-auto flex w-full items-center justify-center gap-x-4">
-        <Gift className="hover:animate-shake h-full w-8 py-2 text-app-main" />
-        <p className="font-semibold first-letter:uppercase">
-          {data.title} on the occasion of {data.name}
+        <Gift className="hidden size-12 py-2 text-app-main hover:animate-shake sm:block" />
+        <p className="text-xs font-semibold first-letter:uppercase sm:text-base">
+          {data.title}
         </p>
 
         <Link
           href={`/stores/${data.store.name}`}
-          className="flex items-center gap-x-1 underline"
+          className="flex items-center gap-x-1 break-words text-xs underline sm:text-sm"
         >
           Visit {data.store.name} <ArrowRight className="size-4" />
         </Link>
