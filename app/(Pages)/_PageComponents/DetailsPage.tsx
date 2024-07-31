@@ -119,7 +119,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
     notFound();
   }
 
-  const commonStyles = "w-full rounded-lg bg-popover p-4 shadow-md";
+  const commonStyles = "w-full rounded-xl bg-popover p-4 shadow-lg";
 
   // NOTE: this is for getting the lengths of  deals and coupons
   const dealsLength =
@@ -488,7 +488,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
       ) : (
         <section className="relative mb-6 flex w-full flex-col items-start gap-6 px-8 pt-10 lg:flex-row lg:px-16">
           {/* Edit link only visbible to admins */}
-          {session?.user.role === "admin" ? (
+          {session?.user.role === "admin" && (
             <div className="absolute right-4 top-0 flex flex-col gap-y-2 place-self-end lg:right-20">
               <Link
                 href={editLink}
@@ -497,13 +497,6 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                 {editLinkText}
               </Link>
             </div>
-          ) : (
-            <Link
-              href={"/submitacoupon"}
-              className="absolute right-4 top-0 flex items-center gap-x-1 place-self-end  underline transition-colors duration-300 ease-linear hover:text-app-main lg:right-20"
-            >
-              Submit a coupon <Tag className="size-4" />
-            </Link>
           )}
           {/* sidebar for larger screens */}
           <aside className="hidden flex-col items-center gap-y-8 lg:flex lg:w-1/4">
@@ -522,7 +515,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
               <>
                 <Button
                   asChild
-                  className="font-medium text-app-main"
+                  className="text-lg font-medium text-app-main"
                   variant={"ghost"}
                 >
                   <Link href={`${detailsData.ref_link}`} target="_blank">
@@ -536,12 +529,14 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
             <div
               className={`${commonStyles} ${detailsData.description ? "" : "hidden"}`}
             >
-              <h2 className="text-xl font-bold">About</h2>
+              <h2 className="text-xl font-bold">
+                About {isStore && detailsData.name}
+              </h2>
               <p>{detailsData.description}</p>
             </div>
 
             <div className={`${commonStyles}`}>
-              <h2 className="mb-2 text-base font-bold">
+              <h2 className="mb-2 text-base font-semibold">
                 Today&apos;s Top {isStore ? `${detailsData.name}` : ""} Coupon
                 Codes
               </h2>
@@ -573,7 +568,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                   <>
                     <div className="flex items-center justify-between">
                       <p>Best Offer:</p>
-                      <p>{detailsData.best_offer} Off</p>
+                      <p>{detailsData.best_offer}</p>
                     </div>
                     <div className="flex items-center justify-between">
                       <p>Average Discount:</p>
@@ -593,8 +588,8 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                   "hidden"
                 }`}
               >
-                <h2 className="mb-2 text-base font-bold">Quick Links</h2>
-                <div className="flex flex-col gap-y-4 rounded-lg border-2 p-4">
+                <h2 className="mb-1 text-base font-bold">Quick Links</h2>
+                <div className="flex flex-col gap-y-2 rounded-lg p-1">
                   <ScrollLink
                     to="faqs"
                     smooth
@@ -605,9 +600,9 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                       JSON.parse(detailsData?.faq).length > 0
                         ? ""
                         : "hidden"
-                    }`}
+                    } rounded-lg border p-2`}
                   >
-                    <div className="flex cursor-pointer items-center justify-between">
+                    <div className="flex cursor-pointer items-center justify-between font-semibold">
                       <p>FAQs</p>
                       <FaQuestionCircle className="size-4" />
                     </div>
@@ -617,9 +612,9 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                     to="hints"
                     smooth
                     offset={-150}
-                    className={`${!detailsData.hint && "hidden"}`}
+                    className={`${!detailsData.hint && "hidden"} rounded-lg border p-2`}
                   >
-                    <div className="flex cursor-pointer items-center justify-between">
+                    <div className="flex cursor-pointer items-center justify-between font-semibold">
                       <p>How To Apply</p>
                       <Lightbulb className="size-4" />
                     </div>
@@ -628,10 +623,10 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                     to="moreabout"
                     smooth
                     offset={-150}
-                    className={`${!detailsData.moreAbout && "hidden"}`}
+                    className={`${!detailsData.moreAbout && "hidden"} rounded-lg border p-2`}
                   >
                     <div
-                      className={`flex cursor-pointer items-center justify-between`}
+                      className={`flex cursor-pointer items-center justify-between font-semibold`}
                     >
                       <p className="inline-block text-center font-medium">
                         More About
@@ -687,7 +682,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                   {blocks.map((block) => (
                     <Button
                       key={block}
-                      className="!size-4 bg-neutral-500/40 text-xs font-light text-black hover:bg-neutral-500/40 dark:text-slate-200"
+                      className="!size-4 bg-neutral-500/40 text-xs font-normal text-black hover:bg-neutral-500/40 dark:text-slate-200"
                       asChild
                     >
                       <Link href={`/stores?like=${block}`}>
@@ -701,48 +696,56 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
           </aside>
           <Separator className="hidden h-auto min-h-[90vh] w-[2px] self-stretch text-muted lg:block" />
           {/* main coupons display */}
-          <main className="flex w-full flex-col items-stretch gap-y-6">
+          <main className="flex w-full flex-col items-stretch gap-y-4">
             <div className="hidden -translate-y-2 flex-col lg:flex">
               <h1 className="mb-2 text-4xl font-bold">{detailsData.name}</h1>
               {initialCoupon && (
                 <p className=" font-semibold">
                   Best Offers Last Validated On{" "}
-                  {format(initialCoupon, "dd-MMM-yyyy")}
+                  {format(initialCoupon, "MMMM dd, yyyy")}
                 </p>
               )}
             </div>
             {/* Tabs */}
-            <div className="flex justify-center place-self-start sm:gap-x-4">
-              <Button
-                onClick={() => handleTabChange("all")}
-                className={
-                  selectedTab === "all"
-                    ? "bg-app-main text-white"
-                    : "bg-transparent text-app-main shadow-none hover:bg-app-main hover:text-white"
-                }
+            <div className="flex flex-col justify-start gap-y-2 lg:w-11/12 lg:flex-row lg:items-center lg:justify-between">
+              <div className="flex justify-start sm:gap-x-4">
+                <Button
+                  onClick={() => handleTabChange("all")}
+                  className={
+                    selectedTab === "all"
+                      ? " text-white"
+                      : "bg-transparent text-app-main shadow-none hover:bg-app-main hover:text-white"
+                  }
+                >
+                  All ({detailsData.coupons?.length || 0})
+                </Button>
+                <Button
+                  onClick={() => handleTabChange("coupon")}
+                  className={
+                    selectedTab === "coupon"
+                      ? "bg-app-main text-white"
+                      : "bg-transparent text-app-main shadow-none hover:bg-app-main hover:text-white"
+                  }
+                >
+                  Coupons ({couponsLength || 0})
+                </Button>
+                <Button
+                  onClick={() => handleTabChange("deal")}
+                  className={
+                    selectedTab === "deal"
+                      ? "bg-app-main text-white"
+                      : "bg-transparent text-app-main shadow-none hover:bg-app-main hover:text-white"
+                  }
+                >
+                  Deals ({dealsLength || 0})
+                </Button>
+              </div>
+              <Link
+                href={"/submitacoupon"}
+                className="flex items-center gap-x-1 place-self-end underline transition-colors duration-300 ease-linear hover:text-app-main"
               >
-                All ({detailsData.coupons?.length || 0})
-              </Button>
-              <Button
-                onClick={() => handleTabChange("coupon")}
-                className={
-                  selectedTab === "coupon"
-                    ? "bg-app-main text-white"
-                    : "bg-transparent text-app-main shadow-none hover:bg-app-main hover:text-white"
-                }
-              >
-                Coupons ({couponsLength || 0})
-              </Button>
-              <Button
-                onClick={() => handleTabChange("deal")}
-                className={
-                  selectedTab === "deal"
-                    ? "bg-app-main text-white"
-                    : "bg-transparent text-app-main shadow-none hover:bg-app-main hover:text-white"
-                }
-              >
-                Deals ({dealsLength || 0})
-              </Button>
+                Submit a coupon <Tag className="size-4" />
+              </Link>
             </div>
             <Accordion
               type="single"
@@ -882,7 +885,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                             <div className="pointer-events-none absolute inset-0 rounded-l-lg border-2 border-dashed border-app-main" />
                           </div>
                         )}
-                        <div className="flex items-center gap-x-4">
+                        <div className="flex items-center gap-x-6 place-self-center">
                           <button
                             onClick={() =>
                               handleReaction(coupon.couponId, "LIKE")
@@ -924,7 +927,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                     </div>
                     <AccordionContent className="relative p-6">
                       <Seperator />
-                      {coupon.description}
+                      <p className="mb-2">{coupon.description}</p>
 
                       <p className="absolute bottom-2 right-2 text-muted-foreground">
                         Expires on:{" "}
@@ -1003,21 +1006,12 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                             </p>
                           </div>
                           {coupon.type === "Deal" && (
-                            <Button className="min-h-10 w-full bg-neutral-500 text-base font-semibold hover:bg-neutral-500">
+                            <Button className="min-h-10 w-full cursor-not-allowed bg-neutral-500 text-base font-semibold hover:bg-neutral-500">
                               Get Deal
                             </Button>
                           )}
                           {coupon.type === "Coupon" && (
-                            <div
-                              className="group relative grid min-h-10 w-full min-w-28 cursor-pointer overflow-hidden rounded-md bg-app-bg-main p-2 dark:bg-app-dark sm:min-h-fit sm:min-w-40"
-                              onClick={() => {
-                                handleCouponUse(
-                                  coupon.couponId,
-                                  "Coupon",
-                                  coupon,
-                                );
-                              }}
-                            >
+                            <div className="group relative grid min-h-10 w-full min-w-28 cursor-not-allowed overflow-hidden rounded-md bg-app-bg-main p-2 dark:bg-app-dark sm:min-h-fit sm:min-w-40">
                               <p
                                 className={`place-self-end text-base font-semibold uppercase tracking-widest ${
                                   !coupon.coupon_code && "min-h-5"
@@ -1037,7 +1031,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                               <div className="pointer-events-none absolute inset-0 rounded-l-lg border-2 border-dashed border-neutral-500" />
                             </div>
                           )}
-                          <div className="flex items-center gap-x-4">
+                          <div className="flex items-center gap-x-6 place-self-center">
                             <button className="flex items-center gap-x-2">
                               <ThumbsUp
                                 className={
@@ -1069,7 +1063,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                       </div>
                       <AccordionContent className="relative p-6">
                         <Seperator />
-                        {coupon.description}
+                        <p className="mb-2">{coupon.description}</p>
                         <p className="absolute bottom-2 right-2 text-muted-foreground">
                           Expired on:{" "}
                           {format(new Date(coupon.due_date), "dd-MMM-yyy")}
@@ -1225,7 +1219,7 @@ const PopularItems: React.FC<PopularItemProps> = ({
   return (
     <div className={`${commonStyles} ${isHidden ? "lg:hidden" : ""}`}>
       <h2 className="text-base font-semibold">{title}</h2>
-      <div className={`mt-4 flex flex-wrap gap-2`}>
+      <div className={`mt-1 flex flex-wrap gap-2`}>
         {items.map((item) => {
           return (
             <Link
@@ -1234,7 +1228,7 @@ const PopularItems: React.FC<PopularItemProps> = ({
               }
               key={item.id}
             >
-              <Badge className="bg-neutral-500/40 font-light text-black hover:bg-neutral-500/40 dark:text-slate-200">
+              <Badge className="bg-neutral-500/40 font-normal text-black hover:bg-neutral-500/40 dark:text-slate-200">
                 {item.name}
               </Badge>
             </Link>

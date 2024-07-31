@@ -2,10 +2,10 @@ import Image from "next/image";
 
 const AboutUs = () => {
   return (
-    <section className="mt-12 bg-popover p-10 lg:mt-16">
-      <div className="mx-auto flex max-w-screen-xl flex-col  sm:px-8 lg:flex-row lg:px-16 xl:px-2 2xl:px-0">
-        <div className="flex w-full flex-col items-start justify-center gap-4 text-justify lg:w-1/2">
-          <h2 className="mx-auto text-center text-2xl font-bold lg:text-3xl">
+    <section className=" bg-popover py-6">
+      <div className="mx-auto flex max-w-screen-xl flex-col px-8 sm:px-10 lg:flex-row lg:px-16 xl:px-6 2xl:px-0">
+        <div className="flex w-full flex-col items-start gap-4 text-justify lg:w-1/2">
+          <h2 className="mx-auto text-start text-2xl font-bold lg:text-3xl">
             Qwik Savings - Shop Smarter, Save Faster
           </h2>
 

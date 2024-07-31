@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "./(Pages)/_PageComponents/Navbar";
 import Providers from "./Providers";
@@ -7,9 +6,12 @@ import { Toaster } from "@/components/ui/toaster";
 import Footer from "./(Pages)/_PageComponents/Footer";
 import AdminNavbar from "./(Pages)/(ADMIN)/_Admincomponents/AdminNavbar";
 import ScrollToTop from "./(Pages)/_PageComponents/ScrollToTop";
+import { Open_Sans } from "next/font/google";
 
-const inter = Inter({ subsets: ["latin"] });
-
+const openSans = Open_Sans({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800"],
+});
 export const metadata: Metadata = {
   metadataBase: new URL("https://qwiksavings.com"),
   title: {
@@ -30,7 +32,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${inter.className} bg-app-bg-main text-black dark:bg-app-dark dark:text-slate-200`}
+        className={`${openSans.className} bg-app-bg-main text-black dark:bg-app-dark dark:text-slate-200`}
       >
         <Providers>
           <AdminNavbar />

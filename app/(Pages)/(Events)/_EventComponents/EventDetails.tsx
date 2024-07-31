@@ -44,7 +44,7 @@ interface CouponReaction {
 
 const EventDetails = () => {
   const router = useRouter();
-  const commonStyles = "w-full rounded-lg bg-popover p-4 shadow-md";
+  const commonStyles = "w-full rounded-xl bg-popover p-4 shadow-md";
   const { eventName } = useParams();
   const { data: session } = useSession();
   const currentUrl = usePathname();
@@ -404,19 +404,12 @@ const EventDetails = () => {
         </div>
       ) : (
         <div className="relative w-full">
-          {session?.user.role === "admin" ? (
+          {session?.user.role === "admin" && (
             <Link
               href={`/admin/editevent/${eventName}`}
               className="absolute right-4 top-0 -translate-y-8 cursor-pointer place-self-end  underline transition-colors duration-300 ease-linear hover:text-app-main lg:right-20"
             >
               Edit Event
-            </Link>
-          ) : (
-            <Link
-              href={`/submitcoupon`}
-              className="absolute right-4 top-0 flex -translate-y-8 cursor-pointer items-center place-self-end  underline transition-colors duration-300 ease-linear hover:text-app-main lg:right-20"
-            >
-              Submit a coupon <Tag className="size-4" />
             </Link>
           )}
           {data?.cover_url && (
@@ -461,7 +454,7 @@ const EventDetails = () => {
                 <p>{data?.description}</p>
               </div>
               <div className={`${commonStyles}`}>
-                <h2 className="mb-2 text-base font-bold">
+                <h2 className="mb-2 text-base font-semibold">
                   Today&apos;s Top Shopping Events
                 </h2>
                 {data?.coupons && data?.coupons[0] && (
@@ -529,7 +522,7 @@ const EventDetails = () => {
             </aside>
             <Separator className="hidden h-auto min-h-[90vh] w-[2px] self-stretch text-muted lg:block" />
             <main className="flex w-full flex-col items-stretch gap-y-6">
-              <div className="hidden -translate-y-2 flex-col lg:flex">
+              <div className="hidden -translate-y-2 flex-col lg:flex lg:w-11/12">
                 <h1 className="mb-2 text-4xl font-bold">{data?.name}</h1>
                 {initialCoupon && (
                   <p className="font-semibold">
@@ -537,6 +530,12 @@ const EventDetails = () => {
                     {format(initialCoupon, "dd-MMM-yyyy")}
                   </p>
                 )}
+                <Link
+                  href={"/submitacoupon"}
+                  className="flex items-center gap-x-1 place-self-end underline transition-colors duration-300 ease-linear hover:text-app-main"
+                >
+                  Submit a coupon <Tag className="size-4" />
+                </Link>
               </div>
 
               {/* Active Coupons */}
@@ -788,7 +787,7 @@ const EventDetails = () => {
                               onClick={() => handleBookmark(coupon.couponId)}
                             />
                             <div className=" flex flex-col items-center gap-x-4 sm:flex-row">
-                              <p className="flex w-fit items-center gap-x-2 text-sm text-emerald-500">
+                              <p className="flex w-fit items-center gap-x-2 text-sm text-neutral-500">
                                 <PiSmileySadBold className="inline-flex size-4 text-app-main" />
                                 Expired
                               </p>
@@ -831,30 +830,12 @@ const EventDetails = () => {
                               />
                             </Dialog>
                             {coupon.type === "Deal" && (
-                              <Button
-                                className="min-h-10 w-full bg-neutral-500 text-base font-semibold hover:bg-neutral-500"
-                                onClick={() => {
-                                  handleCouponUse(
-                                    coupon.couponId,
-                                    "Deal",
-                                    coupon,
-                                  );
-                                }}
-                              >
+                              <Button className="min-h-10 w-full cursor-not-allowed bg-neutral-500 text-base font-semibold hover:bg-neutral-500">
                                 Get Deal
                               </Button>
                             )}
                             {coupon.type === "Coupon" && (
-                              <div
-                                className="group relative grid min-h-10 w-full min-w-28 cursor-pointer overflow-hidden rounded-md bg-app-bg-main p-2 dark:bg-app-dark sm:min-h-fit sm:min-w-40"
-                                onClick={() => {
-                                  handleCouponUse(
-                                    coupon.couponId,
-                                    "Coupon",
-                                    coupon,
-                                  );
-                                }}
-                              >
+                              <div className="group relative grid min-h-10 w-full min-w-28 cursor-not-allowed overflow-hidden rounded-md bg-app-bg-main p-2 dark:bg-app-dark sm:min-h-fit sm:min-w-40">
                                 <p
                                   className={`place-self-end text-base font-semibold uppercase tracking-widest ${
                                     !coupon.coupon_code && "min-h-5"
@@ -875,17 +856,12 @@ const EventDetails = () => {
                               </div>
                             )}
                             <div className="flex items-center gap-x-4">
-                              <button
-                                onClick={() =>
-                                  handleReaction(coupon.couponId, "LIKE")
-                                }
-                                className="flex items-center gap-x-2"
-                              >
+                              <button className="flex cursor-not-allowed items-center gap-x-2">
                                 <ThumbsUp
                                   className={
                                     userReactions[coupon.couponId] === "LIKE"
-                                      ? "size-4 fill-emerald-500 text-emerald-500"
-                                      : "size-4 text-emerald-500 transition-colors duration-200 ease-linear hover:fill-emerald-500"
+                                      ? "size-4 fill-emerald-500 text-neutral-500"
+                                      : "size-4 text-neutral-500 "
                                   }
                                 />
                                 <span className="text-muted-foreground">
@@ -893,17 +869,12 @@ const EventDetails = () => {
                                     ?.like_count || 0}
                                 </span>
                               </button>
-                              <button
-                                onClick={() =>
-                                  handleReaction(coupon.couponId, "DISLIKE")
-                                }
-                                className="flex items-center gap-x-2"
-                              >
+                              <button className="flex cursor-not-allowed items-center gap-x-2">
                                 <ThumbsDown
                                   className={
                                     userReactions[coupon.couponId] === "DISLIKE"
                                       ? "size-4 fill-app-main text-app-main"
-                                      : "size-4 text-app-main transition-colors duration-300 ease-linear hover:fill-app-main"
+                                      : "size-4 text-neutral-500"
                                   }
                                 />
                                 <span className="text-muted-foreground">
@@ -977,8 +948,8 @@ const PopularItems: React.FC<PopularItemProps> = ({
 
   return (
     <div className={`${commonStyles} ${isHidden ? "lg:hidden" : ""}`}>
-      <h2 className="text-base font-semibold">{title}</h2>
-      <div className={`mt-4 flex flex-wrap gap-2`}>
+      <h2 className="font-semibold">{title}</h2>
+      <div className={`mt-1 flex flex-wrap gap-2`}>
         {items.map((item) => {
           return (
             <Link

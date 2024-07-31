@@ -6,8 +6,8 @@ import Socials from "./Socials";
 
 const Footer = () => {
   return (
-    <footer className="flex w-full flex-col gap-6 border-t-2 border-app-main bg-popover p-10 px-4 sm:px-8 lg:px-16">
-      <div className="mx-auto flex max-w-screen-xl flex-col items-center gap-6 lg:flex-row lg:items-start lg:gap-x-16">
+    <footer className="flex w-full flex-col gap-6 border-t-2 border-app-main bg-popover px-4 py-6 sm:px-8">
+      <div className="mx-auto flex w-full flex-col items-center gap-6 lg:flex-row lg:items-start lg:justify-between xl:justify-around">
         {/* Logo and motto */}
         <div className="flex w-2/3 flex-col items-center gap-y-4 lg:w-1/4">
           <Image
@@ -26,7 +26,7 @@ const Footer = () => {
             you a gift card so you can treat yourself on us.
           </p>
         </div>
-        <div className="flex flex-col items-start gap-y-2 lg:translate-y-16">
+        <div className="flex flex-col items-start gap-y-4 lg:translate-y-12">
           <h3 className="text-xl font-bold">Useful Reads</h3>
           {FooterNavlinks["Useful Reads"].map((link) => (
             <Link
@@ -38,7 +38,7 @@ const Footer = () => {
             </Link>
           ))}
         </div>
-        <div className="flex flex-col items-start gap-y-2 lg:translate-y-16">
+        <div className="flex flex-col items-start gap-y-4 lg:translate-y-12">
           <h3 className="text-xl font-bold">Legal</h3>
           {FooterNavlinks.Legal.map((link) => (
             <Link
@@ -50,18 +50,18 @@ const Footer = () => {
             </Link>
           ))}
         </div>
-        <div className="flex flex-col items-center gap-y-6 lg:translate-y-16 lg:items-start">
-          <h3 className="text-xl font-bold sm:text-2xl">Join Our Newsletter</h3>
+        <div className="flex flex-col items-center gap-y-6 lg:w-1/3 lg:translate-y-12 lg:items-start 2xl:w-1/4">
+          <h3 className="text-xl font-bold">Join Our Newsletter</h3>
           <p className="text-md mx-auto text-center text-muted-foreground lg:mx-0 lg:text-start">
             To get the verified and hand tested Coupons or deals alerts.
           </p>
-          <div className="flex w-11/12 items-center justify-between rounded-full border-2 border-app-main pl-1 sm:w-full sm:pl-4 xl:w-10/12">
+          <div className="flex w-full max-w-80 items-center justify-between rounded-full border-2 border-app-main pl-2">
             <input
               type="text"
               placeholder="Enter Your Email Address"
-              className="w-full border-none bg-transparent py-4 caret-red-600 outline-none placeholder:text-xs placeholder:text-muted-foreground sm:placeholder:text-base"
+              className="w-full border-none bg-transparent caret-red-600 outline-none placeholder:text-sm placeholder:text-muted-foreground sm:placeholder:text-base"
             />
-            <Button className="rounded-br-full rounded-tr-full bg-app-main py-8">
+            <Button className="ml-2 rounded-br-full rounded-tr-full bg-app-main font-bold hover:bg-app-main">
               Subscribe
             </Button>
           </div>
@@ -71,15 +71,17 @@ const Footer = () => {
               <Link href={"/privacypolicy"}>Privacy Policy.</Link>
             </span>
           </p>
-          <Socials />
         </div>
       </div>
-      <div className="mx-auto h-px w-full max-w-screen-xl border-t border-dashed border-zinc-800 dark:border-muted-foreground"></div>
-      <p className="mx-auto max-w-screen-xl text-center">
+      <div className="mx-auto h-px w-full border-t border-dashed border-zinc-800 dark:border-muted-foreground lg:mt-4"></div>
+      <div className="mx-auto">
+        <Socials />
+      </div>
+      <p className="mx-auto text-center">
         Disclosure: If you buy a product or service through Qwik Savings, we may
         earn a commission
       </p>
-      <p className="mx-auto max-w-screen-xl text-center">
+      <p className="mx-auto text-center">
         &copy; 2024 QwikSavings.com All rights reserved.
       </p>
     </footer>

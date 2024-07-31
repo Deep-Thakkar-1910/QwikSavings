@@ -24,7 +24,7 @@ const StoresPageContent = () => {
 
   return (
     <section className="mb-6 w-full">
-      <h1 className="mb-4 ml-8 text-2xl font-semibold lg:ml-16">
+      <h1 className="mb-4 ml-8 text-2xl font-semibold lg:ml-12">
         All Stores & Brands A-Z
       </h1>
       <FilterBlocks filterForPage="stores" like={like} setLike={setLike} />

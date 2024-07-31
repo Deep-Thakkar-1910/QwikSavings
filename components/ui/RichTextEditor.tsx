@@ -28,7 +28,7 @@ import {
   TextAlignLeftIcon,
   TextAlignRightIcon,
 } from "@radix-ui/react-icons";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 
 const RichTextEditor = ({
   value,
@@ -37,7 +37,6 @@ const RichTextEditor = ({
   value: string;
   onChange: (value: string) => void;
 }) => {
-  const initialValueSet = useRef<boolean>(false);
   const editor = useEditor({
     editorProps: {
       attributes: {
@@ -49,12 +48,12 @@ const RichTextEditor = ({
       StarterKit.configure({
         orderedList: {
           HTMLAttributes: {
-            class: "list-decimal pl-4",
+            class: "list-decimal ml-2",
           },
         },
         bulletList: {
           HTMLAttributes: {
-            class: "list-disc pl-4",
+            class: "list-disc ml-2",
           },
         },
       }),

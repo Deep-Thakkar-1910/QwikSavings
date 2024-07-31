@@ -53,17 +53,17 @@ const ImageCarousel = () => {
 
   return (
     <Carousel
-      className="w-full lg:w-2/3 xl:w-3/4 2xl:-translate-x-6"
+      className="w-full lg:w-2/3 xl:w-3/4 2xl:-translate-x-8"
       opts={{ loop: true }}
       plugins={[plugin.current]}
       onMouseEnter={() => plugin.current.stop()}
       onMouseLeave={() => plugin.current.play()}
     >
-      <CarouselContent className="max-h-80">
+      <CarouselContent className="max-h-52 rounded-xl sm:max-h-72 lg:max-h-80">
         {data.map((image, index) => (
-          <CarouselItem key={image.carouselPosterUrl}>
+          <CarouselItem key={image.carouselPosterUrl} className="rounded-xl">
             <div
-              className="size-full cursor-pointer"
+              className="size-full cursor-pointer rounded-xl"
               onClick={() => handleImageClick(image)}
             >
               <Image
@@ -71,7 +71,7 @@ const ImageCarousel = () => {
                 alt={`carousel image ${index + 1}`}
                 width={1920}
                 height={1080}
-                className="size-full rounded-lg object-fill"
+                className="size-full rounded-xl object-fill"
                 loading="eager"
                 priority
               />

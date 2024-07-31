@@ -27,75 +27,77 @@ const Navbar = () => {
       <FestivalStrip />
       <nav
         className={cn(
-          "flex h-16 w-full items-center justify-between border-b border-b-app-main bg-white p-4 px-2  dark:bg-app-dark-navbar sm:px-4 md:px-6 lg:h-20 xl:px-12 ",
+          "w-full border-b border-b-app-main bg-white dark:bg-app-dark-navbar",
           isActive
-            ? "translate-y-16 transition-transform duration-200 ease-linear"
+            ? "translate-y-10 transition-transform duration-200 ease-linear"
             : "translate-y-0 transition-transform duration-200 ease-linear",
         )}
       >
-        {/* Branding */}
-        <Link href={"/"}>
-          <Image
-            src={"/Logos/logo.png"}
-            alt="Logo"
-            width={500}
-            height={500}
-            className="hidden h-20 w-60 lg:inline-block"
-          />
-          <Image
-            src={"/Logos/favicon.png"}
-            alt="Logo"
-            width={200}
-            height={200}
-            className="size-8 sm:size-12 md:size-14 lg:hidden"
-          />
-        </Link>
+        <div className="mx-auto flex h-16 w-full max-w-screen-2xl items-center justify-between p-4 px-2 sm:px-4 md:px-6 lg:h-20 lg:justify-evenly lg:px-0">
+          {/* Branding */}
+          <Link href={"/"}>
+            <Image
+              src={"/Logos/logo.png"}
+              alt="Logo"
+              width={500}
+              height={500}
+              className="hidden h-20 w-60 lg:inline-block"
+            />
+            <Image
+              src={"/Logos/favicon.png"}
+              alt="Logo"
+              width={200}
+              height={200}
+              className="size-8 sm:size-12 md:size-14 lg:hidden"
+            />
+          </Link>
 
-        <ul
-          className="hidden items-center gap-x-3 lg:flex xl:gap-x-5"
-          role="tablist"
-        >
-          {session?.user.role === "admin" && (
-            <li role="tab">
-              <Link href={"/admin"}>
-                <button
-                  className={cn(
-                    "text-sm font-medium transition-all duration-300 ease-in-out hover:-translate-y-1 hover:border-b-2 hover:border-b-app-main hover:text-app-main xl:text-base",
-                    isCurrent("admin") && "text-app-main",
-                  )}
-                >
-                  Admin
-                </button>
-              </Link>
-            </li>
-          )}
-          {NavLinks.map((link, index) => {
-            return (
-              <li key={index} role="tab">
-                <Link href={link.href}>
+          <ul
+            className="hidden items-center gap-x-3 lg:flex xl:gap-x-5"
+            role="tablist"
+          >
+            {session?.user.role === "admin" && (
+              <li role="tab">
+                <Link href={"/admin"}>
                   <button
                     className={cn(
                       "text-sm font-medium transition-all duration-300 ease-in-out hover:-translate-y-1 hover:border-b-2 hover:border-b-app-main hover:text-app-main xl:text-base",
-                      isCurrent(link.href.slice(1)) && "text-app-main",
+                      isCurrent("admin") && "text-app-main",
                     )}
                   >
-                    {link.title}
+                    Admin
                   </button>
                 </Link>
               </li>
-            );
-          })}
-        </ul>
+            )}
+            {NavLinks.map((link, index) => {
+              return (
+                <li key={index} role="tab">
+                  <Link href={link.href}>
+                    <button
+                      className={cn(
+                        "text-sm font-medium transition-all duration-300 ease-in-out hover:-translate-y-1 hover:border-b-2 hover:border-b-app-main hover:text-app-main xl:text-base",
+                        isCurrent(link.href.slice(1)) && "text-app-main",
+                      )}
+                    >
+                      {link.title}
+                    </button>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
 
-        <div className="flex items-center gap-x-2 sm:gap-x-3">
-          {/* Search bar */}
           <SearchBar />
-          <div className="lg:hidden">
-            <MobileSidebar />
-          </div>
-          <div className="hidden items-center gap-x-4 lg:flex">
-            <AuthButtons />
-            <ProfileDropDown />
+          <div className="flex items-center gap-x-2 sm:gap-x-3">
+            {/* Search bar */}
+            <div className="lg:hidden">
+              <MobileSidebar />
+            </div>
+            <div className="hidden items-center gap-x-4 lg:flex">
+              <AuthButtons />
+              <ProfileDropDown />
+            </div>
           </div>
         </div>
       </nav>

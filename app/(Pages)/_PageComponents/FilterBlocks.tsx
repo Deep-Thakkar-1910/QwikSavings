@@ -20,14 +20,14 @@ const FilterBlocks = ({ filterForPage, like, setLike }: FilterBlockProps) => {
   lg:size-12 2xl:size-14 hover:bg-zinc-900 hover:text-white dark:hover:bg-slate-200 dark:hover:text-black transition-colors duration-300 ease-in-out`;
 
   return (
-    <div className="mx-8 flex flex-col items-center gap-4 border border-muted-foreground p-4 lg:mx-16 lg:items-start 2xl:pb-6">
-      <h3 className="text-xl text-secondary-foreground/40 sm:text-2xl">
+    <div className="mx-8 flex flex-col items-center gap-4 border border-muted-foreground p-2 py-1 lg:mx-12 lg:items-start">
+      <h3 className="text-xl font-semibold text-muted-foreground">
         Browse by{" "}
         <span className="first-letter:uppercase">
           {filterForPage.charAt(0).toUpperCase() + filterForPage.slice(1)}
         </span>
       </h3>
-      <div className="flex flex-wrap gap-2 place-self-center text-lg sm:text-xl lg:place-self-start">
+      <div className="mb-1 flex flex-wrap gap-2 place-self-center text-lg sm:text-xl lg:place-self-start">
         {
           <>
             <div

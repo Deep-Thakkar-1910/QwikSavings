@@ -15,7 +15,6 @@ import {
 import { format } from "date-fns";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { ThumbsDown, ThumbsUp } from "lucide-react";
-import { set } from "lodash";
 
 interface CategoriesSectionProps {
   fetchFrom: string;
@@ -106,24 +105,24 @@ const CategoriesSection: React.FC<CategoriesSectionProps> = ({
 
   return (
     <section
-      className={`mx-auto w-full max-w-screen-xl overflow-x-hidden py-6 sm:p-10 ${data.coupons?.length === 0 || isLoading || error ? "hidden" : ""}`}
+      className={`mx-auto w-full max-w-screen-xl overflow-x-hidden ${data.coupons?.length === 0 || isLoading || error ? "hidden" : ""}`}
     >
-      <div className="mt-4 flex w-full flex-col items-center sm:flex-row sm:justify-between sm:px-8 lg:px-16 xl:px-0 2xl:px-0">
-        <h2 className="mx-auto mb-4 place-self-center text-2xl font-bold sm:mx-0 sm:place-self-start lg:text-3xl">
+      <div className="flex w-full flex-col items-center sm:flex-row sm:justify-between sm:px-10 lg:px-16 xl:px-6 2xl:px-0">
+        <h2 className="mx-auto place-self-center text-2xl font-bold sm:mx-0 sm:place-self-start lg:text-3xl">
           {title}
         </h2>
         <Link
           href={`/categories/${fetchFrom}`}
-          className="place-self-center text-end text-sm font-medium hover:underline sm:-translate-y-5 sm:place-self-end sm:text-base"
+          className="place-self-center text-end text-sm font-medium hover:underline sm:-translate-y-2 sm:place-self-end sm:text-base"
         >
           View all{" "}
           <span className="first-letter:uppercase">{fetchFrom} Coupons</span>
         </Link>
       </div>
-      <div className="flex flex-nowrap place-items-center items-center justify-start gap-x-8 gap-y-6 overflow-x-auto p-8 md:grid-cols-2 lg:grid lg:grid-cols-3 lg:px-16 xl:grid-cols-4 xl:px-2 2xl:px-0">
+      <div className="flex flex-nowrap place-items-center items-center justify-start gap-x-8 gap-y-6 overflow-x-auto p-8 sm:px-10 md:grid-cols-2 lg:grid lg:grid-cols-4 lg:px-16 xl:px-6 2xl:px-0">
         {data.coupons?.map((coupon: Coupon, index: number) => (
           <div
-            className="flex w-full max-w-72 shrink-0 flex-col flex-wrap items-center rounded-lg bg-popover shadow-lg sm:max-w-80 lg:max-w-full"
+            className="flex w-full max-w-72 shrink-0 flex-col flex-wrap items-center rounded-xl bg-popover shadow-lg sm:max-w-80 lg:max-w-full"
             key={index}
           >
             <div className="flex w-full items-center justify-center rounded-tl-md rounded-tr-md">

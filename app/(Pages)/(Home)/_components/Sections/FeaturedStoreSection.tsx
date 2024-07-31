@@ -36,8 +36,8 @@ const FeaturedStoreSection = () => {
     fetchFeatureData();
   }, []);
   return (
-    <section className={`${featuredData[0] ? "" : "hidden"} p-10`}>
-      <div className=" mx-auto flex w-full max-w-screen-xl flex-col items-center px-4 sm:flex-row sm:justify-between sm:px-8 lg:items-start lg:px-16 xl:px-2 2xl:px-0">
+    <section className={`${featuredData[0] ? "" : "hidden"} py-6`}>
+      <div className=" mx-auto flex w-full max-w-screen-xl flex-col items-center sm:flex-row sm:justify-between sm:px-10 lg:items-start lg:px-16 xl:px-6 2xl:px-0">
         <h2 className="mb-6 text-2xl font-bold lg:text-3xl">Featured Stores</h2>
         <Link
           href={"/stores"}
@@ -57,7 +57,7 @@ const FeaturedStoreSection = () => {
       ) : (
         <div
           className={cn(
-            `flex w-full max-w-screen-xl flex-nowrap items-center justify-start gap-2 overflow-x-auto p-10 px-0 py-4 sm:justify-start sm:px-8 lg:mx-auto lg:px-16`,
+            `flex w-full max-w-screen-xl flex-nowrap items-center justify-center gap-8 overflow-x-auto py-4 sm:justify-start sm:px-10 lg:mx-auto lg:px-16 xl:px-6 2xl:px-0`,
           )}
         >
           {featuredData.map((store) => {
@@ -65,14 +65,14 @@ const FeaturedStoreSection = () => {
               <Link
                 key={store.storeId}
                 href={`/stores/${store.name}`}
-                className="shrink-0"
+                className="shrink-0 rounded-full bg-popover p-2 shadow-md transition-all duration-200 ease-linear hover:scale-110 hover:shadow-lg"
               >
                 <Image
                   src={store.logo_url ?? "https://via.placeholder.com/600x400"}
                   alt={store.storeId}
                   width={400}
                   height={400}
-                  className="size-24 cursor-pointer rounded-full shadow-md transition-all duration-200 ease-linear hover:scale-110 hover:shadow-lg md:size-28"
+                  className="size-24 cursor-pointer rounded-full transition-all duration-200 ease-linear  md:size-28"
                 />
               </Link>
             );

@@ -49,7 +49,7 @@ const DisplayItems = <
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [itemToDelete, setItemToDelete] = useState<T | null>(null);
   const { data: session } = useSession();
-  // Function to group items by their starting character
+
   const groupByCharacter = (items: T[]) => {
     return items.reduce((acc: Record<string, T[]>, item) => {
       const char = item.name[0].toUpperCase();
@@ -61,10 +61,7 @@ const DisplayItems = <
     }, {});
   };
 
-  // Sort the data alphabetically by name
   const sortedData = data.sort((a, b) => a.name.localeCompare(b.name));
-
-  // Group the sorted data by their starting character
   const groupedData = groupByCharacter(sortedData);
 
   const handleDeleteClick = (item: T) => {
@@ -87,7 +84,7 @@ const DisplayItems = <
   };
 
   return (
-    <div className="my-6 min-h-[40vh] w-full bg-popover p-8 lg:px-16 lg:py-16">
+    <div className="mb-6 min-h-[40vh] w-full px-8 py-4 lg:px-12">
       {isLoading ? (
         <div className="flex h-[40vh] w-full items-center justify-center">
           <Spinner />
@@ -102,21 +99,21 @@ const DisplayItems = <
         </div>
       ) : (
         Object.keys(groupedData).map((char) => (
-          <div key={char} className="my-4">
-            <h2 className="mb-2 text-xl font-bold">{char}</h2>
-            <div className="w-full border-0 border-muted-foreground sm:border-2 sm:p-4">
-              <div className="grid grid-cols-1 place-items-center gap-x-6 gap-y-4 md:grid-cols-2 md:place-items-start md:gap-x-8 lg:grid-cols-3 lg:gap-x-12 xl:grid-cols-4">
+          <div key={char} className="my-4 first:mt-0 last:mb-0">
+            <div className="w-full border-0 border-muted-foreground pb-3 pt-2 sm:border sm:px-4">
+              <h2 className="mb-2 text-2xl sm:text-3xl">{char}</h2>
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
                 {groupedData[char].map((item) => (
                   <div
                     key={item.storeId ?? item.categoryId}
-                    className="group relative flex max-h-28 max-w-xs cursor-pointer flex-col items-center rounded-md border p-4 transition-transform duration-300 ease-linear hover:scale-105"
+                    className="group relative flex max-w-80 cursor-pointer flex-col items-center rounded-lg border bg-gray-300/70 p-3 shadow-md transition-transform duration-300 ease-linear hover:scale-105 dark:bg-app-dark-navbar sm:max-w-full"
                   >
-                    <div className="flex h-28 w-full min-w-64 items-center justify-start gap-x-4">
+                    <div className="flex w-full items-center justify-start gap-x-3 ">
                       <Link
                         href={`${item.storeId ? `/stores/${item.name}` : `/categories/${item.name}`}`}
-                        className="flex-grow"
+                        className="flex flex-grow items-center gap-x-3"
                       >
-                        <div className="flex items-center gap-x-4">
+                        <div className="rounded-full border border-black bg-white p-1 dark:border-white dark:bg-black">
                           <Image
                             src={
                               item.logo_url ??
@@ -125,37 +122,37 @@ const DisplayItems = <
                             alt={item.name}
                             width={400}
                             height={400}
-                            className="h-20 w-20 rounded-full object-cover transition-shadow duration-300 ease-linear group-hover:shadow-md"
+                            className="aspect-square w-20 rounded-full object-cover transition-shadow duration-300 ease-linear group-hover:shadow-md sm:w-24"
                           />
-                          <div className="flex flex-col items-start gap-y-2">
-                            <p className="tracking-wide transition-colors duration-300 ease-linear group-hover:text-app-main">
-                              {item.name}
-                            </p>
-                            <p className="text-sm text-muted-foreground">
-                              <span>
-                                {
-                                  item.coupons.filter(
-                                    (coupon) => coupon.type === "Deal",
-                                  ).length
-                                }{" "}
-                                Deals
-                              </span>{" "}
-                              |{" "}
-                              <span>
-                                {
-                                  item.coupons.filter(
-                                    (coupon) => coupon.type === "Coupon",
-                                  ).length
-                                }{" "}
-                                Coupons
-                              </span>
-                            </p>
-                          </div>
+                        </div>
+                        <div className="flex flex-col items-start gap-y-1">
+                          <p className="text-sm tracking-wide transition-colors duration-300 ease-linear sm:text-base">
+                            {item.name}
+                          </p>
+                          <p className="text-xs font-semibold text-muted-foreground sm:text-sm">
+                            <span>
+                              {
+                                item.coupons.filter(
+                                  (coupon) => coupon.type === "Deal",
+                                ).length
+                              }{" "}
+                              Deals
+                            </span>
+                            {" | "}
+                            <span>
+                              {
+                                item.coupons.filter(
+                                  (coupon) => coupon.type === "Coupon",
+                                ).length
+                              }{" "}
+                              Coupons
+                            </span>
+                          </p>
                         </div>
                       </Link>
                       {session?.user?.role === "admin" && (
                         <Trash2
-                          className="absolute right-2 top-2 size-4 cursor-pointer text-app-main "
+                          className="absolute right-2 top-2 size-4 cursor-pointer text-app-main"
                           onClick={() => handleDeleteClick(item)}
                         />
                       )}
@@ -176,7 +173,7 @@ const DisplayItems = <
             </DialogTitle>
             <DialogDescription>
               This action cannot be undone. This will permanently delete the{" "}
-              {itemToDelete?.storeId ? "store" : "category"}
+              {itemToDelete?.storeId ? "store" : "category"}{" "}
               {itemToDelete?.name} and remove all associated data.
             </DialogDescription>
           </DialogHeader>

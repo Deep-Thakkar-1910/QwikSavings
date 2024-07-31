@@ -111,7 +111,7 @@ const CardStackFlipper = ({ autoplay }: { autoplay: boolean }) => {
                 transition: { duration: 0.8, ease: "easeInOut" },
               }}
               className={cn(
-                `absolute h-80 w-60 rounded-lg bg-cover bg-no-repeat transition-colors duration-700 ease-in-out `,
+                `absolute h-80 w-60 rounded-xl bg-cover bg-no-repeat transition-colors duration-700 ease-in-out `,
                 i === 0 && "bg-[#fff2cf]",
                 i === 1 && "bg-[#e1b9ea]",
                 i === 2 && "bg-[#b9e1ea]",

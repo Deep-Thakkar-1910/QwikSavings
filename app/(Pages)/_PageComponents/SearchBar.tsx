@@ -139,9 +139,6 @@ const SearchBar = () => {
   return (
     <div ref={searchRef} className="relative">
       <div className="flex w-56 items-center justify-between rounded-full border-2 border-app-main p-1 sm:w-64 sm:px-3 sm:py-2">
-        <label htmlFor="search">
-          <Search className="mr-2 size-6 text-app-main" />
-        </label>
         <input
           id="search"
           type="text"
@@ -152,6 +149,9 @@ const SearchBar = () => {
           onFocus={handleInputFocus}
           autoComplete="off"
         />
+        <label htmlFor="search">
+          <Search className="ml-2 size-6 text-app-main" />
+        </label>
       </div>
       {showSuggestions && (
         <div className="absolute z-10 mt-2 w-full rounded-md bg-popover shadow-lg">
