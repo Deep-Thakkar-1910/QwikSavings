@@ -10,7 +10,7 @@ const HowItWorks = () => {
           How to use coupons using the QwikSavings
         </h1>
       </div>
-      <div className="mx-auto w-full max-w-screen-xl px-4 text-lg sm:px-8 sm:text-2xl lg:px-16 xl:px-8 2xl:px-0">
+      <div className="mx-auto w-full max-w-screen-xl px-4 text-lg sm:px-8 sm:text-2xl lg:px-12 xl:px-8 2xl:px-0">
         <div className="flex w-full flex-col text-lg lg:ml-2 lg:flex-row-reverse lg:p-5 lg:pt-0">
           <Image
             src={"/HowItWorks/How it Works.jpg"}
@@ -38,7 +38,7 @@ const HowItWorks = () => {
           </div>
         </div>
       </div>
-      <div className="mx-auto w-full max-w-screen-xl px-4 sm:px-8 sm:text-2xl lg:px-16 xl:px-8 2xl:px-0">
+      <div className="mx-auto w-full max-w-screen-xl px-4 sm:px-8 sm:text-2xl lg:px-12 xl:px-8 2xl:px-0">
         <div className="mx-auto w-full text-center text-lg sm:mx-0 sm:text-start lg:ml-2 lg:p-5 lg:pt-0">
           <span className="mt-5 text-2xl font-bold">1,2,3 easy steps</span>
           <p className="my-5  text-center sm:text-start">

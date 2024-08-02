@@ -8,7 +8,7 @@ const AdvertiseWithUsPage = () => {
       <div className="mx-auto w-full max-w-screen-xl p-10 px-4 sm:px-8 sm:text-2xl lg:px-24 xl:px-16 2xl:px-8">
         <h1 className="text-xl font-bold sm:text-2xl">Advertise With Us</h1>
       </div>
-      <div className="mx-auto w-full max-w-screen-xl px-4 text-lg sm:px-8 sm:text-2xl lg:px-16 xl:px-8 2xl:px-0">
+      <div className="mx-auto w-full max-w-screen-xl px-4 text-lg sm:px-8 sm:text-2xl lg:px-12 xl:px-8 2xl:px-0">
         <div className="w-full text-lg lg:-mt-20 lg:ml-2 lg:p-5 lg:pt-0">
           <Image
             className="h-auto w-full  lg:float-right lg:m-10 lg:mr-0 lg:mt-0 lg:w-[45%]"
@@ -38,7 +38,7 @@ const AdvertiseWithUsPage = () => {
           </ul>
         </div>
       </div>
-      <article className="mx-auto my-8 flex flex-col items-center justify-center gap-8 px-4 sm:px-8 lg:px-16 ">
+      <article className="mx-auto my-8 flex flex-col items-center justify-center gap-8 px-4 sm:px-8 lg:px-12 ">
         <div className="mb-2 flex  w-11/12 max-w-screen-lg flex-col items-center justify-center rounded-lg border-2 bg-white p-6 dark:bg-app-dark-navbar md:w-full lg:flex-row lg:items-center lg:justify-between ">
           {/* Form container div */}
           <div className="flex w-full flex-col gap-y-4">

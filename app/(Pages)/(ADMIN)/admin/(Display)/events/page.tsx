@@ -38,7 +38,7 @@ const AllEventsPage = () => {
   return (
     <section className="mt-10 flex w-full flex-col items-center">
       <h1 className="mb-6 text-2xl font-bold">Events</h1>
-      <div className="my-6 flex w-full items-center justify-between px-4 sm:px-8 lg:px-16">
+      <div className="my-6 flex w-full items-center justify-between px-4 sm:px-8 lg:px-12">
         <Link
           href={"/admin/createevent"}
           className="flex items-center gap-x-1 text-app-main underline transition-transform duration-200 ease-linear hover:scale-105"

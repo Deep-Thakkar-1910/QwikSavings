@@ -56,7 +56,7 @@ const BlogDetailsPage = () => {
           <p>{error}</p>
         </div>
       ) : (
-        <section className="relative mb-6 flex w-full flex-col items-start gap-6 px-0 sm:px-8 lg:flex-row lg:px-16">
+        <section className="relative mb-6 flex w-full flex-col items-start gap-6 px-0 sm:px-8 lg:flex-row lg:px-12">
           {session?.user.role === "admin" && (
             <div className="absolute right-4 top-0 flex flex-col gap-y-2 place-self-end lg:right-20">
               <Link

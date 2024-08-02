@@ -33,7 +33,7 @@ const Navbar = () => {
             : "translate-y-0 transition-transform duration-200 ease-linear",
         )}
       >
-        <div className="mx-auto flex h-16 w-full max-w-screen-2xl items-center justify-between p-4 px-2 sm:px-4 md:px-6 lg:h-20 lg:justify-evenly lg:px-0">
+        <div className="mx-auto flex h-16 w-full max-w-screen-2xl items-center justify-between p-4 px-2 sm:px-4 md:px-6 lg:h-20 lg:justify-evenly lg:px-12">
           {/* Branding */}
           <Link href={"/"}>
             <Image

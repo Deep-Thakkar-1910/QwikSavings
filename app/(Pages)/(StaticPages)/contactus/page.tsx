@@ -6,7 +6,7 @@ import Socials from "../../_PageComponents/Socials";
 
 const ContactUsPage = () => {
   return (
-    <article className="my-8 flex  flex-col items-center justify-center gap-8 px-4 sm:px-8 lg:px-16 ">
+    <article className="my-8 flex  flex-col items-center justify-center gap-8 px-4 sm:px-8 lg:px-12 ">
       <div className="mb-2 flex  w-11/12 max-w-screen-lg flex-col items-center justify-center rounded-lg border-2 bg-white p-6 dark:bg-app-dark-navbar md:w-full lg:flex-row lg:items-center lg:justify-between ">
         {/* Form container div */}
         <div className="flex w-full flex-col gap-y-4 lg:w-7/12">

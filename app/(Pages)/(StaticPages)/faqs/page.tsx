@@ -15,10 +15,10 @@ import Seperator from "../../_PageComponents/Seperator";
 const FAQsPage = () => {
   return (
     <section className="mb-10 flex w-full flex-col items-center gap-y-4 lg:items-start lg:gap-y-6">
-      <div className="mx-auto mt-2 w-full max-w-screen-xl px-4 sm:px-8 sm:text-2xl lg:mt-0 lg:px-16 2xl:px-0">
+      <div className="mx-auto mt-2 w-full max-w-screen-xl px-4 sm:px-8 sm:text-2xl lg:mt-0 lg:px-12 2xl:px-0">
         <h1 className="text-xl font-bold sm:text-2xl">FAQs</h1>
       </div>
-      <div className="mx-auto w-full max-w-screen-xl px-4 text-lg sm:px-8 sm:text-2xl lg:px-16 xl:px-8 2xl:px-0">
+      <div className="mx-auto w-full max-w-screen-xl px-4 text-lg sm:px-8 sm:text-2xl lg:px-12 xl:px-8 2xl:px-0">
         <div className="flex flex-col items-center lg:flex-row lg:justify-around">
           <Image
             className="aspect-square w-full max-w-lg object-contain lg:w-2/5"
@@ -50,7 +50,7 @@ const FAQsPage = () => {
         </div>
       </div>
 
-      <div className="mx-auto mt-6 w-full max-w-screen-xl px-4 text-lg sm:px-8 sm:text-2xl lg:px-16 2xl:px-0">
+      <div className="mx-auto mt-6 w-full max-w-screen-xl px-4 text-lg sm:px-8 sm:text-2xl lg:px-12 2xl:px-0">
         <span className="text-xl font-bold lg:text-2xl">
           Common FAQs at Qwik Savings
         </span>

@@ -106,7 +106,7 @@ const DisplayItems = <
                 {groupedData[char].map((item) => (
                   <div
                     key={item.storeId ?? item.categoryId}
-                    className="group relative flex max-w-80 cursor-pointer flex-col items-center rounded-lg border bg-gray-300/70 p-3 shadow-md transition-transform duration-300 ease-linear hover:scale-105 dark:bg-app-dark-navbar sm:max-w-full"
+                    className="group relative flex max-w-80 cursor-pointer flex-col items-center rounded-lg border bg-gray-300/70 p-3 shadow-md transition-transform duration-300 ease-linear hover:scale-105 dark:bg-app-dark-navbar sm:max-w-full lg:max-w-full"
                   >
                     <div className="flex w-full items-center justify-start gap-x-3 ">
                       <Link
@@ -122,7 +122,7 @@ const DisplayItems = <
                             alt={item.name}
                             width={400}
                             height={400}
-                            className="aspect-square w-20 rounded-full object-cover transition-shadow duration-300 ease-linear group-hover:shadow-md sm:w-24"
+                            className="aspect-square w-16 rounded-full object-cover transition-shadow duration-300 ease-linear group-hover:shadow-md"
                           />
                         </div>
                         <div className="flex flex-col items-start gap-y-1">

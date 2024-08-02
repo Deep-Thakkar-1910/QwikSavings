@@ -203,6 +203,8 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
     }
   };
 
+  console.log(detailsData);
+
   // NOTE: this is for handling tab change
   const handleTabChange = (tab: "all" | "coupon" | "deal") => {
     setSelectedTab(tab);
@@ -453,7 +455,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
     <>
       {/* topBar for mobile */}
       <div
-        className={`flex w-full ${isStore ? "items-start" : "items-center"} gap-x-2 rounded-lg bg-popover p-4 px-4 sm:items-center sm:gap-x-4 sm:px-8 lg:hidden lg:px-16`}
+        className={`flex w-full ${isStore ? "items-start" : "items-center"} gap-x-2 rounded-lg bg-popover p-4 px-4 sm:items-center sm:gap-x-4 sm:px-8 lg:hidden lg:px-12`}
       >
         <Image
           src={detailsData?.logo_url ?? "https://via.placeholder.com/600x400"}
@@ -486,7 +488,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
           <p>{error}</p>
         </div>
       ) : (
-        <section className="relative mb-6 flex w-full flex-col items-start gap-6 px-8 pt-10 lg:flex-row lg:px-16">
+        <section className="relative mb-6 flex w-full flex-col items-start gap-6 px-8 pt-10 lg:flex-row lg:px-12">
           {/* Edit link only visbible to admins */}
           {session?.user.role === "admin" && (
             <div className="absolute right-4 top-0 flex flex-col gap-y-2 place-self-end lg:right-20">
@@ -701,7 +703,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
               <h1 className="mb-2 text-4xl font-bold">{detailsData.name}</h1>
               {initialCoupon && (
                 <p className=" font-semibold">
-                  Best Offers Last Validated On{" "}
+                  Best {detailsData._count.coupons} Offers Last Validated On{" "}
                   {format(initialCoupon, "MMMM dd, yyyy")}
                 </p>
               )}
@@ -782,7 +784,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                               "grid w-full place-items-center text-black dark:text-slate-200 ",
                             )}
                           >
-                            {coupon.type}
+                            {coupon.type === "Coupon" ? "Code" : "Deal"}
                           </Badge>
                         </div>
                         {/* Coupon title */}
@@ -877,7 +879,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                             <div className="absolute left-0 top-0 h-full w-full">
                               <div className="polygon-clip h-full w-full rounded-md bg-app-main transition-all duration-200 ease-linear group-hover:w-11/12">
                                 <p className="absolute inset-0 grid place-items-center text-sm font-semibold text-slate-200">
-                                  Reveal code
+                                  Get code
                                 </p>
                               </div>
                             </div>
@@ -971,7 +973,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                                 "grid w-full place-items-center bg-neutral-500 text-black hover:bg-neutral-500 dark:text-slate-200"
                               }
                             >
-                              {coupon.type}
+                              {coupon.type === "Coupon" ? "Code" : "Deal"}
                             </Badge>
                           </div>
                           {/* Coupon title */}
@@ -1023,7 +1025,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                               <div className="absolute left-0 top-0 h-full w-full">
                                 <div className="polygon-clip h-full w-full rounded-md bg-neutral-500 transition-all duration-200 ease-linear hover:bg-neutral-500 group-hover:w-11/12">
                                   <p className="absolute inset-0 grid place-items-center text-sm font-semibold text-slate-200">
-                                    Reveal code
+                                    Get code
                                   </p>
                                 </div>
                               </div>

@@ -14,6 +14,11 @@ export async function GET() {
         storeId: true,
         logo_url: true,
         name: true,
+        _count: {
+          select: {
+            coupons: true,
+          },
+        },
       },
       take: 8,
       orderBy: [

@@ -5,7 +5,7 @@ import { Metadata } from "next";
 // Metadata for the page
 export const metadata: Metadata = {
   title: "Sign up",
-  description: "Signin page for Qwik Saving",
+  description: "Signup page for Qwik Saving",
 };
 const SignUpPage = () => {
   return (
@@ -14,7 +14,7 @@ const SignUpPage = () => {
       <p className="text-sm">
         Already have an account?{" "}
         <span className="cursor-pointer text-app-main underline">
-          <Link href={"/signin"}>SignIn</Link>
+          <Link href={"/signin"}>LogIn</Link>
         </span>
       </p>
       {/* Form container div */}

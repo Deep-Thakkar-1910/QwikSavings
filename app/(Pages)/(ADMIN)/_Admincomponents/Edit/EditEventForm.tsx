@@ -280,7 +280,7 @@ const EditEventForm = () => {
           className="w-full place-self-center rounded-lg hover:shadow-md"
           disabled={formState.isSubmitting}
         >
-          {formState.isSubmitting ? "Creating..." : "Create Category"}
+          {formState.isSubmitting ? "Editing..." : "Edit Event"}
         </Button>
       </form>
     </Form>

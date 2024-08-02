@@ -22,7 +22,7 @@ const CategoryFilterForBlogs = ({
   font-semibold hover:bg-zinc-900 hover:text-white dark:hover:bg-slate-200 dark:hover:text-black transition-colors duration-300 ease-in-out`;
 
   return (
-    <div className="w-full p-4 sm:px-8 lg:px-16">
+    <div className="w-full p-4 sm:px-8 lg:px-12">
       <div className="flex flex-col items-center gap-4 border border-muted-foreground p-4 lg:items-start  2xl:pb-6">
         <h3 className="mx-auto text-center text-xl text-secondary-foreground/40 sm:text-2xl">
           Browse Blogs by{" "}

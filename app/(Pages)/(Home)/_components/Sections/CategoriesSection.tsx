@@ -107,7 +107,7 @@ const CategoriesSection: React.FC<CategoriesSectionProps> = ({
     <section
       className={`mx-auto w-full max-w-screen-xl overflow-x-hidden ${data.coupons?.length === 0 || isLoading || error ? "hidden" : ""}`}
     >
-      <div className="flex w-full flex-col items-center sm:flex-row sm:justify-between sm:px-10 lg:px-16 xl:px-6 2xl:px-0">
+      <div className="flex w-full flex-col items-center sm:flex-row sm:justify-between sm:px-10 lg:px-12 xl:px-6 2xl:px-0">
         <h2 className="mx-auto place-self-center text-2xl font-bold sm:mx-0 sm:place-self-start lg:text-3xl">
           {title}
         </h2>
@@ -119,10 +119,10 @@ const CategoriesSection: React.FC<CategoriesSectionProps> = ({
           <span className="first-letter:uppercase">{fetchFrom} Coupons</span>
         </Link>
       </div>
-      <div className="flex flex-nowrap place-items-center items-center justify-start gap-x-8 gap-y-6 overflow-x-auto p-8 sm:px-10 md:grid-cols-2 lg:grid lg:grid-cols-4 lg:px-16 xl:px-6 2xl:px-0">
+      <div className="flex flex-nowrap place-items-center items-center justify-start gap-x-8 gap-y-6 overflow-x-auto p-8 sm:px-10 md:grid-cols-2 lg:grid lg:grid-cols-4 lg:px-12 xl:px-6 2xl:px-0">
         {data.coupons?.map((coupon: Coupon, index: number) => (
           <div
-            className="flex w-full max-w-72 shrink-0 flex-col flex-wrap items-center rounded-xl bg-popover shadow-lg sm:max-w-80 lg:max-w-full"
+            className="flex w-full max-w-72 shrink-0 flex-col items-center rounded-xl bg-popover shadow-lg sm:max-w-80 lg:max-w-full"
             key={index}
           >
             <div className="flex w-full items-center justify-center rounded-tl-md rounded-tr-md">
@@ -132,16 +132,16 @@ const CategoriesSection: React.FC<CategoriesSectionProps> = ({
                   width={1920}
                   height={1080}
                   alt="Logo"
-                  className="aspect-video h-36 rounded-tl-lg rounded-tr-lg object-cover"
+                  className="aspect-video h-36 rounded-tl-lg rounded-tr-lg object-cover lg:h-28 xl:h-32"
                 />
               ) : (
                 <div className="aspect-video h-36 bg-popover" />
               )}
             </div>
 
-            <div className="flex w-full flex-col gap-y-1 p-4">
+            <div className="flex w-full flex-col gap-y-1 p-4 lg:gap-y-0 xl:gap-y-1">
               <div className="flex w-full items-center justify-between ">
-                <div className="-translate-y-2/3 rounded-full bg-white p-1 dark:bg-app-dark-navbar">
+                <div className="-translate-x-3 -translate-y-2/3 rounded-full bg-white p-1 dark:bg-app-dark-navbar">
                   {coupon.store.logo_url ? (
                     <Link href={`/stores/${coupon.store.name}`}>
                       <Image
@@ -156,7 +156,7 @@ const CategoriesSection: React.FC<CategoriesSectionProps> = ({
                     <div className="size-14 rounded-full bg-popover" />
                   )}
                 </div>
-                <Badge className=" -translate-y-2/3 bg-blue-400/50 text-black dark:text-slate-200">
+                <Badge className=" -translate-y-2/3 bg-blue-400/50 text-black hover:bg-blue-400/50 dark:text-slate-200">
                   VERIFIED
                 </Badge>
               </div>
@@ -198,7 +198,7 @@ const CategoriesSection: React.FC<CategoriesSectionProps> = ({
                   <div className="absolute left-0 top-0 h-full w-full">
                     <div className="polygon-clip h-full w-full rounded-md bg-app-main transition-all duration-200 ease-linear group-hover:w-11/12">
                       <p className="absolute inset-0 grid place-items-center text-sm font-semibold text-slate-200">
-                        Reveal code
+                        Get code
                       </p>
                     </div>
                   </div>

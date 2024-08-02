@@ -14,7 +14,7 @@ import {
 const PrivacyPolicyPage = () => {
   return (
     <section className="mb-10 flex w-full flex-col items-center gap-y-4 lg:items-start lg:gap-y-6">
-      <div className="mx-auto mt-2 flex w-full max-w-screen-xl flex-col items-start px-4 sm:px-8 sm:text-2xl lg:mt-0 lg:flex-row lg:px-16 2xl:px-0">
+      <div className="mx-auto mt-2 flex w-full max-w-screen-xl flex-col items-start px-4 sm:px-8 sm:text-2xl lg:mt-0 lg:flex-row lg:px-12 2xl:px-0">
         <div className="flex w-full flex-col gap-5 pl-6 text-lg text-app-main sm:pl-10 lg:sticky lg:top-32 lg:ml-10 lg:h-screen lg:w-1/3 lg:p-5 lg:pl-0">
           <div className="text-xl font-semibold text-black dark:text-slate-200">
             About QwikSavings.com
@@ -57,7 +57,7 @@ const PrivacyPolicyPage = () => {
             Contact Us
           </Link>
         </div>
-        <div className="mx-auto mt-6 w-full px-4 text-lg sm:px-8 sm:text-2xl lg:mt-0 lg:px-16 xl:px-8 2xl:px-0">
+        <div className="mx-auto mt-6 w-full px-4 text-lg sm:px-8 sm:text-2xl lg:mt-0 lg:px-12 xl:px-8 2xl:px-0">
           <h1 className="ml-2 text-xl font-bold sm:text-2xl lg:text-3xl">
             Privacy Policy Of Qwik Savings
           </h1>

@@ -412,17 +412,8 @@ const EventDetails = () => {
               Edit Event
             </Link>
           )}
-          {data?.cover_url && (
-            <Image
-              src={data?.cover_url}
-              alt="Event Cover url"
-              width={1920}
-              height={1080}
-              className="mx-4 h-48 w-11/12 rounded-md object-cover lg:mx-auto lg:w-2/3 lg:translate-x-28 2xl:translate-x-36"
-            />
-          )}
           {/* Topbar for mobile */}
-          <div className="mt-4 flex w-full items-center gap-x-4 rounded-lg bg-popover p-4 px-4  sm:px-8 lg:hidden lg:px-16">
+          <div className="mt-4 flex w-full items-center gap-x-4 rounded-lg bg-popover p-4 px-4  sm:px-8 lg:hidden lg:px-12">
             <Image
               src={data?.logo_url ?? "https://via.placeholder.com/600x400"}
               alt={data?.name + " Logo"}
@@ -434,492 +425,508 @@ const EventDetails = () => {
               {data?.name}
             </h1>
           </div>
-          <section className="relative mb-6 flex w-full flex-col items-start gap-6 px-4 pt-10 sm:px-8 lg:flex-row lg:px-16">
-            <aside className="hidden flex-col items-center gap-y-8 lg:flex lg:w-1/4">
+          <section className="mb-6 flex w-full flex-col items-start px-4 sm:px-8 lg:px-12">
+            {data?.cover_url && (
               <Image
-                src={
-                  data?.logo_url
-                    ? data?.logo_url
-                    : "https://via.placeholder.com/600x400"
-                }
-                alt={`Event Logo`}
-                width={400}
-                height={400}
-                className="size-40 rounded-full"
+                src={data?.cover_url}
+                alt="Event Cover url"
+                width={1920}
+                height={1080}
+                className="mt-6 h-32 w-full rounded-md object-cover lg:h-40 lg:w-[93.5%]"
               />
-              <div
-                className={`${commonStyles} ${data?.description ? "" : "hidden"}`}
-              >
-                <h2 className="text-xl font-bold">About</h2>
-                <p>{data?.description}</p>
-              </div>
-              <div className={`${commonStyles}`}>
-                <h2 className="mb-2 text-base font-semibold">
-                  Today&apos;s Top Shopping Events
-                </h2>
-                {data?.coupons && data?.coupons[0] && (
-                  <p className="my-2">&bull; {data?.coupons[0].title}</p>
-                )}
-                {data?.coupons && data?.coupons[1] && (
-                  <p className="my-2">&bull; {data?.coupons[1].title}</p>
-                )}
-                <div className="flex flex-col gap-y-4 rounded-lg border-2 p-4">
-                  <div className="flex items-center justify-between ">
-                    <p>Total Coupons:</p>
-                    <p>{couponsLength}</p>
-                  </div>
-
-                  <div className="flex items-center justify-between">
-                    <p>Total Deals:</p>
-                    <p>{dealsLength}</p>
-                  </div>
-                  <div className={`flex items-center justify-between`}>
-                    <p className="inline-block text-center font-medium">
-                      Total Offers:
-                    </p>
-                    <p className="ml-auto inline-block text-center">
-                      {data?.coupons?.length || 0}
-                    </p>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <p>Best Offer:</p>
-                    <p>{data?.best_offer} Off</p>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <p>Average Discount:</p>
-                    <p>{data?.average_discount}</p>
-                  </div>
-                </div>
-              </div>
-              {/* Popular Stores */}
-              {popularData?.length > 0 && (
-                <PopularItems
-                  title="Popular Stores"
-                  items={popularData.map((store, index) => ({
-                    id: index,
-                    name: store.name,
-                  }))}
-                  isStore
+            )}
+            <div className="relative flex w-full flex-col items-start gap-x-6 lg:flex-row lg:pt-10">
+              <aside className="hidden flex-col items-center gap-y-8 lg:flex lg:w-1/4">
+                <Image
+                  src={
+                    data?.logo_url
+                      ? data?.logo_url
+                      : "https://via.placeholder.com/600x400"
+                  }
+                  alt={`Event Logo`}
+                  width={400}
+                  height={400}
+                  className="size-40 rounded-full"
                 />
-              )}
-              {/* Categories Browse by store */}
-              <div className={`${commonStyles}`}>
-                <h2 className="mb-2 font-medium">Browse by Stores</h2>
-                <div className="flex flex-wrap gap-2">
-                  {blocks.map((block) => (
-                    <Button
-                      key={block}
-                      className="!size-4 bg-neutral-500/40 text-xs font-light text-black hover:bg-neutral-500/40 dark:text-slate-200"
-                      asChild
-                    >
-                      <Link href={`/stores?like=${block}`}>
-                        {block.charAt(0).toUpperCase()}
-                      </Link>
-                    </Button>
-                  ))}
-                </div>
-              </div>
-            </aside>
-            <Separator className="hidden h-auto min-h-[90vh] w-[2px] self-stretch text-muted lg:block" />
-            <main className="flex w-full flex-col items-stretch gap-y-6">
-              <div className="hidden -translate-y-2 flex-col lg:flex lg:w-11/12">
-                <h1 className="mb-2 text-4xl font-bold">{data?.name}</h1>
-                {initialCoupon && (
-                  <p className="font-semibold">
-                    Best Offers Last Validated On{" "}
-                    {format(initialCoupon, "dd-MMM-yyyy")}
-                  </p>
-                )}
-                <Link
-                  href={"/submitacoupon"}
-                  className="flex items-center gap-x-1 place-self-end underline transition-colors duration-300 ease-linear hover:text-app-main"
+                <div
+                  className={`${commonStyles} ${data?.description ? "" : "hidden"}`}
                 >
-                  Submit a coupon <Tag className="size-4" />
-                </Link>
-              </div>
-
-              {/* Active Coupons */}
-              <Accordion
-                type="single"
-                collapsible
-                className="flex w-full flex-col gap-y-6 xl:w-11/12"
-              >
-                {activeCoupons.map((coupon: any) => (
-                  <AccordionItem
-                    key={coupon.couponId}
-                    value={coupon.couponId}
-                    className="rounded-lg bg-popover shadow-md"
-                  >
-                    <div className="group/accordion relative flex w-full items-center justify-between gap-x-6 gap-y-4 p-6">
-                      <div className="flex flex-col items-start gap-6 sm:flex-row sm:items-center">
-                        {/* Coupon image */}
-                        <div className="flex w-24 flex-col items-center border">
-                          <Image
-                            src={
-                              coupon.store.logo_url ??
-                              "https://via.placeholder.com/600x400"
-                            }
-                            width={400}
-                            height={400}
-                            className="aspect-square w-full rounded-md border object-contain"
-                            alt={data?.name + " Logo"}
-                          />
-                          <Badge
-                            className={cn(
-                              coupon.type === "Deal"
-                                ? "bg-amber-500 hover:bg-amber-600"
-                                : "bg-blue-400/50 hover:bg-blue-500/50",
-                              "grid w-full place-items-center text-black dark:text-slate-200 ",
-                            )}
-                          >
-                            {coupon.type}
-                          </Badge>
-                        </div>
-                        {/* Coupon title */}
-                        <div className="flex flex-col">
-                          <p className="mb-2 text-base font-semibold tracking-wide first-letter:uppercase">
-                            {coupon.title}
-                          </p>
-                          <AccordionTrigger className="[&[data-state=open]>svg]:text-white [&[data-state=open]]:bg-app-main [&[data-state=open]]:text-white ">
-                            Details
-                          </AccordionTrigger>
-                        </div>
-                      </div>
-
-                      {/* Coupon code users and bookmark */}
-                      <div className="flex flex-col items-end justify-between gap-4">
-                        <Heart
-                          className={`absolute right-2 top-2 size-4 cursor-pointer text-app-main transition-all duration-300 ease-linear ${
-                            bookmarkedCoupons.includes(coupon.couponId)
-                              ? "fill-app-main text-app-main"
-                              : "opacity-100 group-hover/accordion:opacity-100 lg:opacity-0 lg:hover:fill-app-main"
-                          }`}
-                          onClick={() => handleBookmark(coupon.couponId)}
-                        />
-                        <div className=" flex flex-col items-center gap-x-4 sm:flex-row">
-                          <p className="flex w-fit items-center gap-x-2 text-sm text-emerald-500">
-                            <Verified className="inline-flex size-4 text-emerald-500" />
-                            Verified
-                          </p>
-                          <p className="flex items-center gap-x-2 tabular-nums text-muted-foreground">
-                            <User className="size-4" />
-                            {couponUserCounts[coupon.couponId] || 0} Used
-                          </p>
-                        </div>
-                        <Dialog
-                          open={isCouponDialogOpen}
-                          onOpenChange={setIsCouponDialogOpen}
-                        >
-                          <CouponDialog
-                            logoUrl={dialogInfo.logoUrl}
-                            title={coupon.title}
-                            couponCode={dialogInfo.couponCode}
-                            couponId={dialogInfo.couponId}
-                            expiry={format(coupon.due_date, "dd-MMM-yyyy")}
-                            ref_link={coupon.ref_link}
-                            handleReaction={handleReaction}
-                            userReaction={userReactions[dialogInfo.couponId]}
-                          />
-                        </Dialog>
-                        <Dialog
-                          open={isDealDialogOpen}
-                          onOpenChange={setIsDealDialogOpen}
-                        >
-                          <DealDialog
-                            logoUrl={dialogInfo.logoUrl}
-                            title={dialogInfo.title}
-                            couponId={dialogInfo.couponId}
-                            expiry={format(coupon.due_date, "dd-MMM-yyyy")}
-                            ref_link={coupon.ref_link}
-                            handleReaction={handleReaction}
-                            userReaction={userReactions[dialogInfo.couponId]}
-                          />
-                        </Dialog>
-                        {coupon.type === "Deal" && (
-                          <Button
-                            className="min-h-10 w-full text-base font-semibold"
-                            onClick={() => {
-                              handleCouponUse(coupon.couponId, "Deal", coupon);
-                            }}
-                          >
-                            Get Deal
-                          </Button>
-                        )}
-                        {coupon.type === "Coupon" && (
-                          <div
-                            className="group relative grid min-h-10 w-full min-w-28 cursor-pointer overflow-hidden rounded-md bg-app-bg-main p-2 dark:bg-app-dark sm:min-h-fit sm:min-w-40"
-                            onClick={() => {
-                              handleCouponUse(
-                                coupon.couponId,
-                                "Coupon",
-                                coupon,
-                              );
-                            }}
-                          >
-                            <p
-                              className={`place-self-end text-base font-semibold uppercase tracking-widest ${
-                                !coupon.coupon_code && "min-h-5"
-                              }`}
-                            >
-                              {coupon.coupon_code}
-                            </p>
-                            {/* wrapper */}
-                            <div className="absolute left-0 top-0 h-full w-full">
-                              <div className="polygon-clip h-full w-full rounded-md bg-app-main transition-all duration-200 ease-linear group-hover:w-11/12">
-                                <p className="absolute inset-0 grid place-items-center text-sm font-semibold text-slate-200">
-                                  Reveal code
-                                </p>
-                              </div>
-                            </div>
-                            {/* Border overlay */}
-                            <div className="pointer-events-none absolute inset-0 rounded-l-lg border-2 border-dashed border-app-main" />
-                          </div>
-                        )}
-                        <div className="flex items-center gap-x-4">
-                          <button
-                            onClick={() =>
-                              handleReaction(coupon.couponId, "LIKE")
-                            }
-                            className="flex items-center gap-x-2"
-                          >
-                            <ThumbsUp
-                              className={
-                                userReactions[coupon.couponId] === "LIKE"
-                                  ? "size-4 fill-emerald-500 text-emerald-500"
-                                  : "size-4 text-emerald-500 transition-colors duration-200 ease-linear hover:fill-emerald-500"
-                              }
-                            />
-                            <span className="text-muted-foreground">
-                              {couponReactions[coupon.couponId]?.like_count ||
-                                0}
-                            </span>
-                          </button>
-                          <button
-                            onClick={() =>
-                              handleReaction(coupon.couponId, "DISLIKE")
-                            }
-                            className="flex items-center gap-x-2"
-                          >
-                            <ThumbsDown
-                              className={
-                                userReactions[coupon.couponId] === "DISLIKE"
-                                  ? "size-4 fill-app-main text-app-main"
-                                  : "size-4 text-app-main transition-colors duration-300 ease-linear hover:fill-app-main"
-                              }
-                            />
-                            <span className="text-muted-foreground">
-                              {couponReactions[coupon.couponId]
-                                ?.dislike_count || 0}
-                            </span>
-                          </button>
-                        </div>
-                      </div>
+                  <h2 className="text-xl font-bold">About</h2>
+                  <p>{data?.description}</p>
+                </div>
+                <div className={`${commonStyles}`}>
+                  <h2 className="mb-2 text-base font-semibold">
+                    Today&apos;s Top Shopping Events
+                  </h2>
+                  {data?.coupons && data?.coupons[0] && (
+                    <p className="my-2">&bull; {data?.coupons[0].title}</p>
+                  )}
+                  {data?.coupons && data?.coupons[1] && (
+                    <p className="my-2">&bull; {data?.coupons[1].title}</p>
+                  )}
+                  <div className="flex flex-col gap-y-4 rounded-lg border-2 p-4">
+                    <div className="flex items-center justify-between ">
+                      <p>Total Coupons:</p>
+                      <p>{couponsLength}</p>
                     </div>
-                    <AccordionContent className="relative p-6">
-                      <Seperator />
-                      {coupon.description}
 
-                      <p className="absolute bottom-2 right-2 text-muted-foreground">
-                        Expires on:{" "}
-                        {format(new Date(coupon.due_date), "dd-MMM-yyy")}
+                    <div className="flex items-center justify-between">
+                      <p>Total Deals:</p>
+                      <p>{dealsLength}</p>
+                    </div>
+                    <div className={`flex items-center justify-between`}>
+                      <p className="inline-block text-center font-medium">
+                        Total Offers:
                       </p>
-                    </AccordionContent>
-                  </AccordionItem>
-                ))}
-              </Accordion>
-
-              {/* Expired Coupons */}
-              {expiredCoupons.length > 0 && (
-                <>
-                  <h2 className="mt-8 text-2xl font-bold">Expired Coupons</h2>
-                  <Accordion
-                    type="single"
-                    collapsible
-                    className="flex w-full flex-col gap-y-6 lg:w-11/12"
-                  >
-                    {expiredCoupons.map((coupon: any) => (
-                      <AccordionItem
-                        key={coupon.couponId}
-                        value={coupon.couponId.toString()}
-                        className="rounded-lg bg-popover shadow-md"
+                      <p className="ml-auto inline-block text-center">
+                        {data?.coupons?.length || 0}
+                      </p>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <p>Best Offer:</p>
+                      <p>{data?.best_offer} Off</p>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <p>Average Discount:</p>
+                      <p>{data?.average_discount}</p>
+                    </div>
+                  </div>
+                </div>
+                {/* Popular Stores */}
+                {popularData?.length > 0 && (
+                  <PopularItems
+                    title="Popular Stores"
+                    items={popularData.map((store, index) => ({
+                      id: index,
+                      name: store.name,
+                    }))}
+                    isStore
+                  />
+                )}
+                {/* Categories Browse by store */}
+                <div className={`${commonStyles}`}>
+                  <h2 className="mb-2 font-medium">Browse by Stores</h2>
+                  <div className="flex flex-wrap gap-2">
+                    {blocks.map((block) => (
+                      <Button
+                        key={block}
+                        className="!size-4 bg-neutral-500/40 text-xs font-light text-black hover:bg-neutral-500/40 dark:text-slate-200"
+                        asChild
                       >
-                        <div className="group/accordion relative flex w-full items-center justify-between gap-x-6 gap-y-4 p-6 text-muted-foreground">
-                          <div className="flex flex-col items-start gap-6 sm:flex-row sm:items-center">
-                            {/* Coupon image */}
-                            <div className="flex w-24 flex-col items-center border">
-                              <Image
-                                src={
-                                  coupon.store.logo_url ??
-                                  "https://via.placeholder.com/600x400"
-                                }
-                                width={400}
-                                height={400}
-                                className="aspect-square w-full rounded-md border object-contain grayscale"
-                                alt={data?.name + " Logo"}
-                              />
-                              <Badge
-                                className={
-                                  "grid w-full place-items-center bg-neutral-500 text-black hover:bg-neutral-500 dark:text-slate-200"
-                                }
-                              >
-                                {coupon.type}
-                              </Badge>
-                            </div>
-                            {/* Coupon title */}
-                            <div className="flex flex-col">
-                              <p className="mb-2 text-base font-semibold tracking-wide first-letter:uppercase">
-                                {coupon.title}
-                              </p>
-                              <AccordionTrigger className="[&[data-state=open]>svg]:text-white [&[data-state=open]]:bg-neutral-500 [&[data-state=open]]:text-white ">
-                                Details
-                              </AccordionTrigger>
-                            </div>
-                          </div>
+                        <Link href={`/stores?like=${block}`}>
+                          {block.charAt(0).toUpperCase()}
+                        </Link>
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+              </aside>
+              <Separator className="hidden h-auto min-h-[90vh] w-[2px] self-stretch text-muted lg:block" />
+              <main className="flex w-full flex-col items-stretch gap-y-6">
+                <div className="hidden -translate-y-2 flex-col lg:flex lg:w-11/12">
+                  <h1 className="mb-2 text-4xl font-bold">{data?.name}</h1>
+                  <Link
+                    href={"/submitacoupon"}
+                    className="flex items-center gap-x-1 place-self-end underline transition-colors duration-300 ease-linear hover:text-app-main"
+                  >
+                    Submit a coupon <Tag className="size-4" />
+                  </Link>
+                </div>
 
-                          {/* Coupon code users and bookmark */}
-                          <div className="flex flex-col items-end justify-between gap-4">
-                            <Heart
-                              className={`absolute right-2 top-2 size-4 cursor-pointer text-app-main transition-all duration-300 ease-linear ${
-                                bookmarkedCoupons.includes(coupon.couponId)
-                                  ? "fill-app-main text-app-main"
-                                  : "opacity-100 group-hover/accordion:opacity-100 lg:opacity-0 lg:hover:fill-app-main"
-                              }`}
-                              onClick={() => handleBookmark(coupon.couponId)}
+                {/* Active Coupons */}
+                <Accordion
+                  type="single"
+                  collapsible
+                  className="flex w-full flex-col gap-y-6 xl:w-11/12"
+                >
+                  {activeCoupons.map((coupon: any) => (
+                    <AccordionItem
+                      key={coupon.couponId}
+                      value={coupon.couponId}
+                      className="rounded-lg bg-popover shadow-md"
+                    >
+                      <div className="group/accordion relative flex w-full items-center justify-between gap-x-6 gap-y-4 p-6">
+                        <div className="flex flex-col items-start gap-6 sm:flex-row sm:items-center">
+                          {/* Coupon image */}
+                          <div className="flex w-24 flex-col items-center border">
+                            <Image
+                              src={
+                                coupon.store.logo_url ??
+                                "https://via.placeholder.com/600x400"
+                              }
+                              width={400}
+                              height={400}
+                              className="aspect-square w-full rounded-md border object-contain"
+                              alt={data?.name + " Logo"}
                             />
-                            <div className=" flex flex-col items-center gap-x-4 sm:flex-row">
-                              <p className="flex w-fit items-center gap-x-2 text-sm text-neutral-500">
-                                <PiSmileySadBold className="inline-flex size-4 text-app-main" />
-                                Expired
-                              </p>
-                              <p className="flex items-center gap-x-2 tabular-nums text-muted-foreground">
-                                <User className="size-4" />
-                                {couponUserCounts[coupon.couponId] || 0} Used
-                              </p>
-                            </div>
-                            <Dialog
-                              open={isCouponDialogOpen}
-                              onOpenChange={setIsCouponDialogOpen}
+                            <Badge
+                              className={cn(
+                                coupon.type === "Deal"
+                                  ? "bg-amber-500 hover:bg-amber-600"
+                                  : "bg-blue-400/50 hover:bg-blue-500/50",
+                                "grid w-full place-items-center text-black dark:text-slate-200 ",
+                              )}
                             >
-                              <CouponDialog
-                                logoUrl={dialogInfo.logoUrl}
-                                title={coupon.title}
-                                couponCode={dialogInfo.couponCode}
-                                couponId={dialogInfo.couponId}
-                                expiry={format(coupon.due_date, "dd-MMM-yyyy")}
-                                ref_link={coupon.ref_link}
-                                handleReaction={handleReaction}
-                                userReaction={
-                                  userReactions[dialogInfo.couponId]
-                                }
-                              />
-                            </Dialog>
-                            <Dialog
-                              open={isDealDialogOpen}
-                              onOpenChange={setIsDealDialogOpen}
-                            >
-                              <DealDialog
-                                logoUrl={dialogInfo.logoUrl}
-                                title={dialogInfo.title}
-                                couponId={dialogInfo.couponId}
-                                expiry={format(coupon.due_date, "dd-MMM-yyyy")}
-                                ref_link={coupon.ref_link}
-                                handleReaction={handleReaction}
-                                userReaction={
-                                  userReactions[dialogInfo.couponId]
-                                }
-                              />
-                            </Dialog>
-                            {coupon.type === "Deal" && (
-                              <Button className="min-h-10 w-full cursor-not-allowed bg-neutral-500 text-base font-semibold hover:bg-neutral-500">
-                                Get Deal
-                              </Button>
-                            )}
-                            {coupon.type === "Coupon" && (
-                              <div className="group relative grid min-h-10 w-full min-w-28 cursor-not-allowed overflow-hidden rounded-md bg-app-bg-main p-2 dark:bg-app-dark sm:min-h-fit sm:min-w-40">
-                                <p
-                                  className={`place-self-end text-base font-semibold uppercase tracking-widest ${
-                                    !coupon.coupon_code && "min-h-5"
-                                  }`}
-                                >
-                                  {coupon.coupon_code}
-                                </p>
-                                {/* wrapper */}
-                                <div className="absolute left-0 top-0 h-full w-full">
-                                  <div className="polygon-clip h-full w-full rounded-md bg-neutral-500 transition-all duration-200 ease-linear hover:bg-neutral-500 group-hover:w-11/12">
-                                    <p className="absolute inset-0 grid place-items-center text-sm font-semibold text-slate-200">
-                                      Reveal code
-                                    </p>
-                                  </div>
-                                </div>
-                                {/* Border overlay */}
-                                <div className="pointer-events-none absolute inset-0 rounded-l-lg border-2 border-dashed border-neutral-500" />
-                              </div>
-                            )}
-                            <div className="flex items-center gap-x-4">
-                              <button className="flex cursor-not-allowed items-center gap-x-2">
-                                <ThumbsUp
-                                  className={
-                                    userReactions[coupon.couponId] === "LIKE"
-                                      ? "size-4 fill-emerald-500 text-neutral-500"
-                                      : "size-4 text-neutral-500 "
-                                  }
-                                />
-                                <span className="text-muted-foreground">
-                                  {couponReactions[coupon.couponId]
-                                    ?.like_count || 0}
-                                </span>
-                              </button>
-                              <button className="flex cursor-not-allowed items-center gap-x-2">
-                                <ThumbsDown
-                                  className={
-                                    userReactions[coupon.couponId] === "DISLIKE"
-                                      ? "size-4 fill-app-main text-app-main"
-                                      : "size-4 text-neutral-500"
-                                  }
-                                />
-                                <span className="text-muted-foreground">
-                                  {couponReactions[coupon.couponId]
-                                    ?.dislike_count || 0}
-                                </span>
-                              </button>
-                            </div>
+                              {coupon.type}
+                            </Badge>
+                          </div>
+                          {/* Coupon title */}
+                          <div className="flex flex-col">
+                            <p className="mb-2 text-base font-semibold tracking-wide first-letter:uppercase">
+                              {coupon.title}
+                            </p>
+                            <AccordionTrigger className="[&[data-state=open]>svg]:text-white [&[data-state=open]]:bg-app-main [&[data-state=open]]:text-white ">
+                              Details
+                            </AccordionTrigger>
                           </div>
                         </div>
-                        <AccordionContent className="relative p-6">
-                          <Seperator />
-                          {coupon.description}
-                          <p className="absolute bottom-2 right-2 text-muted-foreground">
-                            Expired on:{" "}
-                            {format(new Date(coupon.due_date), "dd-MMM-yyy")}
-                          </p>
-                        </AccordionContent>
-                      </AccordionItem>
-                    ))}
-                  </Accordion>
-                </>
-              )}
 
-              {/* About for mobile */}
-              <div
-                className={`${commonStyles} ${data?.description ? "lg:hidden" : "hidden"}`}
-              >
-                <h2 className="text-xl font-bold">About</h2>
-                <p>{data?.description}</p>
-              </div>
+                        {/* Coupon code users and bookmark */}
+                        <div className="flex flex-col items-end justify-between gap-4">
+                          <Heart
+                            className={`absolute right-2 top-2 size-4 cursor-pointer text-app-main transition-all duration-300 ease-linear ${
+                              bookmarkedCoupons.includes(coupon.couponId)
+                                ? "fill-app-main text-app-main"
+                                : "opacity-100 group-hover/accordion:opacity-100 lg:opacity-0 lg:hover:fill-app-main"
+                            }`}
+                            onClick={() => handleBookmark(coupon.couponId)}
+                          />
+                          <div className=" flex flex-col items-center gap-x-4 sm:flex-row">
+                            <p className="flex w-fit items-center gap-x-2 text-sm text-emerald-500">
+                              <Verified className="inline-flex size-4 text-emerald-500" />
+                              Verified
+                            </p>
+                            <p className="flex items-center gap-x-2 tabular-nums text-muted-foreground">
+                              <User className="size-4" />
+                              {couponUserCounts[coupon.couponId] || 0} Used
+                            </p>
+                          </div>
+                          <Dialog
+                            open={isCouponDialogOpen}
+                            onOpenChange={setIsCouponDialogOpen}
+                          >
+                            <CouponDialog
+                              logoUrl={dialogInfo.logoUrl}
+                              title={coupon.title}
+                              couponCode={dialogInfo.couponCode}
+                              couponId={dialogInfo.couponId}
+                              expiry={format(coupon.due_date, "dd-MMM-yyyy")}
+                              ref_link={coupon.ref_link}
+                              handleReaction={handleReaction}
+                              userReaction={userReactions[dialogInfo.couponId]}
+                            />
+                          </Dialog>
+                          <Dialog
+                            open={isDealDialogOpen}
+                            onOpenChange={setIsDealDialogOpen}
+                          >
+                            <DealDialog
+                              logoUrl={dialogInfo.logoUrl}
+                              title={dialogInfo.title}
+                              couponId={dialogInfo.couponId}
+                              expiry={format(coupon.due_date, "dd-MMM-yyyy")}
+                              ref_link={coupon.ref_link}
+                              handleReaction={handleReaction}
+                              userReaction={userReactions[dialogInfo.couponId]}
+                            />
+                          </Dialog>
+                          {coupon.type === "Deal" && (
+                            <Button
+                              className="min-h-10 w-full text-base font-semibold"
+                              onClick={() => {
+                                handleCouponUse(
+                                  coupon.couponId,
+                                  "Deal",
+                                  coupon,
+                                );
+                              }}
+                            >
+                              Get Deal
+                            </Button>
+                          )}
+                          {coupon.type === "Coupon" && (
+                            <div
+                              className="group relative grid min-h-10 w-full min-w-28 cursor-pointer overflow-hidden rounded-md bg-app-bg-main p-2 dark:bg-app-dark sm:min-h-fit sm:min-w-40"
+                              onClick={() => {
+                                handleCouponUse(
+                                  coupon.couponId,
+                                  "Coupon",
+                                  coupon,
+                                );
+                              }}
+                            >
+                              <p
+                                className={`place-self-end text-base font-semibold uppercase tracking-widest ${
+                                  !coupon.coupon_code && "min-h-5"
+                                }`}
+                              >
+                                {coupon.coupon_code}
+                              </p>
+                              {/* wrapper */}
+                              <div className="absolute left-0 top-0 h-full w-full">
+                                <div className="polygon-clip h-full w-full rounded-md bg-app-main transition-all duration-200 ease-linear group-hover:w-11/12">
+                                  <p className="absolute inset-0 grid place-items-center text-sm font-semibold text-slate-200">
+                                    Get code
+                                  </p>
+                                </div>
+                              </div>
+                              {/* Border overlay */}
+                              <div className="pointer-events-none absolute inset-0 rounded-l-lg border-2 border-dashed border-app-main" />
+                            </div>
+                          )}
+                          <div className="flex items-center gap-x-4">
+                            <button
+                              onClick={() =>
+                                handleReaction(coupon.couponId, "LIKE")
+                              }
+                              className="flex items-center gap-x-2"
+                            >
+                              <ThumbsUp
+                                className={
+                                  userReactions[coupon.couponId] === "LIKE"
+                                    ? "size-4 fill-emerald-500 text-emerald-500"
+                                    : "size-4 text-emerald-500 transition-colors duration-200 ease-linear hover:fill-emerald-500"
+                                }
+                              />
+                              <span className="text-muted-foreground">
+                                {couponReactions[coupon.couponId]?.like_count ||
+                                  0}
+                              </span>
+                            </button>
+                            <button
+                              onClick={() =>
+                                handleReaction(coupon.couponId, "DISLIKE")
+                              }
+                              className="flex items-center gap-x-2"
+                            >
+                              <ThumbsDown
+                                className={
+                                  userReactions[coupon.couponId] === "DISLIKE"
+                                    ? "size-4 fill-app-main text-app-main"
+                                    : "size-4 text-app-main transition-colors duration-300 ease-linear hover:fill-app-main"
+                                }
+                              />
+                              <span className="text-muted-foreground">
+                                {couponReactions[coupon.couponId]
+                                  ?.dislike_count || 0}
+                              </span>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <AccordionContent className="relative p-6">
+                        <Seperator />
+                        {coupon.description}
 
-              {/* Popular Stores for mobile */}
-              {popularData?.length > 0 && (
-                <PopularItems
-                  title="Popular Stores"
-                  items={popularData.map((store, index) => ({
-                    id: index,
-                    name: store.name,
-                  }))}
-                  isHidden
-                  isStore
-                />
-              )}
-            </main>
+                        <p className="absolute bottom-2 right-2 text-muted-foreground">
+                          Expires on:{" "}
+                          {format(new Date(coupon.due_date), "dd-MMM-yyy")}
+                        </p>
+                      </AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
+
+                {/* Expired Coupons */}
+                {expiredCoupons.length > 0 && (
+                  <>
+                    <h2 className="mt-8 text-2xl font-bold">Expired Coupons</h2>
+                    <Accordion
+                      type="single"
+                      collapsible
+                      className="flex w-full flex-col gap-y-6 lg:w-11/12"
+                    >
+                      {expiredCoupons.map((coupon: any) => (
+                        <AccordionItem
+                          key={coupon.couponId}
+                          value={coupon.couponId.toString()}
+                          className="rounded-lg bg-popover shadow-md"
+                        >
+                          <div className="group/accordion relative flex w-full items-center justify-between gap-x-6 gap-y-4 p-6 text-muted-foreground">
+                            <div className="flex flex-col items-start gap-6 sm:flex-row sm:items-center">
+                              {/* Coupon image */}
+                              <div className="flex w-24 flex-col items-center border">
+                                <Image
+                                  src={
+                                    coupon.store.logo_url ??
+                                    "https://via.placeholder.com/600x400"
+                                  }
+                                  width={400}
+                                  height={400}
+                                  className="aspect-square w-full rounded-md border object-contain grayscale"
+                                  alt={data?.name + " Logo"}
+                                />
+                                <Badge
+                                  className={
+                                    "grid w-full place-items-center bg-neutral-500 text-black hover:bg-neutral-500 dark:text-slate-200"
+                                  }
+                                >
+                                  {coupon.type}
+                                </Badge>
+                              </div>
+                              {/* Coupon title */}
+                              <div className="flex flex-col">
+                                <p className="mb-2 text-base font-semibold tracking-wide first-letter:uppercase">
+                                  {coupon.title}
+                                </p>
+                                <AccordionTrigger className="[&[data-state=open]>svg]:text-white [&[data-state=open]]:bg-neutral-500 [&[data-state=open]]:text-white ">
+                                  Details
+                                </AccordionTrigger>
+                              </div>
+                            </div>
+
+                            {/* Coupon code users and bookmark */}
+                            <div className="flex flex-col items-end justify-between gap-4">
+                              <Heart
+                                className={`absolute right-2 top-2 size-4 cursor-pointer text-app-main transition-all duration-300 ease-linear ${
+                                  bookmarkedCoupons.includes(coupon.couponId)
+                                    ? "fill-app-main text-app-main"
+                                    : "opacity-100 group-hover/accordion:opacity-100 lg:opacity-0 lg:hover:fill-app-main"
+                                }`}
+                                onClick={() => handleBookmark(coupon.couponId)}
+                              />
+                              <div className=" flex flex-col items-center gap-x-4 sm:flex-row">
+                                <p className="flex w-fit items-center gap-x-2 text-sm text-neutral-500">
+                                  <PiSmileySadBold className="inline-flex size-4 text-app-main" />
+                                  Expired
+                                </p>
+                                <p className="flex items-center gap-x-2 tabular-nums text-muted-foreground">
+                                  <User className="size-4" />
+                                  {couponUserCounts[coupon.couponId] || 0} Used
+                                </p>
+                              </div>
+                              <Dialog
+                                open={isCouponDialogOpen}
+                                onOpenChange={setIsCouponDialogOpen}
+                              >
+                                <CouponDialog
+                                  logoUrl={dialogInfo.logoUrl}
+                                  title={coupon.title}
+                                  couponCode={dialogInfo.couponCode}
+                                  couponId={dialogInfo.couponId}
+                                  expiry={format(
+                                    coupon.due_date,
+                                    "dd-MMM-yyyy",
+                                  )}
+                                  ref_link={coupon.ref_link}
+                                  handleReaction={handleReaction}
+                                  userReaction={
+                                    userReactions[dialogInfo.couponId]
+                                  }
+                                />
+                              </Dialog>
+                              <Dialog
+                                open={isDealDialogOpen}
+                                onOpenChange={setIsDealDialogOpen}
+                              >
+                                <DealDialog
+                                  logoUrl={dialogInfo.logoUrl}
+                                  title={dialogInfo.title}
+                                  couponId={dialogInfo.couponId}
+                                  expiry={format(
+                                    coupon.due_date,
+                                    "dd-MMM-yyyy",
+                                  )}
+                                  ref_link={coupon.ref_link}
+                                  handleReaction={handleReaction}
+                                  userReaction={
+                                    userReactions[dialogInfo.couponId]
+                                  }
+                                />
+                              </Dialog>
+                              {coupon.type === "Deal" && (
+                                <Button className="min-h-10 w-full cursor-not-allowed bg-neutral-500 text-base font-semibold hover:bg-neutral-500">
+                                  Get Deal
+                                </Button>
+                              )}
+                              {coupon.type === "Coupon" && (
+                                <div className="group relative grid min-h-10 w-full min-w-28 cursor-not-allowed overflow-hidden rounded-md bg-app-bg-main p-2 dark:bg-app-dark sm:min-h-fit sm:min-w-40">
+                                  <p
+                                    className={`place-self-end text-base font-semibold uppercase tracking-widest ${
+                                      !coupon.coupon_code && "min-h-5"
+                                    }`}
+                                  >
+                                    {coupon.coupon_code}
+                                  </p>
+                                  {/* wrapper */}
+                                  <div className="absolute left-0 top-0 h-full w-full">
+                                    <div className="polygon-clip h-full w-full rounded-md bg-neutral-500 transition-all duration-200 ease-linear hover:bg-neutral-500 group-hover:w-11/12">
+                                      <p className="absolute inset-0 grid place-items-center text-sm font-semibold text-slate-200">
+                                        Get code
+                                      </p>
+                                    </div>
+                                  </div>
+                                  {/* Border overlay */}
+                                  <div className="pointer-events-none absolute inset-0 rounded-l-lg border-2 border-dashed border-neutral-500" />
+                                </div>
+                              )}
+                              <div className="flex items-center gap-x-4">
+                                <button className="flex cursor-not-allowed items-center gap-x-2">
+                                  <ThumbsUp
+                                    className={
+                                      userReactions[coupon.couponId] === "LIKE"
+                                        ? "size-4 fill-emerald-500 text-neutral-500"
+                                        : "size-4 text-neutral-500 "
+                                    }
+                                  />
+                                  <span className="text-muted-foreground">
+                                    {couponReactions[coupon.couponId]
+                                      ?.like_count || 0}
+                                  </span>
+                                </button>
+                                <button className="flex cursor-not-allowed items-center gap-x-2">
+                                  <ThumbsDown
+                                    className={
+                                      userReactions[coupon.couponId] ===
+                                      "DISLIKE"
+                                        ? "size-4 fill-app-main text-app-main"
+                                        : "size-4 text-neutral-500"
+                                    }
+                                  />
+                                  <span className="text-muted-foreground">
+                                    {couponReactions[coupon.couponId]
+                                      ?.dislike_count || 0}
+                                  </span>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                          <AccordionContent className="relative p-6">
+                            <Seperator />
+                            {coupon.description}
+                            <p className="absolute bottom-2 right-2 text-muted-foreground">
+                              Expired on:{" "}
+                              {format(new Date(coupon.due_date), "dd-MMM-yyy")}
+                            </p>
+                          </AccordionContent>
+                        </AccordionItem>
+                      ))}
+                    </Accordion>
+                  </>
+                )}
+
+                {/* About for mobile */}
+                <div
+                  className={`${commonStyles} ${data?.description ? "lg:hidden" : "hidden"}`}
+                >
+                  <h2 className="text-xl font-bold">About</h2>
+                  <p>{data?.description}</p>
+                </div>
+
+                {/* Popular Stores for mobile */}
+                {popularData?.length > 0 && (
+                  <PopularItems
+                    title="Popular Stores"
+                    items={popularData.map((store, index) => ({
+                      id: index,
+                      name: store.name,
+                    }))}
+                    isHidden
+                    isStore
+                  />
+                )}
+              </main>
+            </div>
           </section>
         </div>
       )}

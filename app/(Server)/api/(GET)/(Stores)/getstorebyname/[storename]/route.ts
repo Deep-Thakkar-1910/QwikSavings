@@ -41,6 +41,17 @@ export async function GET(
             storeId: true,
           },
         },
+        _count: {
+          select: {
+            coupons: {
+              where: {
+                due_date: {
+                  gt: new Date(),
+                },
+              },
+            },
+          },
+        },
       },
     });
 

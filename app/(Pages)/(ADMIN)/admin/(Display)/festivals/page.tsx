@@ -72,7 +72,7 @@ const AllFestivalsPage = () => {
     <section className="mt-10 flex w-full flex-col items-center">
       <h1 className="mb-6 text-2xl font-bold">Festivals</h1>
       <StoreFilterForCoupon like={like} setLike={setLike} stores={stores} />
-      <div className="my-6 flex w-full flex-col items-center justify-between px-4 sm:flex-row sm:px-8 lg:px-16">
+      <div className="my-6 flex w-full flex-col items-center justify-between px-4 sm:flex-row sm:px-8 lg:px-12">
         <Link
           href={"/admin/createfestival"}
           className="flex items-center gap-x-1 text-app-main underline transition-transform duration-200 ease-linear hover:scale-105"

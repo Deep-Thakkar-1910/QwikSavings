@@ -37,11 +37,11 @@ const FeaturedStoreSection = () => {
   }, []);
   return (
     <section className={`${featuredData[0] ? "" : "hidden"} py-6`}>
-      <div className=" mx-auto flex w-full max-w-screen-xl flex-col items-center sm:flex-row sm:justify-between sm:px-10 lg:items-start lg:px-16 xl:px-6 2xl:px-0">
+      <div className=" mx-auto flex w-full max-w-screen-xl flex-col items-center sm:flex-row sm:justify-between sm:px-10 lg:items-start lg:px-12 xl:px-6 2xl:px-0">
         <h2 className="mb-6 text-2xl font-bold lg:text-3xl">Featured Stores</h2>
         <Link
           href={"/stores"}
-          className="transition-all duration-300 ease-linear hover:text-app-main hover:underline sm:-translate-y-3 lg:translate-y-0"
+          className="font-medium transition-all duration-300 ease-linear hover:text-app-main hover:underline sm:-translate-y-3 lg:translate-y-0"
         >
           View all stores
         </Link>
@@ -57,24 +57,33 @@ const FeaturedStoreSection = () => {
       ) : (
         <div
           className={cn(
-            `flex w-full max-w-screen-xl flex-nowrap items-center justify-center gap-8 overflow-x-auto py-4 sm:justify-start sm:px-10 lg:mx-auto lg:px-16 xl:px-6 2xl:px-0`,
+            `flex w-full max-w-screen-xl flex-nowrap items-center justify-start gap-8 overflow-x-auto px-4 py-4 sm:justify-start sm:px-10 lg:mx-auto lg:px-12 xl:px-6 2xl:px-0`,
           )}
         >
           {featuredData.map((store) => {
             return (
-              <Link
-                key={store.storeId}
-                href={`/stores/${store.name}`}
-                className="shrink-0 rounded-full bg-popover p-2 shadow-md transition-all duration-200 ease-linear hover:scale-110 hover:shadow-lg"
-              >
-                <Image
-                  src={store.logo_url ?? "https://via.placeholder.com/600x400"}
-                  alt={store.storeId}
-                  width={400}
-                  height={400}
-                  className="size-24 cursor-pointer rounded-full transition-all duration-200 ease-linear  md:size-28"
-                />
-              </Link>
+              <div className="flex shrink-0 flex-col items-center gap-y-2">
+                <Link
+                  key={store.storeId}
+                  href={`/stores/${store.name}`}
+                  className="rounded-full bg-popover p-2 shadow-md transition-all duration-200 ease-linear hover:scale-105 hover:shadow-lg lg:ml-2"
+                >
+                  <div>
+                    <Image
+                      src={
+                        store.logo_url ?? "https://via.placeholder.com/600x400"
+                      }
+                      alt={store.storeId}
+                      width={400}
+                      height={400}
+                      className="size-24 cursor-pointer rounded-full transition-all duration-200 ease-linear  md:size-28"
+                    />
+                  </div>
+                </Link>
+                <span className="translate-x-1 tabular-nums text-muted-foreground">
+                  {store._count.coupons} Coupons
+                </span>
+              </div>
             );
           })}
         </div>

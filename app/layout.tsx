@@ -6,11 +6,11 @@ import { Toaster } from "@/components/ui/toaster";
 import Footer from "./(Pages)/_PageComponents/Footer";
 import AdminNavbar from "./(Pages)/(ADMIN)/_Admincomponents/AdminNavbar";
 import ScrollToTop from "./(Pages)/_PageComponents/ScrollToTop";
-import { Open_Sans } from "next/font/google";
+import { Poppins } from "next/font/google";
 
-const openSans = Open_Sans({
+const poppins = Poppins({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
 });
 export const metadata: Metadata = {
   metadataBase: new URL("https://qwiksavings.com"),
@@ -32,7 +32,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${openSans.className} bg-app-bg-main text-black dark:bg-app-dark dark:text-slate-200`}
+        className={`${poppins.className} bg-app-bg-main text-black dark:bg-app-dark dark:text-slate-200`}
       >
         <Providers>
           <AdminNavbar />

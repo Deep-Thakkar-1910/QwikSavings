@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const OurCodesPage = () => {
   return (
-    <section className=" mx-auto mb-10 flex w-full max-w-screen-xl flex-col items-center gap-6 px-4 font-medium sm:px-8 lg:items-start lg:px-16 xl:px-2 2xl:px-0">
+    <section className=" mx-auto mb-10 flex w-full max-w-screen-xl flex-col items-center gap-6 px-4 font-medium sm:px-8 lg:items-start lg:px-12 xl:px-2 2xl:px-0">
       {/* Our Codes Intro Div */}
       <div className="w-full rounded-lg bg-popover p-10">
         <h1 className="text-center text-xl font-bold sm:text-2xl lg:text-start">

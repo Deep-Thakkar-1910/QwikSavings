@@ -4,8 +4,8 @@ import { Metadata } from "next";
 
 // Metadata for the page
 export const metadata: Metadata = {
-  title: "Sign in",
-  description: "Signin page for Qwik Saving",
+  title: "Login",
+  description: "Login page for Qwik Saving",
 };
 
 const SignInPage = ({
@@ -15,7 +15,7 @@ const SignInPage = ({
 }) => {
   return (
     <article className="flex flex-col items-center gap-4">
-      <h1 className="text-4xl md:text-5xl">Signin</h1>
+      <h1 className="text-4xl md:text-5xl">Login</h1>
       <p className="text-sm">
         Are you new here?{" "}
         <span className="cursor-pointer text-app-main underline">
@@ -27,13 +27,13 @@ const SignInPage = ({
         <SignInForm callbackUrl={searchParams.callbackUrl} />
         {/* Terms and conditions statement */}
         <p className="mx-auto mt-4 text-center text-xs font-semibold">
-          By continuing, I agree to Qwik Saving’s{" "}
+          By continuing, I agree to Qwik Saving&apos;s{" "}
           <span className="cursor-pointer text-sm font-bold underline">
-            <Link href={"/"}>Privacy Policy</Link>
+            <Link href={"/privacypolicy"}>Privacy Policy</Link>
           </span>{" "}
           and{" "}
           <span className="cursor-pointer text-sm font-bold underline">
-            <Link href={"/"}>Terms of Use</Link>
+            <Link href={"/termsofservice"}>Terms of Service</Link>
           </span>
         </p>
       </div>

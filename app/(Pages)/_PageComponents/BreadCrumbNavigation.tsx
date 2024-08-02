@@ -18,7 +18,7 @@ const BreadCrumbNavigation = () => {
   const decodedPaths = paths.map((path) => decodeURIComponent(path));
 
   return (
-    <Breadcrumb className="my-4 place-self-start px-8 lg:px-16">
+    <Breadcrumb className="my-4 place-self-start px-8 lg:px-12">
       <BreadcrumbList className="flex gap-0 text-xs text-black dark:text-slate-200 sm:text-sm lg:text-base">
         <BreadcrumbItem>
           <BreadcrumbLink href="/">

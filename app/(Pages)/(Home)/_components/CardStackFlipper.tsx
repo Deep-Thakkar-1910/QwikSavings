@@ -121,14 +121,20 @@ const CardStackFlipper = ({ autoplay }: { autoplay: boolean }) => {
               <div className="mt-5 flex flex-col items-center justify-center gap-5 xl:mt-8">
                 <div className="flex flex-col items-center gap-y-4">
                   <Image
-                    src={card.store.logo_url}
+                    src={
+                      card.store.logo_url ??
+                      "https://via.placeholder.com/600x400"
+                    }
                     alt={`Logo ${i}`}
                     width={1920}
                     height={1080}
                     className="size-12 rounded-full"
                   />
                   <Image
-                    src={card.flipperImage_url}
+                    src={
+                      card.flipperImage_url ??
+                      "https://via.placeholder.com/600x400"
+                    }
                     alt={`Logo ${i}`}
                     width={1920}
                     height={1080}

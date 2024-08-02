@@ -75,7 +75,7 @@ const AllCouponsPage = () => {
         stores={stores}
         isCoupon
       />
-      <div className="my-6 flex w-full flex-col items-center justify-between px-4 sm:flex-row sm:px-8 lg:px-16">
+      <div className="my-6 flex w-full flex-col items-center justify-between px-4 sm:flex-row sm:px-8 lg:px-12">
         <Link
           href={"/admin/createcoupon"}
           className="flex items-center gap-x-1 text-app-main underline transition-transform duration-200 ease-linear hover:scale-105"

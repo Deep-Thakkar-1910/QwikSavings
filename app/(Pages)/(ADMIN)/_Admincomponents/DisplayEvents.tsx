@@ -51,7 +51,7 @@ const DisplayEvents = ({
     }
   };
   return (
-    <div className="my-6 min-h-[40vh] w-full bg-popover p-8 lg:px-16 lg:py-16">
+    <div className="my-6 min-h-[40vh] w-full bg-popover p-8 lg:px-12 lg:py-16">
       {isLoading ? (
         <div className="flex h-[40vh] w-full items-center justify-center">
           <Spinner />
