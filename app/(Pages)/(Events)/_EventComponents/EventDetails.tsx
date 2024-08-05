@@ -632,7 +632,7 @@ const EventDetails = () => {
                           </Dialog>
                           {coupon.type === "Deal" && (
                             <Button
-                              className="min-h-10 w-full text-base font-semibold"
+                              className="min-h-10 w-full text-base font-semibold text-white dark:text-slate-200"
                               onClick={() => {
                                 handleCouponUse(
                                   coupon.couponId,
@@ -665,7 +665,7 @@ const EventDetails = () => {
                               {/* wrapper */}
                               <div className="absolute left-0 top-0 h-full w-full">
                                 <div className="polygon-clip h-full w-full rounded-md bg-app-main transition-all duration-200 ease-linear group-hover:w-11/12">
-                                  <p className="absolute inset-0 grid place-items-center text-sm font-semibold text-slate-200">
+                                  <p className="absolute inset-0 grid place-items-center text-sm font-semibold text-white dark:text-slate-200">
                                     Get code
                                   </p>
                                 </div>
@@ -753,7 +753,7 @@ const EventDetails = () => {
                                   }
                                   width={400}
                                   height={400}
-                                  className="aspect-square w-full rounded-md border object-contain grayscale"
+                                  className="aspect-square w-full rounded-md border object-contain p-1 grayscale"
                                   alt={data?.name + " Logo"}
                                 />
                                 <Badge

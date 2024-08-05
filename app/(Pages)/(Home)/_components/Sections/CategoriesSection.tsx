@@ -174,7 +174,7 @@ const CategoriesSection: React.FC<CategoriesSectionProps> = ({
               {coupon.type === "Deal" && (
                 <Button
                   size={"lg"}
-                  className="w-full bg-app-main text-base font-semibold"
+                  className="w-full bg-app-main text-base font-semibold text-white dark:text-slate-200"
                   onClick={() => handleCouponUse(coupon)}
                 >
                   Get Deal
@@ -182,7 +182,7 @@ const CategoriesSection: React.FC<CategoriesSectionProps> = ({
               )}
               {coupon.type === "Coupon" && (
                 <div
-                  className="group relative grid min-h-10 w-full min-w-28 cursor-pointer overflow-hidden rounded-md bg-app-bg-main p-2 dark:bg-app-dark sm:min-h-fit sm:min-w-40"
+                  className="group relative grid min-h-10 w-full min-w-28 cursor-pointer overflow-hidden rounded-md bg-app-bg-main p-2 text-white dark:bg-app-dark dark:text-slate-200 sm:min-h-fit sm:min-w-40"
                   onClick={() => {
                     handleCouponUse(coupon);
                   }}

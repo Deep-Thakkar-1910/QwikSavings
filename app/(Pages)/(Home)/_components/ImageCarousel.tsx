@@ -53,7 +53,7 @@ const ImageCarousel = () => {
 
   return (
     <Carousel
-      className="w-full lg:w-2/3 xl:w-3/4 2xl:-translate-x-8"
+      className="w-full lg:ml-4 lg:w-2/3 xl:ml-0 xl:w-[72%] xl:-translate-x-2 2xl:w-[79%] 2xl:-translate-x-8"
       opts={{ loop: true }}
       plugins={[plugin.current]}
       onMouseEnter={() => plugin.current.stop()}

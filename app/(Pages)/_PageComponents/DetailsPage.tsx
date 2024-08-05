@@ -701,7 +701,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
           <main className="flex w-full flex-col items-stretch gap-y-4">
             <div className="hidden -translate-y-2 flex-col lg:flex">
               <h1 className="mb-2 text-4xl font-bold">{detailsData.name}</h1>
-              {initialCoupon && (
+              {isStore && initialCoupon && (
                 <p className=" font-semibold">
                   Best {detailsData._count.coupons} Offers Last Validated On{" "}
                   {format(initialCoupon, "MMMM dd, yyyy")}
@@ -849,7 +849,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                         </Dialog>
                         {coupon.type === "Deal" && (
                           <Button
-                            className="min-h-10 w-full bg-app-main  text-base font-semibold"
+                            className="min-h-10 w-full bg-app-main text-base font-semibold text-white dark:text-slate-200"
                             onClick={() => {
                               handleCouponUse(coupon.couponId, "Deal", coupon);
                             }}
@@ -878,7 +878,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                             {/* wrapper */}
                             <div className="absolute left-0 top-0 h-full w-full">
                               <div className="polygon-clip h-full w-full rounded-md bg-app-main transition-all duration-200 ease-linear group-hover:w-11/12">
-                                <p className="absolute inset-0 grid place-items-center text-sm font-semibold text-slate-200">
+                                <p className="absolute inset-0 grid place-items-center text-sm font-semibold text-white dark:text-slate-200">
                                   Get code
                                 </p>
                               </div>
