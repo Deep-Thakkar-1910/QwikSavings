@@ -100,13 +100,13 @@ const DisplayItems = <
       ) : (
         Object.keys(groupedData).map((char) => (
           <div key={char} className="my-4 first:mt-0 last:mb-0">
-            <div className="w-full border-0 border-muted-foreground pb-3 pt-2 sm:border sm:px-4">
+            <div className="w-full border border-muted-foreground px-2 pb-3 pt-2 sm:px-4">
               <h2 className="mb-2 text-2xl sm:text-3xl">{char}</h2>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
                 {groupedData[char].map((item) => (
                   <div
                     key={item.storeId ?? item.categoryId}
-                    className="group relative flex max-w-80 cursor-pointer flex-col items-center rounded-lg border bg-gray-300/70 p-3 shadow-md transition-transform duration-300 ease-linear hover:scale-105 dark:bg-app-dark-navbar sm:max-w-full lg:max-w-full"
+                    className="group relative flex max-w-80 cursor-pointer flex-col items-center rounded-lg border bg-gray-300/70 p-3 shadow-md transition-transform duration-300 ease-linear dark:bg-app-dark-navbar sm:max-w-full sm:hover:scale-105 lg:max-w-full"
                   >
                     <div className="flex w-full items-center justify-start gap-x-3 ">
                       <Link

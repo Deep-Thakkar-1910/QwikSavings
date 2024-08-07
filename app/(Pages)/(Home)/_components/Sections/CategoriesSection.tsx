@@ -135,11 +135,11 @@ const CategoriesSection: React.FC<CategoriesSectionProps> = ({
                   className="aspect-video h-36 rounded-tl-lg rounded-tr-lg object-cover lg:h-28 xl:h-32"
                 />
               ) : (
-                <div className="aspect-video h-36 bg-popover" />
+                <div className="aspect-video h-36 bg-popover lg:h-28 xl:h-32" />
               )}
             </div>
 
-            <div className="flex w-full flex-col gap-y-1 p-4 lg:gap-y-0 xl:gap-y-1">
+            <div className="flex w-full flex-col gap-y-0 p-4 xl:gap-y-1">
               <div className="flex w-full items-center justify-between ">
                 <div className="-translate-x-3 -translate-y-2/3 rounded-full bg-white p-1 dark:bg-app-dark-navbar">
                   {coupon.store.logo_url ? (
@@ -149,14 +149,14 @@ const CategoriesSection: React.FC<CategoriesSectionProps> = ({
                         alt="Brand logo"
                         width={400}
                         height={400}
-                        className="size-20 cursor-pointer rounded-full object-cover"
+                        className="size-14 cursor-pointer rounded-full object-cover"
                       />
                     </Link>
                   ) : (
                     <div className="size-14 rounded-full bg-popover" />
                   )}
                 </div>
-                <Badge className=" -translate-y-2/3 bg-blue-400/50 text-black hover:bg-blue-400/50 dark:text-slate-200">
+                <Badge className="-translate-y-2/3 bg-blue-400/50 text-black hover:bg-blue-400/50 dark:text-slate-200">
                   VERIFIED
                 </Badge>
               </div>
@@ -174,7 +174,7 @@ const CategoriesSection: React.FC<CategoriesSectionProps> = ({
               {coupon.type === "Deal" && (
                 <Button
                   size={"lg"}
-                  className="w-full bg-app-main text-base font-semibold text-white dark:text-slate-200"
+                  className="w-full rounded-xl bg-app-main text-base font-semibold text-white dark:text-slate-200"
                   onClick={() => handleCouponUse(coupon)}
                 >
                   Get Deal
@@ -196,14 +196,14 @@ const CategoriesSection: React.FC<CategoriesSectionProps> = ({
                   </p>
                   {/* wrapper */}
                   <div className="absolute left-0 top-0 h-full w-full">
-                    <div className="polygon-clip h-full w-full rounded-md bg-app-main transition-all duration-200 ease-linear group-hover:w-11/12">
+                    <div className="polygon-clip h-full w-full rounded-xl bg-app-main transition-all duration-200 ease-linear group-hover:w-11/12">
                       <p className="absolute inset-0 grid place-items-center text-sm font-semibold text-slate-200">
                         Get code
                       </p>
                     </div>
                   </div>
                   {/* Border overlay */}
-                  <div className="pointer-events-none absolute inset-0 rounded-l-lg border-2 border-dashed border-app-main" />
+                  <div className="pointer-events-none absolute inset-0 rounded-xl border-2 border-dashed border-app-main" />
                 </div>
               )}
             </div>

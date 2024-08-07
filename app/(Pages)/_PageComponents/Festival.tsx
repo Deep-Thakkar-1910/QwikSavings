@@ -3,6 +3,7 @@ import { ArrowRight, Gift, XIcon } from "lucide-react";
 import Link from "next/link";
 import { useActiveFestival } from "@/hooks/useFestivalActive";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 const FestivalStrip: React.FC = () => {
   const { data, isActive, error, fetchActiveFestival, onSetInactive } =
@@ -22,7 +23,13 @@ const FestivalStrip: React.FC = () => {
       )}
     >
       <div className="ml-auto flex w-full items-center justify-center gap-x-4">
-        <Gift className="hidden size-12 py-2 text-app-main hover:animate-shake sm:block" />
+        <Image
+          src={"/Festival/Gift.webp"}
+          alt="Gift Vector"
+          width={400}
+          height={400}
+          className="hidden h-10 w-16 text-app-main transition-transform duration-200 ease-linear sm:block"
+        />
         <p className="text-xs font-semibold first-letter:uppercase sm:text-base">
           {data.title}
         </p>

@@ -62,9 +62,11 @@ const FeaturedStoreSection = () => {
         >
           {featuredData.map((store) => {
             return (
-              <div className="flex shrink-0 flex-col items-center gap-y-2">
+              <div
+                className="flex shrink-0 flex-col items-center gap-y-2"
+                key={store.storeId}
+              >
                 <Link
-                  key={store.storeId}
                   href={`/stores/${store.name}`}
                   className="rounded-full bg-popover p-2 shadow-md transition-all duration-200 ease-linear hover:scale-105 hover:shadow-lg lg:ml-2"
                 >

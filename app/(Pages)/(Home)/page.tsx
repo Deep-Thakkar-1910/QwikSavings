@@ -12,6 +12,10 @@ export default async function Home() {
       <IntroSection />
       <FeaturedStoreSection />
       <CategoriesSection title="Clothing Offers" fetchFrom="Clothings" />
+      <CategoriesSection
+        title="Health and Fitness"
+        fetchFrom="Health & Fitness Offers"
+      />
       {/* How to use Qwik Savings section */}
       <HowToUse />
       <CategoriesSection title="Travel Offers" fetchFrom="Travels" />

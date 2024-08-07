@@ -23,21 +23,21 @@ const CardStackFlipper = ({ autoplay }: { autoplay: boolean }) => {
 
   const handleCardGetClick = async (coupon: any) => {
     try {
-      console.log(coupon);
       // Update coupon user count
       await axios.post("/updatecouponusercount", { couponId: coupon.couponId });
 
       // Encode coupon data
       const encodedCoupon = encodeURIComponent(
         JSON.stringify({
+          isCouponFromHome: true,
           couponId: coupon.couponId,
           coupon_code: coupon.coupon_code,
           logo: coupon.store.logo_url,
           type: coupon.type,
           title: coupon.title,
+          ref_link: coupon.ref_link,
         }),
       );
-
       // Construct store URL with encoded coupon data
       const storeUrl = `/stores/${coupon.store.name}?coupon=${encodedCoupon}`;
 

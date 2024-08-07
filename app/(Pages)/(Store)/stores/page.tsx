@@ -5,9 +5,11 @@ import FilterBlocks from "../../_PageComponents/FilterBlocks";
 import { useFilter } from "@/hooks/useFilter";
 import DisplayItems from "../../_PageComponents/DisplayComponents";
 import CustomPaginationComponent from "../../_PageComponents/CustomPaginationComponent";
+import { useActiveFestival } from "@/hooks/useFestivalActive";
 
 const StoresPageContent = () => {
   const searchParams = useSearchParams();
+  const isActiveFestival = useActiveFestival((state) => state.isActive);
   const initialLike = searchParams.get("like") || "";
   const { setPage, setLike, data, page, like, isLoading, totalCount, error } =
     useFilter("stores", initialLike);
@@ -23,7 +25,9 @@ const StoresPageContent = () => {
   }, [searchParams, setLike]);
 
   return (
-    <section className="mb-6 w-full">
+    <section
+      className={`mb-6 mt-2 w-full lg:mt-0 ${isActiveFestival ? "translate-y-10 transition-transform duration-200 ease-linear" : "translate-y-0 transition-transform duration-200 ease-linear"}`}
+    >
       <h1 className="mb-4 ml-8 text-2xl font-semibold lg:ml-12">
         All Stores & Brands A-Z
       </h1>

@@ -11,7 +11,7 @@ const IntroSection = () => {
       {/* Image slider and flipper div */}
       <div
         className={cn(
-          "mb-5 flex min-h-[10vh] max-w-screen-xl items-start px-8 lg:min-h-[40vh] lg:gap-x-8 lg:px-12 xl:px-8 2xl:gap-x-0",
+          "mb-5 mt-4 flex min-h-[10vh] max-w-screen-xl items-start px-8 lg:mt-0 lg:min-h-[40vh] lg:gap-x-8 lg:px-12 xl:px-8 2xl:gap-x-0",
           isActive
             ? "mb-14 translate-y-10 transition-transform duration-200 ease-linear"
             : "translate-y-0 transition-transform duration-200 ease-linear",

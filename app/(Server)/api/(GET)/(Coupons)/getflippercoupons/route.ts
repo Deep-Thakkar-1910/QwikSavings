@@ -14,6 +14,7 @@ export async function GET() {
         couponId: true,
         flipperImage_url: true,
         title: true,
+        ref_link: true,
         isVerified: true,
         user_count: true,
         type: true,

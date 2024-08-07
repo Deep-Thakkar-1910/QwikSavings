@@ -8,13 +8,13 @@ import Link from "next/link";
 const EventDisplay = () => {
   const { data, error, isLoading } = useGetEvents();
   return (
-    <div className="mt-6 min-h-[40vh] w-full rounded-md bg-[#f2f0e6] p-4 dark:bg-accent">
+    <div className="mt-6 min-h-[30vh] w-full rounded-md bg-[#f2f0e6] p-4 dark:bg-accent">
       {isLoading ? (
-        <div className="flex h-[40vh] w-full items-center justify-center">
+        <div className="flex h-[30vh] w-full items-center justify-center">
           <Spinner />
         </div>
       ) : error ? (
-        <div className="flex h-[40vh] w-full items-center justify-center">
+        <div className="flex h-[30vh] w-full items-center justify-center">
           <p>{error}</p>
         </div>
       ) : (
@@ -37,7 +37,10 @@ const EventDisplay = () => {
               ) : (
                 <div className="aspect-video size-32" />
               )}
-              <Button className="w-full rounded-lg bg-app-main" asChild>
+              <Button
+                className="w-full rounded-lg bg-app-main hover:bg-app-main"
+                asChild
+              >
                 <Link href={`/events/${event.name}`}>Reveal Deals</Link>
               </Button>
             </div>

@@ -14,9 +14,10 @@ export const GET = async (req: Request) => {
         { status: 400 },
       );
     }
+    const decodedCategoryName = decodeURIComponent(categoryName);
 
     const category = await db.category.findUnique({
-      where: { name: categoryName },
+      where: { name: decodedCategoryName },
       select: {
         categoryId: true,
         coupons: {

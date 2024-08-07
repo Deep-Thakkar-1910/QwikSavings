@@ -33,11 +33,13 @@ const ImageCarousel = () => {
       // Encode coupon data
       const encodedCoupon = encodeURIComponent(
         JSON.stringify({
+          isCouponFromHome: true,
           couponId: coupon.couponId,
           coupon_code: coupon.coupon_code,
           logo: coupon.store.logo_url,
           type: coupon.type,
           title: coupon.title,
+          ref_link: coupon.ref_link,
         }),
       );
 

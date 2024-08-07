@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/accordion";
 import { cn } from "@/lib/utils";
 import {
+  ChevronRight,
   Heart,
   Info,
   Lightbulb,
@@ -47,6 +48,7 @@ import {
 } from "@/components/ui/dialog";
 import { Link as ScrollLink } from "react-scroll";
 import { toast } from "@/components/ui/use-toast";
+import { useActiveFestival } from "@/hooks/useFestivalActive";
 
 interface DetailsPageProps {
   fetchFrom: "store" | "category";
@@ -73,6 +75,9 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
   const [selectedTab, setSelectedTab] = useState<"all" | "coupon" | "deal">(
     "all",
   );
+
+  // state for active festival
+  const isActiveFestival = useActiveFestival((state) => state.isActive);
 
   const blocks = "abcdefghijklmnopqrstuvwxyz".split("");
   // to get state of bookmarked coupons
@@ -203,8 +208,6 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
     }
   };
 
-  console.log(detailsData);
-
   // NOTE: this is for handling tab change
   const handleTabChange = (tab: "all" | "coupon" | "deal") => {
     setSelectedTab(tab);
@@ -256,12 +259,12 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
     }
   }, [detailsData]);
 
-  // NOTE: this is for handling coupon use
+  // NOTE: This is for handling coupon use
   useEffect(() => {
     const encodedCouponData = searchParams.get("coupon");
 
     if (encodedCouponData) {
-      let couponData;
+      let couponData: Record<string, any>;
       try {
         // First, try to parse it as JSON directly
         couponData = JSON.parse(encodedCouponData);
@@ -278,6 +281,12 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
         ref_link: couponData.ref_link || "",
       });
 
+      // Remove the coupon parameter from the URL
+      const newUrl = new URL(window.location.href);
+      newUrl.searchParams.delete("coupon");
+      window.history.replaceState({}, "", newUrl);
+
+      // Open the appropriate dialog
       if (couponData.type === "Deal") {
         setIsDealDialogOpen(true);
       } else {
@@ -285,10 +294,12 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
         setIsCouponDialogOpen(true);
       }
 
-      // Remove the coupon parameter from the URL
-      const newUrl = new URL(window.location.href);
-      newUrl.searchParams.delete("coupon");
-      window.history.replaceState({}, "", newUrl);
+      // If it's a coupon from home, also open the new window
+      if (couponData.isCouponFromHome) {
+        setTimeout(() => {
+          window.open(couponData.ref_link, "_blank");
+        }, 2000);
+      }
     }
   }, [searchParams, detailsData?.logo_url]);
 
@@ -455,7 +466,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
     <>
       {/* topBar for mobile */}
       <div
-        className={`flex w-full ${isStore ? "items-start" : "items-center"} gap-x-2 rounded-lg bg-popover p-4 px-4 sm:items-center sm:gap-x-4 sm:px-8 lg:hidden lg:px-12`}
+        className={`flex w-full ${isStore ? "items-start" : "items-center"} ${isActiveFestival ? "translate-y-8 transition-transform duration-200 ease-linear" : "translate-y-0 transition-transform duration-200 ease-linear"} gap-x-2 rounded-lg bg-popover p-4 px-4 sm:items-center sm:gap-x-4 sm:px-8 lg:hidden lg:px-12`}
       >
         <Image
           src={detailsData?.logo_url ?? "https://via.placeholder.com/600x400"}
@@ -465,7 +476,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
           className="size-32 rounded-full object-cover"
         />
         <div className="flex flex-col items-start gap-y-4">
-          <h1 className="text-center text-xl font-bold sm:text-2xl">
+          <h1 className="ml-6 text-center text-xl font-bold sm:text-2xl">
             {detailsData.name}
           </h1>
           {detailsData.title && (
@@ -491,7 +502,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
         <section className="relative mb-6 flex w-full flex-col items-start gap-6 px-8 pt-10 lg:flex-row lg:px-12">
           {/* Edit link only visbible to admins */}
           {session?.user.role === "admin" && (
-            <div className="absolute right-4 top-0 flex flex-col gap-y-2 place-self-end lg:right-20">
+            <div className="absolute right-4 top-0 flex flex-col gap-y-2 place-self-end lg:right-32 2xl:right-44">
               <Link
                 href={editLink}
                 className="underline transition-colors duration-300 ease-linear hover:text-app-main"
@@ -521,7 +532,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                   variant={"ghost"}
                 >
                   <Link href={`${detailsData.ref_link}`} target="_blank">
-                    Visit the {detailsData.name} Store
+                    Visit {detailsData.name} Store
                   </Link>
                 </Button>
                 <StarRating storeId={detailsData.storeId} />
@@ -538,9 +549,8 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
             </div>
 
             <div className={`${commonStyles}`}>
-              <h2 className="mb-2 text-base font-semibold">
-                Today&apos;s Top {isStore ? `${detailsData.name}` : ""} Coupon
-                Codes
+              <h2 className="mb-2 text-lg font-semibold">
+                Today&apos;s Top {isStore ? `${detailsData.name}` : ""} Codes
               </h2>
               {detailsData?.coupons && detailsData?.coupons[0] && (
                 <p className="my-2">&bull; {detailsData.coupons[0].title}</p>
@@ -679,12 +689,12 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
             {/* Categories Browse by store */}
             {!isStore && (
               <div className={`${commonStyles}`}>
-                <h2 className="mb-2 font-medium">Browse by Stores</h2>
+                <h2 className="mb-2 font-semibold">Browse by Stores</h2>
                 <div className="flex flex-wrap gap-2">
                   {blocks.map((block) => (
                     <Button
                       key={block}
-                      className="!size-4 bg-neutral-500/40 text-xs font-normal text-black hover:bg-neutral-500/40 dark:text-slate-200"
+                      className="!size-4 bg-neutral-500/40 text-xs font-semibold text-black hover:bg-neutral-500/40 dark:text-slate-200"
                       asChild
                     >
                       <Link href={`/stores?like=${block}`}>
@@ -744,7 +754,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
               </div>
               <Link
                 href={"/submitacoupon"}
-                className="flex items-center gap-x-1 place-self-end underline transition-colors duration-300 ease-linear hover:text-app-main"
+                className="hidden items-center gap-x-1 place-self-end underline transition-colors duration-300 ease-linear hover:text-app-main lg:flex"
               >
                 Submit a coupon <Tag className="size-4" />
               </Link>
@@ -762,40 +772,41 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                     value={coupon.couponId}
                     className="rounded-lg bg-popover shadow-md"
                   >
-                    <div className="group/accordion relative flex w-full items-center justify-between gap-x-6 gap-y-4 p-6">
-                      <div className="flex flex-col items-start gap-6 sm:flex-row sm:items-center">
+                    <div className="group/accordion relative flex w-full items-center justify-between gap-x-6 gap-y-4 px-2 py-2 sm:px-6 sm:py-4">
+                      <div className="flex items-start gap-x-2 sm:gap-x-6">
                         {/* Coupon image */}
-                        <div className="flex w-24 flex-col items-center border">
-                          <Image
-                            src={
-                              coupon.store.logo_url ??
-                              "https://via.placeholder.com/600x400"
-                            }
-                            width={400}
-                            height={400}
-                            className="aspect-square w-full rounded-md object-contain"
-                            alt={detailsData.name + " Logo"}
-                          />
-                          <Badge
-                            className={cn(
-                              coupon.type === "Deal"
-                                ? "bg-amber-500 hover:bg-amber-600"
-                                : "bg-blue-400/50 hover:bg-blue-500/50",
-                              "grid w-full place-items-center text-black dark:text-slate-200 ",
-                            )}
-                          >
-                            {coupon.type === "Coupon" ? "Code" : "Deal"}
-                          </Badge>
-                        </div>
-                        {/* Coupon title */}
-                        <div className="flex flex-col">
-                          <p className="mb-2 text-base font-semibold tracking-wide first-letter:uppercase">
-                            {coupon.title}
-                          </p>
-                          <AccordionTrigger className="[&[data-state=open]>svg]:text-white [&[data-state=open]]:bg-app-main [&[data-state=open]]:text-white ">
+                        <div className="flex flex-col items-start gap-y-2">
+                          <div className="flex w-16 flex-col items-center border sm:w-24">
+                            <Image
+                              src={
+                                coupon.store.logo_url ??
+                                "https://via.placeholder.com/600x400"
+                              }
+                              width={400}
+                              height={400}
+                              className="aspect-square w-full rounded-full object-cover p-2"
+                              alt={detailsData.name + " Logo"}
+                            />
+                            <Badge
+                              className={cn(
+                                coupon.type === "Deal"
+                                  ? "bg-amber-500 hover:bg-amber-600"
+                                  : "bg-blue-400/50 hover:bg-blue-500/50",
+                                "grid w-full place-items-center text-black dark:text-slate-200 ",
+                              )}
+                            >
+                              {coupon.type === "Coupon" ? "Code" : "Deal"}
+                            </Badge>
+                          </div>
+                          <AccordionTrigger className="px-1 text-sm sm:px-3 sm:text-base [&[data-state=open]>svg]:text-white [&[data-state=open]]:bg-app-main [&[data-state=open]]:text-white ">
                             Details
                           </AccordionTrigger>
                         </div>
+                        {/* Coupon title */}
+
+                        <p className="max-w-36 translate-y-4 font-semibold tracking-tight first-letter:uppercase sm:max-w-full sm:translate-y-6 sm:tracking-wide">
+                          {coupon.title}
+                        </p>
                       </div>
 
                       {/* Coupon code users and bookmark */}
@@ -808,12 +819,15 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                           }`}
                           onClick={() => handleBookmark(coupon.couponId)}
                         />
-                        <div className=" flex flex-col items-center gap-x-4 sm:flex-row">
-                          <p className="flex w-fit items-center gap-x-2 text-sm text-emerald-500">
+                        <p className="absolute bottom-2 right-2 text-sm tabular-nums text-muted-foreground sm:hidden">
+                          {couponUserCounts[coupon.couponId] || 0} Used
+                        </p>
+                        <div className="hidden items-center gap-x-2 sm:flex">
+                          <p className="flex w-fit items-center gap-x-1 text-sm text-emerald-500">
                             <Verified className="inline-flex size-4 text-emerald-500" />
                             Verified
                           </p>
-                          <p className="flex items-center gap-x-2 tabular-nums text-muted-foreground">
+                          <p className="flex items-center gap-x-1 text-sm tabular-nums text-muted-foreground lg:text-base">
                             <User className="size-4" />
                             {couponUserCounts[coupon.couponId] || 0} Used
                           </p>
@@ -848,46 +862,74 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                           />
                         </Dialog>
                         {coupon.type === "Deal" && (
-                          <Button
-                            className="min-h-10 w-full bg-app-main text-base font-semibold text-white dark:text-slate-200"
-                            onClick={() => {
-                              handleCouponUse(coupon.couponId, "Deal", coupon);
-                            }}
-                          >
-                            Get Deal
-                          </Button>
+                          <>
+                            <Button
+                              className="hidden min-h-10 w-full bg-app-main text-base font-semibold text-white dark:text-slate-200 sm:block"
+                              onClick={() => {
+                                handleCouponUse(
+                                  coupon.couponId,
+                                  "Deal",
+                                  coupon,
+                                );
+                              }}
+                            >
+                              Get Deal
+                            </Button>
+                            <ChevronRight
+                              onClick={() => {
+                                handleCouponUse(
+                                  coupon.couponId,
+                                  "Deal",
+                                  coupon,
+                                );
+                              }}
+                              className="size-6  text-app-main  sm:hidden"
+                            />
+                          </>
                         )}
                         {coupon.type === "Coupon" && (
-                          <div
-                            className="group relative grid min-h-10 w-full min-w-28 cursor-pointer overflow-hidden rounded-md bg-app-bg-main p-2 dark:bg-app-dark sm:min-h-fit sm:min-w-40"
-                            onClick={() => {
-                              handleCouponUse(
-                                coupon.couponId,
-                                "Coupon",
-                                coupon,
-                              );
-                            }}
-                          >
-                            <p
-                              className={`place-self-end text-base font-semibold uppercase tracking-widest ${
-                                !coupon.coupon_code && "min-h-5"
-                              }`}
+                          <>
+                            <div
+                              className="group relative hidden min-h-10 w-full min-w-28 cursor-pointer overflow-hidden rounded-xl bg-app-bg-main p-2 dark:bg-app-dark sm:grid sm:min-h-fit sm:min-w-40"
+                              onClick={() => {
+                                handleCouponUse(
+                                  coupon.couponId,
+                                  "Coupon",
+                                  coupon,
+                                );
+                              }}
                             >
-                              {coupon.coupon_code}
-                            </p>
-                            {/* wrapper */}
-                            <div className="absolute left-0 top-0 h-full w-full">
-                              <div className="polygon-clip h-full w-full rounded-md bg-app-main transition-all duration-200 ease-linear group-hover:w-11/12">
-                                <p className="absolute inset-0 grid place-items-center text-sm font-semibold text-white dark:text-slate-200">
-                                  Get code
-                                </p>
+                              <p
+                                className={`place-self-end text-base font-semibold uppercase tracking-widest ${
+                                  !coupon.coupon_code && "min-h-5"
+                                }`}
+                              >
+                                {coupon.coupon_code}
+                              </p>
+                              {/* wrapper */}
+                              <div className="absolute left-0 top-0 h-full w-full">
+                                <div className="polygon-clip h-full w-full rounded-xl bg-app-main transition-all duration-200 ease-linear group-hover:w-11/12">
+                                  <p className="absolute inset-0 grid place-items-center text-sm font-semibold text-white dark:text-slate-200">
+                                    Get code
+                                  </p>
+                                </div>
                               </div>
+                              {/* Border overlay */}
+                              <div className="pointer-events-none absolute inset-0 rounded-xl border-2 border-dashed border-app-main" />
                             </div>
-                            {/* Border overlay */}
-                            <div className="pointer-events-none absolute inset-0 rounded-l-lg border-2 border-dashed border-app-main" />
-                          </div>
+                            <ChevronRight
+                              onClick={() => {
+                                handleCouponUse(
+                                  coupon.couponId,
+                                  "Deal",
+                                  coupon,
+                                );
+                              }}
+                              className="size-6  text-app-main  sm:hidden"
+                            />
+                          </>
                         )}
-                        <div className="flex items-center gap-x-6 place-self-center">
+                        <div className="hidden items-center gap-x-6 place-self-center sm:flex">
                           <button
                             onClick={() =>
                               handleReaction(coupon.couponId, "LIKE")
@@ -927,7 +969,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                         </div>
                       </div>
                     </div>
-                    <AccordionContent className="relative p-6">
+                    <AccordionContent className="relative px-2 pb-5 pt-2 sm:px-6 sm:pb-6 sm:pt-4">
                       <Seperator />
                       <p className="mb-2">{coupon.description}</p>
 
@@ -954,37 +996,37 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                       value={coupon.couponId}
                       className="rounded-lg bg-popover shadow-md"
                     >
-                      <div className="group/accordion relative flex w-full items-center justify-between gap-x-6 gap-y-4 p-6 text-muted-foreground">
-                        <div className="flex flex-col items-start gap-6 sm:flex-row sm:items-center">
+                      <div className="group/accordion relative flex w-full items-center justify-between gap-x-6 gap-y-4 p-6 px-2 text-muted-foreground sm:px-6">
+                        <div className="flex items-start gap-6 sm:flex-row sm:items-center">
                           {/* Coupon image */}
-                          <div className="flex w-24 flex-col items-center border">
-                            <Image
-                              src={
-                                coupon.store.logo_url ??
-                                "https://via.placeholder.com/600x400"
-                              }
-                              width={400}
-                              height={400}
-                              className="aspect-square w-full rounded-md object-contain grayscale"
-                              alt={detailsData.name + " Logo"}
-                            />
-                            <Badge
-                              className={
-                                "grid w-full place-items-center bg-neutral-500 text-black hover:bg-neutral-500 dark:text-slate-200"
-                              }
-                            >
-                              {coupon.type === "Coupon" ? "Code" : "Deal"}
-                            </Badge>
-                          </div>
-                          {/* Coupon title */}
-                          <div className="flex flex-col">
-                            <p className="mb-2 text-base font-semibold tracking-wide first-letter:uppercase">
-                              {coupon.title}
-                            </p>
-                            <AccordionTrigger className="[&[data-state=open]>svg]:text-white [&[data-state=open]]:bg-neutral-500 [&[data-state=open]]:text-white ">
+                          <div className="flex flex-col items-start gap-y-2 sm:items-center">
+                            <div className="flex w-16 flex-col items-center border sm:w-24">
+                              <Image
+                                src={
+                                  coupon.store.logo_url ??
+                                  "https://via.placeholder.com/600x400"
+                                }
+                                width={400}
+                                height={400}
+                                className="aspect-square w-full rounded-full object-cover p-2 grayscale"
+                                alt={detailsData.name + " Logo"}
+                              />
+                              <Badge
+                                className={
+                                  "grid w-full place-items-center bg-neutral-500 text-black hover:bg-neutral-500 dark:text-slate-200"
+                                }
+                              >
+                                {coupon.type === "Coupon" ? "Code" : "Deal"}
+                              </Badge>
+                            </div>
+                            <AccordionTrigger className="px-1 sm:px-3 [&[data-state=open]>svg]:text-white [&[data-state=open]]:bg-neutral-500 [&[data-state=open]]:text-white">
                               Details
                             </AccordionTrigger>
                           </div>
+                          {/* Coupon title */}
+                          <p className="mb-2 max-w-36 break-words text-base font-semibold tracking-wide first-letter:uppercase sm:max-w-full">
+                            {coupon.title}
+                          </p>
                         </div>
 
                         {/* Coupon code users and bookmark */}
@@ -997,43 +1039,52 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                             }`}
                             onClick={() => handleBookmark(coupon.couponId)}
                           />
-                          <div className=" flex flex-col items-center gap-x-4 sm:flex-row">
-                            <p className="flex w-fit items-center gap-x-2 text-sm">
+                          <p className="absolute bottom-2 right-2 text-sm tabular-nums text-muted-foreground sm:hidden">
+                            {couponUserCounts[coupon.couponId] || 0} Used
+                          </p>
+                          <div className=" hidden items-center gap-x-2 sm:flex sm:flex-row">
+                            <p className="flex w-fit items-center gap-x-1 text-sm">
                               <PiSmileySadBold className="inline-flex size-4 text-app-main" />
                               Expired
                             </p>
-                            <p className="flex items-center gap-x-2 tabular-nums text-muted-foreground">
+                            <p className="flex items-center gap-x-1 text-sm tabular-nums text-muted-foreground">
                               <User className="size-4" />
                               {couponUserCounts[coupon.couponId] || 0} Used
                             </p>
                           </div>
                           {coupon.type === "Deal" && (
-                            <Button className="min-h-10 w-full cursor-not-allowed bg-neutral-500 text-base font-semibold hover:bg-neutral-500">
-                              Get Deal
-                            </Button>
+                            <>
+                              <Button className="hidden min-h-10 w-full cursor-not-allowed rounded-xl bg-neutral-500 text-base font-semibold hover:bg-neutral-500 sm:block">
+                                Get Deal
+                              </Button>
+                              <ChevronRight className="size-6 w-full cursor-not-allowed text-neutral-500  sm:hidden" />
+                            </>
                           )}
                           {coupon.type === "Coupon" && (
-                            <div className="group relative grid min-h-10 w-full min-w-28 cursor-not-allowed overflow-hidden rounded-md bg-app-bg-main p-2 dark:bg-app-dark sm:min-h-fit sm:min-w-40">
-                              <p
-                                className={`place-self-end text-base font-semibold uppercase tracking-widest ${
-                                  !coupon.coupon_code && "min-h-5"
-                                }`}
-                              >
-                                {coupon.coupon_code}
-                              </p>
-                              {/* wrapper */}
-                              <div className="absolute left-0 top-0 h-full w-full">
-                                <div className="polygon-clip h-full w-full rounded-md bg-neutral-500 transition-all duration-200 ease-linear hover:bg-neutral-500 group-hover:w-11/12">
-                                  <p className="absolute inset-0 grid place-items-center text-sm font-semibold text-slate-200">
-                                    Get code
-                                  </p>
+                            <>
+                              <div className="group relative hidden min-h-10 w-full min-w-28 cursor-not-allowed overflow-hidden rounded-md bg-app-bg-main p-2 dark:bg-app-dark sm:grid sm:min-h-fit sm:min-w-40">
+                                <p
+                                  className={`place-self-end text-base font-semibold uppercase tracking-widest ${
+                                    !coupon.coupon_code && "min-h-5"
+                                  }`}
+                                >
+                                  {coupon.coupon_code}
+                                </p>
+                                {/* wrapper */}
+                                <div className="absolute left-0 top-0 h-full w-full">
+                                  <div className="polygon-clip h-full w-full rounded-xl bg-neutral-500 transition-all duration-200 ease-linear hover:bg-neutral-500 group-hover:w-11/12">
+                                    <p className="absolute inset-0 grid place-items-center text-sm font-semibold text-slate-200">
+                                      Get code
+                                    </p>
+                                  </div>
                                 </div>
+                                {/* Border overlay */}
+                                <div className="pointer-events-none absolute inset-0 rounded-xl border-2 border-dashed border-neutral-500" />
                               </div>
-                              {/* Border overlay */}
-                              <div className="pointer-events-none absolute inset-0 rounded-l-lg border-2 border-dashed border-neutral-500" />
-                            </div>
+                              <ChevronRight className="size-6 w-full cursor-not-allowed text-neutral-500  sm:hidden" />
+                            </>
                           )}
-                          <div className="flex items-center gap-x-6 place-self-center">
+                          <div className="hidden items-center gap-x-6 place-self-center sm:flex">
                             <button className="flex items-center gap-x-2">
                               <ThumbsUp
                                 className={
@@ -1230,7 +1281,7 @@ const PopularItems: React.FC<PopularItemProps> = ({
               }
               key={item.id}
             >
-              <Badge className="bg-neutral-500/40 font-normal text-black hover:bg-neutral-500/40 dark:text-slate-200">
+              <Badge className="bg-neutral-500/40 font-medium text-black hover:bg-neutral-500/40 dark:text-slate-200">
                 {item.name}
               </Badge>
             </Link>
@@ -1269,7 +1320,7 @@ const CouponDialog: React.FC<{
   };
 
   return (
-    <DialogContent className="w-11/12 sm:max-w-[425px]">
+    <DialogContent className="w-11/12 sm:w-full">
       <DialogHeader>
         <DialogTitle>Coupon Details</DialogTitle>
       </DialogHeader>
@@ -1352,7 +1403,7 @@ const DealDialog: React.FC<{
   userReaction,
 }) => {
   return (
-    <DialogContent className="w-11/12 sm:max-w-[425px]">
+    <DialogContent className="w-11/12 sm:w-full">
       <DialogHeader>
         <DialogTitle>About Deal</DialogTitle>
       </DialogHeader>

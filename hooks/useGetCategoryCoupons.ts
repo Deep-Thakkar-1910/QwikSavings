@@ -26,7 +26,7 @@ const useGetCategoryCoupons = (categoryName: string) => {
       setError("");
       try {
         const response = await axios(
-          `/getcouponsbycategory?categoryName=${categoryName}`,
+          `/getcouponsbycategory?categoryName=${encodeURIComponent(categoryName)}`,
         );
 
         if (response.data.success) {
