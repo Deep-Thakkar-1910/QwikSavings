@@ -57,7 +57,7 @@ const FeaturedStoreSection = () => {
       ) : (
         <div
           className={cn(
-            `flex w-full max-w-screen-xl flex-nowrap items-center justify-start gap-8 overflow-x-auto px-4 py-4 sm:justify-start sm:px-10 lg:mx-auto lg:px-12 xl:px-6 2xl:px-0`,
+            `flex w-full max-w-screen-xl flex-nowrap items-center justify-start gap-6 overflow-x-auto px-4 py-4 sm:justify-start sm:px-10 lg:mx-auto lg:px-12 xl:px-6 2xl:px-0`,
           )}
         >
           {featuredData.map((store) => {

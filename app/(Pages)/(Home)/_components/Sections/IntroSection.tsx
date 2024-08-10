@@ -7,18 +7,20 @@ import { cn } from "@/lib/utils";
 const IntroSection = () => {
   const isActive = useActiveFestival((state) => state.isActive);
   return (
-    <section className="flex w-full flex-col items-center" id="Intro">
+    <section className="flex w-full flex-col items-center">
       {/* Image slider and flipper div */}
       <div
         className={cn(
-          "mb-5 mt-4 flex min-h-[10vh] max-w-screen-xl items-start px-8 lg:mt-0 lg:min-h-[40vh] lg:gap-x-8 lg:px-12 xl:px-8 2xl:gap-x-0",
+          "relative mt-4 flex min-h-[10vh] max-w-screen-xl items-start justify-between px-8 lg:mt-0 lg:min-h-[35vh] lg:px-12 xl:px-8 2xl:gap-x-0",
           isActive
             ? "mb-14 translate-y-10 transition-transform duration-200 ease-linear"
             : "translate-y-0 transition-transform duration-200 ease-linear",
         )}
       >
         <ImageCarousel />
-        <CardStackFlipper autoplay />
+        <div className="absolute right-0 top-0 p-4">
+          <CardStackFlipper autoplay />
+        </div>
       </div>
       {/* Intro heading div */}
       <div className="flex w-full flex-col items-center justify-center bg-popover p-4 ">

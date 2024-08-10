@@ -164,8 +164,11 @@ const CategoriesSection: React.FC<CategoriesSectionProps> = ({
                 {coupon.title}
               </p>
               <div className="flex w-full -translate-y-4 items-center justify-between text-muted-foreground">
-                <Link href={`/stores/${coupon.store.name}`}>
-                  <span>{coupon.store.name}</span>
+                <Link
+                  href={`/stores/${coupon.store.name}`}
+                  className="flex items-start gap-x-4"
+                >
+                  <span className="w-3/4 break-words">{coupon.store.name}</span>
                 </Link>
                 <span>
                   {couponUserCounts[coupon.couponId] || coupon.user_count} Used

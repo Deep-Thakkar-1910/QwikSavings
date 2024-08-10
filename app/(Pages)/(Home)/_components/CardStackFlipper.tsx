@@ -79,8 +79,8 @@ const CardStackFlipper = ({ autoplay }: { autoplay: boolean }) => {
 
   if (!data || data.length === 0 || error) return null;
   return (
-    <div className={`relative hidden h-fit w-fit lg:inline-block`}>
-      <AnimatePresence mode="sync" initial>
+    <AnimatePresence mode="sync" initial>
+      <div className={`relative hidden h-fit w-fit p-2 lg:inline-flex`}>
         {memoData.map((card, i) => {
           const factor = size - 1 - map.get(i);
           return (
@@ -111,7 +111,7 @@ const CardStackFlipper = ({ autoplay }: { autoplay: boolean }) => {
                 transition: { duration: 0.8, ease: "easeInOut" },
               }}
               className={cn(
-                `absolute h-80 w-60 rounded-xl bg-cover bg-no-repeat transition-colors duration-700 ease-in-out `,
+                `absolute -left-[19rem] -top-4 h-72 w-60 rounded-xl bg-cover bg-no-repeat transition-colors duration-700 ease-in-out xl:-left-72 xl:h-80 2xl:-left-64 `,
                 i === 0 && "bg-[#fff2cf]",
                 i === 1 && "bg-[#e1b9ea]",
                 i === 2 && "bg-[#b9e1ea]",
@@ -164,8 +164,8 @@ const CardStackFlipper = ({ autoplay }: { autoplay: boolean }) => {
             </motion.div>
           );
         })}
-      </AnimatePresence>
-    </div>
+      </div>
+    </AnimatePresence>
   );
 };
 

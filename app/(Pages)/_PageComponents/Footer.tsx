@@ -26,7 +26,7 @@ const Footer = () => {
             you a gift card so you can treat yourself on us.
           </p>
         </div>
-        <div className="flex flex-col items-center gap-y-4 lg:translate-y-12">
+        <div className="flex flex-col items-center gap-y-4 lg:translate-y-12 lg:items-start">
           <h3 className="text-xl font-bold">Useful Reads</h3>
           {FooterNavlinks["Useful Reads"].map((link) => (
             <Link
@@ -38,7 +38,7 @@ const Footer = () => {
             </Link>
           ))}
         </div>
-        <div className="flex flex-col items-center gap-y-4 lg:translate-y-12">
+        <div className="flex flex-col items-center gap-y-4 lg:translate-y-12 lg:items-start">
           <h3 className="text-xl font-bold">Legal</h3>
           {FooterNavlinks.Legal.map((link) => (
             <Link

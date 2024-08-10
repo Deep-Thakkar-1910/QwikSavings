@@ -553,12 +553,16 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                 Today&apos;s Top {isStore ? `${detailsData.name}` : ""} Codes
               </h2>
               {detailsData?.coupons && detailsData?.coupons[0] && (
-                <p className="my-2">&bull; {detailsData.coupons[0].title}</p>
+                <p className="my-2 font-semibold">
+                  &bull; {detailsData.coupons[0].title}
+                </p>
               )}
               {detailsData?.coupons && detailsData?.coupons[1] && (
-                <p className="my-2">&bull; {detailsData.coupons[1].title}</p>
+                <p className="my-2 font-semibold">
+                  &bull; {detailsData.coupons[1].title}
+                </p>
               )}
-              <div className="flex flex-col gap-y-4 rounded-lg border-2 p-4">
+              <div className="flex flex-col gap-y-4 rounded-lg border-2 p-4 px-3">
                 <div className="flex items-center justify-between ">
                   <p>Total Coupons:</p>
                   <p>{couponsLength}</p>
@@ -569,9 +573,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                   <p>{dealsLength}</p>
                 </div>
                 <div className={`flex items-center justify-between`}>
-                  <p className="inline-block text-center font-medium">
-                    Total Offers:
-                  </p>
+                  <p className="inline-block text-center">Total Offers:</p>
                   <p className="ml-auto inline-block text-center">
                     {detailsData.coupons?.length || 0}
                   </p>
@@ -772,11 +774,11 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                     value={coupon.couponId}
                     className="rounded-lg bg-popover shadow-md"
                   >
-                    <div className="group/accordion relative flex w-full items-center justify-between gap-x-6 gap-y-4 px-2 py-2 sm:px-6 sm:py-4">
+                    <div className="group/accordion relative flex w-full items-center justify-between gap-x-6 gap-y-4 px-2 pb-2 pt-3 sm:px-6">
                       <div className="flex items-start gap-x-2 sm:gap-x-6">
                         {/* Coupon image */}
                         <div className="flex flex-col items-start gap-y-2">
-                          <div className="flex w-16 flex-col items-center border sm:w-24">
+                          <div className="flex w-16 flex-col items-center border sm:w-20">
                             <Image
                               src={
                                 coupon.store.logo_url ??
@@ -812,7 +814,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                       {/* Coupon code users and bookmark */}
                       <div className="flex flex-col items-end justify-between gap-4">
                         <Heart
-                          className={`absolute right-2 top-2 size-4 cursor-pointer text-app-main transition-all duration-300 ease-linear ${
+                          className={`absolute right-1 top-1 size-4 cursor-pointer text-app-main transition-all duration-300 ease-linear ${
                             bookmarkedCoupons.includes(coupon.couponId)
                               ? "fill-app-main text-app-main"
                               : "opacity-100 group-hover/accordion:opacity-100 lg:opacity-0 lg:hover:fill-app-main"
@@ -996,11 +998,11 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                       value={coupon.couponId}
                       className="rounded-lg bg-popover shadow-md"
                     >
-                      <div className="group/accordion relative flex w-full items-center justify-between gap-x-6 gap-y-4 p-6 px-2 text-muted-foreground sm:px-6">
-                        <div className="flex items-start gap-6 sm:flex-row sm:items-center">
+                      <div className="group/accordion relative flex w-full items-center justify-between gap-x-6 gap-y-4 px-2 pb-2 pt-3 text-muted-foreground sm:px-6">
+                        <div className="flex items-start gap-6 sm:flex-row">
                           {/* Coupon image */}
                           <div className="flex flex-col items-start gap-y-2 sm:items-center">
-                            <div className="flex w-16 flex-col items-center border sm:w-24">
+                            <div className="flex w-16 flex-col items-center border sm:w-20">
                               <Image
                                 src={
                                   coupon.store.logo_url ??
@@ -1024,7 +1026,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                             </AccordionTrigger>
                           </div>
                           {/* Coupon title */}
-                          <p className="mb-2 max-w-36 break-words text-base font-semibold tracking-wide first-letter:uppercase sm:max-w-full">
+                          <p className="mb-2 max-w-36 translate-y-4 break-words text-base font-semibold tracking-wide first-letter:uppercase sm:max-w-full">
                             {coupon.title}
                           </p>
                         </div>
@@ -1032,7 +1034,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                         {/* Coupon code users and bookmark */}
                         <div className="flex flex-col items-end justify-between gap-4">
                           <Heart
-                            className={`absolute right-2 top-2 size-4 cursor-pointer text-app-main transition-all duration-300 ease-linear ${
+                            className={`absolute right-1 top-1 size-4 cursor-pointer text-app-main transition-all duration-300 ease-linear ${
                               bookmarkedCoupons.includes(coupon.couponId)
                                 ? "fill-app-main text-app-main"
                                 : "opacity-100 group-hover/accordion:opacity-100 lg:opacity-0 lg:hover:fill-app-main"
