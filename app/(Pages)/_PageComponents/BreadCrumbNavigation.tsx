@@ -10,15 +10,18 @@ import {
 import { cn } from "@/lib/utils";
 import { Home, ChevronRight } from "lucide-react";
 import { usePathname } from "next/navigation";
+import { useActiveFestival } from "@/hooks/useFestivalActive";
 
 const BreadCrumbNavigation = () => {
   // getting all the url paths and converting them to array
   const paths = usePathname().split("/").slice(1);
-
+  const isActiveFestival = useActiveFestival((state) => state.isActive);
   const decodedPaths = paths.map((path) => decodeURIComponent(path));
 
   return (
-    <Breadcrumb className="my-4 hidden place-self-start px-8 lg:block lg:px-12">
+    <Breadcrumb
+      className={`my-4 hidden place-self-start px-8 lg:block lg:px-12 ${isActiveFestival ? "mb-4 translate-y-10 transition-transform duration-200 ease-linear" : "mb-0 translate-y-0 transition-transform duration-200 ease-linear"}`}
+    >
       <BreadcrumbList className="flex gap-0 text-xs text-black dark:text-slate-200 sm:text-sm lg:text-base">
         <BreadcrumbItem>
           <BreadcrumbLink href="/">

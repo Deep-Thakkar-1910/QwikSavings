@@ -6,11 +6,11 @@ import Link from "next/link";
 
 const page = () => {
   return (
-    <section className="mb-10 flex w-full flex-col items-start gap-y-4 lg:gap-y-6">
-      <div className="mx-auto mt-6 w-full max-w-screen-xl p-10 px-4 sm:px-8 sm:text-2xl lg:px-12 xl:px-8 2xl:px-0">
+    <section className="mb-10 flex w-full flex-col items-start">
+      <div className="mx-auto mt-6 w-full max-w-screen-xl px-4 sm:px-8 sm:text-2xl lg:px-12 xl:px-8 2xl:px-0">
         <h1 className="text-xl font-bold sm:text-2xl">About Qwik Savings</h1>
       </div>
-      <div className="mx-auto w-full max-w-screen-xl px-4 text-lg sm:px-8 sm:text-2xl lg:px-12 xl:px-8 2xl:px-0">
+      <div className="mx-auto w-full max-w-screen-xl px-4 text-lg sm:px-8 sm:text-xl lg:px-12 xl:px-8 2xl:px-0">
         <Image
           className="h-auto w-full lg:float-right lg:ml-10 lg:w-1/2"
           src={"/AboutusPage/AboutUs.jpg"}

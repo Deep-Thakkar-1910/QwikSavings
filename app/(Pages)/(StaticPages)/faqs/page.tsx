@@ -16,7 +16,9 @@ const FAQsPage = () => {
   return (
     <section className="mb-10 flex w-full flex-col items-center gap-y-4 lg:items-start lg:gap-y-6">
       <div className="mx-auto mt-2 w-full max-w-screen-xl px-4 sm:px-8 sm:text-2xl lg:mt-0 lg:px-12 2xl:px-0">
-        <h1 className="text-xl font-bold sm:text-2xl">FAQs</h1>
+        <h1 className="text-xl font-bold sm:text-2xl">
+          Frequently Asked Questions
+        </h1>
       </div>
       <div className="mx-auto w-full max-w-screen-xl px-4 text-lg sm:px-8 sm:text-2xl lg:px-12 xl:px-8 2xl:px-0">
         <div className="flex flex-col items-center lg:flex-row lg:justify-around">
@@ -63,13 +65,12 @@ const FAQsPage = () => {
             <AccordionItem
               value={faq.id.toString()}
               key={faq.id}
-              className="w-full rounded-md bg-popover px-4 py-10"
+              className="w-full rounded-md px-4 pt-10"
             >
-              <AccordionTrigger className="w-full text-start text-xl font-bold sm:text-2xl [&>.faq]:size-8">
+              <AccordionTrigger className="w-full text-start text-xl font-semibold sm:text-2xl [&>.faq]:size-8">
                 {faq.q}
               </AccordionTrigger>
-              <AccordionContent className="px-6 py-1 text-sm font-medium sm:text-base">
-                <Seperator />
+              <AccordionContent className="px-4 pt-4 text-sm font-medium sm:text-base">
                 {faq.a}
               </AccordionContent>
             </AccordionItem>

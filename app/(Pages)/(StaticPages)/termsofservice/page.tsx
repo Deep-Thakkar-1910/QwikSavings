@@ -50,7 +50,7 @@ const TermsOfServicePage = () => {
           </Link>
         </div>
         <div className="mx-auto mt-6 w-full px-4 text-lg sm:px-8 sm:text-2xl lg:mt-0 lg:px-12 xl:px-8 2xl:px-0">
-          <h1 className="ml-2 text-xl font-bold sm:text-2xl lg:text-3xl">
+          <h1 className="ml-2 text-xl font-bold sm:text-2xl">
             Terms Of Service Of Qwik Savings
           </h1>
           <h2 className="ml-2 mt-2 text-lg font-semibold text-muted-foreground sm:text-xl">
@@ -64,7 +64,7 @@ const TermsOfServicePage = () => {
             >
               TABLE OF CONTENTS
             </div>
-            <ol className="ml-5 flex list-decimal flex-col justify-start gap-2 text-app-main">
+            <ol className="ml-5 flex list-decimal flex-col justify-start gap-2 text-lg text-app-main sm:text-xl">
               <li className="cursor-pointer text-start duration-300 hover:underline">
                 <ScrollToLink
                   to="q1"
@@ -319,7 +319,7 @@ const TermsOfServicePage = () => {
                 </ScrollToLink>
               </li>
             </ol>
-            <div className="flex flex-col gap-2 text-justify text-zinc-700 dark:text-neutral-300">
+            <div className="flex flex-col gap-2 text-justify text-lg text-zinc-700 dark:text-neutral-300 sm:text-xl">
               <span
                 className="mt-4 text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl"
                 id="q1"
@@ -395,7 +395,7 @@ const TermsOfServicePage = () => {
                 the Site.
               </span>
             </div>
-            <div className="flex flex-col gap-2 text-zinc-700 dark:text-neutral-300">
+            <div className="flex flex-col gap-2 text-lg text-zinc-700 dark:text-neutral-300 sm:text-xl">
               <span
                 className="mt-4 text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl"
                 id="q2"
@@ -428,7 +428,7 @@ const TermsOfServicePage = () => {
                 Content and the Marks.
               </span>
             </div>
-            <div className="flex flex-col gap-2 text-zinc-700 dark:text-neutral-300">
+            <div className="flex flex-col gap-2 text-lg text-zinc-700 dark:text-neutral-300 sm:text-xl">
               <span
                 className="mt-4 text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl"
                 id="q3"
@@ -453,7 +453,7 @@ const TermsOfServicePage = () => {
                 use of the Site (or any portion thereof).
               </span>
             </div>
-            <div className="flex flex-col gap-2 text-zinc-700 dark:text-neutral-300">
+            <div className="flex flex-col gap-2 text-lg text-zinc-700 dark:text-neutral-300 sm:text-xl">
               <span
                 className="mt-4 text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl"
                 id="q4"
@@ -584,7 +584,7 @@ const TermsOfServicePage = () => {
                 </li>
               </ul>
             </div>
-            <div className="flex flex-col gap-2 text-zinc-700 dark:text-neutral-300">
+            <div className="flex flex-col gap-2 text-lg text-zinc-700 dark:text-neutral-300 sm:text-xl">
               <span
                 className="mt-4 text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl"
                 id="q5"
@@ -687,7 +687,7 @@ const TermsOfServicePage = () => {
             </div>
 
             <div
-              className="flex flex-col gap-2 text-zinc-700 dark:text-neutral-300"
+              className="flex flex-col gap-2 text-lg text-zinc-700 dark:text-neutral-300 sm:text-xl"
               id="q6"
             >
               <span className="mt-4 text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl">
@@ -716,7 +716,7 @@ const TermsOfServicePage = () => {
                 action against us regarding your Contributions.
               </span>
             </div>
-            <div className="flex flex-col gap-2 text-zinc-700 dark:text-neutral-300">
+            <div className="flex flex-col gap-2 text-lg text-zinc-700 dark:text-neutral-300 sm:text-xl">
               <span
                 className="mt-4 text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl"
                 id="q7"
@@ -739,7 +739,7 @@ const TermsOfServicePage = () => {
                 misappropriation of any proprietary right in your Submissions.
               </span>
             </div>
-            <div className="flex flex-col gap-2 text-zinc-700 dark:text-neutral-300">
+            <div className="flex flex-col gap-2 text-lg text-zinc-700 dark:text-neutral-300 sm:text-xl">
               <span
                 className="mt-4 text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl"
                 id="q8"
@@ -761,7 +761,7 @@ const TermsOfServicePage = () => {
                 other relationship with advertisers.
               </span>
             </div>
-            <div className="flex flex-col gap-2 text-zinc-700 dark:text-neutral-300">
+            <div className="flex flex-col gap-2 text-lg text-zinc-700 dark:text-neutral-300 sm:text-xl">
               <span
                 className="mt-4 text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl"
                 id="q9"
@@ -786,7 +786,7 @@ const TermsOfServicePage = () => {
                 functioning of the Site.
               </span>
             </div>
-            <div className="flex flex-col gap-2 text-zinc-700 dark:text-neutral-300">
+            <div className="flex flex-col gap-2 text-lg text-zinc-700 dark:text-neutral-300 sm:text-xl">
               <span
                 className="mt-4 text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl"
                 id="q10"
@@ -823,7 +823,7 @@ const TermsOfServicePage = () => {
                 </p>
               </div>
             </div>
-            <div className="flex flex-col gap-2 text-zinc-700 dark:text-neutral-300">
+            <div className="flex flex-col gap-2 text-lg text-zinc-700 dark:text-neutral-300 sm:text-xl">
               <span
                 className="mt-4 text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl"
                 id="q11"
@@ -855,7 +855,7 @@ const TermsOfServicePage = () => {
               </span>
             </div>
 
-            <div className="flex flex-col gap-2 text-zinc-700 dark:text-neutral-300">
+            <div className="flex flex-col gap-2 text-lg text-zinc-700 dark:text-neutral-300 sm:text-xl">
               <span
                 className="mt-4 text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl"
                 id="q12"
@@ -888,7 +888,7 @@ const TermsOfServicePage = () => {
               </span>
             </div>
             <div
-              className="flex flex-col gap-2 text-zinc-700 dark:text-neutral-300"
+              className="flex flex-col gap-2 text-lg text-zinc-700 dark:text-neutral-300 sm:text-xl"
               id="q13"
             >
               <span className="mt-4 text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl">
@@ -903,7 +903,7 @@ const TermsOfServicePage = () => {
               </span>
             </div>
             <div
-              className="flex flex-col gap-2 text-zinc-700 dark:text-neutral-300"
+              className="flex flex-col gap-2 text-lg text-zinc-700 dark:text-neutral-300 sm:text-xl"
               id="q14"
             >
               <span className="mt-4 text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl">
@@ -924,7 +924,7 @@ const TermsOfServicePage = () => {
               </span>
             </div>
             <div
-              className="flex flex-col gap-2 text-zinc-700 dark:text-neutral-300"
+              className="flex flex-col gap-2 text-lg text-zinc-700 dark:text-neutral-300 sm:text-xl"
               id="q15"
             >
               <span className="mt-4 text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl">
@@ -940,7 +940,7 @@ const TermsOfServicePage = () => {
               </span>
             </div>
             <div
-              className="flex flex-col gap-2 text-zinc-700 dark:text-neutral-300"
+              className="flex flex-col gap-2 text-lg text-zinc-700 dark:text-neutral-300 sm:text-xl"
               id="q16"
             >
               <span className="mt-4 text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl">
@@ -981,7 +981,7 @@ const TermsOfServicePage = () => {
               </span>
             </div>
             <div
-              className="flex flex-col gap-2 text-zinc-700 dark:text-neutral-300"
+              className="flex flex-col gap-2 text-lg text-zinc-700 dark:text-neutral-300 sm:text-xl"
               id="q17"
             >
               <span className="mt-4 text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl">
@@ -1006,7 +1006,7 @@ const TermsOfServicePage = () => {
               </span>
             </div>
             <div
-              className="flex flex-col gap-2 text-zinc-700 dark:text-neutral-300"
+              className="flex flex-col gap-2 text-lg text-zinc-700 dark:text-neutral-300 sm:text-xl"
               id="q18"
             >
               <span className="mt-4 text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl">
@@ -1034,7 +1034,7 @@ const TermsOfServicePage = () => {
               </span>
             </div>
             <div
-              className="flex flex-col gap-2 text-zinc-700 dark:text-neutral-300"
+              className="flex flex-col gap-2 text-lg text-zinc-700 dark:text-neutral-300 sm:text-xl"
               id="q19"
             >
               <span className="mt-4 text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl">
@@ -1053,7 +1053,7 @@ const TermsOfServicePage = () => {
               </span>
             </div>
             <div
-              className="flex flex-col gap-2 text-zinc-700 dark:text-neutral-300"
+              className="flex flex-col gap-2 text-lg text-zinc-700 dark:text-neutral-300 sm:text-xl"
               id="q20"
             >
               <span className="mt-4 text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl">
@@ -1078,7 +1078,7 @@ const TermsOfServicePage = () => {
               </span>
             </div>
             <div
-              className="flex flex-col gap-2 text-zinc-700 dark:text-neutral-300"
+              className="flex flex-col gap-2 text-lg text-zinc-700 dark:text-neutral-300 sm:text-xl"
               id="q21"
             >
               <span className="mt-4 text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl">
@@ -1094,7 +1094,7 @@ const TermsOfServicePage = () => {
               </span>
             </div>
             <div
-              className="flex flex-col gap-2 text-zinc-700 dark:text-neutral-300"
+              className="flex flex-col gap-2 text-lg text-zinc-700 dark:text-neutral-300 sm:text-xl"
               id="q22"
             >
               <span className="mt-4 text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl">
@@ -1125,7 +1125,7 @@ const TermsOfServicePage = () => {
               </span>
             </div>
             <div
-              className="flex flex-col gap-2 text-zinc-700 dark:text-neutral-300"
+              className="flex flex-col gap-2 text-lg text-zinc-700 dark:text-neutral-300 sm:text-xl"
               id="q23"
             >
               <span className="mt-4 text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl">

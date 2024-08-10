@@ -57,8 +57,8 @@ const PrivacyPolicyPage = () => {
             Contact Us
           </Link>
         </div>
-        <div className="mx-auto mt-6 w-full px-4 text-lg sm:px-8 sm:text-2xl lg:mt-0 lg:px-12 xl:px-8 2xl:px-0">
-          <h1 className="ml-2 text-xl font-bold sm:text-2xl lg:text-3xl">
+        <div className="mx-auto mt-6 w-full px-4 text-lg sm:px-8 sm:text-xl lg:mt-0 lg:px-12 xl:px-8 2xl:px-0">
+          <h1 className="ml-2 text-xl font-bold sm:text-2xl">
             Privacy Policy Of Qwik Savings
           </h1>
           <h2 className="ml-2 mt-2 text-lg font-semibold text-muted-foreground sm:text-xl">

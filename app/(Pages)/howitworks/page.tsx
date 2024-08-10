@@ -4,19 +4,19 @@ import Link from "next/link";
 
 const HowItWorks = () => {
   return (
-    <section className="mb-10 flex w-full flex-col items-center gap-y-4 lg:items-start lg:gap-y-6">
-      <div className="mx-auto mt-6 w-full max-w-screen-xl p-10 px-4 sm:px-8 sm:text-2xl lg:px-24 xl:px-16 2xl:px-8">
+    <section className="mb-10 flex w-full flex-col items-center gap-y-6 lg:items-start">
+      <div className="mx-auto mt-6 w-full max-w-screen-xl px-4 sm:px-8 sm:text-2xl lg:px-24 xl:px-16 2xl:px-8">
         <h1 className="text-xl font-bold sm:text-2xl">
           How to use coupons using the QwikSavings
         </h1>
       </div>
       <div className="mx-auto w-full max-w-screen-xl px-4 text-lg sm:px-8 sm:text-2xl lg:px-12 xl:px-8 2xl:px-0">
-        <div className="flex w-full flex-col text-lg lg:ml-2 lg:flex-row-reverse lg:p-5 lg:pt-0">
+        <div className="flex w-full flex-col items-center text-lg lg:ml-2 lg:flex-row-reverse lg:items-start lg:p-5 lg:pt-0">
           <Image
             src={"/HowItWorks/How it Works.jpg"}
             alt="How it Works Logo"
             width={2000}
-            className="aspect-square w-full -translate-y-14 object-contain mix-blend-multiply dark:mix-blend-normal lg:w-1/3"
+            className="aspect-square w-full max-w-80 object-contain mix-blend-multiply dark:mix-blend-normal lg:w-1/3 lg:max-w-full lg:-translate-y-14"
             height={2000}
           />
           <div>
@@ -40,13 +40,13 @@ const HowItWorks = () => {
       </div>
       <div className="mx-auto w-full max-w-screen-xl px-4 sm:px-8 sm:text-2xl lg:px-12 xl:px-8 2xl:px-0">
         <div className="mx-auto w-full text-center text-lg sm:mx-0 sm:text-start lg:ml-2 lg:p-5 lg:pt-0">
-          <span className="mt-5 text-2xl font-bold">1,2,3 easy steps</span>
+          <span className="text-2xl font-bold">1,2,3 easy steps</span>
           <p className="my-5  text-center sm:text-start">
             It&apos;s quick and easy to get started! Learn how our website works
             in less than 1 minute! Follow these easy steps to maximize your
             savings with our codes!
           </p>
-          <div className="my-10 grid grid-cols-1 gap-10 md:grid-cols-2">
+          <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
             {HowItWorksArray.map((ele) => (
               <div
                 key={ele.id}
@@ -70,7 +70,7 @@ const HowItWorks = () => {
             with our team using the contact us page or by mailing at{" "}
             <Link
               href={"mailto:contact@qwiksavings.com"}
-              className="text-sky-500"
+              className="text-app-main"
             >
               contact@qwiksavings.com
             </Link>
