@@ -500,7 +500,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
         </div>
       ) : (
         <section
-          className={`relative mb-6 flex w-full flex-col items-start gap-6 px-8 pt-10 lg:flex-row lg:px-12 ${isActiveFestival ? "mb-16" : ""}`}
+          className={`relative mb-6 flex w-full flex-col items-start gap-6 px-8 pt-10 lg:flex-row lg:px-12 ${isActiveFestival ? "mb-[50px]" : ""}`}
         >
           {/* Edit link only visbible to admins */}
           {session?.user.role === "admin" && (

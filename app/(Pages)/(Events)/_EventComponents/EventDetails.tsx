@@ -442,7 +442,7 @@ const EventDetails = () => {
             </h1>
           </div>
           <section
-            className={`mb-6 flex w-full flex-col items-start px-4 sm:px-8 lg:px-12 ${isActiveFestival ? "mb-16" : ""}`}
+            className={`mb-6 flex w-full flex-col items-start px-4 sm:px-8 lg:px-12 ${isActiveFestival ? "mb-[50px]" : ""}`}
           >
             {data?.cover_url && (
               <Image
