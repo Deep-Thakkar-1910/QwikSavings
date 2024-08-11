@@ -29,7 +29,7 @@ const StoresPageContent = () => {
 
   return (
     <section
-      className={`mb-6 mt-2 w-full lg:mt-0 ${isActiveFestival && !isAdmin ? "mb-24 translate-y-10 transition-transform duration-200 ease-linear" : "mb-0 translate-y-0 transition-transform duration-200 ease-linear"}`}
+      className={`mb-6 mt-2 w-full lg:mt-0 ${isActiveFestival && !isAdmin ? "mb-[96px] translate-y-10 transition-transform duration-200 ease-linear" : "mb-0 translate-y-0 transition-transform duration-200 ease-linear"}`}
     >
       <h1 className="mb-4 ml-8 text-2xl font-semibold lg:ml-12">
         All Stores & Brands A-Z
