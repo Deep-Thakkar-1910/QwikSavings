@@ -499,7 +499,9 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
           <p>{error}</p>
         </div>
       ) : (
-        <section className="relative mb-6 flex w-full flex-col items-start gap-6 px-8 pt-10 lg:flex-row lg:px-12">
+        <section
+          className={`relative mb-6 flex w-full flex-col items-start gap-6 px-8 pt-10 lg:flex-row lg:px-12 ${isActiveFestival ? "mb-16" : ""}`}
+        >
           {/* Edit link only visbible to admins */}
           {session?.user.role === "admin" && (
             <div className="absolute right-4 top-0 flex flex-col gap-y-2 place-self-end lg:right-32 2xl:right-44">
@@ -710,9 +712,9 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
           </aside>
           <Separator className="hidden h-auto min-h-[90vh] w-[2px] self-stretch text-muted lg:block" />
           {/* main coupons display */}
-          <main className="flex w-full flex-col items-stretch gap-y-4">
+          <main className={`flex w-full flex-col items-stretch gap-y-4`}>
             <div className="hidden -translate-y-2 flex-col lg:flex">
-              <h1 className="mb-2 text-4xl font-bold">{detailsData.name}</h1>
+              <h1 className="mb-2 text-4xl font-bold">{detailsData.title}</h1>
               {isStore && initialCoupon && (
                 <p className=" font-semibold">
                   Best {detailsData._count.coupons} Offers Last Validated On{" "}
@@ -1056,15 +1058,33 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                           </div>
                           {coupon.type === "Deal" && (
                             <>
-                              <Button className="hidden min-h-10 w-full cursor-not-allowed rounded-xl bg-neutral-500 text-base font-semibold hover:bg-neutral-500 sm:block">
+                              <Button
+                                onClick={() => {
+                                  handleCouponUse(
+                                    coupon.couponId,
+                                    "Deal",
+                                    coupon,
+                                  );
+                                }}
+                                className="hidden min-h-10 w-full cursor-pointer rounded-xl bg-neutral-500 text-base font-semibold hover:bg-neutral-500 sm:block"
+                              >
                                 Get Deal
                               </Button>
-                              <ChevronRight className="size-6 w-full cursor-not-allowed text-neutral-500  sm:hidden" />
+                              <ChevronRight className="size-6 w-full cursor-pointer text-neutral-500  sm:hidden" />
                             </>
                           )}
                           {coupon.type === "Coupon" && (
                             <>
-                              <div className="group relative hidden min-h-10 w-full min-w-28 cursor-not-allowed overflow-hidden rounded-md bg-app-bg-main p-2 dark:bg-app-dark sm:grid sm:min-h-fit sm:min-w-40">
+                              <div
+                                onClick={() => {
+                                  handleCouponUse(
+                                    coupon.couponId,
+                                    "Coupon",
+                                    coupon,
+                                  );
+                                }}
+                                className="group relative hidden min-h-10 w-full min-w-28 cursor-pointer overflow-hidden rounded-md bg-app-bg-main p-2 dark:bg-app-dark sm:grid sm:min-h-fit sm:min-w-40"
+                              >
                                 <p
                                   className={`place-self-end text-base font-semibold uppercase tracking-widest ${
                                     !coupon.coupon_code && "min-h-5"
@@ -1083,7 +1103,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                                 {/* Border overlay */}
                                 <div className="pointer-events-none absolute inset-0 rounded-xl border-2 border-dashed border-neutral-500" />
                               </div>
-                              <ChevronRight className="size-6 w-full cursor-not-allowed text-neutral-500  sm:hidden" />
+                              <ChevronRight className="size-6 w-full cursor-pointer text-neutral-500  sm:hidden" />
                             </>
                           )}
                           <div className="hidden items-center gap-x-6 place-self-center sm:flex">
@@ -1322,7 +1342,7 @@ const CouponDialog: React.FC<{
   };
 
   return (
-    <DialogContent className="w-11/12 sm:w-full">
+    <DialogContent className="w-11/12 !bg-app-bg-main sm:w-full">
       <DialogHeader>
         <DialogTitle>Coupon Details</DialogTitle>
       </DialogHeader>
@@ -1405,7 +1425,7 @@ const DealDialog: React.FC<{
   userReaction,
 }) => {
   return (
-    <DialogContent className="w-11/12 sm:w-full">
+    <DialogContent className="w-11/12 !bg-app-bg-main sm:w-full">
       <DialogHeader>
         <DialogTitle>About Deal</DialogTitle>
       </DialogHeader>

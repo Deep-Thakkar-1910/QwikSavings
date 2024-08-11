@@ -82,6 +82,7 @@ const EventDetails = () => {
 
   // state for active festival
   const isActiveFestival = useActiveFestival((state) => state.isActive);
+  const isAdmin = session?.user?.role === "admin";
 
   const blocks = "abcdefghijklmnopqrstuvwxyz".split("");
 
@@ -427,7 +428,7 @@ const EventDetails = () => {
           )}
           {/* Topbar for mobile */}
           <div
-            className={`mt-4 ${isActiveFestival ? "translate-y-4 transition-transform duration-200 ease-linear" : "translate-y-0 transition-transform duration-200 ease-linear"} flex w-full items-center gap-x-4 rounded-lg bg-popover p-4 px-4  sm:px-8 lg:hidden lg:px-12`}
+            className={`mt-4 ${isActiveFestival && !isAdmin ? "translate-y-4 transition-transform duration-200 ease-linear" : "translate-y-0 transition-transform duration-200 ease-linear"} flex w-full items-center gap-x-4 rounded-lg bg-popover p-4 px-4  sm:px-8 lg:hidden lg:px-12`}
           >
             <Image
               src={data?.logo_url ?? "https://via.placeholder.com/600x400"}
@@ -440,7 +441,9 @@ const EventDetails = () => {
               {data?.name}
             </h1>
           </div>
-          <section className="mb-6 flex w-full flex-col items-start px-4 sm:px-8 lg:px-12">
+          <section
+            className={`mb-6 flex w-full flex-col items-start px-4 sm:px-8 lg:px-12 ${isActiveFestival ? "mb-16" : ""}`}
+          >
             {data?.cover_url && (
               <Image
                 src={data?.cover_url}
@@ -847,15 +850,33 @@ const EventDetails = () => {
                               </div>
                               {coupon.type === "Deal" && (
                                 <>
-                                  <Button className="hidden min-h-10 w-full cursor-not-allowed rounded-xl bg-neutral-500 text-base font-semibold hover:bg-neutral-500 sm:block">
+                                  <Button
+                                    onClick={() => {
+                                      handleCouponUse(
+                                        coupon.couponId,
+                                        "Deal",
+                                        coupon,
+                                      );
+                                    }}
+                                    className="hidden min-h-10 w-full cursor-pointer rounded-xl bg-neutral-500 text-base font-semibold hover:bg-neutral-500 sm:block"
+                                  >
                                     Get Deal
                                   </Button>
-                                  <ChevronRight className="size-6 w-full cursor-not-allowed text-neutral-500  sm:hidden" />
+                                  <ChevronRight className="size-6 w-full cursor-pointer text-neutral-500  sm:hidden" />
                                 </>
                               )}
                               {coupon.type === "Coupon" && (
                                 <>
-                                  <div className="group relative hidden min-h-10 w-full min-w-28 cursor-not-allowed overflow-hidden rounded-md bg-app-bg-main p-2 dark:bg-app-dark sm:grid sm:min-h-fit sm:min-w-40">
+                                  <div
+                                    onClick={() => {
+                                      handleCouponUse(
+                                        coupon.couponId,
+                                        "Coupon",
+                                        coupon,
+                                      );
+                                    }}
+                                    className="group relative hidden min-h-10 w-full min-w-28 cursor-pointer overflow-hidden rounded-md bg-app-bg-main p-2 dark:bg-app-dark sm:grid sm:min-h-fit sm:min-w-40"
+                                  >
                                     <p
                                       className={`place-self-end text-base font-semibold uppercase tracking-widest ${
                                         !coupon.coupon_code && "min-h-5"
@@ -874,7 +895,7 @@ const EventDetails = () => {
                                     {/* Border overlay */}
                                     <div className="pointer-events-none absolute inset-0 rounded-xl border-2 border-dashed border-neutral-500" />
                                   </div>
-                                  <ChevronRight className="size-6 w-full cursor-not-allowed text-neutral-500  sm:hidden" />
+                                  <ChevronRight className="size-6 w-full cursor-pointer text-neutral-500  sm:hidden" />
                                 </>
                               )}
                               <div className="hidden items-center gap-x-6 place-self-center sm:flex">
@@ -1022,7 +1043,7 @@ const CouponDialog: React.FC<{
 
   return (
     <DialogOverlay className="fixed inset-0 z-50 !bg-black/20 backdrop-blur-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0">
-      <DialogContent className="w-11/12 sm:w-full">
+      <DialogContent className="w-11/12 !bg-app-bg-main sm:w-full">
         <DialogHeader>
           <DialogTitle>Coupon Details</DialogTitle>
         </DialogHeader>
@@ -1105,7 +1126,7 @@ const DealDialog: React.FC<{
 }) => {
   return (
     <DialogOverlay className="fixed inset-0 z-50 !bg-black/20 backdrop-blur-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0">
-      <DialogContent className="w-11/12 sm:w-full">
+      <DialogContent className="w-11/12 !bg-app-bg-main sm:w-full">
         <DialogHeader>
           <DialogTitle>About Deal</DialogTitle>
         </DialogHeader>

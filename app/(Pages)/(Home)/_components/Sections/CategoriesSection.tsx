@@ -270,7 +270,7 @@ const CouponDialog: React.FC<{
   };
 
   return (
-    <DialogContent className="w-11/12 sm:max-w-[425px]">
+    <DialogContent className="w-11/12 !bg-app-bg-main sm:w-full">
       <DialogHeader>
         <DialogTitle>Coupon Details</DialogTitle>
       </DialogHeader>
@@ -353,7 +353,7 @@ const DealDialog: React.FC<{
   userReaction,
 }) => {
   return (
-    <DialogContent className="w-11/12 sm:max-w-[425px]">
+    <DialogContent className="w-11/12 !bg-app-bg-main sm:w-full">
       <DialogHeader>
         <DialogTitle>About Deal</DialogTitle>
       </DialogHeader>

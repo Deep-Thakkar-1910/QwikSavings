@@ -7,7 +7,7 @@ const FAQSchema = z.object({
 
 export const CreateStoreFormScehma = z.object({
   name: z.string().min(1, "Name is required"),
-  title: z.string(),
+  title: z.string().min(1, "Title for the store is required"),
   logo: z.any().optional(),
   logo_url: z.string().optional(),
   ref_link: z.string().url("Reference link must be a valid URL"),

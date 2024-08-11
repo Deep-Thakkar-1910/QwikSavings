@@ -6,6 +6,7 @@ import Superscript from "@tiptap/extension-superscript";
 import Subscript from "@tiptap/extension-subscript";
 import Heading from "@tiptap/extension-heading";
 import TextAlign from "@tiptap/extension-text-align";
+import HardBreak from "@tiptap/extension-hard-break";
 import {
   Bold,
   Strikethrough,
@@ -20,6 +21,7 @@ import {
   Undo,
   Redo,
 } from "lucide-react";
+import { IoMdReturnLeft } from "react-icons/io";
 import { Toggle } from "@/components/ui/toggle";
 import { Separator } from "@/components/ui/separator";
 import {
@@ -68,6 +70,7 @@ const RichTextEditor = ({
       Underline,
       Superscript,
       Subscript,
+      HardBreak,
     ],
     onUpdate: ({ editor }) => {
       onChange(editor.getHTML()); // Call the onChange callback with the updated HTML content
@@ -176,6 +179,13 @@ const RichTextEditorToolbar = ({ editor }: { editor: Editor }) => {
           }
         >
           <List className={iconClass} />
+        </Toggle>
+        <Toggle
+          size="sm"
+          pressed={editor.isActive("hardBreak")}
+          onPressedChange={() => editor.chain().focus().setHardBreak().run()}
+        >
+          <IoMdReturnLeft className={iconClass} />
         </Toggle>
         <Toggle
           size="sm"
