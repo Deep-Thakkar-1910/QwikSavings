@@ -1,12 +1,12 @@
 "use client";
-import { Suspense, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
-import FilterBlocks from "../../_PageComponents/FilterBlocks";
-import { useFilter } from "@/hooks/useFilter";
-import DisplayItems from "../../_PageComponents/DisplayComponents";
-import CustomPaginationComponent from "../../_PageComponents/CustomPaginationComponent";
 import { useActiveFestival } from "@/hooks/useFestivalActive";
+import { useFilter } from "@/hooks/useFilter";
 import { useSession } from "next-auth/react";
+import { useSearchParams } from "next/navigation";
+import { Suspense, useEffect } from "react";
+import CustomPaginationComponent from "../../_PageComponents/CustomPaginationComponent";
+import DisplayItems from "../../_PageComponents/DisplayComponents";
+import FilterBlocks from "../../_PageComponents/FilterBlocks";
 
 const StoresPageContent = () => {
   const searchParams = useSearchParams();
@@ -32,7 +32,7 @@ const StoresPageContent = () => {
       className={`mb-6 mt-2 w-full lg:mt-0 ${isActiveFestival && !isAdmin ? "mb-[96px] translate-y-10 transition-transform duration-200 ease-linear" : "mb-0 translate-y-0 transition-transform duration-200 ease-linear"}`}
     >
       <h1 className="mb-4 ml-8 text-2xl font-semibold lg:ml-12">
-        All Stores & Brands A-Z
+        All Brands & Stroes A-Z
       </h1>
       <FilterBlocks filterForPage="stores" like={like} setLike={setLike} />
       <DisplayItems

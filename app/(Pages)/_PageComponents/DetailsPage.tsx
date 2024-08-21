@@ -1,25 +1,26 @@
 "use client";
 import Spinner from "@/app/(Pages)/_PageComponents/Spinner";
-import useGetDetails from "@/hooks/useGetDetails";
-import { useSession } from "next-auth/react";
-import Image from "next/image";
-import Link from "next/link";
-import {
-  notFound,
-  useParams,
-  usePathname,
-  useRouter,
-  useSearchParams,
-} from "next/navigation";
-import Seperator from "./Seperator";
-import { Badge } from "@/components/ui/badge";
+import axios from "@/app/api/axios/axios";
 import {
   Accordion,
-  AccordionTrigger,
   AccordionContent,
   AccordionItem,
+  AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Separator } from "@/components/ui/separator";
+import { toast } from "@/components/ui/use-toast";
+import { useActiveFestival } from "@/hooks/useFestivalActive";
+import useGetDetails from "@/hooks/useGetDetails";
 import { cn } from "@/lib/utils";
+import { format } from "date-fns";
 import {
   ChevronRight,
   Heart,
@@ -31,24 +32,22 @@ import {
   User,
   Verified,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import { StarRating } from "../(Store)/_StoreComponent/StarRating";
-import { format } from "date-fns";
-import { useEffect, useMemo, useState } from "react";
-import axios from "@/app/api/axios/axios";
-import { PiSmileySadBold } from "react-icons/pi";
-import { FaExternalLinkAlt } from "react-icons/fa";
-import { FaQuestionCircle } from "react-icons/fa";
+import { useSession } from "next-auth/react";
+import Image from "next/image";
+import Link from "next/link";
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+  notFound,
+  useParams,
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
+import { useEffect, useMemo, useState } from "react";
+import { FaExternalLinkAlt, FaQuestionCircle } from "react-icons/fa";
+import { PiSmileySadBold } from "react-icons/pi";
 import { Link as ScrollLink } from "react-scroll";
-import { toast } from "@/components/ui/use-toast";
-import { useActiveFestival } from "@/hooks/useFestivalActive";
+import { StarRating } from "../(Store)/_StoreComponent/StarRating";
+import Seperator from "./Seperator";
 
 interface DetailsPageProps {
   fetchFrom: "store" | "category";
@@ -758,7 +757,8 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
               </div>
               <Link
                 href={"/submitacoupon"}
-                className="hidden items-center gap-x-1 place-self-end underline transition-colors duration-300 ease-linear hover:text-app-main lg:flex"
+                style={{ color: "#e11d48" }}
+                className="hidden items-center gap-x-1 place-self-end underline transition-colors duration-300 ease-linear lg:flex"
               >
                 Submit a coupon <Tag className="size-4" />
               </Link>

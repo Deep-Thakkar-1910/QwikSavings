@@ -1,7 +1,7 @@
 "use client";
 import { useActiveFestival } from "@/hooks/useFestivalActive";
-import EventDisplay from "../_EventComponents/EventDisplay";
 import { useSession } from "next-auth/react";
+import EventDisplay from "../_EventComponents/EventDisplay";
 
 const EventPage = () => {
   const { data: session } = useSession();
@@ -13,7 +13,7 @@ const EventPage = () => {
     >
       <h1 className="text-xl font-bold sm:text-2xl">
         Browse Top Saving Events
-      </h1>
+      </h1><br/>
       <p>Browse Top Shopping Events</p>
       <EventDisplay />
     </section>

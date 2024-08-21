@@ -1,6 +1,6 @@
+import { Metadata } from "next";
 import Link from "next/link";
 import SignInForm from "../_components/SignInForm";
-import { Metadata } from "next";
 
 // Metadata for the page
 export const metadata: Metadata = {
@@ -14,7 +14,7 @@ const SignInPage = ({
   searchParams: Record<string, any>;
 }) => {
   return (
-    <article className="flex flex-col items-center gap-4">
+    <article className="flex flex-col items-right gap-4">
       <h1 className="text-4xl md:text-5xl">Login</h1>
       <p className="text-sm">
         Are you new here?{" "}

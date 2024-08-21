@@ -41,28 +41,27 @@ const HowItWorks = () => {
       <div className="mx-auto w-full max-w-screen-xl px-4 sm:px-8 sm:text-2xl lg:px-12 xl:px-8 2xl:px-0">
         <div className="mx-auto w-full text-center text-lg sm:mx-0 sm:text-start lg:ml-2 lg:p-5 lg:pt-0">
           <span className="text-2xl font-bold">1,2,3 easy steps</span>
-          <p className="my-5  text-center sm:text-start">
+          <p className="my-5  text-left sm:text-start">
             It&apos;s quick and easy to get started! Learn how our website works
             in less than 1 minute! Follow these easy steps to maximize your
             savings with our codes!
-          </p>
-          <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
-            {HowItWorksArray.map((ele) => (
-              <div
-                key={ele.id}
-                className="flex flex-col gap-2 border bg-popover p-5 duration-300 hover:shadow-md"
-              >
-                <span className="font-semibold">
-                  <span className="mr-2 size-5 rounded-full bg-app-main px-3 py-1 text-xl text-slate-200">
-                    {ele.id}
+            <br />
+            <br />
+            <div>
+              {HowItWorksArray.map((ele) => (
+                <div key={ele.id} className="flex flex-col gap-2">
+                  <span className="font-semibold">
+                    <b>{ele.id}</b>&nbsp;&nbsp;
+                    {ele.text} :
                   </span>
-                  {ele.text} :
-                </span>
-                <span>{ele.content}</span>
-              </div>
-            ))}
-          </div>
-          <p className="my-5  text-center">
+                  <p>{ele.content}</p>
+                  <br />
+                </div>
+              ))}
+            </div>
+          </p>
+
+          <p className="my-5  text-left">
             Love the savings? Share your experience with friends and family!
             Additionally, keep visiting QwikSavings.com for more amazing coupons
             and deals to continue saving on future purchases. If you have any

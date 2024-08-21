@@ -1,39 +1,7 @@
 "use client";
-import { useState } from "react";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import * as z from "zod";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { toast } from "@/components/ui/use-toast";
-import { Textarea } from "@/components/ui/textarea";
 import axios from "@/app/api/axios/axios";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { CalendarIcon, CheckIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/Calendar";
-import { cn } from "@/lib/utils";
-import { format } from "date-fns";
-import { CreateUserCouponFormSchema } from "@/lib/FormSchemas/CreateUserCouponFormSchema";
-import { CaretSortIcon } from "@radix-ui/react-icons";
 import {
   Command,
   CommandEmpty,
@@ -50,7 +18,39 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import { toast } from "@/components/ui/use-toast";
+import { CreateUserCouponFormSchema } from "@/lib/FormSchemas/CreateUserCouponFormSchema";
+import { cn } from "@/lib/utils";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { CaretSortIcon } from "@radix-ui/react-icons";
 import { AxiosError } from "axios";
+import { format } from "date-fns";
+import { CalendarIcon, CheckIcon } from "lucide-react";
+import { useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import * as z from "zod";
 
 type InputType = z.infer<typeof CreateUserCouponFormSchema>;
 
@@ -142,7 +142,7 @@ const CreateUserCouponForm = ({
                     placeholder="Coupon title"
                     {...field}
                     type="text"
-                    className="!bg-app-bg-main dark:!bg-app-dark"
+                    className="!bg-app-bg-main dark:!bg-app-dark rounded-lg"
                   />
                 </FormControl>
                 <FormMessage />
@@ -160,7 +160,7 @@ const CreateUserCouponForm = ({
                   <Textarea
                     placeholder="Coupon Description"
                     {...field}
-                    className="bg-app-bg-main dark:bg-app-dark"
+                    className="bg-app-bg-main dark:bg-app-dark rounded-lg"
                   />
                 </FormControl>
                 <FormMessage />
@@ -181,7 +181,7 @@ const CreateUserCouponForm = ({
                     placeholder="https://example.com"
                     {...field}
                     type="url"
-                    className="!bg-app-bg-main dark:!bg-app-dark"
+                    className="!bg-app-bg-main dark:!bg-app-dark rounded-lg"
                   />
                 </FormControl>
                 <FormMessage />
@@ -202,7 +202,7 @@ const CreateUserCouponForm = ({
                   defaultValue={field.value}
                 >
                   <FormControl>
-                    <SelectTrigger className="!bg-app-bg-main dark:!bg-app-dark">
+                    <SelectTrigger className="!bg-app-bg-main dark:!bg-app-dark rounded-lg">
                       <SelectValue placeholder="Select a Type" />
                     </SelectTrigger>
                   </FormControl>
@@ -247,7 +247,7 @@ const CreateUserCouponForm = ({
                 <Popover>
                   <PopoverTrigger
                     asChild
-                    className="!bg-app-bg-main dark:!bg-app-dark"
+                    className="!bg-app-bg-main dark:!bg-app-dark rounded-lg"
                   >
                     <FormControl>
                       <Button
@@ -329,7 +329,7 @@ const CreateUserCouponForm = ({
                 <Popover>
                   <PopoverTrigger
                     asChild
-                    className="!bg-app-bg-main dark:!bg-app-dark"
+                    className="!bg-app-bg-main dark:!bg-app-dark rounded-lg"
                   >
                     <FormControl>
                       <Button
@@ -407,7 +407,7 @@ const CreateUserCouponForm = ({
                 <Popover>
                   <PopoverTrigger
                     asChild
-                    className="!bg-app-bg-main dark:!bg-app-dark"
+                    className="!bg-app-bg-main dark:!bg-app-dark rounded-lg"
                   >
                     <FormControl>
                       <Button
@@ -444,17 +444,17 @@ const CreateUserCouponForm = ({
               </FormItem>
             )}
           />
-          <p className="mt-2 place-self-center text-xs text-gray-400">
+          {/* <p className="mt-2 place-self-center text-xs text-gray-400">
             Fields marked with<span className="text-app-main"> * </span>are
             required
-          </p>
+          </p> */}
           <Button
             type="submit"
             size={"lg"}
-            className="place-self-center"
+            className="place-self-center rounded-lg"
             disabled={formState.isSubmitting}
           >
-            {formState.isSubmitting ? "Submitting" : "Submit Coupon"}
+            {formState.isSubmitting ? "Submitting" : "Submit"}
           </Button>
         </form>
       </Form>

@@ -1,20 +1,20 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
 import axios from "@/app/api/axios/axios";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import useGetCategoryCoupons, { Coupon } from "@/hooks/useGetCategoryCoupons";
-import Image from "next/image";
-import Link from "next/link";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import useGetCategoryCoupons, { Coupon } from "@/hooks/useGetCategoryCoupons";
 import { format } from "date-fns";
-import { FaExternalLinkAlt } from "react-icons/fa";
 import { ThumbsDown, ThumbsUp } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import React, { useEffect, useRef, useState } from "react";
+import { FaExternalLinkAlt } from "react-icons/fa";
 
 interface CategoriesSectionProps {
   fetchFrom: string;

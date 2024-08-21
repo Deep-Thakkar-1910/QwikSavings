@@ -1,11 +1,11 @@
 "use client";
-import { useState, useEffect, useCallback, useRef } from "react";
-import { Search } from "lucide-react";
-import Link from "next/link";
 import axios from "@/app/api/axios/axios";
 import { Separator } from "@/components/ui/separator";
-import debounce from "lodash/debounce";
 import { useQuery } from "@tanstack/react-query";
+import debounce from "lodash/debounce";
+import { Search } from "lucide-react";
+import Link from "next/link";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Spinner from "./Spinner";
 
 interface Suggestion {
@@ -138,19 +138,19 @@ const SearchBar = () => {
 
   return (
     <div ref={searchRef} className="relative">
-      <div className="flex w-56 items-center justify-between rounded-full border-2 border-app-main p-1 sm:w-64 sm:px-3 sm:py-2">
+      <div className="flex w-56 items-center justify-between rounded-full border-2 border-app-main p-1 sm:w-64 sm:px-3 sm:py-1">
         <input
           id="search"
           type="text"
           ref={inputRef}
-          className="w-full border-none bg-transparent caret-rose-600 outline-none placeholder:text-xs md:placeholder:text-sm"
+          className="w-full border-none bg-transparent caret-rose-600 outline-none placeholder:text-xs md:placeholder:text-xs"
           placeholder="Search for brands, categories"
           onChange={(e) => debouncedSetQuery(e.target.value)}
           onFocus={handleInputFocus}
           autoComplete="off"
         />
         <label htmlFor="search">
-          <Search className="ml-2 size-6 text-app-main" />
+          <Search className="ml-1 size-4 text-app-main" />
         </label>
       </div>
       {showSuggestions && (
