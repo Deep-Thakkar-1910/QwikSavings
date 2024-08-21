@@ -1,16 +1,16 @@
 "use client";
-import Link from "next/link";
-import Image from "next/image";
+import { useActiveFestival } from "@/hooks/useFestivalActive";
 import { NavLinks } from "@/lib/utilities/Navlinks";
+import { cn } from "@/lib/utils";
+import { useSession } from "next-auth/react";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import AuthButtons from "./AuthButtons";
+import FestivalStrip from "./Festival";
 import MobileSidebar from "./MobileSidebar";
 import ProfileDropDown from "./ProfileDropDown";
-import { usePathname } from "next/navigation";
-import { cn } from "@/lib/utils";
-import AuthButtons from "./AuthButtons";
-import { useSession } from "next-auth/react";
 import SearchBar from "./SearchBar";
-import FestivalStrip from "./Festival";
-import { useActiveFestival } from "@/hooks/useFestivalActive";
 const Navbar = () => {
   const pathname = usePathname();
   const paths = pathname.split("/");
@@ -53,7 +53,8 @@ const Navbar = () => {
           </Link>
 
           <ul
-            className="hidden items-center gap-x-3 lg:flex xl:gap-x-5"
+            className="hidden items-center gap-x-8 lg:flex xl:gap-x-10"
+            style={{ fontFamily: "ui-sans-serif" }}
             role="tablist"
           >
             {session?.user.role === "admin" && (
@@ -61,7 +62,7 @@ const Navbar = () => {
                 <Link href={"/admin"}>
                   <button
                     className={cn(
-                      "text-sm font-medium transition-all duration-300 ease-in-out hover:-translate-y-1 hover:border-b-2 hover:border-b-app-main hover:text-app-main xl:text-base",
+                      "text-sm transition-all duration-300 ease-in-out hover:-translate-y-1 hover:border-b-2 hover:border-b-app-main hover:text-app-main xl:text-base",
                       isCurrent("admin") && "text-app-main",
                     )}
                   >
@@ -76,7 +77,7 @@ const Navbar = () => {
                   <Link href={link.href}>
                     <button
                       className={cn(
-                        "text-sm font-medium transition-all duration-300 ease-in-out hover:-translate-y-1 hover:border-b-2 hover:border-b-app-main hover:text-app-main xl:text-base",
+                        "text-sm transition-all duration-300 ease-in-out hover:-translate-y-1 hover:border-b-2 hover:border-b-app-main hover:text-app-main xl:text-base",
                         isCurrent(link.href.slice(1)) && "text-app-main",
                       )}
                     >

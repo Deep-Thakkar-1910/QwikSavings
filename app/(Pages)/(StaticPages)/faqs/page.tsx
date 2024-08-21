@@ -10,7 +10,6 @@ import { AccordionItem } from "@radix-ui/react-accordion";
 import { ChevronRightCircle } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import Seperator from "../../_PageComponents/Seperator";
 
 const FAQsPage = () => {
   return (
@@ -67,10 +66,10 @@ const FAQsPage = () => {
               key={faq.id}
               className="w-full rounded-md px-4 pt-10"
             >
-              <AccordionTrigger className="w-full text-start text-xl font-semibold sm:text-2xl [&>.faq]:size-8">
+              <AccordionTrigger className="w-full text-start text-lg font-bold sm:text-lg [&>.faq]:size-8">
                 {faq.q}
               </AccordionTrigger>
-              <AccordionContent className="px-4 pt-4 text-sm font-medium sm:text-base">
+              <AccordionContent className="px-4 pt-4 text-sm sm:text-base">
                 {faq.a}
               </AccordionContent>
             </AccordionItem>
