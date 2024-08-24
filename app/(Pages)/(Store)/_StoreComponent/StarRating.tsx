@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from "react";
-import { Star } from "lucide-react";
+import axios from "@/app/api/axios/axios";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
-  DialogHeader,
-  DialogTitle,
   DialogDescription,
   DialogFooter,
+  DialogHeader,
+  DialogTitle,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { useSession } from "next-auth/react";
 import { toast } from "@/components/ui/use-toast";
-import axios from "@/app/api/axios/axios";
+import { Star } from "lucide-react";
+import { useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
 
 interface StarRatingProps {
   storeId: number;
@@ -91,7 +91,7 @@ export const StarRating: React.FC<StarRatingProps> = ({ storeId }) => {
         body: JSON.stringify({
           storeId,
           rating: selectedRating,
-          userId: session.user.id,
+          userId: session?.user?.id,
         }),
         headers: { "Content-Type": "application/json" },
       });
@@ -116,10 +116,11 @@ export const StarRating: React.FC<StarRatingProps> = ({ storeId }) => {
   };
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col 
+    
+    items-center">
       <span className="mr-2 font-semibold lg:hidden">Your Rating:</span>
       <div className="flex items-center">
-        <span className="mr-2 hidden font-semibold lg:block">Your Rating:</span>
         {[1, 2, 3, 4, 5].map((star) => (
           <Star
             key={star}
@@ -135,7 +136,16 @@ export const StarRating: React.FC<StarRatingProps> = ({ storeId }) => {
             onMouseLeave={() => rating === null && setHoverRating(0)}
             onClick={() => handleStarClick(star)}
           />
-        ))}
+        ))}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <span className="mr-2 hidden text-sm font-bold sm:block">
+          {totalRatings} Rating
+        </span>
+      </div>
+      <br />
+      <div className="flex items-center">
+        <span className="mr-2 hidden font-bold lg:block">
+          Average Rating: {averageRating.toFixed(1)}
+        </span>
       </div>
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent className="w-11/12 sm:max-w-[425px]">
@@ -153,12 +163,12 @@ export const StarRating: React.FC<StarRatingProps> = ({ storeId }) => {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-      <div className="mt-2 text-sm text-muted-foreground">
+      {/* <div className="mt-2 text-sm text-muted-foreground">
         <span className="font-semibold">{averageRating.toFixed(1)} / 5</span>
         <span className="ml-2">
           ({totalRatings} {totalRatings === 1 ? "rating" : "ratings"})
         </span>
-      </div>
+      </div> */}
     </div>
   );
 };

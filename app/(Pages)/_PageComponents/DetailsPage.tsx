@@ -529,13 +529,18 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
               <>
                 <Button
                   asChild
-                  className="text-lg font-medium text-app-main"
+                  className="rounded-lg border border-black bg-transparent text-lg font-medium text-app-main transition-colors duration-200 hover:bg-[#E11D48] hover:text-white"
+                  style={{ width: "200px" }} // Adjust width here
                   variant={"ghost"}
                 >
-                  <Link href={`${detailsData.ref_link}`} target="_blank">
+                  <Link
+                    href={`${detailsData.ref_link}`}
+                    className="block flex h-full items-center justify-center no-underline"
+                  >
                     Visit {detailsData.name} Store
                   </Link>
                 </Button>
+
                 <StarRating storeId={detailsData.storeId} />
               </>
             )}
@@ -611,8 +616,8 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                     offset={-140}
                     className={`${
                       isStore &&
-                      detailsData.faq &&
-                      JSON.parse(detailsData?.faq).length > 0
+                      detailsData?.faq &&
+                      JSON.parse(detailsData?.faq)?.length > 0
                         ? ""
                         : "hidden"
                     } rounded-lg border p-2`}
@@ -1196,8 +1201,8 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
               />
             )}
             {isStore &&
-              detailsData.faq &&
-              JSON.parse(detailsData?.faq).length > 0 && (
+              detailsData?.faq &&
+              JSON.parse(detailsData?.faq)?.length > 0 && (
                 <section id="faqs" className={`${commonStyles} xl:w-11/12`}>
                   <h2 className="mb-4 w-full text-xl font-bold sm:text-2xl">
                     FAQS
@@ -1207,7 +1212,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                     collapsible
                     className="flex flex-col gap-y-6"
                   >
-                    {JSON.parse(detailsData?.faq).map(
+                    {JSON.parse(detailsData?.faq)?.map(
                       (
                         faq: { question: string; answer: string },
                         index: number,
