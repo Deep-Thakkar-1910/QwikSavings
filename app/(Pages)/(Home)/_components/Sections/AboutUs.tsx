@@ -9,6 +9,8 @@ const AboutUs = () => {
       <div className="mx-auto flex max-w-screen-xl flex-col px-8 sm:px-10 lg:flex-row lg:px-12 xl:px-6 2xl:px-0">
         <div className="flex w-full flex-col items-start gap-4 text-justify lg:w-1/2">
           <h2 className="mx-auto text-start text-xl font-bold sm:text-2xl">
+        <div className="flex w-full flex-col items-start gap-4 text-justify lg:w-1/2">
+          <h2 className="mx-auto text-start text-xl font-bold sm:text-2xl">
             Qwik Savings - Shop Smarter, Save Faster
           </h2>
 

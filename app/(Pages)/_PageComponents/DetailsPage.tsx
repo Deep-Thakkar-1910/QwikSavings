@@ -1085,7 +1085,16 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                           </div>
                           {coupon.type === "Deal" && (
                             <>
-                              <Button className="hidden min-h-10 w-full cursor-not-allowed rounded-xl bg-neutral-500 text-base font-semibold hover:bg-neutral-500 sm:block sm:min-w-40 md:min-w-64">
+                              <Button
+                                onClick={() => {
+                                  handleCouponUse(
+                                    coupon.couponId,
+                                    "Deal",
+                                    coupon,
+                                  );
+                                }}
+                                className="hidden min-h-10 w-full cursor-pointer rounded-xl bg-neutral-500 text-base font-semibold hover:bg-neutral-500 sm:block sm:min-w-40 md:min-w-64"
+                              >
                                 Get Deal
                               </Button>
                               <ChevronRight className="size-6 w-full cursor-not-allowed text-neutral-500  sm:hidden" />
@@ -1093,7 +1102,16 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                           )}
                           {coupon.type === "Coupon" && (
                             <>
-                              <div className="group relative hidden min-h-10 w-full min-w-28 cursor-not-allowed overflow-hidden rounded-md bg-app-bg-main p-2 dark:bg-app-dark sm:grid sm:min-h-fit sm:min-w-40 md:min-w-64">
+                              <div
+                                onClick={() => {
+                                  handleCouponUse(
+                                    coupon.couponId,
+                                    "Coupon",
+                                    coupon,
+                                  );
+                                }}
+                                className="group relative hidden min-h-10 w-full min-w-28 cursor-pointer overflow-hidden rounded-md bg-app-bg-main p-2 dark:bg-app-dark sm:grid sm:min-h-fit sm:min-w-40 md:min-w-64"
+                              >
                                 <p
                                   className={`place-self-end text-base font-semibold uppercase tracking-widest ${
                                     !coupon.coupon_code && "min-h-5"
