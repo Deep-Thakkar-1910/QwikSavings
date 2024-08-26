@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Form,
   FormControl,
@@ -51,21 +51,43 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { AxiosError } from "axios";
+import { useActiveFestival } from "@/hooks/useFestivalActive";
 
 type InputType = z.infer<typeof CreateUserCouponFormSchema>;
 
-interface CreateUserCouponFormProps {
-  categories: { name: string; categoryId: number }[];
-  stores: { name: string; storeId: number }[];
-}
-
-const CreateUserCouponForm = ({
-  categories,
-  stores,
-}: CreateUserCouponFormProps) => {
+const CreateUserCouponForm = ({}) => {
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [categories, setCategories] = useState<Record<string, any>[]>([]);
+  const [stores, setStores] = useState<Record<string, any>[]>([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const categoriesResult = await fetch(
+          `${process.env.BASE_URL}/api/getcategories?_=${new Date().getTime()}`,
+          {
+            cache: "no-cache",
+          },
+        );
+        const storesResult = await fetch(
+          `${process.env.BASE_URL}/api/getstores?_=${new Date().getTime()}`,
+          {
+            cache: "no-cache",
+          },
+        );
+        const categoriesData = await categoriesResult.json();
+        const storesData = await storesResult.json();
+        setCategories(categoriesData.categories || []);
+        setStores(storesData.stores || []);
+      } catch (e) {
+        console.error(e);
+      }
+    };
 
+    fetchData();
+  }, []);
+
+  // Use the 'categories' and 'stores' state variables in your code as needed
   const form = useForm<InputType>({
     resolver: zodResolver(CreateUserCouponFormSchema),
     defaultValues: {

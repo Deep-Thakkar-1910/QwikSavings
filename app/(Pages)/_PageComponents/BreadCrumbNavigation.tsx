@@ -20,7 +20,7 @@ const BreadCrumbNavigation = () => {
 
   return (
     <Breadcrumb
-      className={`my-4 hidden place-self-start px-8 lg:block lg:px-12 ${isActiveFestival ? "mb-4 translate-y-10 transition-transform duration-200 ease-linear" : "mb-0 translate-y-0 transition-transform duration-200 ease-linear"}`}
+      className={`my-4 hidden place-self-start px-8 lg:block lg:px-12 ${isActiveFestival ? "mb-0 translate-y-10 transition-transform duration-200 ease-linear" : "translate-y-0 transition-transform duration-200 ease-linear"}`}
     >
       <BreadcrumbList className="flex gap-0 text-xs text-black dark:text-slate-200 sm:text-sm lg:text-base">
         <BreadcrumbItem>

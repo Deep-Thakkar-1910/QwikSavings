@@ -29,7 +29,7 @@ const BlogDisplay = () => {
           {data?.map((blog: Record<string, any>) => (
             <div
               key={blog.blogId}
-              className="flex max-w-72 flex-col rounded-xl bg-popover shadow-md sm:max-w-80 lg:max-w-full"
+              className="flex max-w-72  flex-col rounded-xl bg-popover shadow-md sm:max-w-80 lg:max-w-full"
             >
               {blog.thumbnail_url ? (
                 <Image

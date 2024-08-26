@@ -440,7 +440,9 @@ const EventDetails = () => {
               {data?.name}
             </h1>
           </div>
-          <section className="mb-6 flex w-full flex-col items-start px-4 sm:px-8 lg:px-12">
+          <section
+            className={`mb-6 flex w-full flex-col items-start px-4 sm:px-8 lg:px-12 ${isActiveFestival ? "!mb-14" : ""}`}
+          >
             {data?.cover_url && (
               <Image
                 src={data?.cover_url}
@@ -452,17 +454,19 @@ const EventDetails = () => {
             )}
             <div className="relative flex w-full flex-col items-start gap-x-6 lg:flex-row lg:pt-10">
               <aside className="hidden flex-col items-center gap-y-8 lg:flex lg:w-1/4">
-                <Image
-                  src={
-                    data?.logo_url
-                      ? data?.logo_url
-                      : "https://via.placeholder.com/600x400"
-                  }
-                  alt={`Event Logo`}
-                  width={400}
-                  height={400}
-                  className="size-40 rounded-full"
-                />
+                <div className="size-64 rounded-full border border-black bg-popover p-1 dark:border-slate-200 xl:size-72">
+                  <Image
+                    src={
+                      data.logo_url
+                        ? data.logo_url
+                        : "https://via.placeholder.com/600x400"
+                    }
+                    alt={`Event Logo`}
+                    width={400}
+                    height={400}
+                    className="aspect-square w-full rounded-full"
+                  />
+                </div>
                 <div
                   className={`${commonStyles} ${data?.description ? "" : "hidden"}`}
                 >

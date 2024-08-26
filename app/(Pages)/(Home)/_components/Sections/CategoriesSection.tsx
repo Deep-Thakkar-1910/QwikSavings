@@ -132,10 +132,10 @@ const CategoriesSection: React.FC<CategoriesSectionProps> = ({
                   width={1920}
                   height={1080}
                   alt="Logo"
-                  className="aspect-video h-36 rounded-tl-lg rounded-tr-lg object-cover lg:h-28 xl:h-32"
+                  className="aspect-video h-36 rounded-tl-xl rounded-tr-xl object-cover lg:h-28 xl:h-32"
                 />
               ) : (
-                <div className="aspect-video h-36 bg-popover lg:h-28 xl:h-32" />
+                <div className="aspect-video h-36 rounded-tl-xl rounded-tr-xl bg-popover lg:h-28 xl:h-32" />
               )}
             </div>
 
@@ -168,7 +168,7 @@ const CategoriesSection: React.FC<CategoriesSectionProps> = ({
                   href={`/stores/${coupon.store.name}`}
                   className="flex items-start gap-x-4"
                 >
-                  <span className="w-3/4 break-words">{coupon.store.name}</span>
+                  <span className="w-4/5">{coupon.store.name}</span>
                 </Link>
                 <span>
                   {couponUserCounts[coupon.couponId] || coupon.user_count} Used
@@ -185,7 +185,7 @@ const CategoriesSection: React.FC<CategoriesSectionProps> = ({
               )}
               {coupon.type === "Coupon" && (
                 <div
-                  className="group relative grid min-h-10 w-full min-w-28 cursor-pointer overflow-hidden rounded-md bg-app-bg-main p-2 text-white dark:bg-app-dark dark:text-slate-200 sm:min-h-fit sm:min-w-40"
+                  className="group relative grid min-h-10 w-full min-w-28 cursor-pointer overflow-hidden rounded-md bg-app-bg-main p-2 text-black dark:bg-app-dark dark:text-slate-200 sm:min-h-fit sm:min-w-40"
                   onClick={() => {
                     handleCouponUse(coupon);
                   }}

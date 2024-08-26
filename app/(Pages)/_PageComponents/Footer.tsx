@@ -6,7 +6,7 @@ import Socials from "./Socials";
 
 const Footer = () => {
   return (
-    <footer className="flex w-full flex-col gap-6 border-t-2 border-app-main bg-popover px-4 py-6 sm:px-8">
+    <footer className="relative -z-50 flex w-full flex-col gap-6 border-t-2 border-app-main bg-popover px-4 py-6 sm:px-8">
       <div className="mx-auto flex w-full flex-col items-center gap-6 lg:flex-row lg:items-start lg:justify-between xl:justify-around">
         {/* Logo and motto */}
         <div className="flex w-2/3 flex-col items-center gap-y-4 lg:w-1/4">
