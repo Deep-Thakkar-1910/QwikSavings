@@ -131,7 +131,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
     notFound();
   }
 
-  const commonStyles = "w-full rounded-xl bg-popover p-4 shadow-lg";
+  const commonStyles = "w-full rounded-xl bg-popover p-4 py-6 shadow-lg";
 
   // NOTE: this is for getting the lengths of  deals and coupons
   const dealsLength =
@@ -553,7 +553,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
             <div
               className={`${commonStyles} ${detailsData.description ? "" : "hidden"}`}
             >
-              <h2 className="text-xl font-bold">
+              <h2 className="mb-2 text-xl font-bold">
                 About {isStore && detailsData.name}
               </h2>
               <p>{detailsData.description}</p>
@@ -707,7 +707,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                   {blocks.map((block) => (
                     <Button
                       key={block}
-                      className="!size-4 bg-neutral-500/40 text-xs font-semibold text-black hover:bg-neutral-500/40 dark:text-slate-200"
+                      className="!size-4 bg-neutral-400/40 text-xs font-semibold text-black hover:bg-neutral-400/40 dark:text-slate-200"
                       asChild
                     >
                       <Link href={`/stores?like=${block}`}>
@@ -740,8 +740,8 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                   onClick={() => handleTabChange("all")}
                   className={
                     selectedTab === "all"
-                      ? " text-white"
-                      : "bg-transparent text-app-main shadow-none hover:bg-app-main hover:text-white"
+                      ? " border-b-2 border-b-app-main bg-popover text-app-main hover:bg-popover"
+                      : "bg-transparent text-app-main shadow-none hover:bg-popover hover:text-app-main hover:shadow-sm"
                   }
                 >
                   All ({detailsData.coupons?.length || 0})
@@ -750,8 +750,8 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                   onClick={() => handleTabChange("coupon")}
                   className={
                     selectedTab === "coupon"
-                      ? "bg-app-main text-white"
-                      : "bg-transparent text-app-main shadow-none hover:bg-app-main hover:text-white"
+                      ? "border-b-2 border-b-app-main bg-popover text-app-main hover:bg-popover"
+                      : "bg-transparent text-app-main shadow-none hover:bg-popover hover:text-app-main hover:shadow-sm"
                   }
                 >
                   Coupons ({couponsLength || 0})
@@ -760,8 +760,8 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                   onClick={() => handleTabChange("deal")}
                   className={
                     selectedTab === "deal"
-                      ? "bg-app-main text-white"
-                      : "bg-transparent text-app-main shadow-none hover:bg-app-main hover:text-white"
+                      ? "border-b-2 border-b-app-main bg-popover text-app-main hover:bg-popover"
+                      : "bg-transparent text-app-main shadow-none hover:bg-popover hover:text-app-main hover:shadow-sm"
                   }
                 >
                   Deals ({dealsLength || 0})
@@ -785,7 +785,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                   <AccordionItem
                     key={coupon.couponId}
                     value={coupon.couponId}
-                    className="grid min-h-40 place-items-center rounded-xl border-2 border-neutral-200 bg-popover shadow-sm sm:min-h-56"
+                    className="min-h-40 rounded-xl border-2 border-neutral-200 bg-popover pt-4 shadow-sm sm:min-h-56"
                   >
                     <div className="group/accordion relative flex w-full items-center justify-between gap-x-6 gap-y-4 px-2 pb-2 pt-3 sm:px-6">
                       <div className="flex items-start gap-x-2 sm:gap-x-6">
@@ -837,7 +837,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                         <p className="absolute bottom-2 right-2 text-sm tabular-nums text-muted-foreground sm:hidden">
                           {couponUserCounts[coupon.couponId] || 0} Used
                         </p>
-                        <div className="hidden items-center gap-x-4 sm:flex sm:text-base md:gap-x-20 lg:text-lg">
+                        <div className="hidden items-center gap-x-4 sm:flex sm:text-base md:gap-x-16 lg:text-lg">
                           <p className="flex w-full items-center gap-x-1  text-emerald-500">
                             <Verified className="inline-flex size-4 text-emerald-500" />
                             Verified
@@ -882,7 +882,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                         {coupon.type === "Deal" && (
                           <>
                             <Button
-                              className="hidden min-h-10 w-full min-w-40 rounded-xl bg-app-main text-base font-semibold text-white dark:text-slate-200 sm:block sm:min-w-40 md:min-w-64"
+                              className="hidden min-h-12 w-full min-w-40 rounded-xl bg-app-main text-base font-semibold text-white dark:text-slate-200 sm:block sm:min-w-40 md:min-w-44"
                               onClick={() => {
                                 handleCouponUse(
                                   coupon.couponId,
@@ -908,7 +908,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                         {coupon.type === "Coupon" && (
                           <>
                             <div
-                              className="group relative hidden min-h-10 w-full min-w-28 cursor-pointer overflow-hidden rounded-xl bg-app-bg-main p-2 dark:bg-app-dark sm:grid sm:min-h-fit sm:min-w-40 md:min-w-64"
+                              className="group relative hidden !min-h-12 w-full min-w-28 cursor-pointer overflow-hidden rounded-xl bg-app-bg-main p-2 dark:bg-app-dark sm:grid sm:min-h-fit sm:min-w-40 md:min-w-44"
                               onClick={() => {
                                 handleCouponUse(
                                   coupon.couponId,
@@ -1025,7 +1025,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                     <AccordionItem
                       key={coupon.couponId}
                       value={coupon.couponId}
-                      className="grid min-h-40 place-items-center rounded-xl border-2 border-neutral-200 bg-popover shadow-sm sm:min-h-56"
+                      className="min-h-40 rounded-xl border-2 border-neutral-200 bg-popover pt-4 shadow-sm sm:min-h-56"
                     >
                       <div className="group/accordion relative flex w-full items-center justify-between gap-x-6 gap-y-4 px-2 pb-2 pt-3 text-muted-foreground sm:px-6">
                         <div className="flex items-start gap-6 sm:flex-row">
@@ -1073,7 +1073,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                           <p className="absolute bottom-2 right-2 text-sm tabular-nums text-muted-foreground sm:hidden">
                             {couponUserCounts[coupon.couponId] || 0} Used
                           </p>
-                          <div className=" hidden items-center gap-x-7 sm:flex sm:flex-row md:gap-x-20">
+                          <div className=" hidden items-center gap-x-7 sm:flex sm:flex-row md:gap-x-16">
                             <p className="flex w-fit items-center gap-x-1 text-sm md:text-base">
                               <PiSmileySadBold className="inline-flex size-4 text-app-main" />
                               Expired
@@ -1093,7 +1093,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                                     coupon,
                                   );
                                 }}
-                                className="hidden min-h-10 w-full cursor-pointer rounded-xl bg-neutral-500 text-base font-semibold hover:bg-neutral-500 sm:block sm:min-w-40 md:min-w-64"
+                                className="hidden min-h-12 w-full cursor-pointer rounded-xl bg-neutral-500 text-base font-semibold hover:bg-neutral-500 sm:block sm:min-w-40 md:min-w-44"
                               >
                                 Get Deal
                               </Button>
@@ -1110,7 +1110,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                                     coupon,
                                   );
                                 }}
-                                className="group relative hidden min-h-10 w-full min-w-28 cursor-pointer overflow-hidden rounded-md bg-app-bg-main p-2 dark:bg-app-dark sm:grid sm:min-h-fit sm:min-w-40 md:min-w-64"
+                                className="group relative hidden !min-h-12 w-full min-w-28 cursor-pointer overflow-hidden rounded-md bg-app-bg-main p-2 dark:bg-app-dark sm:grid sm:min-h-fit sm:min-w-40 md:min-w-44"
                               >
                                 <p
                                   className={`place-self-end text-base font-semibold uppercase tracking-widest ${
@@ -1193,7 +1193,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
             <div
               className={`${commonStyles} ${detailsData.description ? "lg:hidden" : "hidden"} border-2 border-neutral-200`}
             >
-              <h2 className="text-xl font-bold">About</h2>
+              <h2 className="mb-2 text-xl font-bold">About</h2>
               <p>{detailsData.description}</p>
             </div>
 

@@ -118,6 +118,13 @@ const EventDetails = () => {
     Record<number, CouponReaction>
   >({});
 
+  // success ratio like/dislike count ratio
+  const successRatio = (like: number, dislike: number) => {
+    like = like;
+    dislike = dislike;
+    return like === 0 || dislike === 0 ? 0 : (like / (like + dislike)) * 100; // success ratio in percentage
+  };
+
   //  NOTE: this is for fetching popular stores and top categories
   useEffect(() => {
     const fetchPopularStoreData = async () => {
@@ -533,7 +540,7 @@ const EventDetails = () => {
                     {blocks.map((block) => (
                       <Button
                         key={block}
-                        className="!size-4 bg-neutral-500/40 text-xs font-semibold text-black hover:bg-neutral-500/40 dark:text-slate-200"
+                        className="!size-4 bg-neutral-400/40 text-xs font-semibold text-black hover:bg-neutral-400/40 dark:text-slate-200"
                         asChild
                       >
                         <Link href={`/stores?like=${block}`}>
@@ -566,13 +573,13 @@ const EventDetails = () => {
                     <AccordionItem
                       key={coupon.couponId}
                       value={coupon.couponId}
-                      className="rounded-lg bg-popover shadow-md"
+                      className="min-h-40 rounded-xl border-2 border-neutral-200 bg-popover pt-4 shadow-sm sm:min-h-56"
                     >
                       <div className="group/accordion relative flex w-full items-center justify-between gap-x-6 gap-y-4 px-2 pb-2 pt-3 sm:px-6">
                         <div className="flex items-start gap-x-2 sm:gap-x-6">
                           {/* Coupon image */}
-                          <div className="flex flex-col items-start gap-y-2">
-                            <div className="flex w-16 flex-col items-center border sm:w-20">
+                          <div className="flex flex-col items-start gap-y-2 sm:gap-y-6">
+                            <div className="flex w-16 flex-col items-center border sm:w-24">
                               <Image
                                 src={
                                   coupon.store.logo_url ??
@@ -600,15 +607,15 @@ const EventDetails = () => {
                           </div>
                           {/* Coupon title */}
 
-                          <p className="max-w-36 translate-y-4 font-semibold tracking-tight first-letter:uppercase sm:max-w-full sm:translate-y-6 sm:tracking-wide">
+                          <p className="max-w-36 translate-y-4 font-semibold tracking-tight first-letter:uppercase sm:max-w-full sm:translate-y-6 sm:text-lg sm:tracking-wide lg:text-xl">
                             {coupon.title}
                           </p>
                         </div>
 
                         {/* Coupon code users and bookmark */}
-                        <div className="flex flex-col items-end justify-between gap-4">
+                        <div className="flex flex-col items-end justify-between gap-8">
                           <Heart
-                            className={`absolute right-1 top-1 size-4 cursor-pointer text-app-main transition-all duration-300 ease-linear ${
+                            className={`absolute right-1 top-1 size-4 cursor-pointer text-app-main transition-all duration-300 ease-linear sm:-top-2 sm:right-2 ${
                               bookmarkedCoupons.includes(coupon.couponId)
                                 ? "fill-app-main text-app-main"
                                 : "opacity-100 group-hover/accordion:opacity-100 lg:opacity-0 lg:hover:fill-app-main"
@@ -618,14 +625,17 @@ const EventDetails = () => {
                           <p className="absolute bottom-2 right-2 text-sm tabular-nums text-muted-foreground sm:hidden">
                             {couponUserCounts[coupon.couponId] || 0} Used
                           </p>
-                          <div className="hidden items-center gap-x-2 sm:flex">
-                            <p className="flex w-fit items-center gap-x-1 text-sm text-emerald-500">
+                          <div className="hidden items-center gap-x-4 sm:flex sm:text-base md:gap-x-16 lg:text-lg">
+                            <p className="flex w-full items-center gap-x-1  text-emerald-500">
                               <Verified className="inline-flex size-4 text-emerald-500" />
                               Verified
                             </p>
-                            <p className="flex items-center gap-x-1 text-sm tabular-nums text-muted-foreground lg:text-base">
+                            <p className="flex w-full items-center gap-x-1 text-muted-foreground">
                               <User className="size-4" />
-                              {couponUserCounts[coupon.couponId] || 0} Used
+                              <span>
+                                {couponUserCounts[coupon.couponId] || 0}
+                              </span>
+                              <span>Used</span>
                             </p>
                           </div>
                           <Dialog
@@ -660,7 +670,7 @@ const EventDetails = () => {
                           {coupon.type === "Deal" && (
                             <>
                               <Button
-                                className="hidden min-h-10 w-full bg-app-main text-base font-semibold text-white dark:text-slate-200 sm:block"
+                                className="hidden min-h-12 w-full min-w-40 rounded-xl bg-app-main text-base font-semibold text-white dark:text-slate-200 sm:block sm:min-w-40 md:min-w-44"
                                 onClick={() => {
                                   handleCouponUse(
                                     coupon.couponId,
@@ -686,7 +696,7 @@ const EventDetails = () => {
                           {coupon.type === "Coupon" && (
                             <>
                               <div
-                                className="group relative hidden min-h-10 w-full min-w-28 cursor-pointer overflow-hidden rounded-xl bg-app-bg-main p-2 dark:bg-app-dark sm:grid sm:min-h-fit sm:min-w-40"
+                                className="group relative hidden !min-h-12 w-full min-w-28 cursor-pointer overflow-hidden rounded-xl bg-app-bg-main p-2 dark:bg-app-dark sm:grid sm:min-h-fit sm:min-w-40 md:min-w-44"
                                 onClick={() => {
                                   handleCouponUse(
                                     coupon.couponId,
@@ -725,43 +735,56 @@ const EventDetails = () => {
                               />
                             </>
                           )}
-                          <div className="hidden items-center gap-x-6 place-self-center sm:flex">
-                            <button
-                              onClick={() =>
-                                handleReaction(coupon.couponId, "LIKE")
-                              }
-                              className="flex items-center gap-x-2"
-                            >
-                              <ThumbsUp
-                                className={
-                                  userReactions[coupon.couponId] === "LIKE"
-                                    ? "size-4 fill-emerald-500 text-emerald-500"
-                                    : "size-4 text-emerald-500 transition-colors duration-200 ease-linear hover:fill-emerald-500"
+                          <div className=" hidden gap-x-6 pl-2 text-sm sm:flex md:gap-x-12 md:text-base lg:text-lg">
+                            <p className="w-4/5 text-muted-foreground">
+                              <span className="tabular-nums">
+                                {successRatio(
+                                  couponReactions[coupon.couponId]
+                                    ?.like_count || 0,
+                                  couponReactions[coupon.couponId]
+                                    ?.dislike_count || 0,
+                                )}
+                              </span>{" "}
+                              <span>% Success</span>
+                            </p>
+                            <div className="hidden items-center gap-x-2 place-self-center sm:flex">
+                              <button
+                                onClick={() =>
+                                  handleReaction(coupon.couponId, "LIKE")
                                 }
-                              />
-                              <span className="text-muted-foreground">
-                                {couponReactions[coupon.couponId]?.like_count ||
-                                  0}
-                              </span>
-                            </button>
-                            <button
-                              onClick={() =>
-                                handleReaction(coupon.couponId, "DISLIKE")
-                              }
-                              className="flex items-center gap-x-2"
-                            >
-                              <ThumbsDown
-                                className={
-                                  userReactions[coupon.couponId] === "DISLIKE"
-                                    ? "size-4 fill-app-main text-app-main"
-                                    : "size-4 text-app-main transition-colors duration-300 ease-linear hover:fill-app-main"
+                                className="flex items-center gap-x-2"
+                              >
+                                <ThumbsUp
+                                  className={
+                                    userReactions[coupon.couponId] === "LIKE"
+                                      ? "size-4 fill-emerald-500 text-emerald-500"
+                                      : "size-4 text-emerald-500 transition-colors duration-200 ease-linear hover:fill-emerald-500"
+                                  }
+                                />
+                                <span className="text-muted-foreground">
+                                  {couponReactions[coupon.couponId]
+                                    ?.like_count || 0}
+                                </span>
+                              </button>
+                              <button
+                                onClick={() =>
+                                  handleReaction(coupon.couponId, "DISLIKE")
                                 }
-                              />
-                              <span className="text-muted-foreground">
-                                {couponReactions[coupon.couponId]
-                                  ?.dislike_count || 0}
-                              </span>
-                            </button>
+                                className="flex items-center gap-x-2"
+                              >
+                                <ThumbsDown
+                                  className={
+                                    userReactions[coupon.couponId] === "DISLIKE"
+                                      ? "size-4 fill-app-main text-app-main"
+                                      : "size-4 text-app-main transition-colors duration-300 ease-linear hover:fill-app-main"
+                                  }
+                                />
+                                <span className="text-muted-foreground">
+                                  {couponReactions[coupon.couponId]
+                                    ?.dislike_count || 0}
+                                </span>
+                              </button>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -791,13 +814,13 @@ const EventDetails = () => {
                         <AccordionItem
                           key={coupon.couponId}
                           value={coupon.couponId}
-                          className="rounded-lg bg-popover shadow-md"
+                          className="min-h-40 rounded-xl border-2 border-neutral-200 bg-popover pt-4 shadow-sm sm:min-h-56"
                         >
-                          <div className="group/accordion relative flex w-full items-center justify-between gap-x-6 gap-y-4 px-2 py-2 pb-2 pt-3 text-muted-foreground sm:px-6">
+                          <div className="group/accordion relative flex w-full items-center justify-between gap-x-6 gap-y-4 px-2 pb-2 pt-3 text-muted-foreground sm:px-6">
                             <div className="flex items-start gap-6 sm:flex-row">
                               {/* Coupon image */}
-                              <div className="flex flex-col items-start gap-y-2 sm:items-center">
-                                <div className="flex w-16 flex-col items-center border sm:w-20">
+                              <div className="flex flex-col items-start gap-y-2 sm:items-center sm:gap-y-6">
+                                <div className="flex w-16 flex-col items-center border sm:w-24">
                                   <Image
                                     src={
                                       coupon.store.logo_url ??
@@ -827,9 +850,9 @@ const EventDetails = () => {
                             </div>
 
                             {/* Coupon code users and bookmark */}
-                            <div className="flex flex-col items-end justify-between gap-4">
+                            <div className="flex flex-col items-end justify-between gap-8">
                               <Heart
-                                className={`absolute right-1 top-1 size-4 cursor-pointer text-app-main transition-all duration-300 ease-linear ${
+                                className={`absolute right-1 top-1 size-4 cursor-pointer text-app-main transition-all duration-300 ease-linear sm:-top-2 sm:right-2 ${
                                   bookmarkedCoupons.includes(coupon.couponId)
                                     ? "fill-app-main text-app-main"
                                     : "opacity-100 group-hover/accordion:opacity-100 lg:opacity-0 lg:hover:fill-app-main"
@@ -839,19 +862,28 @@ const EventDetails = () => {
                               <p className="absolute bottom-2 right-2 text-sm tabular-nums text-muted-foreground sm:hidden">
                                 {couponUserCounts[coupon.couponId] || 0} Used
                               </p>
-                              <div className=" hidden items-center gap-x-2 sm:flex sm:flex-row">
-                                <p className="flex w-fit items-center gap-x-1 text-sm">
+                              <div className=" hidden items-center gap-x-7 sm:flex sm:flex-row md:gap-x-16">
+                                <p className="flex w-fit items-center gap-x-1 text-sm md:text-base">
                                   <PiSmileySadBold className="inline-flex size-4 text-app-main" />
                                   Expired
                                 </p>
-                                <p className="flex items-center gap-x-1 text-sm tabular-nums text-muted-foreground">
+                                <p className="flex items-center gap-x-1 text-sm tabular-nums text-muted-foreground md:text-base">
                                   <User className="size-4" />
                                   {couponUserCounts[coupon.couponId] || 0} Used
                                 </p>
                               </div>
                               {coupon.type === "Deal" && (
                                 <>
-                                  <Button className="hidden min-h-10 w-full cursor-not-allowed rounded-xl bg-neutral-500 text-base font-semibold hover:bg-neutral-500 sm:block">
+                                  <Button
+                                    onClick={() => {
+                                      handleCouponUse(
+                                        coupon.couponId,
+                                        "Deal",
+                                        coupon,
+                                      );
+                                    }}
+                                    className="hidden min-h-12 w-full cursor-pointer rounded-xl bg-neutral-500 text-base font-semibold hover:bg-neutral-500 sm:block sm:min-w-40 md:min-w-44"
+                                  >
                                     Get Deal
                                   </Button>
                                   <ChevronRight className="size-6 w-full cursor-not-allowed text-neutral-500  sm:hidden" />
@@ -859,7 +891,16 @@ const EventDetails = () => {
                               )}
                               {coupon.type === "Coupon" && (
                                 <>
-                                  <div className="group relative hidden min-h-10 w-full min-w-28 cursor-not-allowed overflow-hidden rounded-md bg-app-bg-main p-2 dark:bg-app-dark sm:grid sm:min-h-fit sm:min-w-40">
+                                  <div
+                                    onClick={() => {
+                                      handleCouponUse(
+                                        coupon.couponId,
+                                        "Coupon",
+                                        coupon,
+                                      );
+                                    }}
+                                    className="group relative hidden !min-h-12 w-full min-w-28 cursor-pointer overflow-hidden rounded-md bg-app-bg-main p-2 dark:bg-app-dark sm:grid sm:min-h-fit sm:min-w-40 md:min-w-44"
+                                  >
                                     <p
                                       className={`place-self-end text-base font-semibold uppercase tracking-widest ${
                                         !coupon.coupon_code && "min-h-5"
@@ -881,34 +922,48 @@ const EventDetails = () => {
                                   <ChevronRight className="size-6 w-full cursor-not-allowed text-neutral-500  sm:hidden" />
                                 </>
                               )}
-                              <div className="hidden items-center gap-x-6 place-self-center sm:flex">
-                                <button className="flex items-center gap-x-2">
-                                  <ThumbsUp
-                                    className={
-                                      userReactions[coupon.couponId] === "LIKE"
-                                        ? "size-4 text-neutral-500"
-                                        : "size-4 text-neutral-500"
-                                    }
-                                  />
-                                  <span className="text-muted-foreground">
-                                    {couponReactions[coupon.couponId]
-                                      ?.like_count || 0}
-                                  </span>
-                                </button>
-                                <button className="flex items-center gap-x-2">
-                                  <ThumbsDown
-                                    className={
-                                      userReactions[coupon.couponId] ===
-                                      "DISLIKE"
-                                        ? "size-4 text-neutral-500"
-                                        : "size-4 text-neutral-500"
-                                    }
-                                  />
-                                  <span className="text-muted-foreground">
-                                    {couponReactions[coupon.couponId]
-                                      ?.dislike_count || 0}
-                                  </span>
-                                </button>
+                              <div className="hidden gap-x-6 pl-2 text-sm sm:flex md:gap-x-12 md:text-base lg:text-lg">
+                                <p className="text-muted-foreground">
+                                  <span className="tabular-nums">
+                                    {successRatio(
+                                      couponReactions[coupon.couponId]
+                                        ?.like_count || 0,
+                                      couponReactions[coupon.couponId]
+                                        ?.dislike_count || 0,
+                                    )}
+                                  </span>{" "}
+                                  <span>% Success</span>
+                                </p>
+                                <div className="hidden items-center gap-x-4 place-self-center sm:flex">
+                                  <button className="flex items-center gap-x-2">
+                                    <ThumbsUp
+                                      className={
+                                        userReactions[coupon.couponId] ===
+                                        "LIKE"
+                                          ? "size-4 text-neutral-500"
+                                          : "size-4 text-neutral-500"
+                                      }
+                                    />
+                                    <span className="text-muted-foreground">
+                                      {couponReactions[coupon.couponId]
+                                        ?.like_count || 0}
+                                    </span>
+                                  </button>
+                                  <button className="flex items-center gap-x-2">
+                                    <ThumbsDown
+                                      className={
+                                        userReactions[coupon.couponId] ===
+                                        "DISLIKE"
+                                          ? "size-4 text-neutral-500"
+                                          : "size-4 text-neutral-500"
+                                      }
+                                    />
+                                    <span className="text-muted-foreground">
+                                      {couponReactions[coupon.couponId]
+                                        ?.dislike_count || 0}
+                                    </span>
+                                  </button>
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -986,7 +1041,7 @@ const PopularItems: React.FC<PopularItemProps> = ({
               }
               key={item.id}
             >
-              <Badge className="bg-neutral-500/40 font-medium text-black hover:bg-neutral-500/40 dark:text-slate-200">
+              <Badge className="bg-neutral-400/40 font-medium text-black hover:bg-neutral-400/40 dark:text-slate-200">
                 {item.name}
               </Badge>
             </Link>

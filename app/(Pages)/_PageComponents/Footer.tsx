@@ -55,7 +55,7 @@ const Footer = () => {
           <p className="text-md mx-auto text-center text-muted-foreground lg:mx-0 lg:text-start">
             To get the verified and hand tested Coupons or deals alerts.
           </p>
-          <div className="flex w-full max-w-80 items-center justify-between rounded-full border-2 border-app-main pl-2">
+          <div className="flex w-full max-w-80 items-center justify-between rounded-full border-2 border-app-main pl-2 xl:max-w-[23rem]">
             <input
               type="text"
               placeholder="Enter Your Email Address"
