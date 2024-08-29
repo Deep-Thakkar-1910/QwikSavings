@@ -1201,6 +1201,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
 
             {isStore &&
               detailsData.faq &&
+              Array.isArray(JSON.parse(detailsData?.faq)) &&
               JSON.parse(detailsData?.faq)?.length > 0 && (
                 <section
                   id="faqs"
