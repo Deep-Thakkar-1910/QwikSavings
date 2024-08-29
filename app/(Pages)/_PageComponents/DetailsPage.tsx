@@ -623,7 +623,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                     className={`${
                       isStore &&
                       detailsData.faq &&
-                      JSON.parse(detailsData?.faq).length > 0
+                      JSON.parse(detailsData?.faq)?.length > 0
                         ? ""
                         : "hidden"
                     } rounded-lg border p-2`}
@@ -1201,7 +1201,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
 
             {isStore &&
               detailsData.faq &&
-              JSON.parse(detailsData?.faq).length > 0 && (
+              JSON.parse(detailsData?.faq)?.length > 0 && (
                 <section
                   id="faqs"
                   className={`${commonStyles} border-2 border-neutral-200 xl:w-11/12`}
@@ -1214,7 +1214,10 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                     collapsible
                     className="flex flex-col gap-y-6"
                   >
-                    {JSON.parse(detailsData?.faq).map(
+                    {
+                      isStore &&
+                      detailsData.faq &&
+                      JSON.parse(detailsData?.faq)?.map(
                       (
                         faq: { question: string; answer: string },
                         index: number,
