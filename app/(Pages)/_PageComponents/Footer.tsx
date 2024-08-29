@@ -6,7 +6,7 @@ import Socials from "./Socials";
 
 const Footer = () => {
   return (
-    <footer className="flex w-full flex-col gap-6 border-t-2 border-app-main bg-popover px-4 py-6 sm:px-8">
+    <footer className="relative -z-50 flex w-full flex-col gap-6 border-t-2 border-app-main bg-popover px-4 py-6 sm:px-8">
       <div className="mx-auto flex w-full flex-col items-center gap-6 lg:flex-row lg:items-start lg:justify-between xl:justify-around">
         {/* Logo and motto */}
         <div className="flex w-2/3 flex-col items-center gap-y-4 lg:w-1/4">
@@ -55,7 +55,7 @@ const Footer = () => {
           <p className="text-md mx-auto text-center text-muted-foreground lg:mx-0 lg:text-start">
             To get the verified and hand tested Coupons or deals alerts.
           </p>
-          <div className="flex w-full max-w-80 items-center justify-between rounded-full border-2 border-app-main pl-2">
+          <div className="flex w-full max-w-80 items-center justify-between rounded-full border-2 border-app-main pl-2 xl:max-w-[23rem]">
             <input
               type="text"
               placeholder="Enter Your Email Address"

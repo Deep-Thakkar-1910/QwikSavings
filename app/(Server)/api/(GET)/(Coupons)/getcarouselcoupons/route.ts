@@ -9,11 +9,6 @@ export async function GET() {
     const carouselCoupons = await db.coupon.findMany({
       where: {
         addToCarousel: true,
-        AND: {
-          due_date: {
-            gte: new Date(),
-          },
-        },
       },
       select: {
         carouselPosterUrl: true,

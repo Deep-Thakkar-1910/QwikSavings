@@ -1,4 +1,9 @@
 "use client";
+import Image from "next/image";
+import Spinner from "./Spinner";
+import Link from "next/link";
+import React, { useState } from "react";
+import { Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -9,10 +14,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { useSession } from "next-auth/react";
-import Image from "next/image";
-import Link from "next/link";
-import { useState } from "react";
-import Spinner from "./Spinner";
 
 interface DisplayItemsProps<
   T extends {
@@ -101,35 +102,60 @@ const DisplayItems = <
           <div key={char} className="my-4 first:mt-0 last:mb-0">
             <div className="w-full border border-muted-foreground px-2 pb-3 pt-2 sm:px-4">
               <h2 className="mb-2 text-2xl sm:text-3xl">{char}</h2>
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-3">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
                 {groupedData[char].map((item) => (
                   <div
                     key={item.storeId ?? item.categoryId}
-                    className="group relative flex max-w-80 cursor-pointer flex-col items-center rounded-lg border bg-gray-100 p-3 shadow-md transition-transform duration-300 ease-linear dark:bg-app-dark-navbar sm:max-w-full sm:hover:scale-105 lg:max-w-full"
+                    className="group relative flex max-w-80 cursor-pointer flex-col items-center rounded-lg border bg-gray-300/70 p-3 shadow-md transition-transform duration-300 ease-linear dark:bg-app-dark-navbar sm:max-w-full sm:hover:scale-105 lg:max-w-full"
                   >
-                    <div className="flex w-full items-center justify-between gap-x-3">
+                    <div className="flex w-full items-center justify-start gap-x-3 ">
                       <Link
                         href={`${item.storeId ? `/stores/${item.name}` : `/categories/${item.name}`}`}
                         className="flex flex-grow items-center gap-x-3"
                       >
-                        <div className="flex flex-col">
-                          <p className="text-sm tracking-wide transition-colors duration-300 ease-linear lg:text-base">
+                        <div className="rounded-full border border-black bg-white p-1 dark:border-white dark:bg-black">
+                          <Image
+                            src={
+                              item.logo_url ??
+                              "https://via.placeholder.com/600x400"
+                            }
+                            alt={item.name}
+                            width={400}
+                            height={400}
+                            className="aspect-square w-16 rounded-full object-cover transition-shadow duration-300 ease-linear group-hover:shadow-md"
+                          />
+                        </div>
+                        <div className="flex flex-col items-start gap-y-1">
+                          <p className="text-sm tracking-wide transition-colors duration-300 ease-linear sm:text-base">
                             {item.name}
+                          </p>
+                          <p className="text-xs font-semibold text-muted-foreground sm:text-sm">
+                            <span>
+                              {
+                                item.coupons.filter(
+                                  (coupon) => coupon.type === "Deal",
+                                ).length
+                              }{" "}
+                              Deals
+                            </span>
+                            {" | "}
+                            <span>
+                              {
+                                item.coupons.filter(
+                                  (coupon) => coupon.type === "Coupon",
+                                ).length
+                              }{" "}
+                              Coupons
+                            </span>
                           </p>
                         </div>
                       </Link>
-                      <div className="flex-shrink-0 rounded-lg bg-white p-1 dark:border-white dark:bg-black">
-                        <Image
-                          src={
-                            item.logo_url ??
-                            "https://via.placeholder.com/600x400"
-                          }
-                          alt={item.name}
-                          width={400}
-                          height={400}
-                          className="aspect-square w-20 rounded-full object-cover transition-shadow duration-300 ease-linear group-hover:shadow-md"
+                      {session?.user?.role === "admin" && (
+                        <Trash2
+                          className="absolute right-2 top-2 size-4 cursor-pointer text-app-main"
+                          onClick={() => handleDeleteClick(item)}
                         />
-                      </div>
+                      )}
                     </div>
                   </div>
                 ))}

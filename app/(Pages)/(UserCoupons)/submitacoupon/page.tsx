@@ -1,38 +1,19 @@
+"use client";
 import Link from "next/link";
 import CreateUserCouponForm from "../_userCouponComponents/SubmitACouponForm";
+import { useActiveFestival } from "@/hooks/useFestivalActive";
 
 export const dynamic = "force-dynamic";
 export const fetchCache = "force-no-store";
 
-const CreateUserCoupon = async () => {
-  let categories = [];
-  let stores = [];
-  try {
-    // fetching available stores and categories for related store and category fields
-    const categoriesResult = await fetch(
-      `${process.env.BASE_URL}/api/getcategories?_=${new Date().getTime()}`,
-      {
-        cache: "no-cache",
-      },
-    );
-    const storesResult = await fetch(
-      `${process.env.BASE_URL}/api/getstores?_=${new Date().getTime()}`,
-      {
-        cache: "no-cache",
-      },
-    );
-    const categoriesData = await categoriesResult.json();
-    const storesData = await storesResult.json();
-    categories = categoriesData.categories || [];
-    stores = storesData.stores || [];
-  } catch (e) {
-    console.error(e);
-  }
-
+const CreateUserCoupon = () => {
+  const isActiveFestival = useActiveFestival((state) => state.isActive);
   return (
-    <div className="mx-auto my-6 w-11/12  max-w-2xl rounded-lg bg-popover p-6">
-      <div className="mb-4 rounded bg-app-main py-2 text-center text-slate-200">
-        <h2 className="text-sm font-bold">
+    <div
+      className={`mx-auto my-6 w-11/12  max-w-2xl rounded-md bg-popover p-6 ${isActiveFestival ? "!mb-14" : ""}`}
+    >
+      <div className="mb-4 rounded bg-app-main py-3 text-center text-slate-200">
+        <h2 className="text-xl font-bold">
           Submit A Coupon & Help Millions Save!
         </h2>
       </div>
@@ -43,8 +24,8 @@ const CreateUserCoupon = async () => {
         you for your commitment to helping everyone save money!
       </p>
 
-      <div className="mx-auto max-w-xl rounded-md p-4">
-        <CreateUserCouponForm categories={categories} stores={stores} />
+      <div className="mx-auto max-w-xl rounded-md border p-4">
+        <CreateUserCouponForm />
       </div>
 
       <p className="mt-4 text-start text-sm text-muted-foreground">

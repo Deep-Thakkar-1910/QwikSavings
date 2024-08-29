@@ -9,11 +9,6 @@ export async function GET() {
     const flipperCoupons = await db.coupon.findMany({
       where: {
         addToFlipper: true,
-        AND: {
-          due_date: {
-            gte: new Date(),
-          },
-        },
       },
       select: {
         couponId: true,

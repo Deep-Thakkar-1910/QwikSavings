@@ -53,8 +53,7 @@ const Navbar = () => {
           </Link>
 
           <ul
-            className="hidden items-center gap-x-8 lg:flex xl:gap-x-10"
-            style={{ fontFamily: "ui-sans-serif" }}
+            className="hidden items-center gap-x-8 font-medium lg:flex xl:gap-x-10"
             role="tablist"
           >
             {session?.user.role === "admin" && (

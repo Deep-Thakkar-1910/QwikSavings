@@ -1,5 +1,6 @@
 "use client";
-import axios from "@/app/api/axios/axios";
+import { useEffect, useState } from "react";
+import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/Calendar";
 import {
@@ -48,24 +49,45 @@ import { CaretSortIcon } from "@radix-ui/react-icons";
 import { AxiosError } from "axios";
 import { format } from "date-fns";
 import { CalendarIcon, CheckIcon } from "lucide-react";
-import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import * as z from "zod";
+import axios from "@/app/api/axios/axios";
 
 type InputType = z.infer<typeof CreateUserCouponFormSchema>;
 
-interface CreateUserCouponFormProps {
-  categories: { name: string; categoryId: number }[];
-  stores: { name: string; storeId: number }[];
-}
-
-const CreateUserCouponForm = ({
-  categories,
-  stores,
-}: CreateUserCouponFormProps) => {
+const CreateUserCouponForm = ({}) => {
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  // Use the 'categories' and 'stores' state variables in your code as needed
+  const [categories, setCategories] = useState<Record<string, any>[]>([]);
+  const [stores, setStores] = useState<Record<string, any>[]>([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const categoriesResult = await fetch(
+          `${process.env.BASE_URL}/api/getcategories?_=${new Date().getTime()}`,
+          {
+            cache: "no-cache",
+          },
+        );
+        const storesResult = await fetch(
+          `${process.env.BASE_URL}/api/getstores?_=${new Date().getTime()}`,
+          {
+            cache: "no-cache",
+          },
+        );
+        const categoriesData = await categoriesResult.json();
+        const storesData = await storesResult.json();
+        setCategories(categoriesData.categories || []);
+        setStores(storesData.stores || []);
+      } catch (e) {
+        console.error(e);
+      }
+    };
 
+    fetchData();
+  }, []);
+
+  // Use the 'categories' and 'stores' state variables in your code as needed
   const form = useForm<InputType>({
     resolver: zodResolver(CreateUserCouponFormSchema),
     defaultValues: {
@@ -142,7 +164,7 @@ const CreateUserCouponForm = ({
                     placeholder="Coupon title"
                     {...field}
                     type="text"
-                    className="!bg-app-bg-main dark:!bg-app-dark rounded-lg"
+                    className="rounded-lg !bg-app-bg-main dark:!bg-app-dark"
                   />
                 </FormControl>
                 <FormMessage />
@@ -160,7 +182,7 @@ const CreateUserCouponForm = ({
                   <Textarea
                     placeholder="Coupon Description"
                     {...field}
-                    className="bg-app-bg-main dark:bg-app-dark rounded-lg"
+                    className="rounded-lg bg-app-bg-main dark:bg-app-dark"
                   />
                 </FormControl>
                 <FormMessage />
@@ -181,7 +203,7 @@ const CreateUserCouponForm = ({
                     placeholder="https://example.com"
                     {...field}
                     type="url"
-                    className="!bg-app-bg-main dark:!bg-app-dark rounded-lg"
+                    className="rounded-lg !bg-app-bg-main dark:!bg-app-dark"
                   />
                 </FormControl>
                 <FormMessage />
@@ -202,7 +224,7 @@ const CreateUserCouponForm = ({
                   defaultValue={field.value}
                 >
                   <FormControl>
-                    <SelectTrigger className="!bg-app-bg-main dark:!bg-app-dark rounded-lg">
+                    <SelectTrigger className="rounded-lg !bg-app-bg-main dark:!bg-app-dark">
                       <SelectValue placeholder="Select a Type" />
                     </SelectTrigger>
                   </FormControl>
@@ -247,7 +269,7 @@ const CreateUserCouponForm = ({
                 <Popover>
                   <PopoverTrigger
                     asChild
-                    className="!bg-app-bg-main dark:!bg-app-dark rounded-lg"
+                    className="rounded-lg !bg-app-bg-main dark:!bg-app-dark"
                   >
                     <FormControl>
                       <Button
@@ -329,7 +351,7 @@ const CreateUserCouponForm = ({
                 <Popover>
                   <PopoverTrigger
                     asChild
-                    className="!bg-app-bg-main dark:!bg-app-dark rounded-lg"
+                    className="rounded-lg !bg-app-bg-main dark:!bg-app-dark"
                   >
                     <FormControl>
                       <Button
@@ -407,7 +429,7 @@ const CreateUserCouponForm = ({
                 <Popover>
                   <PopoverTrigger
                     asChild
-                    className="!bg-app-bg-main dark:!bg-app-dark rounded-lg"
+                    className="rounded-lg !bg-app-bg-main dark:!bg-app-dark"
                   >
                     <FormControl>
                       <Button
@@ -485,5 +507,4 @@ const CreateUserCouponForm = ({
     </>
   );
 };
-
 export default CreateUserCouponForm;

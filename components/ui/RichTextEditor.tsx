@@ -50,12 +50,12 @@ const RichTextEditor = ({
       StarterKit.configure({
         orderedList: {
           HTMLAttributes: {
-            class: "list-decimal ml-2",
+            class: "proseMirrorEditorUlOl list-decimal ml-2",
           },
         },
         bulletList: {
           HTMLAttributes: {
-            class: "list-disc ml-2",
+            class: "proseMirrorEditorUlOl list-disc ml-2",
           },
         },
       }),

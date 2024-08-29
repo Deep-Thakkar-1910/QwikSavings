@@ -1,26 +1,18 @@
 "use client";
 import { useActiveFestival } from "@/hooks/useFestivalActive";
-import { useSession } from "next-auth/react";
 import Image from "next/image";
 
 const AboutUs = () => {
-  const { data: session } = useSession();
-  const isActiveFestival = useActiveFestival((state) => state.isActive);
-  const isAdmin = session?.user?.role === "admin";
+  const isActive = useActiveFestival((state) => state.isActive);
   return (
-    <section
-      className={` bg-popover py-6 ${isActiveFestival && !isAdmin ? "mb-8" : ""}`}
-    >
+    <section className={` bg-popover py-6 ${isActive ? "!mb-8" : ""}`}>
       <div className="mx-auto flex max-w-screen-xl flex-col px-8 sm:px-10 lg:flex-row lg:px-12 xl:px-6 2xl:px-0">
-        <div
-          className="flex w-full flex-col items-start gap-3 text-justify lg:w-1/2"
-          style={{ fontSize: "1.00rem" }}
-        >
-          <h2 className="font-serif mx-auto text-start text-lg lg:text-xl">
+        <div className="flex w-full flex-col items-start gap-4 text-justify lg:w-1/2">
+          <h2 className="mx-auto text-start text-xl font-bold sm:text-2xl">
             Qwik Savings - Shop Smarter, Save Faster
           </h2>
 
-          <div className="font-sans text-xs text-gray-600 dark:text-gray-300">
+          <div className="text-lg text-gray-600 dark:text-gray-300">
             There is nothing more disappointing than finding an exciting code
             only to find it not working at checkout. So, to save you from this,
             our team at Qwik Savings, works meticulously to ensure that you only
@@ -29,7 +21,7 @@ const AboutUs = () => {
             that you aren&apos;t disappointed.
           </div>
 
-          <div className="font-sans text-xs text-gray-700 dark:text-gray-400">
+          <div className="text-gray-700 dark:text-gray-400">
             We are always ready to go one extra mile to deliver on the promise
             we make to you, so be ensured that all that you see on our platform
             is totally functional. We take pride in our system of delivery, thus
@@ -38,13 +30,13 @@ const AboutUs = () => {
             see on our portal will be delivered to you as it is.
           </div>
 
-          <div className="font-sans text-xs text-gray-700 dark:text-gray-400">
+          <div className="text-gray-700 dark:text-gray-400">
             In a rare instance, where the coupon code falls short, we promise
             you a guaranteed gift card as a part of our acknowledgement of the
             issue and gratitude towards you for sticking alongside us.
           </div>
 
-          <div className="font-sans text-xs text-gray-700 dark:text-gray-400">
+          <div className="text-gray-700 dark:text-gray-400">
             Apart from lending a hand in saving you money through our
             brilliantly cost effective coupon codes, we even guide you towards a
             path of a simplified and hassle free online shopping experience
