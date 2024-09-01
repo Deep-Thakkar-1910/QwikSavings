@@ -10,10 +10,12 @@ export interface CardData {
 
 export function useCardFlipperData(): {
   data: CardData[];
+  count: number;
   isLoading: boolean;
   error: string | null;
 } {
   const [data, setData] = useState<CardData[]>([]);
+  const [count, setCount] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -24,6 +26,7 @@ export function useCardFlipperData(): {
           `/getflippercoupons?_=${new Date().getTime()}`,
         );
         setData(response.data.flipperCoupons);
+        setCount(response.data.count);
         setIsLoading(false);
       } catch (error) {
         console.error("Error fetching carousel data:", error);
@@ -35,5 +38,5 @@ export function useCardFlipperData(): {
     fetchData();
   }, []);
 
-  return { data, isLoading, error };
+  return { data, isLoading, error, count };
 }

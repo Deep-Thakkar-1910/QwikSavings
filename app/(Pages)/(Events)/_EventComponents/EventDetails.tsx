@@ -430,7 +430,7 @@ const EventDetails = () => {
           {session?.user.role === "admin" && (
             <Link
               href={`/admin/editevent/${eventName}`}
-              className="absolute right-4 top-0 -translate-y-8 cursor-pointer place-self-end  underline transition-colors duration-300 ease-linear hover:text-app-main lg:right-20"
+              className="absolute right-4 top-0 -translate-y-8 cursor-pointer place-self-end  underline transition-colors duration-300 ease-linear hover:text-app-main lg:right-28 xl:right-40"
             >
               Edit Event
             </Link>
@@ -439,13 +439,15 @@ const EventDetails = () => {
           <div
             className={`mt-4 ${isActiveFestival && !isAdmin ? "translate-y-4 transition-transform duration-200 ease-linear" : "translate-y-0 transition-transform duration-200 ease-linear"} flex w-full items-center gap-x-4 rounded-lg bg-popover p-4 px-4  sm:px-8 lg:hidden lg:px-12`}
           >
-            <Image
-              src={data?.logo_url ?? "https://via.placeholder.com/600x400"}
-              alt={data?.name + " Logo"}
-              width={400}
-              height={400}
-              className="size-32 rounded-full object-cover"
-            />
+            <div className="size-32 rounded-full border border-black bg-popover p-1 transition-shadow duration-200 ease-linear hover:shadow-lg dark:border-slate-200">
+              <Image
+                src={data?.logo_url ?? "https://via.placeholder.com/600x400"}
+                alt={data?.name + " Logo"}
+                width={400}
+                height={400}
+                className="aspect-square w-full rounded-full object-cover"
+              />
+            </div>
             <h1 className="text-start text-base font-bold sm:text-2xl">
               {data?.name}
             </h1>
@@ -459,12 +461,12 @@ const EventDetails = () => {
                 alt="Event Cover url"
                 width={1920}
                 height={1080}
-                className="mb-4 mt-6 h-32 w-full rounded-md object-cover lg:h-40 lg:w-[93.5%]"
+                className="mb-4 mt-6 h-32 w-full rounded-md object-cover lg:h-40 xl:w-[93.5%]"
               />
             )}
-            <div className="relative flex w-full flex-col items-start gap-x-6 lg:flex-row lg:pt-10">
+            <div className="relative flex w-full flex-col items-start lg:flex-row lg:gap-x-10 lg:pt-10 xl:gap-x-14">
               <aside className="hidden flex-col items-center gap-y-8 lg:flex lg:w-1/4">
-                <div className="size-64 rounded-full border border-black bg-popover p-1 dark:border-slate-200 xl:size-72">
+                <div className="size-56 rounded-full border border-black bg-popover p-1 dark:border-slate-200">
                   <Image
                     src={
                       data.logo_url
@@ -488,16 +490,18 @@ const EventDetails = () => {
                     Today&apos;s Top Shopping Events
                   </h2>
                   {data?.coupons && data?.coupons[0] && (
-                    <p className="my-2 font-semibold">
-                      &bull; {data?.coupons[0].title}
+                    <p className="my-2 flex gap-x-2 pl-2 font-semibold">
+                      <span>&bull;</span>
+                      <span>{data?.coupons[0].title}</span>
                     </p>
                   )}
                   {data?.coupons && data?.coupons[1] && (
-                    <p className="my-2 font-semibold">
-                      &bull; {data?.coupons[1].title}
+                    <p className="my-2 flex gap-x-2 pl-2 font-semibold">
+                      <span>&bull;</span>
+                      <span>{data?.coupons[1].title}</span>
                     </p>
                   )}
-                  <div className="flex flex-col gap-y-4 rounded-lg border-2 p-4 px-3">
+                  <div className="flex flex-col gap-y-4 py-4">
                     <div className="flex items-center justify-between ">
                       <p>Total Coupons:</p>
                       <p>{couponsLength}</p>
@@ -576,7 +580,7 @@ const EventDetails = () => {
                     <AccordionItem
                       key={coupon.couponId}
                       value={coupon.couponId}
-                      className="min-h-40 rounded-xl border-2 border-neutral-200 bg-popover pt-4 shadow-sm sm:min-h-56"
+                      className="min-h-40 rounded-xl border-2 border-neutral-200 bg-popover pt-4 shadow-sm dark:border-neutral-700 sm:min-h-56"
                     >
                       <div className="group/accordion relative flex w-full items-center justify-between gap-x-6 gap-y-4 px-2 pb-2 pt-3 sm:px-6">
                         <div className="flex items-start gap-x-2 sm:gap-x-6">
@@ -616,9 +620,9 @@ const EventDetails = () => {
                         </div>
 
                         {/* Coupon code users and bookmark */}
-                        <div className="flex flex-col items-end justify-between gap-8">
+                        <div className="flex flex-col items-end gap-5">
                           <Heart
-                            className={`absolute right-1 top-1 size-4 cursor-pointer text-app-main transition-all duration-300 ease-linear sm:-top-2 sm:right-2 ${
+                            className={`absolute -top-1 right-2 size-5 cursor-pointer text-app-main transition-all duration-300 ease-linear sm:-top-2 ${
                               bookmarkedCoupons.includes(coupon.couponId)
                                 ? "fill-app-main text-app-main"
                                 : "opacity-100 group-hover/accordion:opacity-100 lg:opacity-0 lg:hover:fill-app-main"
@@ -628,13 +632,13 @@ const EventDetails = () => {
                           <p className="absolute bottom-2 right-2 text-sm tabular-nums text-muted-foreground sm:hidden">
                             {couponUserCounts[coupon.couponId] || 0} Used
                           </p>
-                          <div className="hidden items-center gap-x-4 sm:flex sm:text-base md:gap-x-16 lg:text-lg">
-                            <p className="flex w-full items-center gap-x-1  text-emerald-500">
-                              <Verified className="inline-flex size-4 text-emerald-500" />
+                          <div className="hidden w-full items-center justify-between gap-x-8 sm:flex sm:text-base md:gap-x-16 lg:text-lg">
+                            <p className="flex w-full items-center gap-x-1 text-emerald-700 sm:text-lg md:text-xl">
+                              <Verified className="inline-flex size-4 text-emerald-700 md:size-5" />
                               Verified
                             </p>
-                            <p className="flex w-full items-center gap-x-1 text-muted-foreground">
-                              <User className="size-4" />
+                            <p className="flex w-full items-center gap-x-1 text-lg text-muted-foreground md:text-xl">
+                              <User className="size-4 md:size-5" />
                               <span>
                                 {couponUserCounts[coupon.couponId] || 0}
                               </span>
@@ -673,7 +677,7 @@ const EventDetails = () => {
                           {coupon.type === "Deal" && (
                             <>
                               <Button
-                                className="hidden min-h-12 w-full min-w-40 rounded-xl bg-app-main text-base font-semibold text-white dark:text-slate-200 sm:block sm:min-w-40 md:min-w-44"
+                                className="hidden min-h-12 w-56 rounded-xl bg-app-main text-base font-semibold text-white dark:text-slate-200 sm:block md:w-64"
                                 onClick={() => {
                                   handleCouponUse(
                                     coupon.couponId,
@@ -682,7 +686,7 @@ const EventDetails = () => {
                                   );
                                 }}
                               >
-                                Get Deal
+                                GET DEAL
                               </Button>
                               <ChevronRight
                                 onClick={() => {
@@ -699,7 +703,7 @@ const EventDetails = () => {
                           {coupon.type === "Coupon" && (
                             <>
                               <div
-                                className="group relative hidden !min-h-12 w-full min-w-28 cursor-pointer overflow-hidden rounded-xl bg-app-bg-main p-2 dark:bg-app-dark sm:grid sm:min-h-fit sm:min-w-40 md:min-w-44"
+                                className="group relative hidden !min-h-12 w-56 cursor-pointer overflow-hidden rounded-xl bg-app-bg-main p-2 dark:bg-app-dark sm:grid sm:min-h-fit md:w-64"
                                 onClick={() => {
                                   handleCouponUse(
                                     coupon.couponId,
@@ -719,7 +723,7 @@ const EventDetails = () => {
                                 <div className="absolute left-0 top-0 h-full w-full">
                                   <div className="polygon-clip h-full w-full rounded-xl bg-app-main transition-all duration-200 ease-linear group-hover:w-11/12">
                                     <p className="absolute inset-0 grid place-items-center text-sm font-semibold text-white dark:text-slate-200">
-                                      Get code
+                                      Get Code
                                     </p>
                                   </div>
                                 </div>
@@ -738,8 +742,8 @@ const EventDetails = () => {
                               />
                             </>
                           )}
-                          <div className=" hidden gap-x-6 pl-2 text-sm sm:flex md:gap-x-12 md:text-base lg:text-lg">
-                            <p className="w-4/5 text-muted-foreground">
+                          <div className=" hidden w-full translate-x-1 justify-between place-self-start text-sm sm:flex md:text-base lg:text-lg">
+                            <p className="whitespace-nowrap text-sm text-muted-foreground md:text-base">
                               <span className="tabular-nums">
                                 {successRatio(
                                   couponReactions[coupon.couponId]
@@ -747,10 +751,10 @@ const EventDetails = () => {
                                   couponReactions[coupon.couponId]
                                     ?.dislike_count || 0,
                                 )}
-                              </span>{" "}
+                              </span>
                               <span>% Success</span>
                             </p>
-                            <div className="hidden items-center gap-x-2 place-self-center sm:flex">
+                            <div className="hidden -translate-x-1 items-center gap-x-2 place-self-center sm:flex">
                               <button
                                 onClick={() =>
                                   handleReaction(coupon.couponId, "LIKE")
@@ -791,14 +795,15 @@ const EventDetails = () => {
                           </div>
                         </div>
                       </div>
-                      <AccordionContent className="relative px-2 pb-5 pt-2 sm:px-6 sm:pb-6 sm:pt-4">
+                      <AccordionContent className="px-2 pb-5 pt-2 sm:px-6 sm:pb-6 sm:pt-4">
                         <Seperator />
-                        <p className="mb-2">{coupon.description}</p>
-
-                        <p className="absolute bottom-2 right-2 text-muted-foreground">
-                          Expires on:{" "}
-                          {format(new Date(coupon.due_date), "dd-MMM-yyy")}
-                        </p>
+                        <div className="flex flex-col items-start sm:flex-row sm:justify-between ">
+                          <p className="mb-2">{coupon.description}</p>
+                          <p className="text-muted-foreground">
+                            Expires on:{" "}
+                            {format(new Date(coupon.due_date), "dd-MMM-yyy")}
+                          </p>
+                        </div>
                       </AccordionContent>
                     </AccordionItem>
                   ))}
@@ -817,7 +822,7 @@ const EventDetails = () => {
                         <AccordionItem
                           key={coupon.couponId}
                           value={coupon.couponId}
-                          className="min-h-40 rounded-xl border-2 border-neutral-200 bg-popover pt-4 shadow-sm sm:min-h-56"
+                          className="min-h-40 rounded-xl border-2 border-neutral-200 bg-popover pt-4 shadow-sm dark:border-neutral-700 sm:min-h-56"
                         >
                           <div className="group/accordion relative flex w-full items-center justify-between gap-x-6 gap-y-4 px-2 pb-2 pt-3 text-muted-foreground sm:px-6">
                             <div className="flex items-start gap-6 sm:flex-row">
@@ -853,9 +858,9 @@ const EventDetails = () => {
                             </div>
 
                             {/* Coupon code users and bookmark */}
-                            <div className="flex flex-col items-end justify-between gap-8">
+                            <div className="flex flex-col items-end gap-4">
                               <Heart
-                                className={`absolute right-1 top-1 size-4 cursor-pointer text-app-main transition-all duration-300 ease-linear sm:-top-2 sm:right-2 ${
+                                className={`absolute -top-1 right-2 size-5 cursor-pointer text-app-main transition-all duration-300 ease-linear sm:-top-2 sm:right-2 ${
                                   bookmarkedCoupons.includes(coupon.couponId)
                                     ? "fill-app-main text-app-main"
                                     : "opacity-100 group-hover/accordion:opacity-100 lg:opacity-0 lg:hover:fill-app-main"
@@ -865,13 +870,13 @@ const EventDetails = () => {
                               <p className="absolute bottom-2 right-2 text-sm tabular-nums text-muted-foreground sm:hidden">
                                 {couponUserCounts[coupon.couponId] || 0} Used
                               </p>
-                              <div className=" hidden items-center gap-x-7 sm:flex sm:flex-row md:gap-x-16">
-                                <p className="flex w-fit items-center gap-x-1 text-sm md:text-base">
-                                  <PiSmileySadBold className="inline-flex size-4 text-app-main" />
+                              <div className=" hidden w-full items-center justify-between gap-x-6 sm:flex sm:flex-row md:gap-x-16">
+                                <p className="flex w-fit items-center gap-x-1 sm:text-lg md:text-xl">
+                                  <PiSmileySadBold className="inline-flex size-5 text-app-main" />
                                   Expired
                                 </p>
-                                <p className="flex items-center gap-x-1 text-sm tabular-nums text-muted-foreground md:text-base">
-                                  <User className="size-4" />
+                                <p className="flex items-center gap-x-1 tabular-nums text-muted-foreground sm:text-lg md:text-xl">
+                                  <User className="size-5" />
                                   {couponUserCounts[coupon.couponId] || 0} Used
                                 </p>
                               </div>
@@ -885,7 +890,7 @@ const EventDetails = () => {
                                         coupon,
                                       );
                                     }}
-                                    className="hidden min-h-12 w-full cursor-pointer rounded-xl bg-neutral-500 text-base font-semibold hover:bg-neutral-500 sm:block sm:min-w-40 md:min-w-44"
+                                    className="hidden min-h-12 w-56 cursor-pointer rounded-xl bg-neutral-500 text-base font-semibold hover:bg-neutral-500 sm:block md:w-64"
                                   >
                                     Get Deal
                                   </Button>
@@ -902,7 +907,7 @@ const EventDetails = () => {
                                         coupon,
                                       );
                                     }}
-                                    className="group relative hidden !min-h-12 w-full min-w-28 cursor-pointer overflow-hidden rounded-md bg-app-bg-main p-2 dark:bg-app-dark sm:grid sm:min-h-fit sm:min-w-40 md:min-w-44"
+                                    className="group relative hidden !min-h-12 w-56 cursor-pointer overflow-hidden rounded-md bg-app-bg-main p-2 dark:bg-app-dark sm:grid md:w-64"
                                   >
                                     <p
                                       className={`place-self-end text-base font-semibold uppercase tracking-widest ${
@@ -925,8 +930,8 @@ const EventDetails = () => {
                                   <ChevronRight className="size-6 w-full cursor-pointer text-neutral-500  sm:hidden" />
                                 </>
                               )}
-                              <div className="hidden gap-x-6 pl-2 text-sm sm:flex md:gap-x-12 md:text-base lg:text-lg">
-                                <p className="text-muted-foreground">
+                              <div className="hidden w-full translate-x-1 justify-between place-self-start text-sm sm:flex md:text-base lg:text-lg">
+                                <p className="whitespace-nowrap text-sm text-muted-foreground md:text-base">
                                   <span className="tabular-nums">
                                     {successRatio(
                                       couponReactions[coupon.couponId]
@@ -934,10 +939,10 @@ const EventDetails = () => {
                                       couponReactions[coupon.couponId]
                                         ?.dislike_count || 0,
                                     )}
-                                  </span>{" "}
+                                  </span>
                                   <span>% Success</span>
                                 </p>
-                                <div className="hidden items-center gap-x-4 place-self-center sm:flex">
+                                <div className="hidden -translate-x-1 items-center gap-x-4 place-self-center sm:flex">
                                   <button className="flex items-center gap-x-2">
                                     <ThumbsUp
                                       className={
@@ -970,13 +975,18 @@ const EventDetails = () => {
                               </div>
                             </div>
                           </div>
-                          <AccordionContent className="relative p-6">
+                          <AccordionContent className="px-2 pb-5 pt-2 sm:px-6 sm:pb-6 sm:pt-4">
                             <Seperator />
-                            <p className="mb-2">{coupon.description}</p>
-                            <p className="absolute bottom-2 right-2 text-muted-foreground">
-                              Expired on:{" "}
-                              {format(new Date(coupon.due_date), "dd-MMM-yyy")}
-                            </p>
+                            <div className="flex flex-col items-start sm:flex-row sm:justify-between ">
+                              <p className="mb-2">{coupon.description}</p>
+                              <p className="text-muted-foreground">
+                                Expired on:{" "}
+                                {format(
+                                  new Date(coupon.due_date),
+                                  "dd-MMM-yyy",
+                                )}
+                              </p>
+                            </div>
                           </AccordionContent>
                         </AccordionItem>
                       ))}
@@ -986,7 +996,7 @@ const EventDetails = () => {
 
                 {/* About for mobile */}
                 <div
-                  className={`${commonStyles} ${data?.description ? "lg:hidden" : "hidden"}`}
+                  className={`${commonStyles} ${data?.description ? "lg:hidden" : "hidden"} border-2 border-neutral-200 dark:border-neutral-700`}
                 >
                   <h2 className="mb-2 text-xl font-bold">About</h2>
                   <p>{data?.description}</p>
@@ -1033,7 +1043,9 @@ const PopularItems: React.FC<PopularItemProps> = ({
   const commonStyles = "w-full rounded-lg bg-popover p-4 shadow-md";
 
   return (
-    <div className={`${commonStyles} ${isHidden ? "lg:hidden" : ""}`}>
+    <div
+      className={`${commonStyles} ${isHidden ? "lg:hidden" : ""} rounded-xl border-2 border-neutral-200 dark:border-neutral-700 lg:border-0`}
+    >
       <h2 className="font-semibold">{title}</h2>
       <div className={`mt-1 flex flex-wrap gap-2`}>
         {items.map((item) => {

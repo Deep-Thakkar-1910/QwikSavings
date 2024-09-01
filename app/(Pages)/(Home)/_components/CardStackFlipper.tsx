@@ -148,13 +148,13 @@ const CardStackFlipper = ({ autoplay }: { autoplay: boolean }) => {
               </div>
 
               <div
-                className="absolute bottom-5 right-5 cursor-pointer rounded-full bg-stone-100 p-2 transition-all duration-300 ease-linear hover:bg-app-bg-main hover:text-zinc-800 hover:shadow-md dark:text-background xl:bottom-8 "
+                className="absolute bottom-5 right-5 cursor-pointer rounded-full bg-app-main p-2 text-white transition-all duration-300 ease-linear dark:text-slate-200 xl:bottom-8 "
                 onClick={handleNextClick}
               >
                 <ChevronRight className="size-6" />
               </div>
               <button
-                className="ease-linearhover:shadow-md absolute bottom-5 left-5 z-10 rounded-lg bg-[#28538f] p-1 px-5 text-lg  text-slate-200 transition-all duration-300 xl:bottom-8 "
+                className="ease-linearhover:shadow-md absolute bottom-5 left-5 z-10 rounded-lg bg-app-main p-1 px-5 text-lg  text-white transition-all duration-300 dark:text-slate-200 xl:bottom-8 "
                 onClick={() => {
                   handleCardGetClick(card);
                 }}

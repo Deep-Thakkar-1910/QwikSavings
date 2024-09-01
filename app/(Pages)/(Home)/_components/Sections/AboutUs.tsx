@@ -1,11 +1,16 @@
 "use client";
 import { useActiveFestival } from "@/hooks/useFestivalActive";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 
 const AboutUs = () => {
+  const { data: session } = useSession();
+  const isAdmin = session?.user?.role === "admin";
   const isActive = useActiveFestival((state) => state.isActive);
   return (
-    <section className={` bg-popover py-6 ${isActive ? "!mb-8" : ""}`}>
+    <section
+      className={` bg-popover py-6 ${isActive && !isAdmin ? "!mb-8" : ""}`}
+    >
       <div className="mx-auto flex max-w-screen-xl flex-col px-8 sm:px-10 lg:flex-row lg:px-12 xl:px-6 2xl:px-0">
         <div className="flex w-full flex-col items-start gap-4 text-justify lg:w-1/2">
           <h2 className="mx-auto text-start text-xl font-bold sm:text-2xl">

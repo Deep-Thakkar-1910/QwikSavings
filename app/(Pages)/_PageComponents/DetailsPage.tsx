@@ -476,13 +476,15 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
       <div
         className={`flex w-full ${isStore ? "items-start" : "items-center"} ${isActiveFestival ? "translate-y-8 transition-transform duration-200 ease-linear" : "translate-y-0 transition-transform duration-200 ease-linear"} gap-x-2 rounded-lg bg-popover p-4 px-4 sm:items-center sm:gap-x-4 sm:px-8 lg:hidden lg:px-12`}
       >
-        <Image
-          src={detailsData?.logo_url ?? "https://via.placeholder.com/600x400"}
-          alt={detailsData?.name + " Logo"}
-          width={400}
-          height={400}
-          className="size-32 rounded-full object-cover"
-        />
+        <div className="size-32 rounded-full border border-black bg-popover p-1 transition-shadow duration-200 ease-linear hover:shadow-lg dark:border-slate-200">
+          <Image
+            src={detailsData?.logo_url ?? "https://via.placeholder.com/600x400"}
+            alt={detailsData?.name + " Logo"}
+            width={400}
+            height={400}
+            className="aspect-square w-full rounded-full object-cover"
+          />
+        </div>
         <div className="flex flex-col items-start gap-y-4">
           <h1 className="ml-6 text-center text-xl font-bold sm:text-2xl">
             {detailsData.name}
@@ -508,7 +510,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
         </div>
       ) : (
         <section
-          className={`relative mb-6 flex w-full flex-col items-start gap-6 px-8 pt-10 lg:flex-row lg:px-12 ${isActiveFestival ? "!mb-14" : "mb-0"}`}
+          className={`relative mb-6 flex w-full flex-col items-start px-8 pt-10 lg:flex-row lg:gap-x-10 lg:px-12 xl:gap-x-14 ${isActiveFestival ? "!mb-14" : "mb-0"}`}
         >
           {/* Edit link only visbible to admins */}
           {session?.user.role === "admin" && (
@@ -523,7 +525,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
           )}
           {/* sidebar for larger screens */}
           <aside className="hidden flex-col items-center gap-y-8 lg:flex lg:w-1/4">
-            <div className="size-60 rounded-full border border-black bg-popover p-1 transition-shadow duration-200 ease-linear hover:shadow-lg dark:border-slate-200">
+            <div className="size-56 rounded-full border border-black bg-popover p-1 transition-shadow duration-200 ease-linear hover:shadow-lg dark:border-slate-200">
               <Image
                 src={
                   detailsData.logo_url
@@ -565,16 +567,24 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                 Today&apos;s Top {isStore ? `${detailsData.name}` : ""} Codes
               </h2>
               {detailsData?.coupons && detailsData?.coupons[0] && (
-                <p className="my-2 font-semibold">
-                  &bull; {detailsData.coupons[0].title}
+                <p className="my-2 flex gap-x-2 pl-2 font-semibold">
+                  <span>&bull;</span>
+                  <span>{detailsData.coupons[0].title}</span>
                 </p>
               )}
               {detailsData?.coupons && detailsData?.coupons[1] && (
-                <p className="my-2 font-semibold">
-                  &bull; {detailsData.coupons[1].title}
+                <p className="my-2 flex gap-x-2 pl-2 font-semibold">
+                  <span>&bull;</span>
+                  <span>{detailsData.coupons[1].title}</span>
                 </p>
               )}
-              <div className="flex flex-col gap-y-4 rounded-lg border-2 p-4 px-3">
+              <div className="flex flex-col gap-y-4 rounded-lg py-4">
+                <div className={`flex items-center justify-between`}>
+                  <p className="inline-block text-center">Total Offers:</p>
+                  <p className="ml-auto inline-block text-center">
+                    {detailsData.coupons?.length || 0}
+                  </p>
+                </div>
                 <div className="flex items-center justify-between ">
                   <p>Total Coupons:</p>
                   <p>{couponsLength}</p>
@@ -583,12 +593,6 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                 <div className="flex items-center justify-between">
                   <p>Total Deals:</p>
                   <p>{dealsLength}</p>
-                </div>
-                <div className={`flex items-center justify-between`}>
-                  <p className="inline-block text-center">Total Offers:</p>
-                  <p className="ml-auto inline-block text-center">
-                    {detailsData.coupons?.length || 0}
-                  </p>
                 </div>
                 {isStore && (
                   <>
@@ -724,7 +728,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
           {/* main coupons display */}
           <main className={`flex w-full flex-col items-stretch gap-y-4`}>
             <div className="hidden -translate-y-2 flex-col lg:flex">
-              <h1 className="mb-2 text-4xl font-bold xl:text-5xl">
+              <h1 className="mb-2 text-3xl font-bold xl:text-4xl">
                 {detailsData.title}
               </h1>
               {isStore && initialCoupon && (
@@ -787,7 +791,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                   <AccordionItem
                     key={coupon.couponId}
                     value={coupon.couponId}
-                    className="min-h-40 rounded-xl border-2 border-neutral-200 bg-popover pt-4 shadow-sm sm:min-h-56"
+                    className="min-h-40 rounded-xl border-2 border-neutral-200 bg-popover pt-4 shadow-sm dark:border-neutral-700 sm:min-h-56"
                   >
                     <div className="group/accordion relative flex w-full items-center justify-between gap-x-6 gap-y-4 px-2 pb-2 pt-3 sm:px-6">
                       <div className="flex items-start gap-x-2 sm:gap-x-6">
@@ -827,9 +831,9 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                       </div>
 
                       {/* Coupon code users and bookmark */}
-                      <div className="flex flex-col items-end justify-between gap-8">
+                      <div className="flex flex-col items-end gap-5">
                         <Heart
-                          className={`absolute right-1 top-1 size-4 cursor-pointer text-app-main transition-all duration-300 ease-linear sm:-top-2 sm:right-2 ${
+                          className={`absolute -top-1 right-2 size-5 cursor-pointer text-app-main transition-all duration-300 ease-linear sm:-top-2 ${
                             bookmarkedCoupons.includes(coupon.couponId)
                               ? "fill-app-main text-app-main"
                               : "opacity-100 group-hover/accordion:opacity-100 lg:opacity-0 lg:hover:fill-app-main"
@@ -839,13 +843,13 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                         <p className="absolute bottom-2 right-2 text-sm tabular-nums text-muted-foreground sm:hidden">
                           {couponUserCounts[coupon.couponId] || 0} Used
                         </p>
-                        <div className="hidden items-center gap-x-4 sm:flex sm:text-base md:gap-x-16 lg:text-lg">
-                          <p className="flex w-full items-center gap-x-1  text-emerald-500">
-                            <Verified className="inline-flex size-4 text-emerald-500" />
+                        <div className="hidden w-full items-center justify-between gap-x-8 sm:flex sm:text-base md:gap-x-16 lg:text-lg">
+                          <p className="flex w-full items-center gap-x-1 text-emerald-700 sm:text-lg md:text-xl">
+                            <Verified className="inline-flex size-4 text-emerald-700 md:size-5" />
                             Verified
                           </p>
-                          <p className="flex w-full items-center gap-x-1 text-muted-foreground">
-                            <User className="size-4" />
+                          <p className="flex w-full items-center gap-x-1 text-lg text-muted-foreground md:text-xl">
+                            <User className="size-4 md:size-5" />
                             <span>
                               {couponUserCounts[coupon.couponId] || 0}
                             </span>
@@ -884,7 +888,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                         {coupon.type === "Deal" && (
                           <>
                             <Button
-                              className="hidden min-h-12 w-full min-w-40 rounded-xl bg-app-main text-base font-semibold text-white dark:text-slate-200 sm:block sm:min-w-40 md:min-w-44"
+                              className="hidden min-h-12 w-56 rounded-xl bg-app-main text-base font-semibold text-white dark:text-slate-200 sm:block md:w-64"
                               onClick={() => {
                                 handleCouponUse(
                                   coupon.couponId,
@@ -893,7 +897,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                                 );
                               }}
                             >
-                              Get Deal
+                              GET DEAL
                             </Button>
                             <ChevronRight
                               onClick={() => {
@@ -910,7 +914,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                         {coupon.type === "Coupon" && (
                           <>
                             <div
-                              className="group relative hidden !min-h-12 w-full min-w-28 cursor-pointer overflow-hidden rounded-xl bg-app-bg-main p-2 dark:bg-app-dark sm:grid sm:min-h-fit sm:min-w-40 md:min-w-44"
+                              className="group relative hidden !min-h-12 w-56 cursor-pointer overflow-hidden rounded-xl bg-app-bg-main p-2 dark:bg-app-dark sm:grid sm:min-h-fit md:w-64"
                               onClick={() => {
                                 handleCouponUse(
                                   coupon.couponId,
@@ -930,7 +934,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                               <div className="absolute left-0 top-0 h-full w-full">
                                 <div className="polygon-clip h-full w-full rounded-xl bg-app-main transition-all duration-200 ease-linear group-hover:w-11/12">
                                   <p className="absolute inset-0 grid place-items-center text-sm font-semibold text-white dark:text-slate-200">
-                                    Get code
+                                    Get Code
                                   </p>
                                 </div>
                               </div>
@@ -949,8 +953,8 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                             />
                           </>
                         )}
-                        <div className=" hidden gap-x-6 pl-2 text-sm sm:flex md:gap-x-12 md:text-base lg:text-lg">
-                          <p className="w-4/5 text-muted-foreground">
+                        <div className=" hidden w-full translate-x-1 justify-between place-self-start text-sm sm:flex md:text-base lg:text-lg">
+                          <p className="whitespace-nowrap text-sm text-muted-foreground md:text-base">
                             <span className="tabular-nums">
                               {successRatio(
                                 couponReactions[coupon.couponId]?.like_count ||
@@ -958,10 +962,10 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                                 couponReactions[coupon.couponId]
                                   ?.dislike_count || 0,
                               )}
-                            </span>{" "}
+                            </span>
                             <span>% Success</span>
                           </p>
-                          <div className="hidden items-center gap-x-2 place-self-center sm:flex">
+                          <div className="hidden -translate-x-1 items-center gap-x-2 place-self-center sm:flex">
                             <button
                               onClick={() =>
                                 handleReaction(coupon.couponId, "LIKE")
@@ -1002,14 +1006,15 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                         </div>
                       </div>
                     </div>
-                    <AccordionContent className="relative px-2 pb-5 pt-2 sm:px-6 sm:pb-6 sm:pt-4">
+                    <AccordionContent className="px-2 pb-5 pt-2 sm:px-6 sm:pb-6 sm:pt-4">
                       <Seperator />
-                      <p className="mb-2">{coupon.description}</p>
-
-                      <p className="absolute bottom-2 right-2 text-muted-foreground">
-                        Expires on:{" "}
-                        {format(new Date(coupon.due_date), "dd-MMM-yyy")}
-                      </p>
+                      <div className="flex flex-col items-start sm:flex-row sm:justify-between ">
+                        <p className="mb-2">{coupon.description}</p>
+                        <p className="text-muted-foreground">
+                          Expires on:{" "}
+                          {format(new Date(coupon.due_date), "dd-MMM-yyy")}
+                        </p>
+                      </div>
                     </AccordionContent>
                   </AccordionItem>
                 );
@@ -1027,7 +1032,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                     <AccordionItem
                       key={coupon.couponId}
                       value={coupon.couponId}
-                      className="min-h-40 rounded-xl border-2 border-neutral-200 bg-popover pt-4 shadow-sm sm:min-h-56"
+                      className="min-h-40 rounded-xl border-2 border-neutral-200 bg-popover pt-4 shadow-sm dark:border-neutral-700 sm:min-h-56"
                     >
                       <div className="group/accordion relative flex w-full items-center justify-between gap-x-6 gap-y-4 px-2 pb-2 pt-3 text-muted-foreground sm:px-6">
                         <div className="flex items-start gap-6 sm:flex-row">
@@ -1063,9 +1068,9 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                         </div>
 
                         {/* Coupon code users and bookmark */}
-                        <div className="flex flex-col items-end justify-between gap-8">
+                        <div className="flex flex-col items-end gap-4">
                           <Heart
-                            className={`absolute right-1 top-1 size-4 cursor-pointer text-app-main transition-all duration-300 ease-linear sm:-top-2 sm:right-2 ${
+                            className={`absolute -top-1 right-2 size-5 cursor-pointer text-app-main transition-all duration-300 ease-linear sm:-top-2 sm:right-2 ${
                               bookmarkedCoupons.includes(coupon.couponId)
                                 ? "fill-app-main text-app-main"
                                 : "opacity-100 group-hover/accordion:opacity-100 lg:opacity-0 lg:hover:fill-app-main"
@@ -1075,13 +1080,13 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                           <p className="absolute bottom-2 right-2 text-sm tabular-nums text-muted-foreground sm:hidden">
                             {couponUserCounts[coupon.couponId] || 0} Used
                           </p>
-                          <div className=" hidden items-center gap-x-7 sm:flex sm:flex-row md:gap-x-16">
-                            <p className="flex w-fit items-center gap-x-1 text-sm md:text-base">
-                              <PiSmileySadBold className="inline-flex size-4 text-app-main" />
+                          <div className=" hidden w-full items-center justify-between gap-x-6 sm:flex sm:flex-row md:gap-x-16">
+                            <p className="flex w-fit items-center gap-x-1 sm:text-lg md:text-xl">
+                              <PiSmileySadBold className="inline-flex size-5 text-app-main" />
                               Expired
                             </p>
-                            <p className="flex items-center gap-x-1 text-sm tabular-nums text-muted-foreground md:text-base">
-                              <User className="size-4" />
+                            <p className="flex items-center gap-x-1 tabular-nums text-muted-foreground sm:text-lg md:text-xl">
+                              <User className="size-5" />
                               {couponUserCounts[coupon.couponId] || 0} Used
                             </p>
                           </div>
@@ -1095,7 +1100,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                                     coupon,
                                   );
                                 }}
-                                className="hidden min-h-12 w-full cursor-pointer rounded-xl bg-neutral-500 text-base font-semibold hover:bg-neutral-500 sm:block sm:min-w-40 md:min-w-44"
+                                className="hidden min-h-12 w-56 cursor-pointer rounded-xl bg-neutral-500 text-base font-semibold hover:bg-neutral-500 sm:block md:w-64"
                               >
                                 Get Deal
                               </Button>
@@ -1112,7 +1117,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                                     coupon,
                                   );
                                 }}
-                                className="group relative hidden !min-h-12 w-full min-w-28 cursor-pointer overflow-hidden rounded-md bg-app-bg-main p-2 dark:bg-app-dark sm:grid sm:min-h-fit sm:min-w-40 md:min-w-44"
+                                className="group relative hidden !min-h-12 w-56 cursor-pointer overflow-hidden rounded-md bg-app-bg-main p-2 dark:bg-app-dark sm:grid md:w-64"
                               >
                                 <p
                                   className={`place-self-end text-base font-semibold uppercase tracking-widest ${
@@ -1135,8 +1140,8 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                               <ChevronRight className="size-6 w-full cursor-pointer text-neutral-500  sm:hidden" />
                             </>
                           )}
-                          <div className="hidden gap-x-6 pl-2 text-sm sm:flex md:gap-x-12 md:text-base lg:text-lg">
-                            <p className="text-muted-foreground">
+                          <div className="hidden w-full translate-x-1 justify-between place-self-start text-sm sm:flex md:text-base lg:text-lg">
+                            <p className="whitespace-nowrap text-sm text-muted-foreground md:text-base">
                               <span className="tabular-nums">
                                 {successRatio(
                                   couponReactions[coupon.couponId]
@@ -1144,10 +1149,10 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                                   couponReactions[coupon.couponId]
                                     ?.dislike_count || 0,
                                 )}
-                              </span>{" "}
+                              </span>
                               <span>% Success</span>
                             </p>
-                            <div className="hidden items-center gap-x-4 place-self-center sm:flex">
+                            <div className="hidden -translate-x-1 items-center gap-x-4 place-self-center sm:flex">
                               <button className="flex items-center gap-x-2">
                                 <ThumbsUp
                                   className={
@@ -1178,13 +1183,15 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                           </div>
                         </div>
                       </div>
-                      <AccordionContent className="relative p-6">
+                      <AccordionContent className="px-2 pb-5 pt-2 sm:px-6 sm:pb-6 sm:pt-4">
                         <Seperator />
-                        <p className="mb-2">{coupon.description}</p>
-                        <p className="absolute bottom-2 right-2 text-muted-foreground">
-                          Expired on:{" "}
-                          {format(new Date(coupon.due_date), "dd-MMM-yyy")}
-                        </p>
+                        <div className="flex flex-col items-start sm:flex-row sm:justify-between ">
+                          <p className="mb-2">{coupon.description}</p>
+                          <p className="text-muted-foreground">
+                            Expired on:{" "}
+                            {format(new Date(coupon.due_date), "dd-MMM-yyy")}
+                          </p>
+                        </div>
                       </AccordionContent>
                     </AccordionItem>
                   ))}
@@ -1193,7 +1200,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
             )}
             {/* About for mobile */}
             <div
-              className={`${commonStyles} ${detailsData.description ? "lg:hidden" : "hidden"} border-2 border-neutral-200`}
+              className={`${commonStyles} ${detailsData.description ? "lg:hidden" : "hidden"} border-2 border-neutral-200 dark:border-neutral-700`}
             >
               <h2 className="mb-2 text-xl font-bold">About</h2>
               <p>{detailsData.description}</p>
@@ -1205,9 +1212,9 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
               JSON.parse(detailsData?.faq)?.length > 0 && (
                 <section
                   id="faqs"
-                  className={`${commonStyles} border-2 border-neutral-200 xl:w-11/12`}
+                  className={`${commonStyles} border-2 border-neutral-200 dark:border-neutral-700 xl:w-11/12`}
                 >
-                  <h2 className="mb-4 w-full text-xl font-bold sm:text-2xl lg:text-4xl">
+                  <h2 className="mb-4 w-full text-xl font-bold sm:text-2xl lg:text-3xl">
                     FAQS
                   </h2>
                   <Accordion
@@ -1215,42 +1222,41 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                     collapsible
                     className="flex flex-col gap-y-6"
                   >
-                    {
-                      isStore &&
+                    {isStore &&
                       detailsData.faq &&
                       Array.isArray(JSON.parse(detailsData?.faq)) &&
                       JSON.parse(detailsData.faq)?.length > 0 &&
                       JSON.parse(detailsData?.faq)?.map(
-                      (
-                        faq: { question: string; answer: string },
-                        index: number,
-                      ) => {
-                        return (
-                          <AccordionItem
-                            value={`${index}`}
-                            key={index}
-                            className="w-full"
-                          >
-                            <AccordionTrigger className="w-full text-start">
-                              {faq.question}
-                            </AccordionTrigger>
-                            <AccordionContent className="p-4">
-                              {faq.answer}
-                            </AccordionContent>
-                          </AccordionItem>
-                        );
-                      },
-                    )}
+                        (
+                          faq: { question: string; answer: string },
+                          index: number,
+                        ) => {
+                          return (
+                            <AccordionItem
+                              value={`${index}`}
+                              key={index}
+                              className="w-full"
+                            >
+                              <AccordionTrigger className="w-full text-start font-semibold sm:text-lg lg:text-xl">
+                                {faq.question}
+                              </AccordionTrigger>
+                              <AccordionContent className="p-4 lg:text-lg">
+                                {faq.answer}
+                              </AccordionContent>
+                            </AccordionItem>
+                          );
+                        },
+                      )}
                   </Accordion>
                 </section>
               )}
             {isStore && (
               <section
                 id="moreabout"
-                className={`${commonStyles} ${!detailsData.moreAbout && "hidden"} border-2 border-neutral-200 xl:w-11/12`}
+                className={`${commonStyles} ${!detailsData.moreAbout && "hidden"} border-2 border-neutral-200 dark:border-neutral-700 xl:w-11/12`}
               >
                 <div className={`w-full`}>
-                  <h2 className="mb-4 text-xl font-bold sm:text-2xl lg:text-4xl">
+                  <h2 className="mb-4 text-xl font-bold sm:text-2xl lg:text-3xl">
                     More About
                   </h2>
                   <div
@@ -1263,10 +1269,10 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
             {isStore && (
               <section
                 id="hints"
-                className={`${commonStyles} ${!detailsData.hint && "hidden"} border-2 border-neutral-200 xl:w-11/12`}
+                className={`${commonStyles} ${!detailsData.hint && "hidden"} border-2 border-neutral-200 dark:border-neutral-700 xl:w-11/12`}
               >
                 <div className={`w-full`}>
-                  <h2 className="mb-4 text-xl font-bold sm:text-2xl lg:text-4xl">
+                  <h2 className="mb-4 text-xl font-bold sm:text-2xl lg:text-3xl">
                     {detailsData.hintHeading
                       ? detailsData.hintHeading
                       : "How To Apply"}
@@ -1341,7 +1347,7 @@ const PopularItems: React.FC<PopularItemProps> = ({
   isHidden,
 }) => {
   const commonStyles =
-    "w-full rounded-lg bg-popover p-4 shadow-md border-2 border-neutral-200 lg:border-0";
+    "w-full rounded-lg bg-popover p-4 shadow-md border-2 border-neutral-200 dark:border-neutral-700 lg:border-0 rounded-xl";
 
   return (
     <div className={`${commonStyles} ${isHidden ? "lg:hidden" : ""}`}>

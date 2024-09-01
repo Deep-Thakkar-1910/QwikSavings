@@ -6,7 +6,7 @@ import Superscript from "@tiptap/extension-superscript";
 import Subscript from "@tiptap/extension-subscript";
 import Heading from "@tiptap/extension-heading";
 import TextAlign from "@tiptap/extension-text-align";
-import HardBreak from "@tiptap/extension-hard-break";
+import HardBreakExtenstion from "@tiptap/extension-hard-break";
 import {
   Bold,
   Strikethrough,
@@ -31,6 +31,7 @@ import {
   TextAlignRightIcon,
 } from "@radix-ui/react-icons";
 import { useEffect } from "react";
+import { group } from "console";
 
 const RichTextEditor = ({
   value,
@@ -58,6 +59,14 @@ const RichTextEditor = ({
             class: "proseMirrorEditorUlOl list-disc ml-2",
           },
         },
+        hardBreak: {
+          HTMLAttributes: {
+            inline: false,
+            class: "proseMirrorEditorHardBreak",
+            group: "block",
+            content: "text*",
+          },
+        },
       }),
       Heading.configure({
         levels: [1, 2],
@@ -70,7 +79,7 @@ const RichTextEditor = ({
       Underline,
       Superscript,
       Subscript,
-      HardBreak,
+      HardBreakExtenstion,
     ],
     onUpdate: ({ editor }) => {
       onChange(editor.getHTML()); // Call the onChange callback with the updated HTML content

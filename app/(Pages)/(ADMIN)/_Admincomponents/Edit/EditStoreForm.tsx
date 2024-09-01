@@ -88,7 +88,8 @@ const EditStoreForm = ({ similarStores = [] }: StoreFormProps) => {
   });
 
   const [storeDetails, setStoreDetails] = useState<Record<string, any>>();
-
+  console.log(storeDetails?.faq);
+  console.log(storeDetails?.moreAbout);
   // Fetch store data for editing
   useEffect(() => {
     const fetchStoreData = async () => {
@@ -125,7 +126,7 @@ const EditStoreForm = ({ similarStores = [] }: StoreFormProps) => {
         hintHeading: storeDetails.hintHeading ?? "",
         best_offer: storeDetails.best_offer,
         average_discount: storeDetails.average_discount,
-        faq: JSON.parse(storeDetails.faq as unknown as string),
+        faq: JSON.parse(storeDetails?.faq as unknown as string),
         similarStores: storeIds,
         isFeatured: storeDetails.isFeatured ? "yes" : "no",
         addToPopularStores: storeDetails.addToPopularStores ? "yes" : "no",

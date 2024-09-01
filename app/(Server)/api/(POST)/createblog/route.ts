@@ -1,7 +1,6 @@
 import db from "@/lib/prisma";
 import { UploadStoreImage } from "@/lib/utilities/CloudinaryConfig";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
-import { error } from "console";
 import { NextResponse } from "next/server";
 
 // API handler for creating a blog
@@ -47,7 +46,7 @@ export async function POST(req: Request) {
     // creating the blog
     const blog = await db.blog.create({
       data: {
-        title,
+        title: title.trim(),
         content,
         thumbnail_url: thumbnailUrl || "",
         category_id: Number(category_id),

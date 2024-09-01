@@ -18,7 +18,7 @@ const AuthButtons = () => {
           </Button>
           <Button
             asChild
-            className="cursor-pointer transition-transform duration-200 ease-out hover:-translate-y-1"
+            className="cursor-pointer bg-app-main transition-transform duration-200 ease-out hover:-translate-y-1 hover:bg-app-main"
           >
             <Link href="/signup">Sign Up</Link>
           </Button>
