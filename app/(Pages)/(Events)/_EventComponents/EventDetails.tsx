@@ -1040,7 +1040,7 @@ const PopularItems: React.FC<PopularItemProps> = ({
   isStore = false,
   isHidden,
 }) => {
-  const commonStyles = "w-full rounded-lg bg-popover p-4 shadow-md";
+  const commonStyles = "w-full rounded-lg bg-popover p-4 shadow-lg";
 
   return (
     <div
