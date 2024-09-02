@@ -1347,7 +1347,7 @@ const PopularItems: React.FC<PopularItemProps> = ({
   isHidden,
 }) => {
   const commonStyles =
-    "w-full rounded-lg bg-popover p-4 shadow-md border-2 border-neutral-200 dark:border-neutral-700 lg:border-0 rounded-xl";
+    "w-full rounded-lg bg-popover p-4 shadow-lg border-2 border-neutral-200 dark:border-neutral-700 lg:border-0 rounded-xl";
 
   return (
     <div className={`${commonStyles} ${isHidden ? "lg:hidden" : ""}`}>
