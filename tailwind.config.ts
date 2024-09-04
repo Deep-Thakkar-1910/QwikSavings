@@ -23,7 +23,7 @@ const config = {
     extend: {
       colors: {
         "app-bg-main": "#faf9f5",
-        "app-main": "#c22c50",
+        "app-main": "#a12441",
         "app-dark": "#121212",
         "app-dark-navbar": "#181818",
         border: "hsl(var(--border))",

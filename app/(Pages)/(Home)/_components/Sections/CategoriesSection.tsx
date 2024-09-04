@@ -180,7 +180,7 @@ const CategoriesSection: React.FC<CategoriesSectionProps> = ({
                   className="w-full rounded-xl bg-app-main text-base font-semibold text-white dark:text-slate-200"
                   onClick={() => handleCouponUse(coupon)}
                 >
-                  Get Deal
+                  GET DEAL
                 </Button>
               )}
               {coupon.type === "Coupon" && (
@@ -201,7 +201,7 @@ const CategoriesSection: React.FC<CategoriesSectionProps> = ({
                   <div className="absolute left-0 top-0 h-full w-full">
                     <div className="polygon-clip h-full w-full rounded-xl bg-app-main transition-all duration-200 ease-linear group-hover:w-11/12">
                       <p className="absolute inset-0 grid place-items-center text-sm font-semibold text-slate-200">
-                        Get code
+                        GET CODE
                       </p>
                     </div>
                   </div>

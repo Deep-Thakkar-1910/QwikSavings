@@ -1,7 +1,11 @@
 import DetailsPage from "@/app/(Pages)/_PageComponents/DetailsPage";
 
 const CategoryDetailPage = () => {
-  return <DetailsPage fetchFrom="category" />;
+  return (
+    <main className="overflow-x-hidden">
+      <DetailsPage fetchFrom="category" />;
+    </main>
+  );
 };
 
 export default CategoryDetailPage;

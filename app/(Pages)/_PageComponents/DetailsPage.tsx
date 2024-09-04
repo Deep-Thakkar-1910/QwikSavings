@@ -510,11 +510,11 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
         </div>
       ) : (
         <section
-          className={`relative mb-6 flex w-full flex-col items-start px-8 pt-10 lg:flex-row lg:gap-x-10 lg:px-12 xl:gap-x-14 ${isActiveFestival ? "!mb-14" : "mb-0"}`}
+          className={`relative mb-6 flex w-full flex-col items-start px-8 pt-10 lg:flex-row lg:gap-x-10 lg:px-12 xl:ml-5 xl:gap-x-14 2xl:ml-7 ${isActiveFestival ? "!mb-14" : "mb-0"}`}
         >
           {/* Edit link only visbible to admins */}
           {session?.user.role === "admin" && (
-            <div className="absolute right-4 top-0 flex flex-col gap-y-2 place-self-end lg:right-32 2xl:right-44">
+            <div className="absolute right-4 top-0 flex flex-col gap-y-2 place-self-end lg:right-20 2xl:right-28">
               <Link
                 href={editLink}
                 className="underline transition-colors duration-300 ease-linear hover:text-app-main"
@@ -524,7 +524,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
             </div>
           )}
           {/* sidebar for larger screens */}
-          <aside className="hidden flex-col items-center gap-y-8 lg:flex lg:w-1/4">
+          <aside className="hidden flex-col items-center gap-y-8 lg:flex lg:w-1/4 lg:shrink-0 2xl:shrink">
             <div className="size-56 rounded-full border border-black bg-popover p-1 transition-shadow duration-200 ease-linear hover:shadow-lg dark:border-slate-200">
               <Image
                 src={
@@ -546,7 +546,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                   variant={"ghost"}
                 >
                   <Link href={`${detailsData.ref_link}`} target="_blank">
-                    Visit {detailsData.name} Store
+                    Visit {detailsData.name}
                   </Link>
                 </Button>
                 <StarRating storeId={detailsData.storeId} />
@@ -729,7 +729,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
           <main className={`flex w-full flex-col items-stretch gap-y-4`}>
             <div className="hidden -translate-y-2 flex-col lg:flex">
               <h1 className="mb-2 text-3xl font-bold xl:text-4xl">
-                {detailsData.title}
+                {isStore ? detailsData?.title : `${detailsData?.name} Coupons`}
               </h1>
               {isStore && initialCoupon && (
                 <p className=" text-lg font-semibold">
@@ -739,7 +739,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
               )}
             </div>
             {/* Tabs */}
-            <div className="flex flex-col justify-start gap-y-2 lg:w-11/12 lg:flex-row lg:items-center lg:justify-between">
+            <div className="flex flex-col justify-start gap-y-2 lg:w-[97%] lg:flex-row lg:items-center lg:justify-between">
               <div className="flex justify-start sm:gap-x-4">
                 <Button
                   onClick={() => handleTabChange("all")}
@@ -774,8 +774,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
               </div>
               <Link
                 href={"/submitacoupon"}
-                style={{ color: "#e11d48" }}
-                className="hidden items-center gap-x-1 place-self-end underline transition-colors duration-300 ease-linear lg:flex"
+                className="hidden items-center gap-x-1 place-self-end text-app-main underline transition-colors duration-300 ease-linear lg:flex"
               >
                 Submit a coupon <Tag className="size-4" />
               </Link>
@@ -783,7 +782,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
             <Accordion
               type="single"
               collapsible
-              className="flex w-full flex-col gap-y-6 xl:w-11/12"
+              className="flex w-full flex-col gap-y-6 xl:w-[97%]"
             >
               {filteredActiveCoupons.map((coupon: Record<string, any>) => {
                 // Coupon
@@ -844,11 +843,11 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                           {couponUserCounts[coupon.couponId] || 0} Used
                         </p>
                         <div className="hidden w-full items-center justify-between gap-x-8 sm:flex sm:text-base md:gap-x-16 lg:text-lg">
-                          <p className="flex w-full items-center gap-x-1 text-emerald-700 sm:text-lg md:text-xl">
-                            <Verified className="inline-flex size-4 text-emerald-700 md:size-5" />
+                          <p className="flex w-full items-center gap-x-1 text-emerald-900 sm:text-lg">
+                            <Verified className="inline-flex size-4 text-emerald-900 md:size-5" />
                             Verified
                           </p>
-                          <p className="flex w-full items-center gap-x-1 text-lg text-muted-foreground md:text-xl">
+                          <p className="flex w-full items-center gap-x-1 text-muted-foreground sm:text-lg md:text-xl">
                             <User className="size-4 md:size-5" />
                             <span>
                               {couponUserCounts[coupon.couponId] || 0}
@@ -934,7 +933,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                               <div className="absolute left-0 top-0 h-full w-full">
                                 <div className="polygon-clip h-full w-full rounded-xl bg-app-main transition-all duration-200 ease-linear group-hover:w-11/12">
                                   <p className="absolute inset-0 grid place-items-center text-sm font-semibold text-white dark:text-slate-200">
-                                    Get Code
+                                    GET CODE
                                   </p>
                                 </div>
                               </div>
@@ -975,8 +974,8 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                               <ThumbsUp
                                 className={
                                   userReactions[coupon.couponId] === "LIKE"
-                                    ? "size-4 fill-emerald-500 text-emerald-500"
-                                    : "size-4 text-emerald-500 transition-colors duration-200 ease-linear hover:fill-emerald-500"
+                                    ? "size-4 fill-emerald-900 text-emerald-900"
+                                    : "size-4 text-emerald-900 transition-colors duration-200 ease-linear hover:fill-emerald-900"
                                 }
                               />
                               <span className="text-muted-foreground">
@@ -1026,7 +1025,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                 <Accordion
                   type="single"
                   collapsible
-                  className="flex w-full flex-col gap-y-6 xl:w-11/12"
+                  className="flex w-full flex-col gap-y-6 xl:w-[97%]"
                 >
                   {filteredExpiredCoupons.map((coupon: Record<string, any>) => (
                     <AccordionItem
@@ -1130,7 +1129,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                                 <div className="absolute left-0 top-0 h-full w-full">
                                   <div className="polygon-clip h-full w-full rounded-xl bg-neutral-500 transition-all duration-200 ease-linear hover:bg-neutral-500 group-hover:w-11/12">
                                     <p className="absolute inset-0 grid place-items-center text-sm font-semibold text-slate-200">
-                                      Get code
+                                      GET CODE
                                     </p>
                                   </div>
                                 </div>
@@ -1212,7 +1211,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
               JSON.parse(detailsData?.faq)?.length > 0 && (
                 <section
                   id="faqs"
-                  className={`${commonStyles} border-2 border-neutral-200 dark:border-neutral-700 xl:w-11/12`}
+                  className={`${commonStyles} border-2 border-neutral-200 dark:border-neutral-700 xl:w-[97%]`}
                 >
                   <h2 className="mb-4 w-full text-xl font-bold sm:text-2xl lg:text-3xl">
                     FAQS
@@ -1253,7 +1252,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
             {isStore && (
               <section
                 id="moreabout"
-                className={`${commonStyles} ${!detailsData.moreAbout && "hidden"} border-2 border-neutral-200 dark:border-neutral-700 xl:w-11/12`}
+                className={`${commonStyles} ${!detailsData.moreAbout && "hidden"} border-2 border-neutral-200 dark:border-neutral-700 xl:w-[97%]`}
               >
                 <div className={`w-full`}>
                   <h2 className="mb-4 text-xl font-bold sm:text-2xl lg:text-3xl">
@@ -1269,7 +1268,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
             {isStore && (
               <section
                 id="hints"
-                className={`${commonStyles} ${!detailsData.hint && "hidden"} border-2 border-neutral-200 dark:border-neutral-700 xl:w-11/12`}
+                className={`${commonStyles} ${!detailsData.hint && "hidden"} border-2 border-neutral-200 dark:border-neutral-700 xl:w-[97%]`}
               >
                 <div className={`w-full`}>
                   <h2 className="mb-4 text-xl font-bold sm:text-2xl lg:text-3xl">
@@ -1426,7 +1425,7 @@ const CouponDialog: React.FC<{
             {copied ? "Copied!" : "Copy"}
           </Button>
         </div>
-        <p className="flex items-center gap-x-1 text-center text-emerald-500">
+        <p className="flex items-center gap-x-1 text-center text-emerald-900">
           Copy and Paste Coupon code at{" "}
           <Link href={ref_link} target="_blank">
             <span className="flex items-center gap-x-1 text-app-main underline">
@@ -1442,8 +1441,8 @@ const CouponDialog: React.FC<{
             <ThumbsUp
               className={
                 userReaction === "LIKE"
-                  ? "size-4 fill-emerald-500 text-emerald-500"
-                  : "size-4 text-emerald-500 transition-colors duration-200 ease-linear hover:fill-emerald-500"
+                  ? "size-4 fill-emerald-900 text-emerald-900"
+                  : "size-4 text-emerald-900 transition-colors duration-200 ease-linear hover:fill-emerald-900"
               }
             />
           </button>
@@ -1510,8 +1509,8 @@ const DealDialog: React.FC<{
             <ThumbsUp
               className={
                 userReaction === "LIKE"
-                  ? "size-4 fill-emerald-500 text-emerald-500"
-                  : "size-4 text-emerald-500 transition-colors duration-200 ease-linear hover:fill-emerald-500"
+                  ? "size-4 fill-emerald-900 text-emerald-900"
+                  : "size-4 text-emerald-900 transition-colors duration-200 ease-linear hover:fill-emerald-900"
               }
             />
           </button>
