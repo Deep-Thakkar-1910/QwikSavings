@@ -1415,17 +1415,17 @@ const CouponDialog: React.FC<{
         <p className="text-sm font-medium text-muted-foreground">
           Ends on {expiry}
         </p>
-        <div className="flex min-w-24 items-center gap-x-2 rounded-full border border-app-main pl-2 ">
+        <div className="flex min-w-24 items-center gap-x-2 rounded-full border border-app-main py-3 pl-2 ">
           <span className="">{couponCode}</span>
           <Button
             size="sm"
-            className="rounded-full rounded-bl-none rounded-tl-none bg-app-main p-3"
+            className="rounded-full rounded-bl-none rounded-tl-none bg-app-main py-5 p-3"
             onClick={copyToClipboard}
           >
             {copied ? "Copied!" : "Copy"}
           </Button>
         </div>
-        <p className="flex items-center gap-x-1 text-center text-emerald-900">
+        <p className="flex items-center text-sm gap-x-1 text-center text-emerald-900">
           Copy and Paste Coupon code at{" "}
           <Link href={ref_link} target="_blank">
             <span className="flex items-center gap-x-1 text-app-main underline">
