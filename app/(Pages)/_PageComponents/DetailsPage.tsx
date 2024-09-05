@@ -1419,7 +1419,7 @@ const CouponDialog: React.FC<{
           <span className="">{couponCode}</span>
           <Button
             size="sm"
-            className="rounded-full rounded-bl-none rounded-tl-none bg-app-main py-5 p-3"
+            className="rounded-full rounded-bl-none rounded-tl-none bg-app-main h-full p-3"
             onClick={copyToClipboard}
           >
             {copied ? "Copied!" : "Copy"}
