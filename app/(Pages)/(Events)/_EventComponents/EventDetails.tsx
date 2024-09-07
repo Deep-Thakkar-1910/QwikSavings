@@ -44,6 +44,7 @@ import {
 import { PiSmileySadBold } from "react-icons/pi";
 import { toast } from "@/components/ui/use-toast";
 import { useActiveFestival } from "@/hooks/useFestivalActive";
+import { FaExternalLinkAlt } from "react-icons/fa";
 
 type ReactionType = "LIKE" | "DISLIKE";
 
@@ -430,7 +431,7 @@ const EventDetails = () => {
           {session?.user.role === "admin" && (
             <Link
               href={`/admin/editevent/${eventName}`}
-              className="absolute right-4 top-0 -translate-y-8 cursor-pointer place-self-end  underline transition-colors duration-300 ease-linear hover:text-app-main lg:right-28 xl:right-40"
+              className="absolute right-4 top-0 -translate-y-8 cursor-pointer place-self-end  underline transition-colors duration-300 ease-linear hover:text-app-main lg:right-16 xl:right-20"
             >
               Edit Event
             </Link>
@@ -453,7 +454,7 @@ const EventDetails = () => {
             </h1>
           </div>
           <section
-            className={`mb-6 flex w-full flex-col items-start px-4 sm:px-8 lg:px-12 ${isActiveFestival ? "!mb-14" : ""}`}
+            className={`mb-6 flex w-full flex-col items-start px-4 sm:px-8 lg:px-12 xl:ml-5 2xl:ml-7 ${isActiveFestival ? "!mb-14" : ""}`}
           >
             {data?.cover_url && (
               <Image
@@ -461,11 +462,11 @@ const EventDetails = () => {
                 alt="Event Cover url"
                 width={1920}
                 height={1080}
-                className="mb-4 mt-6 h-32 w-full rounded-md object-cover lg:h-40 xl:w-[93.5%]"
+                className="mb-4 mt-6 h-32 w-full rounded-md object-cover lg:h-40 xl:w-[98%]"
               />
             )}
             <div className="relative flex w-full flex-col items-start lg:flex-row lg:gap-x-10 lg:pt-10 xl:gap-x-14">
-              <aside className="hidden flex-col items-center gap-y-8 lg:flex lg:w-1/4">
+              <aside className="hidden flex-col items-center gap-y-8 lg:flex lg:w-1/4 lg:shrink-0 2xl:shrink">
                 <div className="size-56 rounded-full border border-black bg-popover p-1 dark:border-slate-200">
                   <Image
                     src={
@@ -560,11 +561,11 @@ const EventDetails = () => {
               </aside>
               <Separator className="hidden h-auto min-h-[90vh] w-[2px] self-stretch text-muted lg:block" />
               <main className="flex w-full flex-col items-stretch gap-y-6">
-                <div className="hidden -translate-y-2 flex-col lg:flex lg:w-11/12">
+                <div className="hidden w-full -translate-y-2 flex-col lg:flex xl:w-[97%]">
                   <h1 className="mb-2 text-4xl font-bold">{data?.name}</h1>
                   <Link
                     href={"/submitacoupon"}
-                    className="flex items-center gap-x-1 place-self-end underline transition-colors duration-300 ease-linear hover:text-app-main"
+                    className="flex items-center gap-x-1 place-self-end text-app-main underline"
                   >
                     Submit a coupon <Tag className="size-4" />
                   </Link>
@@ -574,13 +575,13 @@ const EventDetails = () => {
                 <Accordion
                   type="single"
                   collapsible
-                  className="flex w-full flex-col gap-y-6 xl:w-11/12"
+                  className="flex w-full flex-col gap-y-6 xl:w-[97%]"
                 >
                   {activeCoupons.map((coupon: any) => (
                     <AccordionItem
                       key={coupon.couponId}
                       value={coupon.couponId}
-                      className="min-h-40 rounded-xl border-2 border-neutral-200 bg-popover pt-4 shadow-sm dark:border-neutral-700 sm:min-h-56"
+                      className="min-h-40 rounded-xl border-2 border-neutral-200 bg-popover shadow-sm dark:border-neutral-700 sm:min-h-56 sm:pt-4"
                     >
                       <div className="group/accordion relative flex w-full items-center justify-between gap-x-6 gap-y-4 px-2 pb-2 pt-3 sm:px-6">
                         <div className="flex items-start gap-x-2 sm:gap-x-6">
@@ -622,7 +623,7 @@ const EventDetails = () => {
                         {/* Coupon code users and bookmark */}
                         <div className="flex flex-col items-end gap-5">
                           <Heart
-                            className={`absolute -top-1 right-2 size-5 cursor-pointer text-app-main transition-all duration-300 ease-linear sm:-top-2 ${
+                            className={`absolute right-2 top-2 size-5 cursor-pointer text-app-main transition-all duration-300 ease-linear sm:-top-1 ${
                               bookmarkedCoupons.includes(coupon.couponId)
                                 ? "fill-app-main text-app-main"
                                 : "opacity-100 group-hover/accordion:opacity-100 lg:opacity-0 lg:hover:fill-app-main"
@@ -633,11 +634,11 @@ const EventDetails = () => {
                             {couponUserCounts[coupon.couponId] || 0} Used
                           </p>
                           <div className="hidden w-full items-center justify-between gap-x-8 sm:flex sm:text-base md:gap-x-16 lg:text-lg">
-                            <p className="flex w-full items-center gap-x-1 text-emerald-700 sm:text-lg md:text-xl">
-                              <Verified className="inline-flex size-4 text-emerald-700 md:size-5" />
+                            <p className="flex w-full items-center gap-x-1 text-emerald-900 sm:text-lg">
+                              <Verified className="inline-flex size-4 text-emerald-900 md:size-5" />
                               Verified
                             </p>
-                            <p className="flex w-full items-center gap-x-1 text-lg text-muted-foreground md:text-xl">
+                            <p className="flex w-full items-center gap-x-1 text-muted-foreground sm:text-lg md:text-xl">
                               <User className="size-4 md:size-5" />
                               <span>
                                 {couponUserCounts[coupon.couponId] || 0}
@@ -721,9 +722,9 @@ const EventDetails = () => {
                                 </p>
                                 {/* wrapper */}
                                 <div className="absolute left-0 top-0 h-full w-full">
-                                  <div className="polygon-clip h-full w-full rounded-xl bg-app-main transition-all duration-200 ease-linear group-hover:w-11/12">
-                                    <p className="absolute inset-0 grid place-items-center text-sm font-semibold text-white dark:text-slate-200">
-                                      Get Code
+                                  <div className="polygon-clip h-full w-full rounded-xl bg-app-main font-semibold transition-all duration-200 ease-linear group-hover:w-11/12">
+                                    <p className="absolute inset-0 grid place-items-center font-semibold text-white dark:text-slate-200">
+                                      GET CODE
                                     </p>
                                   </div>
                                 </div>
@@ -734,7 +735,7 @@ const EventDetails = () => {
                                 onClick={() => {
                                   handleCouponUse(
                                     coupon.couponId,
-                                    "Deal",
+                                    "Coupon",
                                     coupon,
                                   );
                                 }}
@@ -764,8 +765,8 @@ const EventDetails = () => {
                                 <ThumbsUp
                                   className={
                                     userReactions[coupon.couponId] === "LIKE"
-                                      ? "size-4 fill-emerald-500 text-emerald-500"
-                                      : "size-4 text-emerald-500 transition-colors duration-200 ease-linear hover:fill-emerald-500"
+                                      ? "size-4 fill-emerald-900 text-emerald-900"
+                                      : "size-4 text-emerald-900 transition-colors duration-200 ease-linear hover:fill-emerald-900"
                                   }
                                 />
                                 <span className="text-muted-foreground">
@@ -816,13 +817,13 @@ const EventDetails = () => {
                     <Accordion
                       type="single"
                       collapsible
-                      className="flex w-full flex-col gap-y-6 lg:w-11/12"
+                      className="flex w-full flex-col gap-y-6 xl:w-[97%]"
                     >
                       {expiredCoupons.map((coupon: any) => (
                         <AccordionItem
                           key={coupon.couponId}
                           value={coupon.couponId}
-                          className="min-h-40 rounded-xl border-2 border-neutral-200 bg-popover pt-4 shadow-sm dark:border-neutral-700 sm:min-h-56"
+                          className="min-h-40 rounded-xl border-2 border-neutral-200 bg-popover shadow-sm dark:border-neutral-700 sm:min-h-56 sm:pt-4"
                         >
                           <div className="group/accordion relative flex w-full items-center justify-between gap-x-6 gap-y-4 px-2 pb-2 pt-3 text-muted-foreground sm:px-6">
                             <div className="flex items-start gap-6 sm:flex-row">
@@ -860,7 +861,7 @@ const EventDetails = () => {
                             {/* Coupon code users and bookmark */}
                             <div className="flex flex-col items-end gap-4">
                               <Heart
-                                className={`absolute -top-1 right-2 size-5 cursor-pointer text-app-main transition-all duration-300 ease-linear sm:-top-2 sm:right-2 ${
+                                className={`absolute right-2 top-2 size-5 cursor-pointer text-app-main transition-all duration-300 ease-linear sm:-top-1 ${
                                   bookmarkedCoupons.includes(coupon.couponId)
                                     ? "fill-app-main text-app-main"
                                     : "opacity-100 group-hover/accordion:opacity-100 lg:opacity-0 lg:hover:fill-app-main"
@@ -870,14 +871,19 @@ const EventDetails = () => {
                               <p className="absolute bottom-2 right-2 text-sm tabular-nums text-muted-foreground sm:hidden">
                                 {couponUserCounts[coupon.couponId] || 0} Used
                               </p>
-                              <div className=" hidden w-full items-center justify-between gap-x-6 sm:flex sm:flex-row md:gap-x-16">
-                                <p className="flex w-fit items-center gap-x-1 sm:text-lg md:text-xl">
+                              <div className=" hidden w-full items-center justify-between gap-x-6 sm:flex sm:text-base md:gap-x-16 lg:text-lg">
+                                <p className="flex w-fit items-center gap-x-1 sm:text-lg">
                                   <PiSmileySadBold className="inline-flex size-5 text-app-main" />
                                   Expired
                                 </p>
                                 <p className="flex items-center gap-x-1 tabular-nums text-muted-foreground sm:text-lg md:text-xl">
-                                  <User className="size-5" />
-                                  {couponUserCounts[coupon.couponId] || 0} Used
+                                  <span>
+                                    <User className="size-5" />
+                                  </span>
+                                  <span>
+                                    {couponUserCounts[coupon.couponId] || 0}{" "}
+                                    Used
+                                  </span>
                                 </p>
                               </div>
                               {coupon.type === "Deal" && (
@@ -894,7 +900,16 @@ const EventDetails = () => {
                                   >
                                     Get Deal
                                   </Button>
-                                  <ChevronRight className="size-6 w-full cursor-pointer text-neutral-500  sm:hidden" />
+                                  <ChevronRight
+                                    className="size-6 w-full cursor-pointer text-neutral-500  sm:hidden"
+                                    onClick={() => {
+                                      handleCouponUse(
+                                        coupon.couponId,
+                                        "Deal",
+                                        coupon,
+                                      );
+                                    }}
+                                  />
                                 </>
                               )}
                               {coupon.type === "Coupon" && (
@@ -919,15 +934,24 @@ const EventDetails = () => {
                                     {/* wrapper */}
                                     <div className="absolute left-0 top-0 h-full w-full">
                                       <div className="polygon-clip h-full w-full rounded-xl bg-neutral-500 transition-all duration-200 ease-linear hover:bg-neutral-500 group-hover:w-11/12">
-                                        <p className="absolute inset-0 grid place-items-center text-sm font-semibold text-slate-200">
-                                          Get code
+                                        <p className="absolute inset-0 grid place-items-center font-semibold text-slate-200">
+                                          GET CODE
                                         </p>
                                       </div>
                                     </div>
                                     {/* Border overlay */}
                                     <div className="pointer-events-none absolute inset-0 rounded-xl border-2 border-dashed border-neutral-500" />
                                   </div>
-                                  <ChevronRight className="size-6 w-full cursor-pointer text-neutral-500  sm:hidden" />
+                                  <ChevronRight
+                                    className="size-6 w-full cursor-pointer text-neutral-500  sm:hidden"
+                                    onClick={() => {
+                                      handleCouponUse(
+                                        coupon.couponId,
+                                        "Coupon",
+                                        coupon,
+                                      );
+                                    }}
+                                  />
                                 </>
                               )}
                               <div className="hidden w-full translate-x-1 justify-between place-self-start text-sm sm:flex md:text-base lg:text-lg">
@@ -1040,13 +1064,12 @@ const PopularItems: React.FC<PopularItemProps> = ({
   isStore = false,
   isHidden,
 }) => {
-  const commonStyles = "w-full rounded-lg bg-popover p-4 shadow-lg";
+  const commonStyles =
+    "w-full rounded-lg bg-popover p-4 shadow-lg border-2 border-neutral-200 dark:border-neutral-700 lg:border-0 rounded-xl";
 
   return (
-    <div
-      className={`${commonStyles} ${isHidden ? "lg:hidden" : ""} rounded-xl border-2 border-neutral-200 dark:border-neutral-700 lg:border-0`}
-    >
-      <h2 className="font-semibold">{title}</h2>
+    <div className={`${commonStyles} ${isHidden ? "lg:hidden" : ""}`}>
+      <h2 className="text-lg font-bold lg:text-xl">{title}</h2>
       <div className={`mt-1 flex flex-wrap gap-2`}>
         {items.map((item) => {
           return (
@@ -1095,68 +1118,77 @@ const CouponDialog: React.FC<{
   };
 
   return (
-    <DialogOverlay className="fixed inset-0 z-50 !bg-black/20 backdrop-blur-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0">
-      <DialogContent className="w-11/12 !bg-app-bg-main sm:w-full">
-        <DialogHeader>
-          <DialogTitle>Coupon Details</DialogTitle>
-        </DialogHeader>
-        <div className="flex flex-col items-center gap-4">
+    <DialogContent className="w-11/12 !bg-app-bg-main sm:w-full">
+      <DialogHeader>
+        <DialogTitle>Coupon Details</DialogTitle>
+      </DialogHeader>
+      <div className="flex flex-col items-center gap-4">
+        <div className="grid size-44 place-items-center rounded-full border border-black bg-popover p-1 dark:border-neutral-700">
           <Image
             src={logoUrl ?? "https://via.placeholder.com/100x100"}
             width={400}
             height={400}
             alt="Store logo"
-            className="size-28 rounded-full"
+            className="aspect-square size-full rounded-full"
           />
-          <p className="text-sm font-medium">{title}</p>
-          <p className="text-sm font-medium text-muted-foreground">
-            Ends on {expiry}
-          </p>
-          <div className="flex min-w-24 items-center gap-x-2 rounded-full border border-app-main pl-2 ">
-            <span className="">{couponCode}</span>
-            <Button
-              size="sm"
-              className="ml-auto min-w-16 rounded-full rounded-bl-none rounded-tl-none bg-app-main p-3"
-              onClick={copyToClipboard}
-            >
-              {copied ? "Copied!" : "Copy"}
-            </Button>
-          </div>
-          <p className="flex items-center gap-x-1 text-emerald-500">
-            Copy and Paste Coupon code at{" "}
-            <Link href={ref_link}>
-              <span className="text-app-main underline">Product</span>
-            </Link>
-          </p>
-          <div className="flex items-center gap-4">
-            <button
-              onClick={() => handleReaction(couponId, "LIKE")}
-              className="flex items-center gap-2"
-            >
-              <ThumbsUp
-                className={
-                  userReaction === "LIKE"
-                    ? "size-4 fill-emerald-500 text-emerald-500"
-                    : "size-4 text-emerald-500 transition-colors duration-200 ease-linear hover:fill-emerald-500"
-                }
-              />
-            </button>
-            <button
-              onClick={() => handleReaction(couponId, "DISLIKE")}
-              className="flex items-center gap-2"
-            >
-              <ThumbsDown
-                className={
-                  userReaction === "DISLIKE"
-                    ? "size-4 fill-app-main text-app-main"
-                    : "size-4 text-app-main transition-colors duration-300 ease-linear hover:fill-app-main"
-                }
-              />
-            </button>
+        </div>
+        <p className="text-lg font-medium">{title}</p>
+        <p className="text font-medium text-muted-foreground">
+          Ends on {expiry}
+        </p>
+        <div className="flex w-full min-w-24 items-center justify-between gap-x-2 rounded-full border border-app-main px-5 py-3 sm:w-1/2">
+          <span className="">{couponCode}</span>
+          <Button
+            size="sm"
+            className="rounded-full bg-app-main p-3 py-5"
+            onClick={copyToClipboard}
+          >
+            {copied ? "Copied!" : "Copy"}
+          </Button>
+        </div>
+        <p className="flex items-center gap-x-1 text-center text-sm text-emerald-900">
+          Copy and Paste Coupon code at{" "}
+          <Link href={ref_link} target="_blank">
+            <span className="flex items-center gap-x-1 text-app-main underline">
+              Product <FaExternalLinkAlt className="size-3" />
+            </span>
+          </Link>
+        </p>
+        <div className="flex w-full min-w-24 items-center justify-between gap-x-2 rounded-full border border-app-main px-5 py-3 sm:w-2/3">
+          <p className="font-medium">Did this work for you? </p>
+          <div className="flex gap-x-2">
+            <div className="rounded-lg border border-app-main p-2">
+              <button
+                onClick={() => handleReaction(couponId, "LIKE")}
+                className="flex items-center gap-2"
+              >
+                <ThumbsUp
+                  className={
+                    userReaction === "LIKE"
+                      ? "size-5 fill-emerald-900 text-emerald-900"
+                      : "size-5 text-emerald-900 transition-colors duration-200 ease-linear hover:fill-emerald-900"
+                  }
+                />
+              </button>
+            </div>
+            <div className="rounded-lg border border-app-main p-2">
+              <button
+                onClick={() => handleReaction(couponId, "DISLIKE")}
+                className="flex items-center gap-2"
+              >
+                <ThumbsDown
+                  className={
+                    userReaction === "DISLIKE"
+                      ? "size-5 fill-app-main text-app-main"
+                      : "size-5 text-app-main transition-colors duration-300 ease-linear hover:fill-app-main"
+                  }
+                />
+              </button>
+            </div>
           </div>
         </div>
-      </DialogContent>
-    </DialogOverlay>
+      </div>
+    </DialogContent>
   );
 };
 
@@ -1178,54 +1210,61 @@ const DealDialog: React.FC<{
   userReaction,
 }) => {
   return (
-    <DialogOverlay className="fixed inset-0 z-50 !bg-black/20 backdrop-blur-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0">
-      <DialogContent className="w-11/12 !bg-app-bg-main sm:w-full">
-        <DialogHeader>
-          <DialogTitle>About Deal</DialogTitle>
-        </DialogHeader>
-        <div className="flex flex-col items-center gap-4">
+    <DialogContent className="w-11/12 !bg-app-bg-main sm:w-full">
+      <DialogHeader>
+        <DialogTitle>About Deal</DialogTitle>
+      </DialogHeader>
+      <div className="flex flex-col items-center gap-4">
+        <div className="grid size-44 place-items-center rounded-full border border-black bg-popover p-1 dark:border-neutral-700">
           <Image
             src={logoUrl ?? "https://via.placeholder.com/100x100"}
             width={400}
             height={400}
             alt="Store logo"
-            className="size-28 rounded-full"
+            className="aspect-square size-full rounded-full"
           />
-          <p className="text-sm font-medium">{title}</p>
-          <p className="text-sm font-medium text-muted-foreground">
-            Ends on {expiry}
-          </p>
-          <Link href={ref_link}>
-            <Button className="bg-app-main">Go to Deal</Button>
+        </div>
+        <p className="text-lg font-medium">{title}</p>
+        <p className="font-medium text-muted-foreground">Ends on {expiry}</p>
+        <Button className="min-w-40 bg-app-main py-6" asChild>
+          <Link href={ref_link} target="_blank">
+            Go to Deal
           </Link>
-          <div className="flex items-center gap-4">
-            <button
-              onClick={() => handleReaction(couponId, "LIKE")}
-              className="flex items-center gap-2"
-            >
-              <ThumbsUp
-                className={
-                  userReaction === "LIKE"
-                    ? "size-4 fill-emerald-500 text-emerald-500"
-                    : "size-4 text-emerald-500 transition-colors duration-200 ease-linear hover:fill-emerald-500"
-                }
-              />
-            </button>
-            <button
-              onClick={() => handleReaction(couponId, "DISLIKE")}
-              className="flex items-center gap-2"
-            >
-              <ThumbsDown
-                className={
-                  userReaction === "DISLIKE"
-                    ? "size-4 fill-app-main text-app-main"
-                    : "size-4 text-app-main transition-colors duration-300 ease-linear hover:fill-app-main"
-                }
-              />
-            </button>
+        </Button>
+        <div className="flex w-full min-w-24 items-center justify-between gap-x-2 rounded-full border border-app-main px-5 py-3 sm:w-2/3">
+          <p className="font-medium">Did this work for you? </p>
+          <div className="flex gap-x-2">
+            <div className="rounded-lg border border-app-main p-2">
+              <button
+                onClick={() => handleReaction(couponId, "LIKE")}
+                className="flex items-center gap-2"
+              >
+                <ThumbsUp
+                  className={
+                    userReaction === "LIKE"
+                      ? "size-5 fill-emerald-900 text-emerald-900"
+                      : "size-5 text-emerald-900 transition-colors duration-200 ease-linear hover:fill-emerald-900"
+                  }
+                />
+              </button>
+            </div>
+            <div className="rounded-lg border border-app-main p-2">
+              <button
+                onClick={() => handleReaction(couponId, "DISLIKE")}
+                className="flex items-center gap-2"
+              >
+                <ThumbsDown
+                  className={
+                    userReaction === "DISLIKE"
+                      ? "size-5 fill-app-main text-app-main"
+                      : "size-5 text-app-main transition-colors duration-300 ease-linear hover:fill-app-main"
+                  }
+                />
+              </button>
+            </div>
           </div>
         </div>
-      </DialogContent>
-    </DialogOverlay>
+      </div>
+    </DialogContent>
   );
 };
