@@ -10,7 +10,7 @@ const page = () => {
       <div className="mx-auto mt-6 w-full max-w-screen-xl px-4 sm:px-8 sm:text-2xl lg:px-12 xl:px-8 2xl:px-0">
         <h1 className="text-xl font-bold sm:text-2xl">About Qwik Savings</h1>
       </div>
-      <div className="mx-auto w-full max-w-screen-xl px-4 text-lg sm:px-8 lg:text-sm lg:px-12 xl:px-8 2xl:px-0">
+      <div className="mx-auto w-full max-w-screen-xl px-4 text-lg sm:px-8 lg:px-12 lg:text-lg xl:px-8 2xl:px-0">
         <Image
           className="h-auto w-full lg:float-right lg:ml-10 lg:w-1/2"
           src={"/AboutusPage/AboutUs.jpg"}
@@ -69,7 +69,7 @@ const page = () => {
           ))}
         </div>
       </div>
-      <div className="mx-auto w-full max-w-screen-xl px-4 text-lg sm:px-8 sm:text-2xl lg:px-12 xl:px-8 2xl:px-0">
+      <div className="mx-auto w-full max-w-screen-xl px-4 py-5 text-lg sm:px-8 sm:text-2xl lg:px-12 lg:py-10 xl:px-8 2xl:px-0">
         <div className="w-full text-lg lg:ml-2 lg:p-5 lg:pt-0">
           <Image
             className="dark m-10 ml-0 h-auto w-full mix-blend-multiply dark:mix-blend-normal lg:float-left lg:w-1/2"

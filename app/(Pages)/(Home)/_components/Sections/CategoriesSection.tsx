@@ -275,28 +275,30 @@ const CouponDialog: React.FC<{
         <DialogTitle>Coupon Details</DialogTitle>
       </DialogHeader>
       <div className="flex flex-col items-center gap-4">
-        <Image
-          src={logoUrl ?? "https://via.placeholder.com/100x100"}
-          width={400}
-          height={400}
-          alt="Store logo"
-          className="size-28 rounded-full"
-        />
-        <p className="text-sm font-medium">{title}</p>
-        <p className="text-sm font-medium text-muted-foreground">
+        <div className="grid size-44 place-items-center rounded-full border border-black bg-popover p-1 dark:border-neutral-700">
+          <Image
+            src={logoUrl ?? "https://via.placeholder.com/100x100"}
+            width={400}
+            height={400}
+            alt="Store logo"
+            className="aspect-square size-full rounded-full"
+          />
+        </div>
+        <p className="text-lg font-medium">{title}</p>
+        <p className="text font-medium text-muted-foreground">
           Ends on {expiry}
         </p>
-        <div className="flex min-w-24 items-center gap-x-2 rounded-full border border-app-main pl-2 ">
+        <div className="flex w-full min-w-24 items-center justify-between gap-x-2 rounded-full border border-app-main px-5 py-3 sm:w-1/2">
           <span className="">{couponCode}</span>
           <Button
             size="sm"
-            className="rounded-full rounded-bl-none rounded-tl-none bg-app-main p-3"
+            className="rounded-full bg-app-main p-3 py-5"
             onClick={copyToClipboard}
           >
             {copied ? "Copied!" : "Copy"}
           </Button>
         </div>
-        <p className="flex items-center gap-x-1 text-center text-emerald-500">
+        <p className="flex items-center gap-x-1 text-center text-sm text-emerald-900">
           Copy and Paste Coupon code at{" "}
           <Link href={ref_link} target="_blank">
             <span className="flex items-center gap-x-1 text-app-main underline">
@@ -304,31 +306,38 @@ const CouponDialog: React.FC<{
             </span>
           </Link>
         </p>
-        <div className="flex items-center gap-4">
-          <button
-            onClick={() => handleReaction(couponId, "LIKE")}
-            className="flex items-center gap-2"
-          >
-            <ThumbsUp
-              className={
-                userReaction === "LIKE"
-                  ? "size-4 fill-emerald-500 text-emerald-500"
-                  : "size-4 text-emerald-500 transition-colors duration-200 ease-linear hover:fill-emerald-500"
-              }
-            />
-          </button>
-          <button
-            onClick={() => handleReaction(couponId, "DISLIKE")}
-            className="flex items-center gap-2"
-          >
-            <ThumbsDown
-              className={
-                userReaction === "DISLIKE"
-                  ? "size-4 fill-app-main text-app-main"
-                  : "size-4 text-app-main transition-colors duration-300 ease-linear hover:fill-app-main"
-              }
-            />
-          </button>
+        <div className="flex w-full min-w-24 items-center justify-between gap-x-2 rounded-full border border-app-main px-5 py-3 sm:w-2/3">
+          <p className="font-medium">Did this work for you? </p>
+          <div className="flex gap-x-2">
+            <div className="rounded-lg border border-app-main p-2">
+              <button
+                onClick={() => handleReaction(couponId, "LIKE")}
+                className="flex items-center gap-2"
+              >
+                <ThumbsUp
+                  className={
+                    userReaction === "LIKE"
+                      ? "size-5 fill-emerald-900 text-emerald-900"
+                      : "size-5 text-emerald-900 transition-colors duration-200 ease-linear hover:fill-emerald-900"
+                  }
+                />
+              </button>
+            </div>
+            <div className="rounded-lg border border-app-main p-2">
+              <button
+                onClick={() => handleReaction(couponId, "DISLIKE")}
+                className="flex items-center gap-2"
+              >
+                <ThumbsDown
+                  className={
+                    userReaction === "DISLIKE"
+                      ? "size-5 fill-app-main text-app-main"
+                      : "size-5 text-app-main transition-colors duration-300 ease-linear hover:fill-app-main"
+                  }
+                />
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </DialogContent>
@@ -358,45 +367,54 @@ const DealDialog: React.FC<{
         <DialogTitle>About Deal</DialogTitle>
       </DialogHeader>
       <div className="flex flex-col items-center gap-4">
-        <Image
-          src={logoUrl ?? "https://via.placeholder.com/100x100"}
-          width={400}
-          height={400}
-          alt="Store logo"
-          className="size-28 rounded-full"
-        />
-        <p className="text-sm font-medium">{title}</p>
-        <p className="text-sm font-medium text-muted-foreground">
-          Ends on {expiry}
-        </p>
-        <Link href={ref_link} target="_blank">
-          <Button className="bg-app-main">Go to Deal</Button>
-        </Link>
-        <div className="flex items-center gap-4">
-          <button
-            onClick={() => handleReaction(couponId, "LIKE")}
-            className="flex items-center gap-2"
-          >
-            <ThumbsUp
-              className={
-                userReaction === "LIKE"
-                  ? "size-4 fill-emerald-500 text-emerald-500"
-                  : "size-4 text-emerald-500 transition-colors duration-200 ease-linear hover:fill-emerald-500"
-              }
-            />
-          </button>
-          <button
-            onClick={() => handleReaction(couponId, "DISLIKE")}
-            className="flex items-center gap-2"
-          >
-            <ThumbsDown
-              className={
-                userReaction === "DISLIKE"
-                  ? "size-4 fill-app-main text-app-main"
-                  : "size-4 text-app-main transition-colors duration-300 ease-linear hover:fill-app-main"
-              }
-            />
-          </button>
+        <div className="grid size-44 place-items-center rounded-full border border-black bg-popover p-1 dark:border-neutral-700">
+          <Image
+            src={logoUrl ?? "https://via.placeholder.com/100x100"}
+            width={400}
+            height={400}
+            alt="Store logo"
+            className="aspect-square size-full rounded-full"
+          />
+        </div>
+        <p className="text-lg font-medium">{title}</p>
+        <p className="font-medium text-muted-foreground">Ends on {expiry}</p>
+        <Button className="min-w-40 bg-app-main py-6" asChild>
+          <Link href={ref_link} target="_blank">
+            Go to Deal
+          </Link>
+        </Button>
+        <div className="flex w-full min-w-24 items-center justify-between gap-x-2 rounded-full border border-app-main px-5 py-3 sm:w-2/3">
+          <p className="font-medium">Did this work for you? </p>
+          <div className="flex gap-x-2">
+            <div className="rounded-lg border border-app-main p-2">
+              <button
+                onClick={() => handleReaction(couponId, "LIKE")}
+                className="flex items-center gap-2"
+              >
+                <ThumbsUp
+                  className={
+                    userReaction === "LIKE"
+                      ? "size-5 fill-emerald-900 text-emerald-900"
+                      : "size-5 text-emerald-900 transition-colors duration-200 ease-linear hover:fill-emerald-900"
+                  }
+                />
+              </button>
+            </div>
+            <div className="rounded-lg border border-app-main p-2">
+              <button
+                onClick={() => handleReaction(couponId, "DISLIKE")}
+                className="flex items-center gap-2"
+              >
+                <ThumbsDown
+                  className={
+                    userReaction === "DISLIKE"
+                      ? "size-5 fill-app-main text-app-main"
+                      : "size-5 text-app-main transition-colors duration-300 ease-linear hover:fill-app-main"
+                  }
+                />
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </DialogContent>
