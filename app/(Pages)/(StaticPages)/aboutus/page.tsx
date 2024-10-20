@@ -45,12 +45,12 @@ const page = () => {
           saving both your time and money.
         </p>
       </div>
-      <div className="mx-auto flex w-full  flex-col items-start justify-center gap-5 bg-popover p-6 px-4 sm:px-8 lg:px-12 xl:px-8 2xl:px-0">
+      <div className="mx-auto flex w-full  flex-col items-start justify-center gap-5 bg-popover p-20 px-4 sm:px-8 lg:px-12 xl:px-8 2xl:px-0">
         <div className="mx-auto grid w-full max-w-screen-xl grid-cols-1 justify-items-stretch gap-5 sm:justify-items-center lg:grid-cols-3 lg:place-content-start">
           {AboutUs.map((ele, index) => (
             <div
               key={index}
-              className="flex h-[420px]  flex-col items-center justify-center gap-4 rounded-2xl bg-app-bg-main px-5 shadow-md dark:bg-app-dark sm:w-96 sm:max-w-xl lg:w-full"
+              className="flex h-[420px]  flex-col items-center justify-center gap-4 rounded-2xl bg-app-bg-main px-5 shadow-lg dark:bg-app-dark sm:w-96 sm:max-w-xl lg:w-full"
             >
               <Image
                 src={ele.img}
@@ -127,8 +127,8 @@ const page = () => {
           </p>
         </div>
       </div>
-      <div className="mx-auto w-full max-w-screen-xl px-4 text-lg sm:px-8 sm:text-2xl lg:px-12 xl:px-8 2xl:px-0">
-        <div className="flex w-full flex-col items-start justify-between text-lg lg:ml-2 lg:flex-row lg:p-5 lg:pt-0">
+      <div className="mx-auto grid w-full place-items-center bg-popover px-4 text-lg sm:px-8 sm:text-2xl lg:px-12 xl:px-8 2xl:px-0">
+        <div className="flex w-full max-w-screen-xl flex-col items-start justify-between pb-8 text-lg lg:ml-2 lg:flex-row lg:justify-center lg:p-5 lg:pt-0">
           <Image
             className="h-auto w-full mix-blend-multiply dark:mix-blend-normal lg:float-left lg:m-10 lg:my-0 lg:ml-0 lg:w-2/5"
             src={"/AboutusPage/Contact us.jpg"}

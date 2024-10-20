@@ -2,7 +2,7 @@ import { HowToUseData } from "@/lib/utilities/HowToUse";
 import Image from "next/image";
 const HowToUse = () => {
   return (
-    <section className={`my-12 flex flex-col bg-popover py-6`}>
+    <section className={`flex flex-col bg-popover py-8`}>
       <div className="mx-auto flex max-w-screen-xl flex-col items-center sm:px-10 md:items-start lg:px-12 xl:px-6 2xl:px-0">
         <h2 className="mb-4 text-center text-xl font-bold sm:text-2xl lg:text-3xl">
           How to use Qwik Savings

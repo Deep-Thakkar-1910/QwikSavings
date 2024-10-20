@@ -105,7 +105,7 @@ const CategoriesSection: React.FC<CategoriesSectionProps> = ({
 
   return (
     <section
-      className={`mx-auto w-full max-w-screen-xl overflow-x-hidden ${data.coupons?.length === 0 || isLoading || error ? "hidden" : ""}`}
+      className={`mx-auto w-full max-w-screen-xl overflow-x-hidden pt-8 ${data.coupons?.length === 0 || isLoading || error ? "hidden" : ""}`}
     >
       <div className="flex w-full flex-col items-center sm:flex-row sm:justify-between sm:px-10 lg:px-12 xl:px-6 2xl:px-0">
         <h2 className="mx-auto place-self-center text-2xl font-bold sm:mx-0 sm:place-self-start lg:text-3xl">

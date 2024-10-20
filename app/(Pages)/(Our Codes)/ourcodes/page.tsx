@@ -5,24 +5,24 @@ const OurCodesPage = () => {
   return (
     <section className=" mx-auto mb-10 flex w-full max-w-screen-xl flex-col items-center gap-6 px-4 font-medium sm:px-8 lg:items-start lg:px-12 xl:px-2 2xl:px-0">
       {/* Our Codes Intro Div */}
-      <div className="w-full rounded-lg bg-popover p-10">
+      <div className="w-full rounded-lg  p-10">
         <h1 className="text-center text-xl font-bold sm:text-2xl lg:text-start">
           Gift Card, If Not Code
         </h1>
-        <div className="mt-6 flex flex-col items-center justify-end gap-6 lg:flex-row-reverse">
+        <div className="mt-6 flex flex-col items-center justify-end gap-6 text-lg lg:flex-row-reverse">
           <div className="flex w-full flex-col items-center lg:w-1/2">
             <Image
-              src={"/OurCodes/Hand-Tested-Codes.png"}
-              alt="Hand Tested Picture"
+              src={"/OurCodes/Our-Codes.jpg"}
+              alt="Our code Picture"
               width={5326}
               height={4776}
-              className="size-full max-w-96 lg:max-w-full"
+              className="size-full max-w-96 "
             />
             {/* <p className="mx-auto text-center text-base font-bold sm:text-xl  lg:place-self-end lg:text-end">
               All of Our Codes are Hand-Tested By Real People
             </p> */}
           </div>
-          <div className="flex flex-col gap-y-6 text-center text-sm  tracking-tighter sm:text-justify lg:w-1/2">
+          <div className="flex flex-col gap-y-6 text-center tracking-tighter sm:text-justify lg:w-1/2">
             <p>
               We understand the frustration of an inactive coupon
               code-there&apos;s nothing more disappointing than anticipating
@@ -49,13 +49,15 @@ const OurCodesPage = () => {
       </div>
 
       {/* How To Div */}
-      <div className="w-full rounded-lg bg-popover p-10">
-        <h1 className="text-center text-lg font-bold sm:text-xl lg:text-start">
+      <div className="w-full rounded-lg  p-10">
+        <h1 className="text-center text-lg font-bold sm:text-xl lg:text-start lg:text-2xl">
           How you can get a gift card if the code does&apos;t work?
         </h1>
-        <div className="mt-14 grid auto-cols-fr grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-14 grid auto-cols-fr grid-cols-1 gap-6 sm:text-lg md:grid-cols-2 lg:grid-cols-3">
           <div className="flex flex-col items-start gap-y-6">
-            <h2 className="text-lg font-semibold">1. Reveal the Coupon</h2>
+            <h2 className="text-lg font-semibold sm:text-xl lg:text-2xl">
+              1. Reveal the Coupon
+            </h2>
             <p className="text-start  tracking-wide lg:text-justify">
               Simply click &apos;Get Code&apos; to reveal the coupon code, then
               proceed to purchase items that meet the offer&apos;s conditions.
@@ -64,14 +66,19 @@ const OurCodesPage = () => {
             </p>
           </div>
           <div className="flex flex-col items-start gap-y-6">
-            <h2 className="text-lg font-semibold">2. Inactive Code</h2>
-            <div className="text-start  tracking-wide lg:text-justify">
+            <h2 className="text-lg font-semibold sm:text-xl lg:text-2xl">
+              2. Inactive Code
+            </h2>
+            <div className="text-start tracking-wide lg:text-justify">
               <p>
                 If the coupon code doesn&apos;t work, forward your online order
                 confirmation or receipt by email to{" "}
               </p>
-              <span className="font-extrabold">
-                <Link href={"mailto:claims@qwiksavings.com"}>
+              <span className="break-words font-bold">
+                <Link
+                  className="break-all text-sky-500"
+                  href={"mailto:claims@qwiksavings.com"}
+                >
                   claims@qwiksavings.com
                 </Link>{" "}
               </span>{" "}
@@ -88,7 +95,7 @@ const OurCodesPage = () => {
             </div>
           </div>
           <div className="flex flex-col items-start gap-y-6 md:col-span-2 lg:col-span-1">
-            <h2 className="text-lg font-semibold md:text-center lg:text-start">
+            <h2 className="text-lg font-semibold sm:text-xl lg:text-2xl">
               3. Get a FREE Gift Card
             </h2>
             <p className="text-start  tracking-wide lg:text-justify">
@@ -106,14 +113,14 @@ const OurCodesPage = () => {
       </div>
 
       {/* Acceptable Code Div */}
-      <div className="w-full rounded-lg bg-popover p-10">
+      <div className="w-full rounded-lg  p-10">
         <h1 className="text-center text-xl font-bold sm:text-2xl lg:text-start">
           Acceptable Codes
         </h1>
         <div className="mt-6 flex flex-col items-center justify-end gap-6 lg:flex-row-reverse">
           <div className="flex w-full flex-col items-center lg:w-1/2">
             <Image
-              src={"/OurCodes/Hand-Tested-Codes.png"}
+              src={"/OurCodes/OurCodesCoupon.png"}
               alt="Hand Tested Picture"
               width={5326}
               height={4776}
@@ -123,20 +130,20 @@ const OurCodesPage = () => {
               All of Our Codes are Hand-Tested By Real People
             </p> */}
           </div>
-          <div className="flex flex-col gap-y-6 text-center text-sm  tracking-tighter sm:text-justify lg:w-1/2">
+          <div className="flex flex-col gap-y-6 text-center text-base tracking-tighter sm:text-justify lg:w-1/2 lg:text-lg">
             <p className="mt-6 text-center lg:text-start">
               Our codes guarantee applies specifically to online coupon codes.
               You can recognize these codes in two simple ways:
             </p>
+            <h2 className="mt-6 text-center tracking-wide">- 1. Button</h2>
             <p className="mt-2">
-              <h2 className="mt-6 text-center tracking-wide">- 1. Button</h2>A
               valid coupon code can be identified by the button used to display
               the code, which will typically say: &quot;Get Code.&quot;
             </p>
+            <h2 className="mt-6 text-center tracking-wide">
+              - 2. Checkout Page
+            </h2>
             <p className="mt-2">
-              <h2 className="mt-6 text-center tracking-wide">
-                - 2. Checkout Page
-              </h2>
               A coupon code is used to make online purchases and save money. You
               can apply these codes by entering them into a designated box,
               often labeled as &quot;discount code,&quot; at the checkout stage
@@ -147,7 +154,7 @@ const OurCodesPage = () => {
       </div>
 
       {/* Unacceptable Code Div */}
-      <div className="w-full rounded-lg bg-popover p-10">
+      <div className="w-full rounded-lg  p-10">
         <div className="mb-6 flex flex-col items-center text-center">
           <h1 className="text-xl font-bold sm:text-2xl">Unacceptable Codes</h1>
           <p className="mt-4 text-sm sm:text-base">
@@ -156,23 +163,16 @@ const OurCodesPage = () => {
           </p>
         </div>
         <div className="mt-6 flex flex-col items-center justify-end gap-6 lg:flex-row-reverse">
-          <div className="flex flex-col gap-y-6 text-center text-sm  tracking-tighter sm:text-justify lg:w-1/2">
-            <h2 className="mt-6 font-bold tracking-wide">1. Deals</h2>
+          <div className="flex flex-col gap-y-6 text-center text-lg  tracking-tighter sm:text-justify lg:w-1/2">
+            <h2 className="mt-6 font-medium tracking-wide">1. Deals</h2>
             <p className="mt-2">
               Deals which do not require a code to secure the saving. These can
               be identified by the &quot;Get Deal&quot; button.
             </p>
-            <h2 className="mt-6 font-bold tracking-wide">2. Sale Deals</h2>
-            <p className="mt-2">
-              Certain &quot;Sale&quot; offers don&apos;t need a code for the
-              discount. You&apos;ll notice these by the &quot;Get Deal&quot;
-              button, allowing you to access the discount directly without
-              entering a code during your purchase.
-            </p>
           </div>
           <div className="flex w-full flex-col items-center lg:w-1/2">
             <Image
-              src={"/OurCodes/Hand-Tested-Codes.png"}
+              src={"/OurCodes/OurCodesCoupon.png"}
               alt="Hand Tested Picture"
               width={5326}
               height={4776}
@@ -180,10 +180,30 @@ const OurCodesPage = () => {
             />
           </div>
         </div>
+        <div className="mt-6 flex flex-col items-center justify-end gap-6 lg:flex-row-reverse">
+          <div className="flex w-full flex-col items-center lg:w-1/2">
+            <Image
+              src={"/OurCodes/OurCodesCoupon.png"}
+              alt="Hand Tested Picture"
+              width={5326}
+              height={4776}
+              className="size-full max-w-96 lg:max-w-full"
+            />
+          </div>
+          <div className="flex flex-col gap-y-6 text-center text-lg  tracking-tighter sm:text-justify lg:w-1/2">
+            <h2 className="mt-6 font-medium tracking-wide">2. Sale Deals</h2>
+            <p className="mt-2">
+              Certain &quot;Sale&quot; offers don&apos;t need a code for the
+              discount. You&apos;ll notice these by the &quot;Get Deal&quot;
+              button, allowing you to access the discount directly without
+              entering a code during your purchase.
+            </p>
+          </div>
+        </div>
       </div>
 
       {/* Need To Know Div */}
-      <div className="w-full rounded-lg bg-popover p-10 text-lg">
+      <div className="w-full rounded-lg  p-10 text-lg">
         <h1 className="text-center font-bold sm:text-xl lg:text-start">
           You need To know this
         </h1>
@@ -207,8 +227,10 @@ const OurCodesPage = () => {
           <li>
             You want to purchase using our coupon code and if the coupon code
             doesn&apos;t work and you made a purchase then you&apos;re eligible
-            to receive a gift card under our “Our Codes” guarantee. NOTE:- You
-            have to complete the purchase without any other codes!
+            to receive a gift card under our “Our Codes” guarantee.{" "}
+            <span className="font-bold">
+              NOTE:- You have to complete the purchase without any other codes!
+            </span>
           </li>
           <li>
             To redeem the coupon code, it&apos;s crucial that you&apos;ve
@@ -226,7 +248,7 @@ const OurCodesPage = () => {
           </li>
           <li>
             All claims should be sent to the following e-mail address:
-            <span className="font-extrabold">
+            <span className="font-bold text-sky-500">
               <Link
                 href={"mailto:claims@qwiksavings.com"}
                 className="break-words"

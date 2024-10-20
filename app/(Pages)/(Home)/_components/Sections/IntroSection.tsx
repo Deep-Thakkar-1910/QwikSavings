@@ -23,7 +23,7 @@ const IntroSection = () => {
         </div>
       </div>
       {/* Intro heading div */}
-      <div className="flex w-full flex-col items-center justify-center bg-popover p-4 ">
+      <div className="flex w-full flex-col items-center justify-center bg-popover p-4 py-8">
         <h1 className="mx-auto mb-6 px-4 text-center text-2xl font-bold sm:px-6 lg:px-12 lg:text-3xl xl:px-2 2xl:px-0">
           Qwik Savings - Your one stop shop for quick savings
         </h1>

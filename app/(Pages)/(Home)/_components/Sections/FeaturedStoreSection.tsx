@@ -36,7 +36,7 @@ const FeaturedStoreSection = () => {
     fetchFeatureData();
   }, []);
   return (
-    <section className={`${featuredData[0] ? "" : "hidden"} py-6`}>
+    <section className={`${featuredData[0] ? "" : "hidden"} py-8`}>
       <div className=" mx-auto flex w-full max-w-screen-xl flex-col items-center sm:flex-row sm:justify-between sm:px-10 lg:items-start lg:px-12 xl:px-6 2xl:px-0">
         <h2 className="mb-6 text-2xl font-bold lg:text-3xl">Featured Stores</h2>
         <Link
