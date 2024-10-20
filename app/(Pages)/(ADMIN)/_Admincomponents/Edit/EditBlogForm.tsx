@@ -87,7 +87,7 @@ const EditBlogForm = ({
         thumbnail: undefined,
         thumbnail_url: blogDetails.thumbnail_url ?? "",
         content: blogDetails.content,
-        category_id: `${blogDetails.category_id}` ?? "",
+        category_id: (blogDetails.category_id as string) ?? "",
       });
       setSelectedImage(blogDetails.logo_url);
     }
