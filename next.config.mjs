@@ -15,6 +15,9 @@ const nextConfig = {
 
     return config;
   },
+  eslint: {
+    ignoreDuringBuilds: false,
+  },
   images: {
     remotePatterns: [
       {
