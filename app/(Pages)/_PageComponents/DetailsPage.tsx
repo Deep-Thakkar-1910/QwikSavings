@@ -612,9 +612,9 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
               <div
                 className={`${commonStyles} ${
                   isStore &&
-                  detailsData.faq &&
-                  !detailsData.hint &&
-                  !detailsData.moreAbout &&
+                  detailsData?.faq &&
+                  !detailsData?.hint &&
+                  !detailsData?.moreAbout &&
                   "hidden"
                 }`}
               >
@@ -627,7 +627,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                     className={`${
                       isStore &&
                       detailsData.faq &&
-					  detailsData.length > 0
+                      JSON.parse(detailsData?.faq)?.length > 0
                         ? ""
                         : "hidden"
                     } rounded-lg border p-2`}
@@ -1228,7 +1228,9 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
             </div>
 
             {isStore &&
-              detailsData?.faq?.length > 0 && (
+              detailsData.faq &&
+              Array.isArray(JSON.parse(detailsData?.faq)) &&
+              JSON.parse(detailsData?.faq)?.length > 0 && (
                 <section
                   id="faqs"
                   className={`${commonStyles} border-2 border-neutral-200 dark:border-neutral-700 xl:w-[97%]`}
@@ -1242,8 +1244,10 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                     className="flex flex-col gap-y-6"
                   >
                     {isStore &&
-                      detailsData?.faq?.length > 0 &&
-                      detailsData?.faq?.map(
+                      detailsData.faq &&
+                      Array.isArray(JSON.parse(detailsData?.faq)) &&
+                      JSON.parse(detailsData.faq)?.length > 0 &&
+                      JSON.parse(detailsData?.faq)?.map(
                         (
                           faq: { question: string; answer: string },
                           index: number,

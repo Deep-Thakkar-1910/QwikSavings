@@ -23,13 +23,15 @@ const ProfileDropDown = () => {
   const { resolvedTheme, setTheme } = useTheme();
   const { data: session } = useSession();
   const currentUrl = usePathname();
+
   // extracting first name and last name initals from the user name
   const name = session?.user?.name.split(" ");
   const AvatarName =
     name && name.length > 1
       ? name[0][0]?.toUpperCase() + name[1][0]?.toUpperCase()
       : name && name[0][0]?.toUpperCase();
-  //   return the dropdown menu
+
+  // return the dropdown menu
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
@@ -42,21 +44,23 @@ const ProfileDropDown = () => {
           </AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
-      <DropdownMenuContent>
-        <DropdownMenuLabel className="text-center">Profile</DropdownMenuLabel>
+      <DropdownMenuContent className="w-48 sm:w-60">
+        <DropdownMenuLabel className="text-center sm:text-lg">Profile</DropdownMenuLabel>
         <DropdownMenuSeparator className={`${session?.user ? "" : "hidden"}`} />
+
         {session?.user?.email && (
-          <DropdownMenuItem className="overflow-x-auto text-sky-700 dark:text-sky-500">
-            <p className="text-balance">{session?.user?.email}</p>
+          <DropdownMenuItem className="text-center sm:text-left text-sky-700 dark:text-sky-500 truncate">
+            <p>{session?.user?.email}</p>
           </DropdownMenuItem>
         )}
+
         <DropdownMenuGroup>
           <DropdownMenuSeparator className="sm:hidden" />
           <DropdownMenuLabel className="sm:hidden">Theme</DropdownMenuLabel>
           <DropdownMenuSeparator className="hidden sm:block" />
 
           <DropdownMenuSub>
-            <DropdownMenuSubTrigger className="hidden sm:flex">
+            <DropdownMenuSubTrigger className="hidden sm:flex items-center">
               {resolvedTheme === "dark" ? (
                 <Moon className="mr-2 size-4" />
               ) : (
@@ -67,14 +71,14 @@ const ProfileDropDown = () => {
 
             <DropdownMenuItem
               onClick={() => setTheme("light")}
-              className="sm:hidden"
+              className="sm:hidden flex items-center"
             >
               <Sun className="mr-2 size-4" />
               <span>Light</span>
             </DropdownMenuItem>
             <DropdownMenuItem
               onClick={() => setTheme("dark")}
-              className="sm:hidden"
+              className="sm:hidden flex items-center"
             >
               <Moon className="mr-2 size-4" />
               <span>Dark</span>
@@ -93,18 +97,19 @@ const ProfileDropDown = () => {
             </DropdownMenuSubContent>
           </DropdownMenuSub>
         </DropdownMenuGroup>
+
         {session?.user && (
           <>
             <DropdownMenuSeparator />
             <Link href="/bookmarks">
-              <DropdownMenuItem>
+              <DropdownMenuItem className="flex items-center">
                 <Heart className="mr-2 size-4" />
                 <span>My Bookmarks</span>
               </DropdownMenuItem>
             </Link>
             <DropdownMenuSeparator />
             <Link href={`/api/auth/signout?callbackUrl=${currentUrl}`}>
-              <DropdownMenuItem>
+              <DropdownMenuItem className="flex items-center">
                 <ArrowLeftFromLine className="mr-2 size-4" />
                 <span>Sign Out</span>
               </DropdownMenuItem>
