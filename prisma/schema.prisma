@@ -1,0 +1,242 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+  binaryTargets   = ["native", "linux-musl-openssl-3.0.x"]
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+model User {
+  id                   String                @id @default(cuid())
+  name                 String
+  password             String?
+  email                String                @unique
+  emailVerified        DateTime?
+  role                 String?               @default("user")
+  image                String?
+  accounts             Account[]
+  sessions             Session[]
+  bookmarks            Bookmark[]
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
+  Rating               Rating[]
+  UserSubmittedCoupons UserSubmittedCoupon[]
+
+  @@index([email], type: Hash)
+  @@map("users")
+}
+
+model Account {
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  @@map("sessions")
+}
+
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+
+  @@id([identifier, token])
+  @@map("verification_tokens")
+}
+
+model Bookmark {
+  id        String   @id @default(cuid())
+  userId    String
+  couponId  Int
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  coupon    Coupon   @relation(fields: [couponId], references: [couponId], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, couponId])
+  @@map("bookmarks")
+}
+
+model Store {
+  storeId              Int                   @id @default(autoincrement())
+  name                 String                @unique
+  title                String?
+  logo_url             String?
+  ref_link             String
+  description          String?
+  moreAbout            String?
+  hintHeading          String?
+  hint                 String?
+  isFeatured           Boolean               @default(false)
+  addToPopularStores   Boolean               @default(false)
+  faq                  Json?
+  ratings_count        Int                   @default(0)
+  average_rating       Float                 @default(0)
+  best_offer           String                @default("0")
+  average_discount     String                @default("0")
+  coupons              Coupon[]
+  Rating               Rating[]
+  UserSubmittedCoupons UserSubmittedCoupon[]
+  festivals            Festival[]
+  similarStores        Store[]               @relation("SimilarStores")
+  storeIsSimilarTo     Store[]               @relation("SimilarStores")
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @default(now()) @updatedAt
+
+  @@map("stores")
+}
+
+model Festival {
+  festivalId Int      @id @default(autoincrement())
+  name       String
+  title      String
+  activated  Boolean  @default(false)
+  storeId    Int
+  store      Store    @relation(fields: [storeId], references: [storeId], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now()) @updatedAt
+
+  @@map("festivals")
+}
+
+model Event {
+  eventId          Int      @id @default(autoincrement())
+  name             String   @unique
+  title            String
+  description      String?
+  logo_url         String?
+  cover_url        String?
+  best_offer       String   @default("0")
+  average_discount String   @default("0")
+  coupons          Coupon[] @relation("EventCoupon")
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @default(now()) @updatedAt
+
+  @@map("events")
+}
+
+model Rating {
+  id        Int      @id @default(autoincrement())
+  rating    Int
+  userId    String
+  storeId   Int
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  store     Store    @relation(fields: [storeId], references: [storeId], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, storeId])
+  @@map("ratings")
+}
+
+model Category {
+  categoryId               Int                   @id @default(autoincrement())
+  logo_url                 String?
+  addToTodaysTopCategories Boolean               @default(false)
+  name                     String                @unique
+  description              String?
+  coupons                  Coupon[]
+  blogs                    Blog[]
+  UserSubmittedCoupon      UserSubmittedCoupon[]
+  createdAt                DateTime              @default(now())
+  updatedAt                DateTime              @default(now()) @updatedAt
+
+  @@map("categories")
+}
+
+model Blog {
+  blogId        Int      @id @default(autoincrement())
+  title         String
+  thumbnail_url String
+  content       String
+  category_id   Int      @default(4)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @default(now()) @updatedAt
+  category      Category @relation(fields: [category_id], references: [categoryId], onDelete: Cascade)
+
+  @@map("blogs")
+}
+
+model Coupon {
+  couponId             Int        @id @default(autoincrement())
+  title                String
+  description          String?
+  coupon_code          String?
+  thumbnail_url        String?
+  flipperImage_url     String?
+  carouselPosterUrl    String?
+  type                 Type
+  addToHomePage        Boolean    @default(false)
+  addToCarousel        Boolean    @default(false)
+  addToFlipper         Boolean    @default(false)
+  store_id             Int
+  category_id          Int
+  ref_link             String
+  due_date             DateTime
+  user_count           Int        @default(0)
+  createdAt            DateTime   @default(now())
+  isVerified           Boolean    @default(false)
+  updatedAt            DateTime   @default(now()) @updatedAt
+  like_count           Int        @default(0)
+  dislike_count        Int        @default(0)
+  originalSubmissionId Int?
+  store                Store      @relation(fields: [store_id], references: [storeId], onDelete: Cascade)
+  category             Category   @relation(fields: [category_id], references: [categoryId], onDelete: Cascade)
+  events               Event[]    @relation("EventCoupon")
+  bookmarks            Bookmark[]
+
+  @@map("coupons")
+}
+
+model UserSubmittedCoupon {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String?
+  coupon_code String?
+  type        Type
+  store_id    Int
+  category_id Int
+  ref_link    String
+  due_date    DateTime
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  userId      String
+  isVerified  Boolean  @default(false)
+  user        User     @relation(fields: [userId], references: [id])
+  store       Store    @relation(fields: [store_id], references: [storeId])
+  category    Category @relation(fields: [category_id], references: [categoryId])
+
+  @@map("user_submitted_coupons")
+}
+
+enum Type {
+  Coupon
+  Deal
+}
