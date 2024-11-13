@@ -20,7 +20,7 @@ export async function GET() {
       where: { userId: session.user.id },
       select: { couponId: true },
     });
-    const bookmarkedCoupons = bookmarks.map((b) => b.couponId);
+    const bookmarkedCoupons = bookmarks.map((b: any) => b.couponId);
     return NextResponse.json({ success: true, bookmarkedCoupons });
   } catch (error) {
     console.error("Error fetching bookmarks:", error);

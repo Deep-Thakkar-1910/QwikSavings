@@ -35,7 +35,7 @@ export async function GET() {
       },
     });
 
-    const formattedCoupons = bookmarkedCoupons.map((bookmark) => ({
+    const formattedCoupons = bookmarkedCoupons.map((bookmark: any) => ({
       id: bookmark.coupon.couponId,
       title: bookmark.coupon.title,
       description: bookmark.coupon.description,

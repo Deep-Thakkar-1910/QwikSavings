@@ -126,7 +126,7 @@ const EditStoreForm = ({ similarStores = [] }: StoreFormProps) => {
         hintHeading: storeDetails.hintHeading ?? "",
         best_offer: storeDetails.best_offer,
         average_discount: storeDetails.average_discount,
-        faq: JSON.parse(storeDetails?.faq as unknown as string),
+        faq: storeDetails?.faq as unknown as InputType["faq"],
         similarStores: storeIds,
         isFeatured: storeDetails.isFeatured ? "yes" : "no",
         addToPopularStores: storeDetails.addToPopularStores ? "yes" : "no",

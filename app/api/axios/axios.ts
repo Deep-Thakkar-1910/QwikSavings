@@ -8,6 +8,10 @@ import axios from "axios";
 // });
 
 // For production
+// export default axios.create({
+//   baseURL: `https://qwiksavings.com/api`,
+// });
+
 export default axios.create({
-  baseURL: `https://qwik-savings-eta.vercel.app/api`,
+  baseURL: `https://qwik-savings-eta.vercel.app//api`,
 });
