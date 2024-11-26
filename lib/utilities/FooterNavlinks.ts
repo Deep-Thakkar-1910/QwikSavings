@@ -18,7 +18,7 @@ export const FooterNavlinks = {
     },
     {
       title: "How It Works",
-      href: "/howitworks",
+      href: "/how-it-works",
     },
     {
       title: "FAQ",
@@ -26,7 +26,7 @@ export const FooterNavlinks = {
     },
     {
       title: "Submit A Coupon",
-      href: "/submitacoupon",
+      href: "/submit-a-coupon",
     },
   ],
   Legal: [

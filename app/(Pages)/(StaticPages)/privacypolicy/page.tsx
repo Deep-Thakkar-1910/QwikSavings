@@ -33,7 +33,7 @@ const PrivacyPolicyPage = () => {
             Our Codes
           </Link>
           <Link
-            href="/howitworks"
+            href="/how-it-works"
             className="w-fit cursor-pointer text-start duration-300 hover:underline"
           >
             How it Works

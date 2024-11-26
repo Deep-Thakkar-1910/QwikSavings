@@ -40,7 +40,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: `${process.env.NEXT_PUBLIC_BASE_URL}/about`,
     },
     {
-      url: `${process.env.NEXT_PUBLIC_BASE_URL}/howitworks`,
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}/how-it-works`,
     },
     {
       url: `${process.env.NEXT_PUBLIC_BASE_URL}/termsofservice`,

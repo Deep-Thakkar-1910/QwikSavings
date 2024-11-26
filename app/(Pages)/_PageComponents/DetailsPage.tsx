@@ -770,7 +770,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                 </Button>
               </div>
               <Link
-                href={"/submitacoupon"}
+                href={"/submit-a-coupon"}
                 className="hidden items-center gap-x-1 place-self-end text-app-main underline transition-colors duration-300 ease-linear lg:flex"
               >
                 Submit a coupon <Tag className="size-4" />
