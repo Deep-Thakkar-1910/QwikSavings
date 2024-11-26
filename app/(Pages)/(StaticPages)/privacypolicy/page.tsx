@@ -21,7 +21,7 @@ const PrivacyPolicyPage = () => {
           </div>
           <Separator className="h-1 w-full max-w-32 bg-neutral-400 dark:bg-neutral-200 lg:max-w-full" />
           <Link
-            href="/aboutus"
+            href="/about-us"
             className="w-fit cursor-pointer text-start duration-300 hover:underline"
           >
             Our Company

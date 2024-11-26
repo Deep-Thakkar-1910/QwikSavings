@@ -2,7 +2,7 @@ export const FooterNavlinks = {
   "Useful Reads": [
     {
       title: "About Us",
-      href: "/aboutus",
+      href: "/about-us",
     },
     {
       title: "Our Codes",
