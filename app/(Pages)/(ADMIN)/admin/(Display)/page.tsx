@@ -66,7 +66,7 @@ const AdminAllStoresPage = () => {
       <FilterBlocks filterForPage="stores" like={like} setLike={setLike} />
       <div className="my-6 flex w-full items-center justify-between px-4 sm:px-8 lg:px-12">
         <Link
-          href={"/admin/createstore"}
+          href={"/admin/create-store"}
           className="flex items-center gap-x-1 text-app-main underline transition-transform duration-200 ease-linear hover:scale-105"
         >
           <Tag className="size-3" />

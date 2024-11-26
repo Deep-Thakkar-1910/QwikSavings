@@ -49,7 +49,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: `${process.env.NEXT_PUBLIC_BASE_URL}/privacypolicy`,
     },
     {
-      url: `${process.env.NEXT_PUBLIC_BASE_URL}/ourcodes`,
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}/our-codes`,
     },
     {
       url: `${process.env.NEXT_PUBLIC_BASE_URL}/contactus`,

@@ -9,7 +9,7 @@ export const NavLinks = [
   },
   {
     title: "Our Codes",
-    href: "/ourcodes",
+    href: "/our-codes",
   },
   {
     title: "Events",

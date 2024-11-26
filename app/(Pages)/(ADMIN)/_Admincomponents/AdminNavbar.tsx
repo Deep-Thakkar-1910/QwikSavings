@@ -9,7 +9,7 @@ const AdminNavbar = () => {
   const aciveStyles = "text-app-main";
 
   const adminNavlinks = [
-    { href: "/admin/createstore", title: "Create Store" },
+    { href: "/admin/create-store", title: "Create Store" },
     { href: "/admin/createcategory", title: "Create Category" },
     { href: "/admin/createcoupon", title: "Create Coupon" },
     { href: "/admin/createevent", title: "Create Event" },

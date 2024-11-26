@@ -19,7 +19,7 @@ const TermsOfServicePage = () => {
             Our Company
           </Link>
           <Link
-            href="/ourcodes"
+            href="/our-codes"
             className="w-fit cursor-pointer text-start duration-300 hover:underline"
           >
             Our Codes

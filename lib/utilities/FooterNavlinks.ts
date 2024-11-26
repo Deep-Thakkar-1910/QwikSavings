@@ -6,7 +6,7 @@ export const FooterNavlinks = {
     },
     {
       title: "Our Codes",
-      href: "/ourcodes",
+      href: "/our-codes",
     },
     {
       title: "Savings Events",
