@@ -10,7 +10,7 @@ const AdminNavbar = () => {
 
   const adminNavlinks = [
     { href: "/admin/create-store", title: "Create Store" },
-    { href: "/admin/createcategory", title: "Create Category" },
+    { href: "/admin/create-category", title: "Create Category" },
     { href: "/admin/createcoupon", title: "Create Coupon" },
     { href: "/admin/createevent", title: "Create Event" },
     { href: "/admin/createblog", title: "Create Blog" },
