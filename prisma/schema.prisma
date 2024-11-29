@@ -206,7 +206,7 @@ model Coupon {
   dislike_count        Int        @default(0)
   originalSubmissionId Int?
   store                Store      @relation(fields: [store_id], references: [storeId], onDelete: Cascade)
-  category             Category   @relation(fields: [category_id], references: [categoryId], onDelete: Cascade)
+  category             Category   @relation(fields: [category_id], references: [categoryId], onDelete: NoAction)
   events               Event[]    @relation("EventCoupon")
   bookmarks            Bookmark[]
 
