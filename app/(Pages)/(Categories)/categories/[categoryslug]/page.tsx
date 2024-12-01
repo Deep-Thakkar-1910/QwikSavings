@@ -10,7 +10,7 @@ interface Params {
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { categoryslug } = params;
-  const titleName = await db.store.findUnique({
+  const titleName = await db.category.findUnique({
     where: {
       slug: categoryslug,
     },
@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   });
   return {
     title: `${titleName?.name}`,
-    description: `Discover more about ${categoryslug}. Explore details, insights, and more about this category.`,
+    description: `Discover more about ${titleName?.name}. Explore details, insights, and more about this category.`,
   };
 }
 
