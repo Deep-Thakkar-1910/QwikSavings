@@ -62,10 +62,10 @@ interface CouponReaction {
 
 const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
   const router = useRouter();
-  const { storename, categoryname } = useParams();
+  const { storeslug, categoryslug } = useParams();
   const { data: session } = useSession();
   const currentUrl = usePathname();
-  const name = fetchFrom === "store" ? storename : categoryname;
+  const slug = fetchFrom === "store" ? storeslug : categoryslug;
   // to store popular store data
   const [popularData, setPopularData] = useState<Record<string, any>[]>([]);
   // to store top categories data
@@ -116,7 +116,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
     initialCoupon,
   } = useGetDetails({
     fetchFrom,
-    name: name as string,
+    slug: slug as string,
   });
 
   // success ratio like/dislike count ratio
@@ -146,8 +146,8 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
 
   const isStore = fetchFrom === "store";
   const editLink = isStore
-    ? `/admin/editstore/${name}`
-    : `/admin/editcategory/${name}`;
+    ? `/admin/editstore/${slug}`
+    : `/admin/editcategory/${slug}`;
   const editLinkText = isStore ? "Edit Store" : "Edit Category";
 
   //  NOTE: this is for fetching popular stores and top categories

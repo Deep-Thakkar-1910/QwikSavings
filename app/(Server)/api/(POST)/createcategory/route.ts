@@ -40,6 +40,7 @@ export async function POST(req: Request) {
     const category = await db.category.create({
       data: {
         name: name.trim(),
+        slug: name.trim().replace(/\s+/g, "-").toLowerCase(),
         description: description ? description : null,
         logo_url: logoUrl,
         addToTodaysTopCategories:

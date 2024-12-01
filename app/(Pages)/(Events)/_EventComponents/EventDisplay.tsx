@@ -41,7 +41,7 @@ const EventDisplay = () => {
                 className="w-full rounded-lg bg-app-main hover:bg-app-main"
                 asChild
               >
-                <Link href={`/events/${event.name}`}>Reveal Deals</Link>
+                <Link href={`/events/${event.slug}`}>Reveal Deals</Link>
               </Button>
             </div>
           ))}

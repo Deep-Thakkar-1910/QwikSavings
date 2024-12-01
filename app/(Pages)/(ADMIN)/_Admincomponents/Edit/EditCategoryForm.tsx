@@ -34,7 +34,7 @@ type InputType = z.infer<typeof CreateCategoryFormSchema>;
 
 const EditCategoryForm = () => {
   const router = useRouter();
-  const { categoryName } = useParams();
+  const { categoryslug } = useParams();
 
   const [categoryDetails, setCategoryDetails] = useState<any>(null);
 
@@ -42,7 +42,7 @@ const EditCategoryForm = () => {
   useEffect(() => {
     const fetchCategoryDetails = async () => {
       try {
-        const response = await axios.get(`/getcategorybyname/${categoryName}`);
+        const response = await axios.get(`/getcategorybyslug/${categoryslug}`);
         console.log(response.data);
         if (response.data.success) {
           setCategoryDetails(response.data.categoryDetails);
@@ -53,7 +53,7 @@ const EditCategoryForm = () => {
     };
 
     fetchCategoryDetails();
-  }, [categoryName]);
+  }, [categoryslug]);
 
   const form = useForm<InputType>({
     resolver: zodResolver(CreateCategoryFormSchema),
@@ -116,7 +116,7 @@ const EditCategoryForm = () => {
     formData.append("data", JSON.stringify(restData));
     try {
       const result = await axios.put(
-        `/editcategorybyname/${categoryName}`,
+        `/editcategorybyname/${categoryslug}`,
         formData,
         {
           headers: {

@@ -86,6 +86,7 @@ model Bookmark {
 model Store {
   storeId              Int                   @id @default(autoincrement())
   name                 String                @unique
+  slug                 String                @unique
   title                String?
   logo_url             String?
   ref_link             String
@@ -128,6 +129,7 @@ model Festival {
 model Event {
   eventId          Int      @id @default(autoincrement())
   name             String   @unique
+  slug             String   @unique
   title            String
   description      String?
   logo_url         String?
@@ -159,6 +161,7 @@ model Category {
   logo_url                 String?
   addToTodaysTopCategories Boolean               @default(false)
   name                     String                @unique
+  slug                     String                @unique
   description              String?
   coupons                  Coupon[]
   blogs                    Blog[]

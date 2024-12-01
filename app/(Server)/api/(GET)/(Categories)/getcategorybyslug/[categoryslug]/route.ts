@@ -6,13 +6,13 @@ export const fetchCache = "force-no-store";
 
 export async function GET(
   req: Request,
-  context: { params: { categoryname: string } },
+  context: { params: { categoryslug: string } },
 ) {
   try {
-    const { categoryname } = context.params;
+    const { categoryslug } = context.params;
     const categoryDetails = await db.category.findUnique({
       where: {
-        name: categoryname.trim(),
+        slug: categoryslug.trim(),
       },
       include: {
         coupons: {

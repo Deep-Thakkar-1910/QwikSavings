@@ -75,7 +75,8 @@ export async function POST(req: Request) {
     // creating a new store
     const store = await db.store.create({
       data: {
-        name: name.trim(),
+        name: name.trim().replace(/\s+/g, " "),
+        slug: name.trim().toLowerCase().replace(/\s+/g, "-"),
         title,
         logo_url: logoUrl,
         ref_link,

@@ -63,6 +63,7 @@ export async function POST(req: Request) {
     const event = await db.event.create({
       data: {
         name: name.trim(),
+        slug: name.trim().replace(/\s+/g, "-").toLowerCase(),
         description,
         title,
         logo_url: logoUrl ? logoUrl : null,

@@ -82,6 +82,7 @@ const AllCategories = () => {
         data={data.map((item: Record<string, any>) => ({
           categoryId: item.categoryId,
           name: item.name,
+          slug: item.slug,
           logo_url: item.logo_url,
           coupons: item.coupons,
         }))}

@@ -137,11 +137,11 @@ const CreateEventForm = () => {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Category Name</FormLabel>
+              <FormLabel>Event Name</FormLabel>
               <sup className="text-app-main">*</sup>
               <FormControl>
                 <Input
-                  placeholder="Enter a Category Name"
+                  placeholder="Enter the Event Name"
                   {...field}
                   type="text"
                 />

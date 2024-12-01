@@ -28,7 +28,7 @@ type InputType = z.infer<typeof CreateEventFormSchema>;
 
 const EditEventForm = () => {
   const router = useRouter();
-  const { eventName } = useParams();
+  const { eventslug } = useParams();
 
   const [eventDetails, setEventDetails] = useState<any>(null);
 
@@ -36,7 +36,7 @@ const EditEventForm = () => {
   useEffect(() => {
     const fetchCategoryDetails = async () => {
       try {
-        const response = await axios.get(`/geteventbyname/${eventName}`);
+        const response = await axios.get(`/geteventbyslug/${eventslug}`);
         if (response.data.success) {
           setEventDetails(response.data.eventDetails);
         }
@@ -46,7 +46,7 @@ const EditEventForm = () => {
     };
 
     fetchCategoryDetails();
-  }, [eventName]);
+  }, [eventslug]);
 
   const form = useForm<InputType>({
     resolver: zodResolver(CreateEventFormSchema),
@@ -135,7 +135,7 @@ const EditEventForm = () => {
     formData.append("data", JSON.stringify(restData));
     try {
       const result = await axios.put(
-        `/editeventbyname/${eventName}`,
+        `/editeventbyname/${eventslug}`,
         formData,
         {
           headers: {
@@ -173,11 +173,11 @@ const EditEventForm = () => {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Category Name</FormLabel>
+              <FormLabel>Event Name</FormLabel>
               <sup className="text-app-main">*</sup>
               <FormControl>
                 <Input
-                  placeholder="Enter a Category Name"
+                  placeholder="Enter the event Name"
                   {...field}
                   type="text"
                 />

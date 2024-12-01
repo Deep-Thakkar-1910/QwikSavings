@@ -45,7 +45,7 @@ interface StoreFormProps {
 }
 const EditStoreForm = ({ similarStores = [] }: StoreFormProps) => {
   const router = useRouter();
-  const { storeName } = useParams();
+  const { storeslug } = useParams();
 
   const similarStoreOptions = similarStores.map((store) => {
     return {
@@ -94,7 +94,7 @@ const EditStoreForm = ({ similarStores = [] }: StoreFormProps) => {
   useEffect(() => {
     const fetchStoreData = async () => {
       try {
-        const response = await axios.get(`/getstorebyname/${storeName}`);
+        const response = await axios.get(`/getstorebyslug/${storeslug}`);
         const data = response.data.storeDetails;
         setStoreDetails(data);
       } catch (error) {
@@ -107,7 +107,7 @@ const EditStoreForm = ({ similarStores = [] }: StoreFormProps) => {
       }
     };
     fetchStoreData();
-  }, [storeName]);
+  }, [storeslug]);
 
   useEffect(() => {
     if (storeDetails) {
@@ -167,7 +167,7 @@ const EditStoreForm = ({ similarStores = [] }: StoreFormProps) => {
 
     try {
       const response = await axios.put(
-        `/editstorebyname/${storeName}`,
+        `/editstorebyname/${storeslug}`,
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },

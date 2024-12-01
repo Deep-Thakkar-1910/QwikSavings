@@ -21,6 +21,7 @@ export async function GET(req: Request) {
       select: {
         categoryId: true,
         name: true,
+        slug: true,
         logo_url: true,
         coupons: {
           select: {

@@ -13,6 +13,7 @@ export async function GET() {
       select: {
         eventId: true,
         name: true,
+        slug: true,
         logo_url: true,
         coupons: {
           select: {

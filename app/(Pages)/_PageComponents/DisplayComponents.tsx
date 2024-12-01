@@ -14,12 +14,14 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { useSession } from "next-auth/react";
+import { usePathname } from "next/navigation";
 
 interface DisplayItemsProps<
   T extends {
     storeId?: number;
     categoryId?: number;
     name: string;
+    slug: string;
     logo_url?: string;
     coupons: { type: string }[] | [];
   },
@@ -36,6 +38,7 @@ const DisplayItems = <
     storeId?: number;
     categoryId?: number;
     name: string;
+    slug: string;
     logo_url?: string;
     coupons: { type: string }[] | [];
   },
@@ -49,7 +52,7 @@ const DisplayItems = <
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [itemToDelete, setItemToDelete] = useState<T | null>(null);
   const { data: session } = useSession();
-
+  const isAdminPath = usePathname().includes("/admin");
   const groupByCharacter = (items: T[]) => {
     return items.reduce((acc: Record<string, T[]>, item) => {
       const char = item.name[0].toUpperCase();
@@ -110,7 +113,7 @@ const DisplayItems = <
                   >
                     <div className="flex w-full items-center justify-start gap-x-3 ">
                       <Link
-                        href={`${item.storeId ? `/stores/${item.name}` : `/categories/${item.name}`}`}
+                        href={`${item.storeId ? `/stores/${item.slug}` : `/categories/${item.slug}`}`}
                         className="flex flex-grow items-center gap-x-3"
                       >
                         <div className="rounded-full border border-black bg-white p-1 dark:border-white dark:bg-black">
@@ -150,7 +153,7 @@ const DisplayItems = <
                           </p>
                         </div>
                       </Link>
-                      {session?.user?.role === "admin" && (
+                      {session?.user?.role === "admin" && isAdminPath && (
                         <Trash2
                           className="absolute right-2 top-2 size-4 cursor-pointer text-app-main"
                           onClick={() => handleDeleteClick(item)}

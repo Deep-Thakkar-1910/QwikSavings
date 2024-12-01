@@ -39,6 +39,7 @@ const StoresPageContent = () => {
         data={data.map((item: Record<string, any>) => ({
           storeId: item.storeId,
           name: item.name,
+          slug: item.slug,
           logo_url: item.logo_url,
           coupons: item.coupons,
         }))}

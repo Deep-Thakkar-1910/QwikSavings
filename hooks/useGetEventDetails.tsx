@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 
 type EventData = Record<string, any>;
 
-const useGetEventDetails = (eventName: string) => {
+const useGetEventDetails = (slug: string) => {
   const [data, setData] = useState<EventData>({});
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -12,7 +12,7 @@ const useGetEventDetails = (eventName: string) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`geteventbyname/${eventName}`);
+        const response = await axios.get(`geteventbyslug/${slug}`);
         if (response.data.success) {
           setData(response.data.eventDetails);
           setInitialCoupon(response.data?.eventDetails?.coupon[0]?.due_date);
@@ -26,7 +26,7 @@ const useGetEventDetails = (eventName: string) => {
     };
 
     fetchData();
-  }, [eventName]);
+  }, [slug]);
 
   return { data, isLoading, error, initialCoupon };
 };

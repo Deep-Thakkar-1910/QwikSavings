@@ -1,18 +1,15 @@
 import db from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
-export const dynamic = "force-dynamic";
-export const fetchCache = "force-no-store";
-
 export async function GET(
   req: Request,
-  context: { params: { eventname: string } },
+  context: { params: { storeslug: string } },
 ) {
   try {
-    const { eventname } = context.params;
-    const eventDetails = await db.event.findUnique({
+    const { storeslug } = context.params;
+    const storeDetails = await db.store.findUnique({
       where: {
-        name: eventname.trim(),
+        slug: storeslug.trim(),
       },
       include: {
         coupons: {
@@ -20,9 +17,9 @@ export async function GET(
             couponId: true,
             due_date: true,
             description: true,
+            coupon_code: true,
             ref_link: true,
             type: true,
-            coupon_code: true,
             title: true,
             user_count: true,
             like_count: true,
@@ -33,18 +30,36 @@ export async function GET(
               },
             },
           },
+
           orderBy: {
             createdAt: "desc",
+          },
+        },
+        similarStores: {
+          select: {
+            name: true,
+            storeId: true,
+          },
+        },
+        _count: {
+          select: {
+            coupons: {
+              where: {
+                due_date: {
+                  gt: new Date(),
+                },
+              },
+            },
           },
         },
       },
     });
 
-    return NextResponse.json({ success: true, eventDetails }, { status: 200 });
+    return NextResponse.json({ success: true, storeDetails }, { status: 200 });
   } catch (err) {
     console.log(err);
     return NextResponse.json(
-      { success: false, error: "Error fetching Event details" },
+      { success: false, error: "Error fetching store details" },
       { status: 500 },
     );
   }
