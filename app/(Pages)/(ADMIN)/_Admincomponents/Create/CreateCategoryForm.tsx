@@ -170,6 +170,7 @@ const CreateCategoryForm = () => {
           render={({ field }) => (
             <FormItem>
               <FormLabel>About</FormLabel>
+              <sup className="text-app-main">*</sup>
               <FormControl>
                 <Textarea {...field} placeholder="About Category" />
               </FormControl>

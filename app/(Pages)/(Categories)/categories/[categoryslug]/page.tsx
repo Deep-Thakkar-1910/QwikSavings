@@ -16,11 +16,12 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
     },
     select: {
       name: true,
+      description: true,
     },
   });
   return {
     title: `${titleName?.name}`,
-    description: `Discover more about ${titleName?.name}. Explore details, insights, and more about this category.`,
+    description: titleName?.description as string,
   };
 }
 

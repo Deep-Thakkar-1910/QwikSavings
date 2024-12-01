@@ -90,7 +90,7 @@ model Store {
   title                String?
   logo_url             String?
   ref_link             String
-  description          String?
+  description          String                @default("No description available")
   moreAbout            String?
   hintHeading          String?
   hint                 String?
@@ -131,7 +131,7 @@ model Event {
   name             String   @unique
   slug             String   @unique
   title            String
-  description      String?
+  description      String   @default("No description available")
   logo_url         String?
   cover_url        String?
   best_offer       String   @default("0")
@@ -162,7 +162,7 @@ model Category {
   addToTodaysTopCategories Boolean               @default(false)
   name                     String                @unique
   slug                     String                @unique
-  description              String?
+  description              String                @default("No description available")
   coupons                  Coupon[]
   blogs                    Blog[]
   UserSubmittedCoupon      UserSubmittedCoupon[]

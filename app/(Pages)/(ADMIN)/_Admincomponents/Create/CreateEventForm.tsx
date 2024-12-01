@@ -226,6 +226,7 @@ const CreateEventForm = () => {
           render={({ field }) => (
             <FormItem>
               <FormLabel>About</FormLabel>
+              <sup className="text-app-main">*</sup>
               <FormControl>
                 <Textarea {...field} placeholder="About Event" />
               </FormControl>

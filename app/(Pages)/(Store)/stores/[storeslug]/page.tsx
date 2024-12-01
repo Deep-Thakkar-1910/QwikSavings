@@ -16,10 +16,11 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
     },
     select: {
       name: true,
+      description: true,
     },
   });
   const title = `${titleName?.name}`;
-  const description = `Discover products available in Store ${titleName}. Shop now to explore unique items curated just for you.`;
+  const description = titleName?.description as string;
 
   return {
     title,

@@ -333,9 +333,10 @@ const EditStoreForm = ({ similarStores = [] }: StoreFormProps) => {
           name="description"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Store Description</FormLabel>
+              <FormLabel>About Us</FormLabel>
+              <sup className="text-app-main">*</sup>
               <FormControl>
-                <Textarea placeholder="Store description" {...field} />
+                <Textarea placeholder="About Us" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

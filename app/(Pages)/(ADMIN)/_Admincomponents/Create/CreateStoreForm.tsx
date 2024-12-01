@@ -302,6 +302,7 @@ const CreateStoreForm = () => {
           render={({ field }) => (
             <FormItem>
               <FormLabel>About Us</FormLabel>
+              <sup className="text-app-main">*</sup>
               <FormControl>
                 <Textarea placeholder="About Us" {...field} />
               </FormControl>

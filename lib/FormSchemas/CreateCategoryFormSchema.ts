@@ -5,5 +5,5 @@ export const CreateCategoryFormSchema = z.object({
   logo: z.any().optional(),
   logo_url: z.string().optional(),
   addToTodaysTopCategories: z.enum(["yes", "no"]).default("no"),
-  description: z.string().optional(),
+  description: z.string().min(1, "Description is required"),
 });
