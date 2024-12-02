@@ -113,7 +113,15 @@ const DisplayItems = <
                   >
                     <div className="flex w-full items-center justify-start gap-x-3 ">
                       <Link
-                        href={`${item.storeId ? `/stores/${item.slug}` : `/categories/${item.slug}`}`}
+                        href={`${
+                          item.storeId
+                            ? isAdminPath
+                              ? `/admin/editstore/${item.slug}`
+                              : `/store/${item.slug}`
+                            : isAdminPath
+                              ? `/admin/editcategory/${item.slug}`
+                              : `/categories/${item.slug}`
+                        }`}
                         className="flex flex-grow items-center gap-x-3"
                       >
                         <div className="rounded-full border border-black bg-white p-1 dark:border-white dark:bg-black">

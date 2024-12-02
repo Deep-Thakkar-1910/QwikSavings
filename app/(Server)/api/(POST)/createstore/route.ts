@@ -14,6 +14,7 @@ export async function POST(req: Request) {
   // extracting required properties
   const {
     name,
+    slug,
     title,
     ref_link,
     isFeatured,
@@ -76,7 +77,7 @@ export async function POST(req: Request) {
     const store = await db.store.create({
       data: {
         name: name.trim().replace(/\s+/g, " "),
-        slug: name.trim().toLowerCase().replace(/\s+/g, "-"),
+        slug: slug.trim(),
         title,
         logo_url: logoUrl,
         ref_link,

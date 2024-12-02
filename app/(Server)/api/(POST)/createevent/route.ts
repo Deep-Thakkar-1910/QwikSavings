@@ -11,7 +11,7 @@ export async function POST(req: Request) {
   const request = (await formData.get("data")) as string;
   const body = await JSON.parse(request);
   // extracting the name out of body
-  const { name, description, title, average_discount, best_offer } = body;
+  const { name, slug, description, title, average_discount, best_offer } = body;
   try {
     let logoUrl;
     let coverUrl;
@@ -63,7 +63,7 @@ export async function POST(req: Request) {
     const event = await db.event.create({
       data: {
         name: name.trim(),
-        slug: name.trim().replace(/\s+/g, "-").toLowerCase(),
+        slug: slug.trim(),
         description,
         title,
         logo_url: logoUrl ? logoUrl : null,

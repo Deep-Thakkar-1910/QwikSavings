@@ -70,7 +70,7 @@ const DisplayEvents = ({
             <div
               key={item.eventId}
               className="group relative flex max-h-28 max-w-xs cursor-pointer flex-col items-center rounded-md border p-4 transition-transform duration-300 ease-linear hover:scale-105"
-              onClick={() => router.push(`/events/${item.name}`)}
+              onClick={() => router.push(`/admin/editevent/${item.slug}`)}
             >
               <div className="flex h-28 w-full min-w-64 items-center justify-start gap-x-4">
                 <Image

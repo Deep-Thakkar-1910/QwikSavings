@@ -19,7 +19,7 @@ import axios from "@/app/api/axios/axios";
 import { AxiosError } from "axios";
 import { CreateCategoryFormSchema } from "@/lib/FormSchemas/CreateCategoryFormSchema";
 import Image from "next/image";
-import { MinusCircle } from "lucide-react";
+import { Info, MinusCircle } from "lucide-react";
 import { ChangeEvent, useRef, useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
 import {
@@ -29,6 +29,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 type InputType = z.infer<typeof CreateCategoryFormSchema>;
 
@@ -59,6 +65,7 @@ const EditCategoryForm = () => {
     resolver: zodResolver(CreateCategoryFormSchema),
     defaultValues: {
       name: "",
+      slug: "",
       description: "",
       addToTodaysTopCategories: "no",
       logo: undefined,
@@ -71,6 +78,7 @@ const EditCategoryForm = () => {
     if (categoryDetails) {
       form.reset({
         name: categoryDetails.name,
+        slug: categoryDetails.slug,
         description: categoryDetails.description ?? undefined,
         logo: undefined,
         addToTodaysTopCategories: categoryDetails.addToTodaysTopCategories
@@ -116,7 +124,7 @@ const EditCategoryForm = () => {
     formData.append("data", JSON.stringify(restData));
     try {
       const result = await axios.put(
-        `/editcategorybyname/${categoryslug}`,
+        `/editcategorybyslug/${categoryslug}`,
         formData,
         {
           headers: {
@@ -165,6 +173,37 @@ const EditCategoryForm = () => {
                 />
               </FormControl>
               <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={control}
+          name="slug"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Slug</FormLabel>
+              <sup className="text-app-main">*</sup>
+              <FormControl>
+                <Input placeholder="Enter Slug here" {...field} type="text" />
+              </FormControl>
+              <div className="flex items-center gap-2">
+                <FormMessage />
+                {formState.errors.slug && (
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Info className="size-4 cursor-pointer text-accent-foreground" />
+                      </TooltipTrigger>
+                      <TooltipContent className="bg-popover-foreground text-popover">
+                        <p>
+                          A valid slug looks like{" "}
+                          <strong className="font-extrabold">abc-xyz</strong>
+                        </p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                )}
+              </div>
             </FormItem>
           )}
         />

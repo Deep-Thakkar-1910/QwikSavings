@@ -26,7 +26,7 @@ import {
 } from "@/components/ui/select";
 import { useState, ChangeEvent, useRef, useEffect } from "react";
 import Image from "next/image";
-import { MinusCircle } from "lucide-react";
+import { Info, MinusCircle } from "lucide-react";
 import { AxiosError } from "axios";
 import RichTextEditor from "@/components/ui/RichTextEditor";
 import {
@@ -37,6 +37,13 @@ import {
   MultiSelectorList,
   MultiSelectorTrigger,
 } from "@/components/ui/MultipleSelector";
+import { Popover } from "@/components/ui/popover";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 type InputType = z.infer<typeof CreateStoreFormScehma>;
 interface similarStoresType {
@@ -84,6 +91,7 @@ const CreateStoreForm = () => {
     resolver: zodResolver(CreateStoreFormScehma),
     defaultValues: {
       name: "",
+      slug: "",
       title: "",
       logo: undefined,
       ref_link: "",
@@ -191,10 +199,42 @@ const CreateStoreForm = () => {
         />
         <FormField
           control={control}
+          name="slug"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Slug</FormLabel>
+              <sup className="text-app-main">*</sup>
+              <FormControl>
+                <Input placeholder="Enter Slug here" {...field} type="text" />
+              </FormControl>
+              <div className="flex items-center gap-2">
+                <FormMessage />
+                {formState.errors.slug && (
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Info className="size-4 cursor-pointer text-accent-foreground" />
+                      </TooltipTrigger>
+                      <TooltipContent className="bg-popover-foreground text-popover">
+                        <p>
+                          A valid slug looks like{" "}
+                          <strong className="font-extrabold">abc-xyz</strong>
+                        </p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                )}
+              </div>
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={control}
           name="title"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Title</FormLabel>
+              <sup className="text-app-main">*</sup>
               <FormControl>
                 <Input placeholder="Store Title" {...field} type="text" />
               </FormControl>

@@ -10,7 +10,7 @@ export async function POST(req: Request) {
   const request = (await formData.get("data")) as string;
   const body = await JSON.parse(request);
   // extracting the name out of body
-  const { name, description, addToTodaysTopCategories } = body;
+  const { name, slug, description, addToTodaysTopCategories } = body;
   try {
     let logoUrl;
 
@@ -40,7 +40,7 @@ export async function POST(req: Request) {
     const category = await db.category.create({
       data: {
         name: name.trim(),
-        slug: name.trim().replace(/\s+/g, "-").toLowerCase(),
+        slug: slug.trim(),
         description: description ? description : null,
         logo_url: logoUrl,
         addToTodaysTopCategories:

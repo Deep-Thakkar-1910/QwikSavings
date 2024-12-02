@@ -5,15 +5,15 @@ import { NextResponse } from "next/server";
 
 export async function PUT(
   req: Request,
-  context: { params: { categoryName: string } },
+  context: { params: { categoryslug: string } },
 ) {
-  const { categoryName } = context.params;
+  const { categoryslug } = context.params;
   const formData = await req.formData();
   const logo = (formData.get("logo") as File) ?? null;
   const request = (await formData.get("data")) as string;
   const body = await JSON.parse(request);
 
-  const { name, description, logo_url, addToTodaysTopCategories } = body;
+  const { name, slug, description, logo_url, addToTodaysTopCategories } = body;
 
   try {
     let logoUrl;
@@ -36,10 +36,11 @@ export async function PUT(
     }
     const updatedCategory = await db.category.update({
       where: {
-        name: categoryName,
+        slug: categoryslug,
       },
       data: {
-        name,
+        name: name.trim(),
+        slug: slug.trim(),
         description: description ? description : null,
         logo_url: logoUrl || logo_url,
         addToTodaysTopCategories:
@@ -51,6 +52,7 @@ export async function PUT(
       { status: 200 },
     );
   } catch (error) {
+    console.error(error);
     if (
       error instanceof PrismaClientKnownRequestError &&
       error.code === "P2002"

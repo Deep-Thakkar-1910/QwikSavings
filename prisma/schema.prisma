@@ -110,6 +110,7 @@ model Store {
   createdAt            DateTime              @default(now())
   updatedAt            DateTime              @default(now()) @updatedAt
 
+  @@index([slug], name: "store-slug", type: Hash)
   @@map("stores")
 }
 
@@ -140,6 +141,7 @@ model Event {
   createdAt        DateTime @default(now())
   updatedAt        DateTime @default(now()) @updatedAt
 
+  @@index([slug], name: "event-slug", type: Hash)
   @@map("events")
 }
 
@@ -169,6 +171,7 @@ model Category {
   createdAt                DateTime              @default(now())
   updatedAt                DateTime              @default(now()) @updatedAt
 
+  @@index([slug], name: "category-slug", type: Hash)
   @@map("categories")
 }
 

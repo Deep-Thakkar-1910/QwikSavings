@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 
 export async function PUT(
   req: Request,
-  context: { params: { storeName: string } },
+  context: { params: { storeslug: string } },
 ) {
   const formData = await req.formData();
   const logo = (formData.get("logo") as File) ?? null;
@@ -16,6 +16,7 @@ export async function PUT(
   const {
     name,
     title,
+    slug,
     ref_link,
     isFeatured,
     description,
@@ -58,10 +59,11 @@ export async function PUT(
     // Update the store
     const updatedStore = await db.store.update({
       where: {
-        name: context.params.storeName,
+        slug: context.params.storeslug,
       },
       data: {
-        name,
+        name: name.trim(),
+        slug: slug.trim(),
         title,
         logo_url: logoUrl || logo_url,
         ref_link,
@@ -85,6 +87,7 @@ export async function PUT(
     // Return response on success
     return NextResponse.json({ success: true, updatedStore }, { status: 200 });
   } catch (error) {
+    console.error(error);
     // Unique constraint failed
     if (
       error instanceof PrismaClientKnownRequestError &&

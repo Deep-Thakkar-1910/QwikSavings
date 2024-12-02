@@ -6,9 +6,9 @@ import { NextResponse } from "next/server";
 // API handler for creating a category
 export async function PUT(
   req: Request,
-  context: { params: { eventName: string } },
+  context: { params: { eventslug: string } },
 ) {
-  const { eventName } = context.params;
+  const { eventslug } = context.params;
   const formData = await req.formData();
   const logo: File | null = (formData.get("logo_url") as File) ?? null;
   const cover: File | null = (formData.get("cover_url") as File) ?? null;
@@ -17,6 +17,7 @@ export async function PUT(
   // extracting the name out of body
   const {
     name,
+    slug,
     description,
     title,
     logoUrl: LogoURL,
@@ -72,10 +73,11 @@ export async function PUT(
     // creating the event
     const event = await db.event.update({
       where: {
-        name: eventName,
+        slug: eventslug,
       },
       data: {
-        name,
+        name: name.trim(),
+        slug: slug.trim(),
         description,
         title,
         logo_url: logoUrl ? logoUrl : LogoURL,
@@ -92,6 +94,7 @@ export async function PUT(
       { status: 201 },
     );
   } catch (error) {
+    console.error(error);
     // if Unique constraint failed
     if (error instanceof PrismaClientKnownRequestError) {
       if (error.code === "P2002") {

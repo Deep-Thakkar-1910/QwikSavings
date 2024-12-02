@@ -18,11 +18,17 @@ import axios from "@/app/api/axios/axios";
 import { AxiosError } from "axios";
 
 import Image from "next/image";
-import { MinusCircle } from "lucide-react";
+import { Info, MinusCircle } from "lucide-react";
 import { ChangeEvent, useRef, useState } from "react";
 
 import { useRouter } from "next/navigation";
 import { CreateEventFormSchema } from "@/lib/FormSchemas/CreateEventFormSchema";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 type InputType = z.infer<typeof CreateEventFormSchema>;
 
@@ -32,6 +38,7 @@ const CreateEventForm = () => {
     resolver: zodResolver(CreateEventFormSchema),
     defaultValues: {
       name: "",
+      slug: "",
       title: "",
       description: "",
       cover_url: "",
@@ -147,6 +154,37 @@ const CreateEventForm = () => {
                 />
               </FormControl>
               <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={control}
+          name="slug"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Slug</FormLabel>
+              <sup className="text-app-main">*</sup>
+              <FormControl>
+                <Input placeholder="Enter Slug here" {...field} type="text" />
+              </FormControl>
+              <div className="flex items-center gap-2">
+                <FormMessage />
+                {formState.errors.slug && (
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Info className="size-4 cursor-pointer text-accent-foreground" />
+                      </TooltipTrigger>
+                      <TooltipContent className="bg-popover-foreground text-popover">
+                        <p>
+                          A valid slug looks like{" "}
+                          <strong className="font-extrabold">abc-xyz</strong>
+                        </p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                )}
+              </div>
             </FormItem>
           )}
         />
