@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-import { UploadStoreImage } from "@/lib/utilities/CloudinaryConfig";
+import { uploadToS3 } from "@/lib/utilities/AwsConfig";
 import db from "@/lib/prisma";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { MAX_FEATURED_STORE_LIMITS } from "@/lib/Constants";
@@ -55,13 +55,10 @@ export async function POST(req: Request) {
     if (logo) {
       // converting the image to a buffer
       const buffer = await logo.arrayBuffer();
-      // converting buffer to bytes string for uploading to cloudinary
+      // converting buffer to bytes string for uploading to s3
       const bytes = Buffer.from(buffer);
-      // passing buffer to Cloudinary to get image-url for storing in database
-      logoUrl = (await UploadStoreImage(
-        bytes,
-        "store_images",
-      )) as unknown as string;
+      // passing buffer to s3 to get image-url for storing in database
+      logoUrl = (await uploadToS3(bytes, "store_images")) as unknown as string;
       if (!logoUrl) {
         return NextResponse.json(
           {

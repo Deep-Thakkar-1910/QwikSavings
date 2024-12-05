@@ -3,7 +3,7 @@ import {
   MAX_FLIPPER_COUPON_LIMITS,
 } from "@/lib/Constants";
 import db from "@/lib/prisma";
-import { UploadStoreImage } from "@/lib/utilities/CloudinaryConfig";
+import { uploadToS3 } from "@/lib/utilities/AwsConfig";
 import { error } from "console";
 import { NextResponse } from "next/server";
 
@@ -93,9 +93,9 @@ export async function POST(req: Request) {
       const buffer = await thumbnail.arrayBuffer();
       // converting the image to array buffer
       const bytes = Buffer.from(buffer);
-      // converting buffer to bytes string for uploading to cloudinary
+      // converting buffer to bytes string for uploading to s3
       // uploading the thumbnail
-      thumbnailUrl = (await UploadStoreImage(
+      thumbnailUrl = (await uploadToS3(
         bytes,
         "coupon_images",
       )) as unknown as string;
@@ -113,9 +113,9 @@ export async function POST(req: Request) {
       const buffer = await flipperImage.arrayBuffer();
       // converting the image to array buffer
       const bytes = Buffer.from(buffer);
-      // converting buffer to bytes string for uploading to cloudinary
+      // converting buffer to bytes string for uploading to s3
       // uploading the flipper
-      flipperUrl = (await UploadStoreImage(
+      flipperUrl = (await uploadToS3(
         bytes,
         "coupon_images",
       )) as unknown as string;
@@ -132,9 +132,9 @@ export async function POST(req: Request) {
       const buffer = await carouselPoster.arrayBuffer();
       // converting the image to array buffer
       const bytes = Buffer.from(buffer);
-      // converting buffer to bytes string for uploading to cloudinary
+      // converting buffer to bytes string for uploading to s3
       // uploading the carousel Poster
-      carouselPosterUrl = (await UploadStoreImage(
+      carouselPosterUrl = (await uploadToS3(
         bytes,
         "coupon_images",
       )) as unknown as string;

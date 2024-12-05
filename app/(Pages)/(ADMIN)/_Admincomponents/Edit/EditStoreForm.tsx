@@ -44,6 +44,16 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { constructS3Url } from "@/lib/utilities/AwsConfig";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { set } from "lodash";
 
 type InputType = z.infer<typeof CreateStoreFormScehma>;
 interface StoreFormProps {
@@ -95,8 +105,13 @@ const EditStoreForm = ({ similarStores = [] }: StoreFormProps) => {
   });
 
   const [storeDetails, setStoreDetails] = useState<Record<string, any>>();
-  console.log(storeDetails?.faq);
-  console.log(storeDetails?.moreAbout);
+  const [showRemoveImageDialog, setShowRemoveImageDialog] =
+    useState<boolean>(false);
+
+  const [confirmRemoveLogo, setConfirmRemoveLogo] = useState<boolean | null>(
+    false,
+  );
+  const [keyToDelete, setKeyToDelete] = useState<string | undefined>();
   // Fetch store data for editing
   useEffect(() => {
     const fetchStoreData = async () => {
@@ -139,7 +154,7 @@ const EditStoreForm = ({ similarStores = [] }: StoreFormProps) => {
         isFeatured: storeDetails.isFeatured ? "yes" : "no",
         addToPopularStores: storeDetails.addToPopularStores ? "yes" : "no",
       });
-      setSelectedImage(storeDetails.logo_url ?? null);
+      setSelectedImage(constructS3Url(storeDetails.logo_url) ?? null);
     }
   }, [storeDetails, reset]);
 
@@ -149,6 +164,7 @@ const EditStoreForm = ({ similarStores = [] }: StoreFormProps) => {
     if (file) {
       setValue("logo", file);
       setSelectedImage(URL.createObjectURL(file));
+      setKeyToDelete(storeDetails?.logo_url);
     }
   };
 
@@ -159,6 +175,8 @@ const EditStoreForm = ({ similarStores = [] }: StoreFormProps) => {
       imageRef.current.src = "";
       imageRef.current.value = "";
     }
+    setConfirmRemoveLogo(true);
+    setKeyToDelete(storeDetails?.logo_url);
   };
 
   // form submission handler
@@ -170,7 +188,8 @@ const EditStoreForm = ({ similarStores = [] }: StoreFormProps) => {
 
     // Remove the logo from the data object to not clutter the form data
     const { logo, ...restData } = data;
-    restData.logo_url = data.logo_url;
+    restData.logo_url = confirmRemoveLogo ? undefined : data.logo_url;
+    restData.keyToDelete = keyToDelete;
     formData.append("data", JSON.stringify(restData));
 
     try {
@@ -292,13 +311,23 @@ const EditStoreForm = ({ similarStores = [] }: StoreFormProps) => {
                 />
                 <MinusCircle
                   className="size-6 translate-y-1/2 cursor-pointer text-destructive"
-                  onClick={removeImage}
+                  onClick={() => {
+                    setShowRemoveImageDialog(true);
+                  }}
                 />
               </>
             )}
           </div>
           <FormMessage />
         </FormItem>
+        <RemoveImageDialog
+          handleConfirmDelete={() => {
+            setShowRemoveImageDialog(false);
+            removeImage();
+          }}
+          isDialogOpen={showRemoveImageDialog}
+          setIsDialogOpen={setShowRemoveImageDialog}
+        />
         <FormField
           control={control}
           name="ref_link"
@@ -576,4 +605,39 @@ const EditStoreForm = ({ similarStores = [] }: StoreFormProps) => {
   );
 };
 
+interface RemoveImageDialogProps {
+  handleConfirmDelete: () => void;
+  isDialogOpen: boolean;
+  setIsDialogOpen: (value: boolean) => void;
+}
+
+const RemoveImageDialog: React.FC<RemoveImageDialogProps> = ({
+  handleConfirmDelete,
+  isDialogOpen,
+  setIsDialogOpen,
+}: RemoveImageDialogProps) => (
+  <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+    <DialogContent className="w-11/12 max-w-96">
+      <DialogHeader>
+        <DialogTitle>Are you sure you want to delete this item?</DialogTitle>
+        <DialogDescription>
+          This action cannot be undone. This will permanently delete this Image
+          if you press delete and update the store.
+        </DialogDescription>
+      </DialogHeader>
+      <DialogFooter>
+        <Button
+          variant="outline"
+          className="my-4 border-app-main sm:mx-2 sm:my-0"
+          onClick={() => setIsDialogOpen(false)}
+        >
+          Cancel
+        </Button>
+        <Button className="bg-app-main" onClick={handleConfirmDelete}>
+          Delete
+        </Button>
+      </DialogFooter>
+    </DialogContent>
+  </Dialog>
+);
 export default EditStoreForm;

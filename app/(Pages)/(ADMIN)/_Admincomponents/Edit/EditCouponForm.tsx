@@ -54,6 +54,7 @@ import {
   MultiSelectorList,
   MultiSelectorTrigger,
 } from "@/components/ui/MultipleSelector";
+import { constructS3Url } from "@/lib/utilities/AwsConfig";
 
 type InputType = z.infer<typeof CreateCouponFormSchema>;
 
@@ -162,11 +163,17 @@ const EditCouponForm = ({ categories, stores, events }: CouponFormProps) => {
       }
       // Set image previews
       if (couponDetails.thumbnail_url)
-        setSelectedThumbnailImage(couponDetails.thumbnail_url);
+        setSelectedThumbnailImage(
+          constructS3Url(couponDetails.thumbnail_url) ?? null,
+        );
       if (couponDetails.flipperImage_url)
-        setSelectedFlipperImage(couponDetails.flipperImage_url);
+        setSelectedFlipperImage(
+          constructS3Url(couponDetails.flipperImage_url) ?? null,
+        );
       if (couponDetails.carouselPosterUrl)
-        setSelectedCarouselImage(couponDetails.carouselPosterUrl);
+        setSelectedCarouselImage(
+          constructS3Url(couponDetails.carouselPosterUrl) ?? null,
+        );
     }
   }, [couponDetails, reset, setValue]);
 

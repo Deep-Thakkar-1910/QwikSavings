@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Trash2 } from "lucide-react";
+import { constructS3Url } from "@/lib/utilities/AwsConfig";
 interface DisplayEventProps {
   data: Record<string, any>[];
   isLoading: boolean;
@@ -74,7 +75,10 @@ const DisplayEvents = ({
             >
               <div className="flex h-28 w-full min-w-64 items-center justify-start gap-x-4">
                 <Image
-                  src={item.logo_url ?? "https://via.placeholder.com/600x400"}
+                  src={
+                    constructS3Url(item.logo_url) ??
+                    "https://via.placeholder.com/600x400"
+                  }
                   alt={item.name}
                   width={400}
                   height={400}

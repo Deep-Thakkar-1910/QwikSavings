@@ -38,6 +38,7 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
+import { constructS3Url } from "@/lib/utilities/AwsConfig";
 
 type InputType = z.infer<typeof CreateBlogFormSchema>;
 
@@ -89,7 +90,7 @@ const EditBlogForm = ({
         content: blogDetails.content,
         category_id: (blogDetails.category_id as string) ?? "",
       });
-      setSelectedImage(blogDetails.logo_url);
+      setSelectedImage(constructS3Url(blogDetails.logo_url) ?? null);
     }
   }, [blogDetails, form]);
 

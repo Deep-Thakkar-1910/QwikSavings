@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/dialog";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { constructS3Url } from "@/lib/utilities/AwsConfig";
 
 interface BlogsDisplayProps {
   like: string | null;
@@ -88,7 +89,7 @@ const BlogsDisplay = ({
             >
               {blog.thumbnail_url ? (
                 <Image
-                  src={blog.thumbnail_url}
+                  src={constructS3Url(blog.thumbnail_url)!}
                   alt={blog.title}
                   width={400}
                   height={400}

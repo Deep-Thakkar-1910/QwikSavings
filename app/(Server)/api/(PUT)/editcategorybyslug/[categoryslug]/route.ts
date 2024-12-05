@@ -1,5 +1,5 @@
 import db from "@/lib/prisma";
-import { UploadStoreImage } from "@/lib/utilities/CloudinaryConfig";
+import { uploadToS3 } from "@/lib/utilities/AwsConfig";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { NextResponse } from "next/server";
 
@@ -20,7 +20,7 @@ export async function PUT(
     if (logo) {
       const buffer = await logo.arrayBuffer();
       const bytes = Buffer.from(buffer);
-      logoUrl = (await UploadStoreImage(
+      logoUrl = (await uploadToS3(
         bytes,
         "category_images",
       )) as unknown as string;

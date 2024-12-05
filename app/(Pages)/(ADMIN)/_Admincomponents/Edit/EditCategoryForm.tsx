@@ -35,6 +35,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { constructS3Url } from "@/lib/utilities/AwsConfig";
 
 type InputType = z.infer<typeof CreateCategoryFormSchema>;
 
@@ -85,7 +86,7 @@ const EditCategoryForm = () => {
           ? "yes"
           : "no",
       });
-      setSelectedImage(categoryDetails.logo_url);
+      setSelectedImage(constructS3Url(categoryDetails.logo_url) ?? null);
     }
   }, [categoryDetails, form]);
 

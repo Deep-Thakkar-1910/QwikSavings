@@ -1,5 +1,5 @@
 import db from "@/lib/prisma";
-import { UploadStoreImage } from "@/lib/utilities/CloudinaryConfig";
+import { deleteFromS3, uploadToS3 } from "@/lib/utilities/AwsConfig";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { NextResponse } from "next/server";
 
@@ -27,24 +27,32 @@ export async function PUT(
     best_offer,
     average_discount,
     addToPopularStores,
-    logo_url,
     similarStores,
+    keyToDelete,
   } = body;
+  let { logo_url } = body;
 
   try {
+    if (!(logo && logo_url) && keyToDelete) {
+      await deleteFromS3(keyToDelete);
+      logo_url = null;
+    }
     let logoUrl;
 
     // If there is a logo in the form data
     if (logo) {
       // Convert the image to a buffer
       const buffer = await logo.arrayBuffer();
-      // Convert buffer to bytes string for uploading to cloudinary
+      // Convert buffer to bytes string for uploading to s3
       const bytes = Buffer.from(buffer);
-      // Pass buffer to Cloudinary to get image-url for storing in database
-      logoUrl = (await UploadStoreImage(
-        bytes,
-        "store_images",
-      )) as unknown as string;
+
+      const uploadOperations = [
+        uploadToS3(bytes, "store_images"),
+        ...(keyToDelete ? [deleteFromS3(keyToDelete)] : []),
+      ];
+
+      // Pass buffer to s3 to get image-url for storing in database
+      [logoUrl] = await Promise.all(uploadOperations);
       if (!logoUrl) {
         return NextResponse.json(
           {

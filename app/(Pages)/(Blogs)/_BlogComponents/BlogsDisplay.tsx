@@ -7,6 +7,7 @@ import { ArrowRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { format } from "date-fns";
 import { Separator } from "@radix-ui/react-dropdown-menu";
+import { constructS3Url } from "@/lib/utilities/AwsConfig";
 
 const BlogDisplay = () => {
   const { data, error, isLoading } = useGetBlogs();
@@ -34,7 +35,8 @@ const BlogDisplay = () => {
               {blog.thumbnail_url ? (
                 <Image
                   src={
-                    blog.thumbnail_url ?? "https://via.placeholder.com/400x600"
+                    constructS3Url(blog.thumbnail_url) ??
+                    "https://via.placeholder.com/400x600"
                   }
                   alt={blog.title}
                   width={600}

@@ -29,6 +29,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { constructS3Url } from "@/lib/utilities/AwsConfig";
 
 type InputType = z.infer<typeof CreateEventFormSchema>;
 
@@ -75,8 +76,8 @@ const EditEventForm = () => {
         logo_url: undefined,
         cover_url: undefined,
       });
-      setSelectedLogo(eventDetails.logo_url);
-      setSelectedCover(eventDetails.cover_url);
+      setSelectedLogo(constructS3Url(eventDetails.logo_url) ?? null);
+      setSelectedCover(constructS3Url(eventDetails.cover_url) ?? null);
     }
   }, [eventDetails, form]);
 

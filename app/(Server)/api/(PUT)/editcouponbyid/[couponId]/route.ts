@@ -3,7 +3,7 @@ import {
   MAX_FLIPPER_COUPON_LIMITS,
 } from "@/lib/Constants";
 import db from "@/lib/prisma";
-import { UploadStoreImage } from "@/lib/utilities/CloudinaryConfig";
+import { uploadToS3 } from "@/lib/utilities/AwsConfig";
 import { NextResponse } from "next/server";
 
 export async function PUT(
@@ -104,7 +104,7 @@ export async function PUT(
     if (thumbnail) {
       const buffer = await thumbnail.arrayBuffer();
       const bytes = Buffer.from(buffer);
-      thumbnailUrl = (await UploadStoreImage(
+      thumbnailUrl = (await uploadToS3(
         bytes,
         "coupon_images",
       )) as unknown as string;
@@ -120,7 +120,7 @@ export async function PUT(
     if (flipperImage) {
       const buffer = await flipperImage.arrayBuffer();
       const bytes = Buffer.from(buffer);
-      flipperUrl = (await UploadStoreImage(
+      flipperUrl = (await uploadToS3(
         bytes,
         "coupon_images",
       )) as unknown as string;
@@ -136,7 +136,7 @@ export async function PUT(
     if (carouselPoster) {
       const buffer = await carouselPoster.arrayBuffer();
       const bytes = Buffer.from(buffer);
-      carouselPosterUrl = (await UploadStoreImage(
+      carouselPosterUrl = (await uploadToS3(
         bytes,
         "coupon_images",
       )) as unknown as string;

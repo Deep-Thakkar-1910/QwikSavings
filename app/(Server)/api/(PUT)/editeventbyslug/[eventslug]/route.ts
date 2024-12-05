@@ -1,5 +1,5 @@
 import db from "@/lib/prisma";
-import { UploadStoreImage } from "@/lib/utilities/CloudinaryConfig";
+import { uploadToS3 } from "@/lib/utilities/AwsConfig";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { NextResponse } from "next/server";
 
@@ -30,13 +30,10 @@ export async function PUT(
     if (logo) {
       // converting the image to a buffer
       const buffer = await logo.arrayBuffer();
-      // converting buffer to bytes string for uploading to cloudinary
+      // converting buffer to bytes string for uploading to s3
       const bytes = Buffer.from(buffer);
-      // passing buffer to Cloudinary to get image-url for storing in database
-      logoUrl = (await UploadStoreImage(
-        bytes,
-        "event_images",
-      )) as unknown as string;
+      // passing buffer to s3 to get image-url for storing in database
+      logoUrl = (await uploadToS3(bytes, "event_images")) as unknown as string;
       if (!logoUrl) {
         return NextResponse.json(
           {
@@ -52,13 +49,10 @@ export async function PUT(
     if (cover) {
       // converting the image to a buffer
       const buffer = await cover.arrayBuffer();
-      // converting buffer to bytes string for uploading to cloudinary
+      // converting buffer to bytes string for uploading to s3
       const bytes = Buffer.from(buffer);
-      // passing buffer to Cloudinary to get image-url for storing in database
-      coverUrl = (await UploadStoreImage(
-        bytes,
-        "event_images",
-      )) as unknown as string;
+      // passing buffer to s3 to get image-url for storing in database
+      coverUrl = (await uploadToS3(bytes, "event_images")) as unknown as string;
       if (!coverUrl) {
         return NextResponse.json(
           {

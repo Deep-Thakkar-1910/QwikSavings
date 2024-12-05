@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { useCardFlipperData } from "@/hooks/useCardFlipperData";
 import axios from "@/app/api/axios/axios";
 import { useRouter } from "next/navigation";
+import { constructS3Url } from "@/lib/utilities/AwsConfig";
 
 const CardStackFlipper = ({ autoplay }: { autoplay: boolean }) => {
   const { data, error } = useCardFlipperData();
@@ -122,7 +123,7 @@ const CardStackFlipper = ({ autoplay }: { autoplay: boolean }) => {
                 <div className="flex flex-col items-center gap-y-4">
                   <Image
                     src={
-                      card.store.logo_url ??
+                      constructS3Url(card.store.logo_url) ??
                       "https://via.placeholder.com/600x400"
                     }
                     alt={`Logo ${i}`}
@@ -132,7 +133,7 @@ const CardStackFlipper = ({ autoplay }: { autoplay: boolean }) => {
                   />
                   <Image
                     src={
-                      card.flipperImage_url ??
+                      constructS3Url(card.flipperImage_url) ??
                       "https://via.placeholder.com/600x400"
                     }
                     alt={`Logo ${i}`}

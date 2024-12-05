@@ -30,24 +30,9 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: "media.istockphoto.com",
-      },
-      {
-        protocol: "https",
-        hostname: "res.cloudinary.com",
-      },
-      {
-        protocol: "https",
-        hostname: "placehold.co",
+        hostname: "qwiksavings-prod-bucket.s3.ap-south-1.amazonaws.com",
       },
     ],
-  },
-  typescript: {
-    // !! WARN !!
-    // Dangerously allow production builds to successfully complete even if
-    // your project has type errors.
-    // !! WARN !!
-    ignoreBuildErrors: true,
   },
 };
 

@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/dialog";
 import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
+import { constructS3Url } from "@/lib/utilities/AwsConfig";
 
 interface DisplayItemsProps<
   T extends {
@@ -127,7 +128,7 @@ const DisplayItems = <
                         <div className="rounded-full border border-black bg-white p-1 dark:border-white dark:bg-black">
                           <Image
                             src={
-                              item.logo_url ??
+                              constructS3Url(item.logo_url) ??
                               "https://via.placeholder.com/600x400"
                             }
                             alt={item.name}

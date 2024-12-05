@@ -2,6 +2,7 @@
 
 import Spinner from "@/app/(Pages)/_PageComponents/Spinner";
 import axios from "@/app/api/axios/axios";
+import { constructS3Url } from "@/lib/utilities/AwsConfig";
 import { cn } from "@/lib/utils";
 import { AxiosError } from "axios";
 import Image from "next/image";
@@ -73,7 +74,8 @@ const FeaturedStoreSection = () => {
                   <div>
                     <Image
                       src={
-                        store.logo_url ?? "https://via.placeholder.com/600x400"
+                        constructS3Url(store.logo_url) ??
+                        "https://via.placeholder.com/600x400"
                       }
                       alt={store.storeId}
                       width={400}

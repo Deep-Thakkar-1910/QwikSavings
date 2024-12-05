@@ -16,6 +16,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import axios from "@/app/api/axios/axios";
 import { useRouter } from "next/navigation";
+import { constructS3Url } from "@/lib/utilities/AwsConfig";
 
 const ImageCarousel = () => {
   const { data, isLoading, error } = useImageCarouselData();
@@ -69,7 +70,10 @@ const ImageCarousel = () => {
               onClick={() => handleImageClick(image)}
             >
               <Image
-                src={image.carouselPosterUrl}
+                src={
+                  constructS3Url(image.carouselPosterUrl) ??
+                  "https://via.placeholder.com/600x400"
+                }
                 alt={`carousel image ${index + 1}`}
                 width={1920}
                 height={1080}

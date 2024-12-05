@@ -14,6 +14,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { toast } from "@/components/ui/use-toast";
 import axios from "@/app/api/axios/axios";
+import { constructS3Url } from "@/lib/utilities/AwsConfig";
 
 interface CouponCardProps {
   coupon: Coupon;
@@ -102,7 +103,7 @@ const CouponCard = ({
       <div className="mb-4 flex items-center">
         {coupon.storeLogo && (
           <Image
-            src={coupon.storeLogo}
+            src={constructS3Url(coupon.storeLogo)!}
             alt={coupon.storeName}
             width={64}
             height={64}

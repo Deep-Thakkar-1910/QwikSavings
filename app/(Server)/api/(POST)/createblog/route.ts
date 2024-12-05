@@ -1,5 +1,5 @@
 import db from "@/lib/prisma";
-import { UploadStoreImage } from "@/lib/utilities/CloudinaryConfig";
+import { uploadToS3 } from "@/lib/utilities/AwsConfig";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { NextResponse } from "next/server";
 
@@ -25,10 +25,10 @@ export async function POST(req: Request) {
     if (thumbnail) {
       // converting the image to a buffer
       const buffer = await thumbnail.arrayBuffer();
-      // converting buffer to bytes string for uploading to cloudinary
+      // converting buffer to bytes string for uploading to s3
       const bytes = Buffer.from(buffer);
-      // passing buffer to Cloudinary to get image-url for storing in database
-      thumbnailUrl = (await UploadStoreImage(
+      // passing buffer to s3 to get image-url for storing in database
+      thumbnailUrl = (await uploadToS3(
         bytes,
         "blog_images",
       )) as unknown as string;
