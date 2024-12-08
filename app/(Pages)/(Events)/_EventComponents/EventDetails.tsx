@@ -45,6 +45,7 @@ import { PiSmileySadBold } from "react-icons/pi";
 import { toast } from "@/components/ui/use-toast";
 import { useActiveFestival } from "@/hooks/useFestivalActive";
 import { FaExternalLinkAlt } from "react-icons/fa";
+import { constructS3Url } from "@/lib/utilities/AwsConfig";
 
 type ReactionType = "LIKE" | "DISLIKE";
 
@@ -185,13 +186,13 @@ const EventDetails = () => {
   };
 
   const [activeCoupons, expiredCoupons] = useMemo(() => {
-    const now = new Date();
+    const now = new Date().getDate();
     return (data?.coupons || []).reduce(
       (
         acc: [Record<string, any>[], Record<string, any>[]],
         coupon: Record<string, any>,
       ) => {
-        if (new Date(coupon.due_date) > now) {
+        if (new Date(coupon.due_date).getDate() >= now) {
           acc[0].push(coupon);
         } else {
           acc[1].push(coupon);
@@ -442,7 +443,10 @@ const EventDetails = () => {
           >
             <div className="size-32 rounded-full border border-black bg-popover p-1 transition-shadow duration-200 ease-linear hover:shadow-lg dark:border-slate-200">
               <Image
-                src={data?.logo_url ?? "https://via.placeholder.com/600x400"}
+                src={
+                  constructS3Url(data?.logo_url) ??
+                  "https://via.placeholder.com/600x400"
+                }
                 alt={data?.name + " Logo"}
                 width={400}
                 height={400}
@@ -458,7 +462,7 @@ const EventDetails = () => {
           >
             {data?.cover_url && (
               <Image
-                src={data?.cover_url}
+                src={constructS3Url(data?.cover_url)!}
                 alt="Event Cover url"
                 width={1920}
                 height={1080}
@@ -470,9 +474,8 @@ const EventDetails = () => {
                 <div className="size-56 rounded-full border border-black bg-popover p-1 dark:border-slate-200">
                   <Image
                     src={
-                      data.logo_url
-                        ? data.logo_url
-                        : "https://via.placeholder.com/600x400"
+                      constructS3Url(data.logo_url) ??
+                      "https://via.placeholder.com/600x400"
                     }
                     alt={`Event Logo`}
                     width={400}
@@ -590,7 +593,7 @@ const EventDetails = () => {
                             <div className="flex w-16 flex-col items-center border sm:w-24">
                               <Image
                                 src={
-                                  coupon.store.logo_url ??
+                                  constructS3Url(coupon.store.logo_url) ??
                                   "https://via.placeholder.com/600x400"
                                 }
                                 width={400}
@@ -832,7 +835,7 @@ const EventDetails = () => {
                                 <div className="flex w-16 flex-col items-center border sm:w-24">
                                   <Image
                                     src={
-                                      coupon.store.logo_url ??
+                                      constructS3Url(coupon.store.logo_url) ??
                                       "https://via.placeholder.com/600x400"
                                     }
                                     width={400}
@@ -1125,7 +1128,9 @@ const CouponDialog: React.FC<{
       <div className="flex flex-col items-center gap-4">
         <div className="grid size-44 place-items-center rounded-full border border-black bg-popover p-1 dark:border-neutral-700">
           <Image
-            src={logoUrl ?? "https://via.placeholder.com/100x100"}
+            src={
+              constructS3Url(logoUrl) ?? "https://via.placeholder.com/100x100"
+            }
             width={400}
             height={400}
             alt="Store logo"
@@ -1217,7 +1222,9 @@ const DealDialog: React.FC<{
       <div className="flex flex-col items-center gap-4">
         <div className="grid size-44 place-items-center rounded-full border border-black bg-popover p-1 dark:border-neutral-700">
           <Image
-            src={logoUrl ?? "https://via.placeholder.com/100x100"}
+            src={
+              constructS3Url(logoUrl) ?? "https://via.placeholder.com/100x100"
+            }
             width={400}
             height={400}
             alt="Store logo"

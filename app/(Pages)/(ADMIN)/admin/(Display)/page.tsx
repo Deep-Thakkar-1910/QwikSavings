@@ -9,6 +9,7 @@ import Link from "next/link";
 import axios from "@/app/api/axios/axios";
 import { toast } from "@/components/ui/use-toast";
 import { AxiosError } from "axios";
+import { log } from "console";
 
 const AdminAllStoresPage = () => {
   const {
@@ -29,9 +30,11 @@ const AdminAllStoresPage = () => {
     setPage(newPage);
   };
 
-  const handleDelete = async (id: number) => {
+  const handleDelete = async (id: number, logo_url?: string | undefined) => {
     try {
-      const response = await axios.delete(`/deletestore/${id}`);
+      const response = await axios.delete(
+        `/deletestore/${id}?logo_url=${logo_url}`,
+      );
       if (response.data.success) {
         // Update local state
         setData((prevData) => prevData.filter((item) => item.storeId !== id));

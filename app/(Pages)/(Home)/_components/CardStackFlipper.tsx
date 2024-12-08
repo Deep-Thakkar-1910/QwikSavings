@@ -40,7 +40,7 @@ const CardStackFlipper = ({ autoplay }: { autoplay: boolean }) => {
         }),
       );
       // Construct store URL with encoded coupon data
-      const storeUrl = `/stores/${coupon.store.name}?coupon=${encodedCoupon}`;
+      const storeUrl = `/store/${coupon.store.slug}?coupon=${encodedCoupon}`;
 
       // Redirect to the store page
       router.push(storeUrl);

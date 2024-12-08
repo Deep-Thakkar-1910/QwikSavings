@@ -11,6 +11,13 @@ export async function GET(
       where: {
         couponId: Number(couponId),
       },
+      include: {
+        events: {
+          select: {
+            eventId: true,
+          },
+        },
+      },
     });
     return NextResponse.json({ success: true, coupon }, { status: 200 });
   } catch (err) {

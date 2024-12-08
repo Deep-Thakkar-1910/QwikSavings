@@ -82,7 +82,7 @@ const CouponDisplay = ({
                   {coupon.type}
                 </Badge>
                 <Badge
-                  className={`grid w-20 place-items-center text-black dark:text-slate-200 ${new Date(coupon.due_date).getTime() > new Date().getTime() ? "bg-emerald-500" : "bg-app-main"}`}
+                  className={`grid w-20 place-items-center text-black dark:text-slate-200 ${new Date(coupon.due_date).getDate() >= new Date().getDate() ? "bg-emerald-500" : "bg-app-main"}`}
                 >
                   {new Date(coupon.due_date).getTime() > new Date().getTime()
                     ? "Active"

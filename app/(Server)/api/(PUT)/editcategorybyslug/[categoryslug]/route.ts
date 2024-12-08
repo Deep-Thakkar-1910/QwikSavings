@@ -1,5 +1,5 @@
 import db from "@/lib/prisma";
-import { uploadToS3 } from "@/lib/utilities/AwsConfig";
+import { deleteFromS3, uploadToS3 } from "@/lib/utilities/AwsConfig";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { NextResponse } from "next/server";
 
@@ -13,17 +13,31 @@ export async function PUT(
   const request = (await formData.get("data")) as string;
   const body = await JSON.parse(request);
 
-  const { name, slug, description, logo_url, addToTodaysTopCategories } = body;
+  const { name, slug, description, addToTodaysTopCategories, keyToDelete } =
+    body;
+
+  let { logo_url } = body;
 
   try {
+    // Delete existing image from S3 if keyToDelete is provided and no new logo
+    if (!(logo && logo_url) && keyToDelete) {
+      await deleteFromS3(keyToDelete);
+      logo_url = null;
+    }
+
     let logoUrl;
     if (logo) {
       const buffer = await logo.arrayBuffer();
       const bytes = Buffer.from(buffer);
-      logoUrl = (await uploadToS3(
-        bytes,
-        "category_images",
-      )) as unknown as string;
+
+      const uploadOperations = [
+        uploadToS3(bytes, "category_images"),
+        ...(keyToDelete ? [deleteFromS3(keyToDelete)] : []),
+      ];
+
+      // Perform upload and optional delete operations
+      [logoUrl] = await Promise.all(uploadOperations);
+
       if (!logoUrl) {
         return NextResponse.json(
           {
@@ -34,6 +48,7 @@ export async function PUT(
         );
       }
     }
+
     const updatedCategory = await db.category.update({
       where: {
         slug: categoryslug,
@@ -47,6 +62,7 @@ export async function PUT(
           addToTodaysTopCategories === "yes" ? true : false,
       },
     });
+
     return NextResponse.json(
       { success: true, updatedCategory },
       { status: 200 },

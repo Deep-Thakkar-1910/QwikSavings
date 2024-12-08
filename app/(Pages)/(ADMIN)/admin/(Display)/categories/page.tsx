@@ -28,9 +28,11 @@ const AllCategories = () => {
     setPage(newPage);
   };
 
-  const handleDelete = async (id: number) => {
+  const handleDelete = async (id: number, logo_url?: string | undefined) => {
     try {
-      const response = await axios.delete(`/deletecategory/${id}`);
+      const response = await axios.delete(
+        `/deletecategory/${id}?logo_url=${logo_url}`,
+      );
 
       if (response.data.success) {
         // Update local state

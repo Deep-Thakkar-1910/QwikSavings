@@ -11,7 +11,7 @@ export interface CarouselImageItem {
   user_count: number;
   type: string;
   store: {
-    name: string;
+    slug: string;
     logo_url: string;
   };
 }

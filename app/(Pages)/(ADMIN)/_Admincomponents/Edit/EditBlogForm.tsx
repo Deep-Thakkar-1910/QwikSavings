@@ -38,6 +38,14 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { constructS3Url } from "@/lib/utilities/AwsConfig";
 
 type InputType = z.infer<typeof CreateBlogFormSchema>;
@@ -60,7 +68,7 @@ const EditBlogForm = ({
           setBlogDetails(response.data.blogDetails);
         }
       } catch (error) {
-        console.error("Error fetching category details", error);
+        console.error("Error fetching blog details", error);
       }
     };
 
@@ -80,6 +88,7 @@ const EditBlogForm = ({
   });
 
   const { control, handleSubmit, formState, setValue } = form;
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   useEffect(() => {
     if (blogDetails) {
@@ -88,13 +97,19 @@ const EditBlogForm = ({
         thumbnail: undefined,
         thumbnail_url: blogDetails.thumbnail_url ?? "",
         content: blogDetails.content,
-        category_id: (blogDetails.category_id as string) ?? "",
+        category_id: blogDetails.category_id.toString() ?? "",
       });
-      setSelectedImage(constructS3Url(blogDetails.logo_url) ?? null);
+      setSelectedImage(constructS3Url(blogDetails.thumbnail_url) ?? null);
     }
   }, [blogDetails, form]);
 
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [showRemoveImageDialog, setShowRemoveImageDialog] =
+    useState<boolean>(false);
+  const [confirmRemoveLogo, setConfirmRemoveLogo] = useState<boolean | null>(
+    false,
+  );
+  const [keyToDelete, setKeyToDelete] = useState<string | undefined>();
+
   const imageRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
@@ -103,6 +118,7 @@ const EditBlogForm = ({
       setValue("thumbnail", file);
       setSelectedImage(URL.createObjectURL(file));
     }
+    setKeyToDelete(blogDetails.thumbnail_url);
   };
 
   const removeImage = () => {
@@ -111,6 +127,7 @@ const EditBlogForm = ({
     if (imageRef.current) {
       imageRef.current.value = "";
     }
+    setKeyToDelete(blogDetails.thumbnail_url);
   };
 
   const onSubmit: SubmitHandler<InputType> = async (data) => {
@@ -119,6 +136,10 @@ const EditBlogForm = ({
       formData.append("thumbnail", data.thumbnail);
     }
     const { thumbnail, ...restData } = data;
+    restData.thumbnail_url = confirmRemoveLogo
+      ? undefined
+      : blogDetails.thumbnail_url;
+    restData.keyToDelete = keyToDelete;
     formData.append("data", JSON.stringify(restData));
     try {
       const result = await axios.put(`/editblog?blogId=${blogId}`, formData, {
@@ -197,13 +218,21 @@ const EditBlogForm = ({
                 />
                 <MinusCircle
                   className="size-6 translate-y-1/2 cursor-pointer text-destructive"
-                  onClick={removeImage}
+                  onClick={() => setShowRemoveImageDialog(true)}
                 />
               </>
             )}
           </div>
           <FormMessage />
         </FormItem>
+        <RemoveImageDialog
+          handleConfirmDelete={() => {
+            setShowRemoveImageDialog(false);
+            removeImage();
+          }}
+          isDialogOpen={showRemoveImageDialog}
+          setIsDialogOpen={setShowRemoveImageDialog}
+        />
         <FormField
           control={control}
           name="content"
@@ -314,5 +343,41 @@ const EditBlogForm = ({
     </Form>
   );
 };
+
+interface RemoveImageDialogProps {
+  handleConfirmDelete: () => void;
+  isDialogOpen: boolean;
+  setIsDialogOpen: (value: boolean) => void;
+}
+
+const RemoveImageDialog: React.FC<RemoveImageDialogProps> = ({
+  handleConfirmDelete,
+  isDialogOpen,
+  setIsDialogOpen,
+}: RemoveImageDialogProps) => (
+  <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+    <DialogContent className="w-11/12 max-w-96">
+      <DialogHeader>
+        <DialogTitle>Are you sure you want to delete this item?</DialogTitle>
+        <DialogDescription>
+          This action cannot be undone. This will permanently delete this Image
+          if you press delete and update the blog.
+        </DialogDescription>
+      </DialogHeader>
+      <DialogFooter>
+        <Button
+          variant="outline"
+          className="my-4 border-app-main sm:mx-2 sm:my-0"
+          onClick={() => setIsDialogOpen(false)}
+        >
+          Cancel
+        </Button>
+        <Button className="bg-app-main" onClick={handleConfirmDelete}>
+          Delete
+        </Button>
+      </DialogFooter>
+    </DialogContent>
+  </Dialog>
+);
 
 export default EditBlogForm;

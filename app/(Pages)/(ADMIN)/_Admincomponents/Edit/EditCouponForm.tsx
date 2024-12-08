@@ -54,6 +54,16 @@ import {
   MultiSelectorList,
   MultiSelectorTrigger,
 } from "@/components/ui/MultipleSelector";
+
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+
 import { constructS3Url } from "@/lib/utilities/AwsConfig";
 
 type InputType = z.infer<typeof CreateCouponFormSchema>;
@@ -77,6 +87,39 @@ const EditCouponForm = ({ categories, stores, events }: CouponFormProps) => {
   const [selectedCarouselImage, setSelectedCarouselImage] = useState<
     string | null
   >(null);
+
+  // NOTE: states to show remove image dialogs.
+  const [showRemoveThumbnailDialog, setShowRemoveThumbnailDialog] =
+    useState<boolean>(false);
+
+  const [showRemoveFlipperDialog, setShowRemoveFlipperDialog] =
+    useState<boolean>(false);
+
+  const [showRemoveCarouselDialog, setShowRemoveCarouselDialog] =
+    useState<boolean>(false);
+
+  // NOTE: states to confirm removal of images
+
+  const [confirmRemoveThumbnail, setConfirmRemoveThumbnail] = useState<
+    boolean | null
+  >(false);
+  const [confirmRemoveFlipper, setConfirmRemoveFlipper] = useState<
+    boolean | null
+  >(false);
+  const [confirmRemoveCarousel, setConfirmRemoveCarousel] = useState<
+    boolean | null
+  >(false);
+
+  // NOTE: states to set previous image keys to delete
+  const [keyToDeleteThumbnail, setKeyToDeleteThumbnail] = useState<
+    string | undefined
+  >();
+  const [keyToDeleteFlipper, setKeyToDeleteFlipper] = useState<
+    string | undefined
+  >();
+  const [keyToDeleteCarousel, setKeyToDeleteCarousel] = useState<
+    string | undefined
+  >();
 
   const eventOptions = events?.map((event) => {
     return {
@@ -137,6 +180,7 @@ const EditCouponForm = ({ categories, stores, events }: CouponFormProps) => {
 
   useEffect(() => {
     if (couponDetails) {
+      console.log(couponDetails);
       const eventIds =
         couponDetails?.events?.map((event: any) =>
           event?.eventId?.toString(),
@@ -147,8 +191,8 @@ const EditCouponForm = ({ categories, stores, events }: CouponFormProps) => {
         description: couponDetails.description ?? undefined,
         ref_link: couponDetails.ref_link ?? "",
         title: couponDetails.title ?? "",
-        category_id: (couponDetails.category_id as string) ?? "",
-        store_id: (couponDetails.store_id as string) ?? "",
+        category_id: couponDetails.category_id.toString() ?? "",
+        store_id: couponDetails.store_id.toString() ?? "",
         events: eventIds,
         type: couponDetails.type === "Deal" ? "Deal" : "Coupon",
         addToCarousel: couponDetails.addToCarousel ? "yes" : "no",
@@ -186,6 +230,7 @@ const EditCouponForm = ({ categories, stores, events }: CouponFormProps) => {
       // const resizedFile = await resizeThumbnailImage(file);
       setValue("thumbnail_url", file);
       setSelectedThumbnailImage(URL.createObjectURL(file));
+      setKeyToDeleteThumbnail(couponDetails.thumbnail_url);
     }
   };
   // handle Flipper image onChange event
@@ -195,6 +240,7 @@ const EditCouponForm = ({ categories, stores, events }: CouponFormProps) => {
       // const resizedFile = await resizeFlipperImage(file);
       setValue("flipperImage_url", file);
       setSelectedFlipperImage(URL.createObjectURL(file));
+      setKeyToDeleteFlipper(couponDetails.flipperImage_url);
     }
   };
   // handle Carousel image onChange event
@@ -204,6 +250,7 @@ const EditCouponForm = ({ categories, stores, events }: CouponFormProps) => {
       // const resizedFile = await resizeCarouselPoster(file);
       setValue("carouselPosterUrl", file);
       setSelectedCarouselImage(URL.createObjectURL(file));
+      setKeyToDeleteCarousel(couponDetails.carouselPosterUrl);
     }
   };
 
@@ -214,6 +261,8 @@ const EditCouponForm = ({ categories, stores, events }: CouponFormProps) => {
       thumbnailRef.current.src = "";
       thumbnailRef.current.value = "";
     }
+    setKeyToDeleteThumbnail(couponDetails.thumbnail_url);
+    setValue("addToHomePage", "no");
   };
   const removeFlipper = () => {
     setSelectedFlipperImage(null);
@@ -222,6 +271,8 @@ const EditCouponForm = ({ categories, stores, events }: CouponFormProps) => {
       flipperRef.current.src = "";
       flipperRef.current.value = "";
     }
+    setKeyToDeleteFlipper(couponDetails.flipperImage_url);
+    setValue("addToFlipper", "no");
   };
   const removeCarousel = () => {
     setSelectedCarouselImage(null);
@@ -230,6 +281,8 @@ const EditCouponForm = ({ categories, stores, events }: CouponFormProps) => {
       carouselRef.current.src = "";
       carouselRef.current.value = "";
     }
+    setValue("addToCarousel", "no");
+    setKeyToDeleteCarousel(couponDetails.carouselPosterUrl);
   };
 
   // form submission handler
@@ -243,6 +296,23 @@ const EditCouponForm = ({ categories, stores, events }: CouponFormProps) => {
       formData.append("carouselPosterUrl", data.carouselPosterUrl);
     const { thumbnail_url, carouselPosterUrl, flipperImage_url, ...restData } =
       data;
+
+    restData.thumbnailUrl = confirmRemoveThumbnail
+      ? undefined
+      : couponDetails.thumbnail_url;
+
+    restData.carouselPoster_url = confirmRemoveCarousel
+      ? undefined
+      : couponDetails.carouselPosterUrl;
+
+    restData.flipperImageUrl = confirmRemoveFlipper
+      ? undefined
+      : couponDetails.flipperImage_url;
+
+    restData.keyToDeleteCarousel = keyToDeleteCarousel;
+    restData.keyToDeleteThumbnail = keyToDeleteThumbnail;
+    restData.keyToDeleteFlipper = keyToDeleteFlipper;
+
     formData.append("data", JSON.stringify(restData));
     try {
       const result = await axios.put(`/editcouponbyid/${couponId}`, formData, {
@@ -422,7 +492,7 @@ const EditCouponForm = ({ categories, stores, events }: CouponFormProps) => {
                   />
                   <MinusCircle
                     className="size-6 translate-y-1/2 cursor-pointer text-destructive"
-                    onClick={removeThumbnail}
+                    onClick={() => setShowRemoveThumbnailDialog(true)}
                   />
                 </>
               )}
@@ -430,6 +500,14 @@ const EditCouponForm = ({ categories, stores, events }: CouponFormProps) => {
             <FormMessage />
           </FormItem>
         )}
+        <RemoveImageDialog
+          handleConfirmDelete={() => {
+            setShowRemoveThumbnailDialog(false);
+            removeThumbnail();
+          }}
+          isDialogOpen={showRemoveThumbnailDialog}
+          setIsDialogOpen={setShowRemoveThumbnailDialog}
+        />
         {/* Carousel Field */}
         <FormField
           control={control}
@@ -486,7 +564,7 @@ const EditCouponForm = ({ categories, stores, events }: CouponFormProps) => {
                   />
                   <MinusCircle
                     className="size-6 translate-y-1/2 cursor-pointer text-destructive"
-                    onClick={removeCarousel}
+                    onClick={() => setShowRemoveCarouselDialog(true)}
                   />
                 </>
               )}
@@ -494,7 +572,14 @@ const EditCouponForm = ({ categories, stores, events }: CouponFormProps) => {
             <FormMessage />
           </FormItem>
         )}
-
+        <RemoveImageDialog
+          handleConfirmDelete={() => {
+            setShowRemoveCarouselDialog(false);
+            removeCarousel();
+          }}
+          isDialogOpen={showRemoveCarouselDialog}
+          setIsDialogOpen={setShowRemoveCarouselDialog}
+        />
         {/* Flipper Field */}
         <FormField
           control={control}
@@ -551,7 +636,7 @@ const EditCouponForm = ({ categories, stores, events }: CouponFormProps) => {
                   />
                   <MinusCircle
                     className="size-6 translate-y-1/2 cursor-pointer text-destructive"
-                    onClick={removeFlipper}
+                    onClick={() => setShowRemoveFlipperDialog(true)}
                   />
                 </>
               )}
@@ -559,6 +644,14 @@ const EditCouponForm = ({ categories, stores, events }: CouponFormProps) => {
             <FormMessage />
           </FormItem>
         )}
+        <RemoveImageDialog
+          handleConfirmDelete={() => {
+            setShowRemoveFlipperDialog(false);
+            removeFlipper();
+          }}
+          isDialogOpen={showRemoveFlipperDialog}
+          setIsDialogOpen={setShowRemoveFlipperDialog}
+        />
         <FormField
           control={control}
           name="category_id"
@@ -810,5 +903,41 @@ const EditCouponForm = ({ categories, stores, events }: CouponFormProps) => {
     </Form>
   );
 };
+
+interface RemoveImageDialogProps {
+  handleConfirmDelete: () => void;
+  isDialogOpen: boolean;
+  setIsDialogOpen: (value: boolean) => void;
+}
+
+const RemoveImageDialog: React.FC<RemoveImageDialogProps> = ({
+  handleConfirmDelete,
+  isDialogOpen,
+  setIsDialogOpen,
+}: RemoveImageDialogProps) => (
+  <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+    <DialogContent className="w-11/12 max-w-96">
+      <DialogHeader>
+        <DialogTitle>Are you sure you want to delete this item?</DialogTitle>
+        <DialogDescription>
+          This action cannot be undone. This will permanently delete this Image
+          if you press delete and update the coupon.
+        </DialogDescription>
+      </DialogHeader>
+      <DialogFooter>
+        <Button
+          variant="outline"
+          className="my-4 border-app-main sm:mx-2 sm:my-0"
+          onClick={() => setIsDialogOpen(false)}
+        >
+          Cancel
+        </Button>
+        <Button className="bg-app-main" onClick={handleConfirmDelete}>
+          Delete
+        </Button>
+      </DialogFooter>
+    </DialogContent>
+  </Dialog>
+);
 
 export default EditCouponForm;

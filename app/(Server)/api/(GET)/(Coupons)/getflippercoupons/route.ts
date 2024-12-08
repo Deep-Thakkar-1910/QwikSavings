@@ -21,7 +21,7 @@ export async function GET() {
         coupon_code: true,
         store: {
           select: {
-            name: true,
+            slug: true,
             logo_url: true,
           },
         },

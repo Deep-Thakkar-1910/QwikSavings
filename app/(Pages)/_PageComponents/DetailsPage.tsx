@@ -223,13 +223,13 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
   };
 
   const [activeCoupons, expiredCoupons] = useMemo(() => {
-    const now = new Date();
+    const now = new Date().getDate();
     return (detailsData?.coupons || []).reduce(
       (
         acc: [Record<string, any>[], Record<string, any>[]],
         coupon: Record<string, any>,
       ) => {
-        if (new Date(coupon.due_date) > now) {
+        if (new Date(coupon.due_date).getDate() >= now) {
           acc[0].push(coupon);
         } else {
           acc[1].push(coupon);

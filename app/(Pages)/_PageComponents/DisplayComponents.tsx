@@ -31,7 +31,7 @@ interface DisplayItemsProps<
   isLoading: boolean;
   error: string | undefined;
   emptyMessage: string;
-  onDelete?: (id: number) => Promise<void>;
+  onDelete?: (id: number, logo_url?: string | undefined) => Promise<void>;
 }
 
 const DisplayItems = <
@@ -76,7 +76,10 @@ const DisplayItems = <
   const handleConfirmDelete = async () => {
     if (onDelete && itemToDelete) {
       try {
-        await onDelete(itemToDelete.storeId ?? itemToDelete.categoryId!);
+        await onDelete(
+          itemToDelete.storeId ?? itemToDelete.categoryId!,
+          itemToDelete.logo_url,
+        );
         setIsDialogOpen(false);
         setItemToDelete(null);
       } catch (error) {

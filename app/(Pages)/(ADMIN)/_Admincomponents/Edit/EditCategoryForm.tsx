@@ -35,6 +35,15 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+
 import { constructS3Url } from "@/lib/utilities/AwsConfig";
 
 type InputType = z.infer<typeof CreateCategoryFormSchema>;
@@ -44,6 +53,14 @@ const EditCategoryForm = () => {
   const { categoryslug } = useParams();
 
   const [categoryDetails, setCategoryDetails] = useState<any>(null);
+
+  const [showRemoveImageDialog, setShowRemoveImageDialog] =
+    useState<boolean>(false);
+
+  const [confirmRemoveLogo, setConfirmRemoveLogo] = useState<boolean | null>(
+    false,
+  );
+  const [keyToDelete, setKeyToDelete] = useState<string | undefined>();
 
   // Fetch category details on component mount
   useEffect(() => {
@@ -103,6 +120,7 @@ const EditCategoryForm = () => {
     if (file) {
       setValue("logo", file);
       setSelectedImage(URL.createObjectURL(file));
+      setKeyToDelete(categoryDetails?.logo_url);
     }
   };
 
@@ -113,6 +131,8 @@ const EditCategoryForm = () => {
       imageRef.current.src = "";
       imageRef.current.value = "";
     }
+    setConfirmRemoveLogo(true);
+    setKeyToDelete(categoryDetails?.logo_url);
   };
 
   const onSubmit: SubmitHandler<InputType> = async (data) => {
@@ -121,7 +141,8 @@ const EditCategoryForm = () => {
       formData.append("logo", data.logo);
     }
     const { logo, ...restData } = data;
-    restData.logo_url = categoryDetails.logo_url;
+    restData.logo_url = confirmRemoveLogo ? undefined : data.logo_url;
+    restData.keyToDelete = keyToDelete;
     formData.append("data", JSON.stringify(restData));
     try {
       const result = await axios.put(
@@ -300,5 +321,40 @@ const EditCategoryForm = () => {
     </Form>
   );
 };
+interface RemoveImageDialogProps {
+  handleConfirmDelete: () => void;
+  isDialogOpen: boolean;
+  setIsDialogOpen: (value: boolean) => void;
+}
+
+const RemoveImageDialog: React.FC<RemoveImageDialogProps> = ({
+  handleConfirmDelete,
+  isDialogOpen,
+  setIsDialogOpen,
+}: RemoveImageDialogProps) => (
+  <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+    <DialogContent className="w-11/12 max-w-96">
+      <DialogHeader>
+        <DialogTitle>Are you sure you want to delete this item?</DialogTitle>
+        <DialogDescription>
+          This action cannot be undone. This will permanently delete this Image
+          if you press delete and update the category.
+        </DialogDescription>
+      </DialogHeader>
+      <DialogFooter>
+        <Button
+          variant="outline"
+          className="my-4 border-app-main sm:mx-2 sm:my-0"
+          onClick={() => setIsDialogOpen(false)}
+        >
+          Cancel
+        </Button>
+        <Button className="bg-app-main" onClick={handleConfirmDelete}>
+          Delete
+        </Button>
+      </DialogFooter>
+    </DialogContent>
+  </Dialog>
+);
 
 export default EditCategoryForm;

@@ -53,7 +53,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { set } from "lodash";
 
 type InputType = z.infer<typeof CreateStoreFormScehma>;
 interface StoreFormProps {
@@ -188,7 +187,7 @@ const EditStoreForm = ({ similarStores = [] }: StoreFormProps) => {
 
     // Remove the logo from the data object to not clutter the form data
     const { logo, ...restData } = data;
-    restData.logo_url = confirmRemoveLogo ? undefined : data.logo_url;
+    restData.logo_url = confirmRemoveLogo ? undefined : storeDetails?.logo_url;
     restData.keyToDelete = keyToDelete;
     formData.append("data", JSON.stringify(restData));
 

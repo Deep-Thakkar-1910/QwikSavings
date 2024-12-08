@@ -29,6 +29,16 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+
 import { constructS3Url } from "@/lib/utilities/AwsConfig";
 
 type InputType = z.infer<typeof CreateEventFormSchema>;
@@ -66,6 +76,23 @@ const EditEventForm = () => {
     shouldFocusError: true,
   });
 
+  const [showRemoveLogoDialog, setShowRemoveLogoDialog] =
+    useState<boolean>(false);
+
+  const [showRemoveCoverDialog, setShowRemoveCoverDialog] =
+    useState<boolean>(false);
+
+  const [confirmRemoveLogo, setConfirmRemoveLogo] = useState<boolean | null>(
+    false,
+  );
+  const [confirmRemoveCover, setConfirmRemoveCover] = useState<boolean | null>(
+    false,
+  );
+  const [keyToDeleteLogo, setKeyToDeleteLogo] = useState<string | undefined>();
+  const [keyToDeleteCover, setKeyToDeleteCover] = useState<
+    string | undefined
+  >();
+
   useEffect(() => {
     if (eventDetails) {
       form.reset({
@@ -100,6 +127,7 @@ const EditEventForm = () => {
     if (file) {
       setValue("logo_url", file);
       setSelectedLogo(URL.createObjectURL(file));
+      setKeyToDeleteLogo(eventDetails.logo_url);
     }
   };
   // handle logo image onChange event
@@ -108,6 +136,7 @@ const EditEventForm = () => {
     if (file) {
       setValue("cover_url", file);
       setSelectedCover(URL.createObjectURL(file));
+      setKeyToDeleteCover(eventDetails.cover_url);
     }
   };
 
@@ -119,6 +148,8 @@ const EditEventForm = () => {
       logoRef.current.src = "";
       logoRef.current.value = "";
     }
+    setConfirmRemoveLogo(true);
+    setKeyToDeleteLogo(eventDetails.logo_url);
   };
   // function to remove the selected Cover Image
   const removeCover = () => {
@@ -128,6 +159,8 @@ const EditEventForm = () => {
       coverRef.current.src = "";
       coverRef.current.value = "";
     }
+    setConfirmRemoveCover(true);
+    setKeyToDeleteCover(eventDetails.cover_url);
   };
 
   const onSubmit: SubmitHandler<InputType> = async (data) => {
@@ -139,8 +172,10 @@ const EditEventForm = () => {
       formData.append("cover_url", data.cover_url);
     }
     const { logo_url, cover_url, ...restData } = data;
-    restData.logoUrl = eventDetails.logo_url;
-    restData.coverUrl = eventDetails.cover_url;
+    restData.logoUrl = confirmRemoveLogo ? undefined : eventDetails.logo_url;
+    restData.coverUrl = confirmRemoveCover ? undefined : eventDetails.cover_url;
+    restData.keyToDeleteLogo = keyToDeleteLogo;
+    restData.keyToDeleteCover = keyToDeleteCover;
     formData.append("data", JSON.stringify(restData));
     try {
       const result = await axios.put(
@@ -254,13 +289,21 @@ const EditEventForm = () => {
                 />
                 <MinusCircle
                   className="size-6 translate-y-1/2 cursor-pointer text-destructive"
-                  onClick={removeLogo}
+                  onClick={() => setShowRemoveLogoDialog(true)}
                 />
               </>
             )}
           </div>
           <FormMessage />
         </FormItem>
+        <RemoveImageDialog
+          handleConfirmDelete={() => {
+            setShowRemoveLogoDialog(false);
+            removeLogo();
+          }}
+          isDialogOpen={showRemoveLogoDialog}
+          setIsDialogOpen={setShowRemoveLogoDialog}
+        />
         {/* Cover Image field */}
         <FormItem>
           <div className="my-4 flex items-center gap-x-3">
@@ -289,13 +332,21 @@ const EditEventForm = () => {
                 />
                 <MinusCircle
                   className="size-6 translate-y-1/2 cursor-pointer text-destructive"
-                  onClick={removeCover}
+                  onClick={() => setShowRemoveCoverDialog(true)}
                 />
               </>
             )}
           </div>
           <FormMessage />
         </FormItem>
+        <RemoveImageDialog
+          handleConfirmDelete={() => {
+            setShowRemoveCoverDialog(false);
+            removeCover();
+          }}
+          isDialogOpen={showRemoveCoverDialog}
+          setIsDialogOpen={setShowRemoveCoverDialog}
+        />
         <FormField
           control={control}
           name="description"
@@ -327,5 +378,41 @@ const EditEventForm = () => {
     </Form>
   );
 };
+
+interface RemoveImageDialogProps {
+  handleConfirmDelete: () => void;
+  isDialogOpen: boolean;
+  setIsDialogOpen: (value: boolean) => void;
+}
+
+const RemoveImageDialog: React.FC<RemoveImageDialogProps> = ({
+  handleConfirmDelete,
+  isDialogOpen,
+  setIsDialogOpen,
+}: RemoveImageDialogProps) => (
+  <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+    <DialogContent className="w-11/12 max-w-96">
+      <DialogHeader>
+        <DialogTitle>Are you sure you want to delete this item?</DialogTitle>
+        <DialogDescription>
+          This action cannot be undone. This will permanently delete this Image
+          if you press delete and update the event.
+        </DialogDescription>
+      </DialogHeader>
+      <DialogFooter>
+        <Button
+          variant="outline"
+          className="my-4 border-app-main sm:mx-2 sm:my-0"
+          onClick={() => setIsDialogOpen(false)}
+        >
+          Cancel
+        </Button>
+        <Button className="bg-app-main" onClick={handleConfirmDelete}>
+          Delete
+        </Button>
+      </DialogFooter>
+    </DialogContent>
+  </Dialog>
+);
 
 export default EditEventForm;

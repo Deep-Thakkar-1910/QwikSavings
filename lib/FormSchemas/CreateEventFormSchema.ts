@@ -8,6 +8,8 @@ export const CreateEventFormSchema = z.object({
     .min(1, "Slug is required"),
   title: z.string().optional(),
   description: z.string().min(1, "Description is required"),
+  keyToDeleteLogo: z.string().optional(),
+  keyToDeleteCover: z.string().optional(),
   logo_url: z.any().optional(),
   cover_url: z.any().optional(),
   logoUrl: z.string().optional(),
