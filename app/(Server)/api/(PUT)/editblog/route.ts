@@ -1,10 +1,30 @@
+import { authOptions } from "@/lib/AuthOptions";
 import db from "@/lib/prisma";
 import { deleteFromS3, uploadToS3 } from "@/lib/utilities/AwsConfig";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
 // API handler for creating a blog
 export async function PUT(req: Request) {
+  try {
+    const session = await getServerSession(authOptions);
+
+    if (!session?.user && session?.user.role !== "admin") {
+      return NextResponse.json(
+        { success: false, error: "Unauthorized" },
+        { status: 401 },
+      );
+    }
+  } catch (error) {
+    return NextResponse.json(
+      {
+        success: false,
+        error: "Something went wrong while fetching user details.",
+      },
+      { status: 500 },
+    );
+  }
   const formData = await req.formData();
   const searchParams = new URL(req.url).searchParams;
   const blogId = searchParams.get("blogId");

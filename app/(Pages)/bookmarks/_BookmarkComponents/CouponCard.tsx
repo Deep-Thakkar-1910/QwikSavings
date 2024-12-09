@@ -51,7 +51,7 @@ const CouponCard = ({
       );
 
       // Construct store URL with encoded coupon data
-      const storeUrl = `/stores/${coupon.storeName}?coupon=${encodedCoupon}`;
+      const storeUrl = `/store/${coupon.storeSlug}?coupon=${encodedCoupon}`;
 
       // Redirect to the store page
       router.push(storeUrl);

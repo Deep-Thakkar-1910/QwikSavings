@@ -1381,7 +1381,7 @@ const PopularItems: React.FC<PopularItemProps> = ({
           return (
             <Link
               href={
-                isStore ? `/stores/${item.name}` : `/categories/${item.name}`
+                isStore ? `/store/${item.slug}` : `/categories/${item.slug}`
               }
               key={item.id}
             >

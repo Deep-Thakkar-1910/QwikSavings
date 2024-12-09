@@ -1,13 +1,32 @@
 import db from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/AuthOptions";
 
 export async function PUT(
   req: Request,
   { params }: { params: { festivalId: string } },
 ) {
   const { festivalId } = params;
+  try {
+    const session = await getServerSession(authOptions);
 
+    if (!session?.user && session?.user.role !== "admin") {
+      return NextResponse.json(
+        { success: false, error: "Unauthorized" },
+        { status: 401 },
+      );
+    }
+  } catch (error) {
+    return NextResponse.json(
+      {
+        success: false,
+        error: "Something went wrong while fetching user details.",
+      },
+      { status: 500 },
+    );
+  }
   try {
     await db.$transaction(async (tx) => {
       // Find a festival which is active

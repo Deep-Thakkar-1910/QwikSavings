@@ -144,7 +144,7 @@ const CategoriesSection: React.FC<CategoriesSectionProps> = ({
               <div className="flex w-full items-center justify-between ">
                 <div className="-translate-x-3 -translate-y-2/3 rounded-full bg-white p-1 dark:bg-app-dark-navbar">
                   {coupon.store.logo_url ? (
-                    <Link href={`/stores/${coupon.store.name}`}>
+                    <Link href={`/store/${coupon.store.slug}`}>
                       <Image
                         src={constructS3Url(coupon.store.logo_url)!}
                         alt="Brand logo"
@@ -166,7 +166,7 @@ const CategoriesSection: React.FC<CategoriesSectionProps> = ({
               </p>
               <div className="flex w-full -translate-y-4 items-center justify-between text-muted-foreground">
                 <Link
-                  href={`/stores/${coupon.store.name}`}
+                  href={`/store/${coupon.store.slug}`}
                   className="flex items-start gap-x-4"
                 >
                   <span className="w-4/5">{coupon.store.name}</span>

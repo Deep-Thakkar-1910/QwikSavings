@@ -9,21 +9,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const storeUrls = stores.map((store) => {
     return {
-      url: `${process.env.NEXT_PUBLIC_BASE_URL}/stores/${encodeURIComponent(store.name)}`,
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}/store/${encodeURIComponent(store.slug)}`,
       lastModified: new Date(store.updatedAt),
     };
   });
 
   const categoryUrls = categories.map((category) => {
     return {
-      url: `${process.env.NEXT_PUBLIC_BASE_URL}/categories/${encodeURIComponent(category.name)}`,
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}/categories/${encodeURIComponent(category.slug)}`,
       lastModified: new Date(category.updatedAt),
     };
   });
 
   const eventUrls = evnets.map((event) => {
     return {
-      url: `${process.env.NEXT_PUBLIC_BASE_URL}/events/${encodeURIComponent(event.name)}`,
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}/events/${encodeURIComponent(event.slug)}`,
       lastModified: new Date(event.updatedAt),
     };
   });

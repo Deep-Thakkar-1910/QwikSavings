@@ -68,7 +68,7 @@ const FeaturedStoreSection = () => {
                 key={store.storeId}
               >
                 <Link
-                  href={`/stores/${store.name}`}
+                  href={`/store/${store.slug}`}
                   className="rounded-full bg-popover p-2 shadow-md transition-all duration-200 ease-linear hover:scale-105 hover:shadow-lg lg:ml-2"
                 >
                   <div>

@@ -1,3 +1,4 @@
+import { authOptions } from "@/lib/AuthOptions";
 import {
   MAX_CAROUSEL_COUPON_LIMITS,
   MAX_FLIPPER_COUPON_LIMITS,
@@ -7,12 +8,31 @@ import {
   uploadToS3,
   deleteMultipleFilesFromS3,
 } from "@/lib/utilities/AwsConfig";
+import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
 export async function PUT(
   req: Request,
   context: { params: { couponId: string } },
 ) {
+  try {
+    const session = await getServerSession(authOptions);
+
+    if (!session?.user && session?.user.role !== "admin") {
+      return NextResponse.json(
+        { success: false, error: "Unauthorized" },
+        { status: 401 },
+      );
+    }
+  } catch (error) {
+    return NextResponse.json(
+      {
+        success: false,
+        error: "Something went wrong while fetching user details.",
+      },
+      { status: 500 },
+    );
+  }
   const { couponId } = context.params;
   try {
     const request = await req.formData();

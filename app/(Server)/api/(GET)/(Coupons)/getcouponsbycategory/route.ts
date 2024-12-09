@@ -29,7 +29,7 @@ export const GET = async (req: Request) => {
           select: {
             store: {
               select: {
-                name: true,
+                slug: true,
                 logo_url: true,
               },
             },

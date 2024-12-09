@@ -1,9 +1,29 @@
+import { authOptions } from "@/lib/AuthOptions";
 import db from "@/lib/prisma";
 import { error } from "console";
+import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
 // API handler for creating a blog
 export async function POST(req: Request) {
+  try {
+    const session = await getServerSession(authOptions);
+
+    if (!session?.user && session?.user.role !== "admin") {
+      return NextResponse.json(
+        { success: false, error: "Unauthorized" },
+        { status: 401 },
+      );
+    }
+  } catch (error) {
+    return NextResponse.json(
+      {
+        success: false,
+        error: "Something went wrong while fetching user details.",
+      },
+      { status: 500 },
+    );
+  }
   try {
     const body = await req.json();
     // extracting the fields out of body

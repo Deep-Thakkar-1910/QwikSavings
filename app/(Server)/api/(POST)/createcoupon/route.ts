@@ -1,3 +1,4 @@
+import { authOptions } from "@/lib/AuthOptions";
 import {
   MAX_CAROUSEL_COUPON_LIMITS,
   MAX_FLIPPER_COUPON_LIMITS,
@@ -5,9 +6,28 @@ import {
 import db from "@/lib/prisma";
 import { uploadToS3 } from "@/lib/utilities/AwsConfig";
 import { error } from "console";
+import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
+  try {
+    const session = await getServerSession(authOptions);
+
+    if (!session?.user && session?.user.role !== "admin") {
+      return NextResponse.json(
+        { success: false, error: "Unauthorized" },
+        { status: 401 },
+      );
+    }
+  } catch (error) {
+    return NextResponse.json(
+      {
+        success: false,
+        error: "Something went wrong while fetching user details.",
+      },
+      { status: 500 },
+    );
+  }
   try {
     const request = await req.formData();
     const thumbnail: File | null =

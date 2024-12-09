@@ -4,9 +4,29 @@ import { uploadToS3 } from "@/lib/utilities/AwsConfig";
 import db from "@/lib/prisma";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { MAX_FEATURED_STORE_LIMITS } from "@/lib/Constants";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/AuthOptions";
 
 // API handler to create store
 export async function POST(req: Request) {
+  try {
+    const session = await getServerSession(authOptions);
+
+    if (!session?.user && session?.user.role !== "admin") {
+      return NextResponse.json(
+        { success: false, error: "Unauthorized" },
+        { status: 401 },
+      );
+    }
+  } catch (error) {
+    return NextResponse.json(
+      {
+        success: false,
+        error: "Something went wrong while fetching user details.",
+      },
+      { status: 500 },
+    );
+  }
   const formData = await req.formData();
   const logo = (formData.get("logo") as File) ?? null;
   const request = (await formData.get("data")) as string;

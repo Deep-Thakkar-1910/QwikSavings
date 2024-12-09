@@ -14,6 +14,7 @@ export async function GET() {
         storeId: true,
         logo_url: true,
         name: true,
+        slug: true,
         _count: {
           select: {
             coupons: true,

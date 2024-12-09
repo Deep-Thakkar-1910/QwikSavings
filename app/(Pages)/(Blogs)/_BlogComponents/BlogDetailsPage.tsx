@@ -162,7 +162,7 @@ const PopularItems: React.FC<PopularItemProps> = ({
       <div className="mt-4 flex flex-wrap gap-2">
         {items.map((item) => (
           <Link
-            href={isStore ? `/stores/${item.name}` : `/categories/${item.name}`}
+            href={isStore ? `/store/${item.slug}` : `/categories/${item.slug}`}
             key={item.id}
           >
             <Badge className="bg-neutral-500/40 font-light text-black hover:bg-neutral-500/40 dark:text-slate-200">

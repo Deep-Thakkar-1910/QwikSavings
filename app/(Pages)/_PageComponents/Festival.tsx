@@ -35,10 +35,10 @@ const FestivalStrip: React.FC = () => {
         </p>
 
         <Link
-          href={`/stores/${data.store.name}`}
+          href={`/store/${data.store.slug}`}
           className="flex items-center gap-x-1 break-words text-xs underline sm:text-sm"
         >
-          Visit {data.store.name} <ArrowRight className="size-4" />
+          Visit {data.store.slug} <ArrowRight className="size-4" />
         </Link>
       </div>
       <XIcon onClick={onSetInactive} className="ml-auto cursor-pointer" />

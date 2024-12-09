@@ -22,6 +22,7 @@ export async function GET() {
             store: {
               select: {
                 name: true,
+                slug: true,
                 logo_url: true,
               },
             },
@@ -48,6 +49,7 @@ export async function GET() {
       likeCount: bookmark.coupon.like_count,
       dislikeCount: bookmark.coupon.dislike_count,
       storeName: bookmark.coupon.store.name,
+      storeSlug: bookmark.coupon.store.slug,
       storeLogo: bookmark.coupon.store.logo_url,
       categoryName: bookmark.coupon.category.name,
     }));

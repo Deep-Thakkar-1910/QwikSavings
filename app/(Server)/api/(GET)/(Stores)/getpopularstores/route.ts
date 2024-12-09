@@ -11,7 +11,7 @@ export async function GET() {
         addToPopularStores: true,
       },
       select: {
-        name: true,
+        slug: true,
       },
     });
     return NextResponse.json({ success: true, popularStores }, { status: 200 });

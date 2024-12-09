@@ -7,7 +7,7 @@ type Festival = {
   title: string;
   activated: boolean;
   store: {
-    name: string;
+    slug: string;
   };
 };
 

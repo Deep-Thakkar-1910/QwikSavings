@@ -11,6 +11,7 @@ export interface Coupon {
   likeCount: number;
   dislikeCount: number;
   storeName: string;
+  storeSlug: string;
   storeLogo: string | null;
   categoryName: string;
 }

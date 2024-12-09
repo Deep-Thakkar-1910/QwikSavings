@@ -12,7 +12,7 @@ export async function GET() {
       include: {
         store: {
           select: {
-            name: true,
+            slug: true,
           },
         },
       },

@@ -11,7 +11,7 @@ export async function GET() {
         addToTodaysTopCategories: true,
       },
       select: {
-        name: true,
+        slug: true,
       },
     });
     return NextResponse.json({ success: true, topCategories }, { status: 200 });
