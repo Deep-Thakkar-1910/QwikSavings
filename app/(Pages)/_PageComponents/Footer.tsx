@@ -68,7 +68,7 @@ const Footer = () => {
           <p className="text-md mx-auto text-center text-muted-foreground lg:mx-0 lg:text-start">
             We&apos;ll never share your details. See our{" "}
             <span className="font-semibold text-black dark:font-bold dark:text-muted-foreground">
-              <Link href={"/privacypolicy"}>Privacy Policy.</Link>
+              <Link href={"/privacy-policy"}>Privacy Policy.</Link>
             </span>
           </p>
         </div>

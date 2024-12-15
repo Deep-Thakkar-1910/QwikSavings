@@ -32,19 +32,19 @@ export const FooterNavlinks = {
   Legal: [
     {
       title: "Contact Us",
-      href: "/contactus",
+      href: "/contact-us",
     },
     {
       title: "Advertise With Us",
-      href: "/advertisewithus",
+      href: "/advertise-with-us",
     },
     {
       title: "Privacy Policy",
-      href: "/privacypolicy",
+      href: "/privacy-policy",
     },
     {
       title: "Terms Of Service",
-      href: "/termsofservice",
+      href: "/terms-of-service",
     },
     {
       title: "Sitemap",
