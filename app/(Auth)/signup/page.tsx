@@ -24,11 +24,11 @@ const SignUpPage = () => {
         <p className="mx-auto mt-4 text-center text-xs font-semibold">
           By continuing, I agree to Qwik Saving’s{" "}
           <span className="cursor-pointer text-sm font-bold underline">
-            <Link href={"/"}>Privacy Policy</Link>
+            <Link href={"/privacy-policy"}>Privacy Policy</Link>
           </span>{" "}
           and{" "}
           <span className="cursor-pointer text-sm font-bold underline">
-            <Link href={"/"}>Terms of Use</Link>
+            <Link href={"/terms-of-service"}>Terms of Use</Link>
           </span>
         </p>
       </div>

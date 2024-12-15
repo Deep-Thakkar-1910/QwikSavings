@@ -49,7 +49,9 @@ const SignUpForm = () => {
           description: "Account Creaeted Successfully",
           action: (
             <ToastAction altText="sign In">
-              <Link href={"/signin"}>Check Your Email</Link>
+              <Link href={"https://mail.google.com/"} target="_blank">
+                Check Your Email
+              </Link>
             </ToastAction>
           ),
         });
