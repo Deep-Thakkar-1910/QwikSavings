@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 const IntroSection = () => {
   const isActive = useActiveFestival((state) => state.isActive);
   return (
-    <section className="flex w-full flex-col items-center">
+    <section className="flex w-full flex-col items-center justify-between">
       {/* Image slider and flipper div */}
       <div
         className={cn(
@@ -18,7 +18,7 @@ const IntroSection = () => {
         )}
       >
         <ImageCarousel />
-        <div className="absolute right-0 top-0 p-4">
+        <div className="absolute -right-10 top-0 p-4">
           <CardStackFlipper autoplay />
         </div>
       </div>

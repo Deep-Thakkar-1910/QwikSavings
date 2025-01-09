@@ -61,18 +61,21 @@ const FAQsPage = () => {
           collapsible
         >
           {FAQS.map((faq) => (
-            <AccordionItem
-              value={faq.id.toString()}
-              key={faq.id}
-              className="w-full rounded-md px-4 pt-10"
-            >
-              <AccordionTrigger className="w-full text-start text-lg font-bold sm:text-lg [&>.faq]:size-8">
-                {faq.q}
-              </AccordionTrigger>
-              <AccordionContent className="px-4 pt-4 text-sm sm:text-base">
-                {faq.a}
-              </AccordionContent>
-            </AccordionItem>
+            <>
+              <AccordionItem
+                value={faq.id.toString()}
+                key={faq.id}
+                className="w-full rounded-md px-4 pt-10"
+              >
+                <AccordionTrigger className="w-full text-start text-lg font-bold sm:text-lg [&>.faq]:size-8">
+                  {faq.q}
+                </AccordionTrigger>
+                <AccordionContent className="px-4 pt-4 text-sm sm:text-base">
+                  {faq.a}
+                </AccordionContent>
+              </AccordionItem>
+              <hr className="mt-3"/>
+            </>
           ))}
         </Accordion>
       </div>
