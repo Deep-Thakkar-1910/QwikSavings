@@ -68,7 +68,6 @@ const EventDetails = () => {
     notFound();
   }
 
-  console.log(data);
 
   const dealsLength =
     data?.coupons?.filter(
