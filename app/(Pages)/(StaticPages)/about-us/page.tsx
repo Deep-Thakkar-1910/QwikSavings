@@ -128,7 +128,7 @@ const page = () => {
         </div>
       </div>
       <div className="mx-auto grid w-full place-items-center bg-popover px-4 text-lg sm:px-8 sm:text-2xl lg:px-12 xl:px-8 2xl:px-0">
-        <div className="flex w-full max-w-screen-xl flex-col items-start justify-between pb-8 text-lg lg:ml-2 lg:flex-row lg:justify-center lg:p-5 lg:pt-0">
+        <div className="flex w-full max-w-screen-xl flex-col items-start justify-between pb-8 text-lg lg:ml-2 lg:flex-row lg:justify-center lg:p-5">
           <Image
             className="h-auto w-full mix-blend-multiply dark:mix-blend-normal lg:float-left lg:m-10 lg:my-0 lg:ml-0 lg:w-2/5"
             src={"/AboutusPage/Contact us.jpg"}
