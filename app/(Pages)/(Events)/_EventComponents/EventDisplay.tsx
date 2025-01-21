@@ -89,13 +89,15 @@ const data = [
 const EventDisplay = () => {
   return (
     <div className="mt-6 min-h-[30vh] w-full rounded-md bg-[#f2f0e6] p-4 dark:bg-accent">
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 justify-items-center">
         {data.map((event) => (
           <div
             key={event.id}
-            className="flex max-w-72 flex-col items-center gap-4 rounded-md bg-popover p-4 shadow-md sm:max-w-80 lg:max-w-full py-4"
+            className="flex w-full max-w-[300px] flex-col items-center gap-4 rounded-md bg-popover p-4 shadow-md sm:max-w-[350px] py-4"
           >
-            <h2 className="mt-2 text-lg font-semibold">{event.name}</h2>
+            <h2 className="mt-2 text-center text-lg font-semibold">
+              {event.name}
+            </h2>
             <Image
               src={event.path}
               alt={event.name}
