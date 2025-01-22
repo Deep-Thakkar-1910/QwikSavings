@@ -123,58 +123,62 @@ const CategoriesSection: React.FC<CategoriesSectionProps> = ({
       <div className="flex flex-nowrap place-items-center items-center justify-start gap-x-8 gap-y-6 overflow-x-auto p-8 sm:px-10 md:grid-cols-2 lg:grid lg:grid-cols-4 lg:px-12 xl:px-6 2xl:px-0">
         {data.coupons?.map((coupon: Coupon, index: number) => (
           <div
-            className="flex w-full max-w-72 shrink-0 flex-col items-center rounded-xl bg-popover shadow-lg sm:max-w-80 lg:max-w-full"
+            className="flex w-full max-w-72 shrink-0 flex-col justify-between rounded-xl bg-popover shadow-lg sm:max-w-80 lg:max-w-full min-h-[400px]" // Ensure full height and alignment
             key={index}
           >
-            <div className="flex w-full items-center justify-center rounded-tl-md rounded-tr-md">
-              {coupon.thumbnail_url ? (
-                <Image
-                  src={constructS3Url(coupon.thumbnail_url)!}
-                  width={1920}
-                  height={1080}
-                  alt="Logo"
-                  className="aspect-video h-36 rounded-tl-xl rounded-tr-xl object-cover lg:h-28 xl:h-32"
-                />
-              ) : (
-                <div className="aspect-video h-36 rounded-tl-xl rounded-tr-xl bg-popover lg:h-28 xl:h-32" />
-              )}
-            </div>
+            <div>
+              <div className="flex w-full items-center justify-center rounded-tl-md rounded-tr-md">
+                {coupon.thumbnail_url ? (
+                  <Image
+                    src={constructS3Url(coupon.thumbnail_url)!}
+                    width={1920}
+                    height={1080}
+                    alt="Logo"
+                    className="aspect-video h-36 rounded-tl-xl rounded-tr-xl object-cover lg:h-28 xl:h-32"
+                  />
+                ) : (
+                  <div className="aspect-video h-36 rounded-tl-xl rounded-tr-xl bg-popover lg:h-28 xl:h-32" />
+                )}
+              </div>
 
-            <div className="flex w-full flex-col gap-y-0 p-4 xl:gap-y-1">
-              <div className="flex w-full items-center justify-between ">
-                <div className="-translate-x-3 -translate-y-2/3 rounded-full bg-white p-1 dark:bg-app-dark-navbar">
-                  {coupon.store.logo_url ? (
-                    <Link href={`/store/${coupon.store.slug}`}>
-                      <Image
-                        src={constructS3Url(coupon.store.logo_url)!}
-                        alt="Brand logo"
-                        width={400}
-                        height={400}
-                        className="size-14 cursor-pointer rounded-full object-cover"
-                      />
-                    </Link>
-                  ) : (
-                    <div className="size-14 rounded-full bg-popover" />
-                  )}
+              <div className="flex w-full flex-col gap-y-0 p-4 xl:gap-y-1">
+                <div className="flex w-full items-center justify-between">
+                  <div className="-translate-x-3 -translate-y-2/3 rounded-full bg-white p-1 dark:bg-app-dark-navbar">
+                    {coupon.store.logo_url ? (
+                      <Link href={`/store/${coupon.store.slug}`}>
+                        <Image
+                          src={constructS3Url(coupon.store.logo_url)!}
+                          alt="Brand logo"
+                          width={400}
+                          height={400}
+                          className="size-14 cursor-pointer rounded-full object-cover"
+                        />
+                      </Link>
+                    ) : (
+                      <div className="size-14 rounded-full bg-popover" />
+                    )}
+                  </div>
+                  <Badge className="-translate-y-2/3 bg-blue-400/50 text-black hover:bg-blue-400/50 dark:text-slate-200">
+                    VERIFIED
+                  </Badge>
                 </div>
-                <Badge className="-translate-y-2/3 bg-blue-400/50 text-black hover:bg-blue-400/50 dark:text-slate-200">
-                  VERIFIED
-                </Badge>
+                <p className="-translate-y-8 place-self-start font-semibold first-letter:uppercase">
+                  {coupon.title}
+                </p>
+                <div className="flex w-full -translate-y-4 items-center justify-between text-muted-foreground">
+                  <Link
+                    href={`/store/${coupon.store.slug}`}
+                    className="flex items-start gap-x-4"
+                  >
+                    <span className="w-4/5">{coupon.store.name}</span>
+                  </Link>
+                  <span>
+                    {couponUserCounts[coupon.couponId] || coupon.user_count} Used
+                  </span>
+                </div>
               </div>
-              <p className=" -translate-y-8 place-self-start font-semibold first-letter:uppercase">
-                {coupon.title}
-              </p>
-              <div className="flex w-full -translate-y-4 items-center justify-between text-muted-foreground">
-                <Link
-                  href={`/store/${coupon.store.slug}`}
-                  className="flex items-start gap-x-4"
-                >
-                  <span className="w-4/5">{coupon.store.name}</span>
-                </Link>
-                <span>
-                  {couponUserCounts[coupon.couponId] || coupon.user_count} Used
-                </span>
-              </div>
+            </div>
+            <div className="flex w-full px-4 pb-4">
               {coupon.type === "Deal" && (
                 <Button
                   size={"lg"}
@@ -192,13 +196,11 @@ const CategoriesSection: React.FC<CategoriesSectionProps> = ({
                   }}
                 >
                   <p
-                    className={`place-self-end text-base font-semibold uppercase tracking-widest ${
-                      !coupon.coupon_code && "min-h-5"
-                    }`}
+                    className={`place-self-end text-base font-semibold uppercase tracking-widest ${!coupon.coupon_code && "min-h-5"
+                      }`}
                   >
                     {coupon.coupon_code}
                   </p>
-                  {/* wrapper */}
                   <div className="absolute left-0 top-0 h-full w-full">
                     <div className="polygon-clip h-full w-full rounded-xl bg-app-main transition-all duration-200 ease-linear group-hover:w-11/12">
                       <p className="absolute inset-0 grid place-items-center text-sm font-semibold text-slate-200">
@@ -206,13 +208,13 @@ const CategoriesSection: React.FC<CategoriesSectionProps> = ({
                       </p>
                     </div>
                   </div>
-                  {/* Border overlay */}
                   <div className="pointer-events-none absolute inset-0 rounded-xl border-2 border-dashed border-app-main" />
                 </div>
               )}
             </div>
           </div>
         ))}
+
       </div>
       <Dialog open={isCouponDialogOpen} onOpenChange={setIsCouponDialogOpen}>
         <CouponDialog
@@ -262,90 +264,90 @@ const CouponDialog: React.FC<{
   handleReaction,
   userReaction,
 }) => {
-  const [copied, setCopied] = useState(false);
+    const [copied, setCopied] = useState(false);
 
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(couponCode);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
+    const copyToClipboard = () => {
+      navigator.clipboard.writeText(couponCode);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    };
 
-  return (
-    <DialogContent className="w-11/12 !bg-app-bg-main sm:w-full">
-      <DialogHeader>
-        <DialogTitle>Coupon Details</DialogTitle>
-      </DialogHeader>
-      <div className="flex flex-col items-center gap-4">
-        <div className="grid size-44 place-items-center rounded-full border border-black bg-popover p-1 dark:border-neutral-700">
-          <Image
-            src={
-              constructS3Url(logoUrl) ?? "https://via.placeholder.com/100x100"
-            }
-            width={400}
-            height={400}
-            alt="Store logo"
-            className="aspect-square size-full rounded-full"
-          />
-        </div>
-        <p className="text-lg font-medium">{title}</p>
-        <p className="text font-medium text-muted-foreground">
-          Ends on {expiry}
-        </p>
-        <div className="flex w-full min-w-24 items-center justify-between gap-x-2 rounded-full border border-app-main px-5 py-3 sm:w-1/2">
-          <span className="">{couponCode}</span>
-          <Button
-            size="sm"
-            className="rounded-full bg-app-main p-3 py-5"
-            onClick={copyToClipboard}
-          >
-            {copied ? "Copied!" : "Copy"}
-          </Button>
-        </div>
-        <p className="flex items-center gap-x-1 text-center text-sm text-emerald-900">
-          Copy and Paste Coupon code at{" "}
-          <Link href={ref_link} target="_blank">
-            <span className="flex items-center gap-x-1 text-app-main underline">
-              Product <FaExternalLinkAlt className="size-3" />
-            </span>
-          </Link>
-        </p>
-        <div className="flex w-full min-w-24 items-center justify-between gap-x-2 rounded-full border border-app-main px-5 py-3 sm:w-2/3">
-          <p className="font-medium">Did this work for you? </p>
-          <div className="flex gap-x-2">
-            <div className="rounded-lg border border-app-main p-2">
-              <button
-                onClick={() => handleReaction(couponId, "LIKE")}
-                className="flex items-center gap-2"
-              >
-                <ThumbsUp
-                  className={
-                    userReaction === "LIKE"
-                      ? "size-5 fill-emerald-900 text-emerald-900"
-                      : "size-5 text-emerald-900 transition-colors duration-200 ease-linear hover:fill-emerald-900"
-                  }
-                />
-              </button>
-            </div>
-            <div className="rounded-lg border border-app-main p-2">
-              <button
-                onClick={() => handleReaction(couponId, "DISLIKE")}
-                className="flex items-center gap-2"
-              >
-                <ThumbsDown
-                  className={
-                    userReaction === "DISLIKE"
-                      ? "size-5 fill-app-main text-app-main"
-                      : "size-5 text-app-main transition-colors duration-300 ease-linear hover:fill-app-main"
-                  }
-                />
-              </button>
+    return (
+      <DialogContent className="w-11/12 !bg-app-bg-main sm:w-full">
+        <DialogHeader>
+          <DialogTitle>Coupon Details</DialogTitle>
+        </DialogHeader>
+        <div className="flex flex-col items-center gap-4">
+          <div className="grid size-44 place-items-center rounded-full border border-black bg-popover p-1 dark:border-neutral-700">
+            <Image
+              src={
+                constructS3Url(logoUrl) ?? "https://via.placeholder.com/100x100"
+              }
+              width={400}
+              height={400}
+              alt="Store logo"
+              className="aspect-square size-full rounded-full"
+            />
+          </div>
+          <p className="text-lg font-medium">{title}</p>
+          <p className="text font-medium text-muted-foreground">
+            Ends on {expiry}
+          </p>
+          <div className="flex w-full min-w-24 items-center justify-between gap-x-2 rounded-full border border-app-main px-5 py-3 sm:w-1/2">
+            <span className="">{couponCode}</span>
+            <Button
+              size="sm"
+              className="rounded-full bg-app-main p-3 py-5"
+              onClick={copyToClipboard}
+            >
+              {copied ? "Copied!" : "Copy"}
+            </Button>
+          </div>
+          <p className="flex items-center gap-x-1 text-center text-sm text-emerald-900">
+            Copy and Paste Coupon code at{" "}
+            <Link href={ref_link} target="_blank">
+              <span className="flex items-center gap-x-1 text-app-main underline">
+                Product <FaExternalLinkAlt className="size-3" />
+              </span>
+            </Link>
+          </p>
+          <div className="flex w-full min-w-24 items-center justify-between gap-x-2 rounded-full border border-app-main px-5 py-3 sm:w-2/3">
+            <p className="font-medium">Did this work for you? </p>
+            <div className="flex gap-x-2">
+              <div className="rounded-lg border border-app-main p-2">
+                <button
+                  onClick={() => handleReaction(couponId, "LIKE")}
+                  className="flex items-center gap-2"
+                >
+                  <ThumbsUp
+                    className={
+                      userReaction === "LIKE"
+                        ? "size-5 fill-emerald-900 text-emerald-900"
+                        : "size-5 text-emerald-900 transition-colors duration-200 ease-linear hover:fill-emerald-900"
+                    }
+                  />
+                </button>
+              </div>
+              <div className="rounded-lg border border-app-main p-2">
+                <button
+                  onClick={() => handleReaction(couponId, "DISLIKE")}
+                  className="flex items-center gap-2"
+                >
+                  <ThumbsDown
+                    className={
+                      userReaction === "DISLIKE"
+                        ? "size-5 fill-app-main text-app-main"
+                        : "size-5 text-app-main transition-colors duration-300 ease-linear hover:fill-app-main"
+                    }
+                  />
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </DialogContent>
-  );
-};
+      </DialogContent>
+    );
+  };
 
 const DealDialog: React.FC<{
   logoUrl: string;
@@ -364,64 +366,64 @@ const DealDialog: React.FC<{
   handleReaction,
   userReaction,
 }) => {
-  return (
-    <DialogContent className="w-11/12 !bg-app-bg-main sm:w-full">
-      <DialogHeader>
-        <DialogTitle>About Deal</DialogTitle>
-      </DialogHeader>
-      <div className="flex flex-col items-center gap-4">
-        <div className="grid size-44 place-items-center rounded-full border border-black bg-popover p-1 dark:border-neutral-700">
-          <Image
-            src={
-              constructS3Url(logoUrl) ?? "https://via.placeholder.com/100x100"
-            }
-            width={400}
-            height={400}
-            alt="Store logo"
-            className="aspect-square size-full rounded-full"
-          />
-        </div>
-        <p className="text-lg font-medium">{title}</p>
-        <p className="font-medium text-muted-foreground">Ends on {expiry}</p>
-        <Button className="min-w-40 bg-app-main py-6" asChild>
-          <Link href={ref_link} target="_blank">
-            Go to Deal
-          </Link>
-        </Button>
-        <div className="flex w-full min-w-24 items-center justify-between gap-x-2 rounded-full border border-app-main px-5 py-3 sm:w-2/3">
-          <p className="font-medium">Did this work for you? </p>
-          <div className="flex gap-x-2">
-            <div className="rounded-lg border border-app-main p-2">
-              <button
-                onClick={() => handleReaction(couponId, "LIKE")}
-                className="flex items-center gap-2"
-              >
-                <ThumbsUp
-                  className={
-                    userReaction === "LIKE"
-                      ? "size-5 fill-emerald-900 text-emerald-900"
-                      : "size-5 text-emerald-900 transition-colors duration-200 ease-linear hover:fill-emerald-900"
-                  }
-                />
-              </button>
-            </div>
-            <div className="rounded-lg border border-app-main p-2">
-              <button
-                onClick={() => handleReaction(couponId, "DISLIKE")}
-                className="flex items-center gap-2"
-              >
-                <ThumbsDown
-                  className={
-                    userReaction === "DISLIKE"
-                      ? "size-5 fill-app-main text-app-main"
-                      : "size-5 text-app-main transition-colors duration-300 ease-linear hover:fill-app-main"
-                  }
-                />
-              </button>
+    return (
+      <DialogContent className="w-11/12 !bg-app-bg-main sm:w-full">
+        <DialogHeader>
+          <DialogTitle>About Deal</DialogTitle>
+        </DialogHeader>
+        <div className="flex flex-col items-center gap-4">
+          <div className="grid size-44 place-items-center rounded-full border border-black bg-popover p-1 dark:border-neutral-700">
+            <Image
+              src={
+                constructS3Url(logoUrl) ?? "https://via.placeholder.com/100x100"
+              }
+              width={400}
+              height={400}
+              alt="Store logo"
+              className="aspect-square size-full rounded-full"
+            />
+          </div>
+          <p className="text-lg font-medium">{title}</p>
+          <p className="font-medium text-muted-foreground">Ends on {expiry}</p>
+          <Button className="min-w-40 bg-app-main py-6" asChild>
+            <Link href={ref_link} target="_blank">
+              Go to Deal
+            </Link>
+          </Button>
+          <div className="flex w-full min-w-24 items-center justify-between gap-x-2 rounded-full border border-app-main px-5 py-3 sm:w-2/3">
+            <p className="font-medium">Did this work for you? </p>
+            <div className="flex gap-x-2">
+              <div className="rounded-lg border border-app-main p-2">
+                <button
+                  onClick={() => handleReaction(couponId, "LIKE")}
+                  className="flex items-center gap-2"
+                >
+                  <ThumbsUp
+                    className={
+                      userReaction === "LIKE"
+                        ? "size-5 fill-emerald-900 text-emerald-900"
+                        : "size-5 text-emerald-900 transition-colors duration-200 ease-linear hover:fill-emerald-900"
+                    }
+                  />
+                </button>
+              </div>
+              <div className="rounded-lg border border-app-main p-2">
+                <button
+                  onClick={() => handleReaction(couponId, "DISLIKE")}
+                  className="flex items-center gap-2"
+                >
+                  <ThumbsDown
+                    className={
+                      userReaction === "DISLIKE"
+                        ? "size-5 fill-app-main text-app-main"
+                        : "size-5 text-app-main transition-colors duration-300 ease-linear hover:fill-app-main"
+                    }
+                  />
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </DialogContent>
-  );
-};
+      </DialogContent>
+    );
+  };
