@@ -85,8 +85,7 @@ const OurCodesPage = () => {
               within 48 hours of making your order. Within your email, please
               also include:
               <br />
-              <br />
-              <ul className="ml-6 list-disc">
+              <ul className="list-disc">
                 <li>Your name and email address</li>
                 <li>Name of online store or brands</li>
                 <li>Screenshot of product ordered</li>
@@ -130,20 +129,20 @@ const OurCodesPage = () => {
               All of Our Codes are Hand-Tested By Real People
             </p> */}
           </div>
-          <div className="flex flex-col gap-y-6 text-center text-base tracking-tighter sm:text-justify lg:w-1/2 lg:text-lg">
+          <div className="flex flex-col text-center text-base tracking-tighter sm:text-justify lg:w-1/2 lg:text-lg">
             <p className="mt-6 text-center lg:text-start">
               Our codes guarantee applies specifically to online coupon codes.
               You can recognize these codes in two simple ways:
             </p>
-            <h2 className="mt-6 text-center tracking-normal">- 1. Button</h2>
-            <p className="mt-2">
+            <h2 className="text-center tracking-normal">- 1. Button</h2>
+            <p className="mt-5">
               valid coupon code can be identified by the button used to display
               the code, which will typically say: &quot;Get Code.&quot;
             </p>
-            <h2 className="mt-6 text-center tracking-normal">
+            <h2 className="text-center tracking-normal">
               - 2. Checkout Page
             </h2>
-            <p className="mt-2">
+            <p className="mt-5">
               A coupon code is used to make online purchases and save money. You
               can apply these codes by entering them into a designated box,
               often labeled as &quot;discount code,&quot; at the checkout stage
