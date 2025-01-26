@@ -7,11 +7,11 @@ import { cn } from "@/lib/utils";
 const IntroSection = () => {
   const isActive = useActiveFestival((state) => state.isActive);
   return (
-    <section className="flex w-full flex-col items-center justify-between">
+    <section className="container m-auto">
       {/* Image slider and flipper div */}
       <div
         className={cn(
-          "relative mb-8 mt-4 flex min-h-[10vh] max-w-screen-xl items-start justify-between px-8 lg:mt-0 lg:min-h-[35vh] lg:px-12 xl:px-8 2xl:gap-x-0",
+          "relative mb-8 mt-4 flex min-h-[10vh] items-center justify-between px-8 lg:mt-0 lg:min-h-[35vh] lg:px-12 xl:px-8 2xl:gap-x-0",
           isActive
             ? "mb-[4.5rem] translate-y-10 transition-transform duration-200 ease-linear"
             : "translate-y-0 transition-transform duration-200 ease-linear",
