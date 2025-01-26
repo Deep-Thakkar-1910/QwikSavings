@@ -59,8 +59,8 @@ const ImageCarousel = () => {
       className="w-full rounded-2xl lg:ml-4 lg:w-2/3 xl:ml-0 xl:w-[75.5%] xl:-translate-x-2 2xl:w-[80%] 2xl:-translate-x-8"
       opts={{ loop: true }}
       plugins={[plugin.current]}
-      onMouseEnter={() => plugin.current.stop()}
-      onMouseLeave={() => plugin.current.play()}
+      onMouseEnter={() => plugin?.current?.stop()}
+      onMouseLeave={() => plugin?.current?.play()}
     >
       <CarouselContent className="max-h-44 rounded-2xl sm:max-h-72 xl:max-h-80">
         {data.map((image, index) => (

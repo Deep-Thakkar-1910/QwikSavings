@@ -85,7 +85,7 @@ const DisplayEvents = ({
                   className="h-20 w-20 rounded-full object-cover transition-shadow duration-300 ease-linear group-hover:shadow-md"
                 />
                 <div className="flex flex-col items-start gap-y-2">
-                  <p className="tracking-wide transition-colors duration-300 ease-linear group-hover:text-app-main">
+                  <p className="tracking-normal transition-colors duration-300 ease-linear group-hover:text-app-main">
                     {item.name}
                   </p>
                   <p className="text-sm text-muted-foreground">

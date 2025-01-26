@@ -117,15 +117,14 @@ const DisplayItems = <
                   >
                     <div className="flex w-full items-center justify-start gap-x-3 ">
                       <Link
-                        href={`${
-                          item.storeId
+                        href={`${item.storeId
                             ? isAdminPath
                               ? `/admin/editstore/${item.slug}`
                               : `/store/${item.slug}`
                             : isAdminPath
                               ? `/admin/editcategory/${item.slug}`
                               : `/categories/${item.slug}`
-                        }`}
+                          }`}
                         className="flex flex-grow items-center gap-x-3"
                       >
                         <div className="rounded-full border border-black bg-white p-1 dark:border-white dark:bg-black">
@@ -141,7 +140,7 @@ const DisplayItems = <
                           />
                         </div>
                         <div className="flex flex-col items-start gap-y-1">
-                          <p className="text-sm tracking-wide transition-colors duration-300 ease-linear sm:text-base">
+                          <p className="text-sm tracking-normal transition-colors duration-300 ease-linear sm:text-base">
                             {item.name}
                           </p>
                           <p className="text-xs font-semibold text-muted-foreground sm:text-sm">

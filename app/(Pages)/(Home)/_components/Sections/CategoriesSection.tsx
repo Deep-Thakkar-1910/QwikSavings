@@ -196,7 +196,7 @@ const CategoriesSection: React.FC<CategoriesSectionProps> = ({
                   }}
                 >
                   <p
-                    className={`place-self-end text-base font-semibold uppercase tracking-widest ${!coupon.coupon_code && "min-h-5"
+                    className={`place-self-end text-base font-semibold uppercase tracking-normalst ${!coupon.coupon_code && "min-h-5"
                       }`}
                   >
                     {coupon.coupon_code}

@@ -58,7 +58,7 @@ const OurCodesPage = () => {
             <h2 className="text-lg font-semibold sm:text-xl lg:text-2xl">
               1. Reveal the Coupon
             </h2>
-            <p className="text-start  tracking-wide lg:text-justify">
+            <p className="text-start  tracking-normal lg:text-justify">
               Simply click &apos;Get Code&apos; to reveal the coupon code, then
               proceed to purchase items that meet the offer&apos;s conditions.
               If in doubt, always refer to the condition by clicking on
@@ -69,7 +69,7 @@ const OurCodesPage = () => {
             <h2 className="text-lg font-semibold sm:text-xl lg:text-2xl">
               2. Inactive Code
             </h2>
-            <div className="text-start tracking-wide lg:text-justify">
+            <div className="text-start tracking-normal lg:text-justify">
               <p>
                 If the coupon code doesn&apos;t work, forward your online order
                 confirmation or receipt by email to{" "}
@@ -98,7 +98,7 @@ const OurCodesPage = () => {
             <h2 className="text-lg font-semibold sm:text-xl lg:text-2xl">
               3. Get a FREE Gift Card
             </h2>
-            <p className="text-start  tracking-wide lg:text-justify">
+            <p className="text-start  tracking-normal lg:text-justify">
               Our dedicated customer support team will review your claim within
               ten business days. If it meets the criteria, you&apos;ll receive a
               $10 gift card for the same online store where you made your
@@ -135,12 +135,12 @@ const OurCodesPage = () => {
               Our codes guarantee applies specifically to online coupon codes.
               You can recognize these codes in two simple ways:
             </p>
-            <h2 className="mt-6 text-center tracking-wide">- 1. Button</h2>
+            <h2 className="mt-6 text-center tracking-normal">- 1. Button</h2>
             <p className="mt-2">
               valid coupon code can be identified by the button used to display
               the code, which will typically say: &quot;Get Code.&quot;
             </p>
-            <h2 className="mt-6 text-center tracking-wide">
+            <h2 className="mt-6 text-center tracking-normal">
               - 2. Checkout Page
             </h2>
             <p className="mt-2">
@@ -164,7 +164,7 @@ const OurCodesPage = () => {
         </div>
         <div className="mt-6 flex flex-col items-center justify-end gap-6 lg:flex-row-reverse">
           <div className="flex flex-col gap-y-6 text-center text-lg  tracking-tighter sm:text-justify lg:w-1/2">
-            <h2 className="mt-6 font-medium tracking-wide">1. Deals</h2>
+            <h2 className="mt-6 font-medium tracking-normal">1. Deals</h2>
             <p className="mt-2">
               Deals which do not require a code to secure the saving. These can
               be identified by the &quot;Get Deal&quot; button.
@@ -191,7 +191,7 @@ const OurCodesPage = () => {
             />
           </div>
           <div className="flex flex-col gap-y-6 text-center text-lg  tracking-tighter sm:text-justify lg:w-1/2">
-            <h2 className="mt-6 font-medium tracking-wide">2. Sale Deals</h2>
+            <h2 className="mt-6 font-medium tracking-normal">2. Sale Deals</h2>
             <p className="mt-2">
               Certain &quot;Sale&quot; offers don&apos;t need a code for the
               discount. You&apos;ll notice these by the &quot;Get Deal&quot;
