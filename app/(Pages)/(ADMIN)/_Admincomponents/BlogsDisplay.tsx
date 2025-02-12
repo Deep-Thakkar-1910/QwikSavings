@@ -82,7 +82,7 @@ const BlogsDisplay = ({
           {data.map((blog) => (
             <div
               key={blog.couponId}
-              className="relative flex cursor-pointer flex-col items-center gap-4 rounded-lg bg-accent p-4 dark:bg-background"
+              className="relative flex cursor-pointer flex-col items-center gap-4 rounded-lg bg-accent p-4"
               onClick={() => {
                 router.push(`/admin/editblog/${blog.blogId}`);
               }}
@@ -100,7 +100,7 @@ const BlogsDisplay = ({
                   <p className="text-muted-foreground">No Image</p>
                 </div>
               )}
-              <Badge className="grid  w-20 place-items-center bg-blue-400/50 text-black hover:bg-blue-400/50 dark:text-slate-200">
+              <Badge className="grid  w-20 place-items-center bg-blue-400/50 text-black hover:bg-blue-400/50">
                 {like}
               </Badge>
               <p className="place-self-start">Title: {blog.title}</p>

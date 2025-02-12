@@ -12,7 +12,7 @@ const OurCodesPage = () => {
         <div className="mt-28 flex flex-col items-center justify-end gap-6 text-lg lg:flex-row-reverse">
           <div className="flex w-full flex-col items-center lg:w-1/2">
             <Image
-              src={"/OurCodes/Our-Codes.jpg"}
+              src={"/OurCodes/Hand-Tested-Codes.png"}
               alt="Our code Picture"
               width={5326}
               height={4776}
@@ -120,7 +120,7 @@ const OurCodesPage = () => {
         <div className="mt-6 flex flex-col items-center justify-end gap-6 lg:flex-row-reverse">
           <div className="flex w-full flex-col items-center lg:w-1/2">
             <Image
-              src={"/OurCodes/OurCodesCoupon.png"}
+              src={"/OurCodes/Hand-Tested-Codes.png"}
               alt="Hand Tested Picture"
               width={5326}
               height={4776}
@@ -172,7 +172,7 @@ const OurCodesPage = () => {
           </div>
           <div className="flex w-full flex-col items-center lg:w-1/2">
             <Image
-              src={"/OurCodes/OurCodesCoupon.png"}
+              src={"/OurCodes/Hand-Tested-Codes.png"}
               alt="Hand Tested Picture"
               width={5326}
               height={4776}
@@ -192,7 +192,7 @@ const OurCodesPage = () => {
           </div>
           <div className="flex w-full flex-col items-center lg:w-1/2">
             <Image
-              src={"/OurCodes/OurCodesCoupon.png"}
+              src={"/OurCodes/Hand-Tested-Codes.png"}
               alt="Hand Tested Picture"
               width={5326}
               height={4776}

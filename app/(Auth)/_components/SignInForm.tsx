@@ -141,7 +141,7 @@ const SignInForm = ({ callbackUrl }: SignInFormProps) => {
         </div>
         <Button
           type="button"
-          className="flex w-full items-center gap-x-4 place-self-center rounded-lg bg-slate-100 text-black hover:bg-white hover:shadow-md dark:bg-app-dark dark:text-slate-200 dark:hover:bg-zinc-950"
+          className="flex w-full items-center gap-x-4 place-self-center rounded-lg bg-slate-100 text-black hover:bg-white hover:shadow-md"
           onClick={() => signIn("google")}
         >
           Sign In with Google

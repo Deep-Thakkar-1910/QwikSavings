@@ -17,7 +17,7 @@ const AboutUs = () => {
             Qwik Savings - Shop Smarter, Save Faster
           </h2>
 
-          <div className="text-lg text-gray-600 dark:text-gray-300">
+          <div className="text-lg text-gray-600">
             There is nothing more disappointing than finding an exciting code
             only to find it not working at checkout. So, to save you from this,
             our team at Qwik Savings, works meticulously to ensure that you only
@@ -26,7 +26,7 @@ const AboutUs = () => {
             that you aren&apos;t disappointed.
           </div>
 
-          <div className="text-gray-700 dark:text-gray-400">
+          <div className="text-gray-700">
             We are always ready to go one extra mile to deliver on the promise
             we make to you, so be ensured that all that you see on our platform
             is totally functional. We take pride in our system of delivery, thus
@@ -35,13 +35,13 @@ const AboutUs = () => {
             see on our portal will be delivered to you as it is.
           </div>
 
-          <div className="text-gray-700 dark:text-gray-400">
+          <div className="text-gray-700">
             In a rare instance, where the coupon code falls short, we promise
             you a guaranteed gift card as a part of our acknowledgement of the
             issue and gratitude towards you for sticking alongside us.
           </div>
 
-          <div className="text-gray-700 dark:text-gray-400">
+          <div className="text-gray-700">
             Apart from lending a hand in saving you money through our
             brilliantly cost effective coupon codes, we even guide you towards a
             path of a simplified and hassle free online shopping experience

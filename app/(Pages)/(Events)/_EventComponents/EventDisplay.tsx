@@ -10,7 +10,7 @@ const EventDisplay = () => {
   const { data, error, isLoading } = useGetEvents();
 
   return (
-    <div className="mt-6 min-h-[30vh] w-full rounded-md bg-[#f2f0e6] p-4 dark:bg-accent">
+    <div className="mt-6 min-h-[30vh] w-full rounded-md bg-[#f2f0e6] p-4">
       {isLoading ? (
         <div className="flex h-[30vh] w-full items-center justify-center">
           <Spinner />

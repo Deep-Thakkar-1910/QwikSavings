@@ -18,7 +18,7 @@ const SignUpPage = () => {
         </span>
       </p>
       {/* Form container div */}
-      <div className="flex w-11/12 flex-col items-center justify-center rounded-lg border-2 bg-white p-6 dark:bg-app-dark-navbar sm:w-full ">
+      <div className="flex w-11/12 flex-col items-center justify-center rounded-lg border-2 bg-white p-6 sm:w-full ">
         <SignUpForm />
         {/* Terms and conditions statement */}
         <p className="mx-auto mt-4 text-center text-xs font-semibold">

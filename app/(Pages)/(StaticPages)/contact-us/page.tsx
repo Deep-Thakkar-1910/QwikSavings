@@ -11,7 +11,7 @@ const ContactUsPage = () => {
   return (
     <article className="my-8 flex  flex-col items-center justify-center gap-y-6 px-4 sm:px-8 lg:px-12 ">
       <div
-        className={`mb-2 flex  w-11/12 max-w-screen-lg flex-col items-center justify-center rounded-lg border-2 bg-white p-6 dark:bg-app-dark-navbar md:w-full lg:flex-row lg:items-center lg:justify-between ${isActiveFestival ? "!mb-14" : ""}`}
+        className={`mb-2 flex  w-11/12 max-w-screen-lg flex-col items-center justify-center rounded-lg border-2 bg-white p-6 md:w-full lg:flex-row lg:items-center lg:justify-between ${isActiveFestival ? "!mb-14" : ""}`}
       >
         {/* Form container div */}
         <div className="flex w-full flex-col gap-y-2 lg:w-7/12">

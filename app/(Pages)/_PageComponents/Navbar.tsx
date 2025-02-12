@@ -27,7 +27,7 @@ const Navbar = () => {
       <FestivalStrip />
       <nav
         className={cn(
-          "w-full border-b border-b-app-main bg-white dark:bg-app-dark-navbar",
+          "w-full border-b border-b-app-main bg-white",
           isActive
             ? "translate-y-10 transition-transform duration-200 ease-linear"
             : "translate-y-0 transition-transform duration-200 ease-linear",

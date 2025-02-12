@@ -45,7 +45,7 @@ const MobileSidebar = () => {
       <Sheet open={isOpen} onOpenChange={onClose}>
         <SheetContent
           side="right"
-          className="flex w-10/12 flex-col items-center justify-around border-l bg-white dark:bg-app-dark-navbar sm:w-2/3 md:w-2/5 lg:hidden"
+          className="flex w-10/12 flex-col items-center justify-around border-l bg-white sm:w-2/3 md:w-2/5 lg:hidden"
         >
           <SheetHeader className="w-full ">
             <div className="mx-auto">

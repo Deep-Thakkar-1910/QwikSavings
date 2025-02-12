@@ -14,12 +14,12 @@ const CategoryFilterForBlogs = ({
   setLike,
 }: CategoryFilterForBlogsProps) => {
   const activeBlockStyle =
-    "bg-zinc-900 text-white dark:bg-slate-200 dark:text-black";
-  ("bg-zinc-900 text-white dark:bg-slate-200 dark:text-black");
+    "bg-zinc-900 text-white";
+  ("bg-zinc-900 text-white");
 
   const commonBlockStyle = `flex cursor-pointer items-center justify-center border border-muted-foreground p-2 
   flex cursor-pointer items-center justify-center border border-muted-foreground p-2 font-semibold
-  font-semibold hover:bg-zinc-900 hover:text-white dark:hover:bg-slate-200 dark:hover:text-black transition-colors duration-300 ease-in-out`;
+  font-semibold hover:bg-zinc-900 hover:text-white transition-colors duration-300 ease-in-out`;
 
   return (
     <div className="w-full p-4 sm:px-8 lg:px-12">

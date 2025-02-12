@@ -153,7 +153,7 @@ const FestivalDisplay = ({
         <div className="grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2 md:gap-x-8 lg:grid-cols-4 lg:gap-x-12">
           {data.map((festival) => (
             <div
-              className="relative flex cursor-pointer flex-col items-center gap-4 rounded-lg bg-accent p-4 dark:bg-background"
+              className="relative flex cursor-pointer flex-col items-center gap-4 rounded-lg bg-accent p-4"
               key={festival.festivalId}
               onClick={() => {
                 router.push(`/admin/editfestival/${festival.festivalId}`);

@@ -205,7 +205,7 @@ const CarouselPrevious = React.forwardRef<
       variant={variant}
       size={size}
       className={cn(
-        "group absolute hidden size-6 rounded-full border-none bg-black/20 outline-none ring-0 transition-all duration-300 ease-linear backdrop:blur-sm hover:bg-black/30 dark:bg-white/20 dark:hover:bg-white/30 sm:size-8 lg:flex",
+        "group absolute hidden size-6 rounded-full border-none bg-black/20 outline-none ring-0 transition-all duration-300 ease-linear backdrop:blur-sm hover:bg-black/30 sm:size-8 lg:flex",
         orientation === "horizontal"
           ? "left-4 top-1/2 -translate-y-1/2 sm:left-12"
           : "-top-12 left-1/2 -translate-x-1/2 rotate-90",
@@ -215,7 +215,7 @@ const CarouselPrevious = React.forwardRef<
       onClick={scrollPrev}
       {...props}
     >
-      <ChevronLeft className="size-4 transition-colors duration-200 ease-linear group-hover:text-slate-200 dark:text-black  dark:group-hover:text-white sm:size-6 " />
+      <ChevronLeft className="size-4 transition-colors duration-200 ease-linear group-hover:text-slate-200   sm:size-6 " />
       <span className="sr-only">Previous slide</span>
     </Button>
   );
@@ -234,7 +234,7 @@ const CarouselNext = React.forwardRef<
       variant={variant}
       size={size}
       className={cn(
-        "group absolute hidden size-6 rounded-full border-none bg-black/20 outline-none ring-0 transition-all duration-300 ease-linear backdrop:blur-sm hover:bg-black/30 dark:bg-white/20 dark:hover:bg-white/30 sm:size-8 lg:flex",
+        "group absolute hidden size-6 rounded-full border-none bg-black/20 outline-none ring-0 transition-all duration-300 ease-linear backdrop:blur-sm hover:bg-black/30 sm:size-8 lg:flex",
         orientation === "horizontal"
           ? "right-4 top-1/2 -translate-y-1/2 sm:right-12"
           : "-bottom-12 left-1/2 -translate-x-1/2 rotate-90",
@@ -244,7 +244,7 @@ const CarouselNext = React.forwardRef<
       onClick={scrollNext}
       {...props}
     >
-      <ChevronRight className="size-4 transition-colors duration-200 ease-linear group-hover:text-slate-200 dark:text-black  dark:group-hover:text-white sm:size-6" />
+      <ChevronRight className="size-4 transition-colors duration-200 ease-linear group-hover:text-slate-200   sm:size-6" />
       <span className="sr-only">Next slide</span>
     </Button>
   );

@@ -177,7 +177,7 @@ const SearchBar = () => {
                       href={`/${getTypePlural(suggestion.type)}/${encodeURIComponent(
                         suggestion.name,
                       )}`}
-                      className="block px-4 py-2 hover:bg-primary-foreground dark:hover:bg-primary/50"
+                      className="block px-4 py-2 hover:bg-primary-foreground"
                     >
                       {highlightMatch(suggestion.name, query)}
                     </Link>

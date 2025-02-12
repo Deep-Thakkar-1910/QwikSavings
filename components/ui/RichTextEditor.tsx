@@ -99,7 +99,7 @@ const RichTextEditor = ({
       <EditorContent
         content={value}
         editor={editor}
-        className="border-primary caret-red-600 focus-within:rounded-md focus-within:border dark:caret-app-main"
+        className="border-primary caret-red-600 focus-within:rounded-md focus-within:border"
       />
     </>
   );
@@ -140,7 +140,7 @@ const RichTextEditorToolbar = ({ editor }: { editor: Editor }) => {
         </Toggle>
         <Separator
           orientation="vertical"
-          className="mx-1 h-8 w-px dark:bg-neutral-600"
+          className="mx-1 h-8 w-px"
         />
         <Toggle
           size="sm"
@@ -178,7 +178,7 @@ const RichTextEditorToolbar = ({ editor }: { editor: Editor }) => {
         </Toggle>
         <Separator
           orientation="vertical"
-          className="mx-1 h-8 w-px dark:bg-neutral-600"
+          className="mx-1 h-8 w-px"
         />
         <Toggle
           size="sm"
@@ -207,7 +207,7 @@ const RichTextEditorToolbar = ({ editor }: { editor: Editor }) => {
         </Toggle>
         <Separator
           orientation="vertical"
-          className="h-8 w-px dark:bg-neutral-600"
+          className="h-8 w-px"
         />
 
         <Toggle
@@ -249,7 +249,7 @@ const RichTextEditorToolbar = ({ editor }: { editor: Editor }) => {
 
         <Separator
           orientation="vertical"
-          className="mx-1 h-8 w-px dark:bg-neutral-600"
+          className="mx-1 h-8 w-px"
         />
         <Toggle
           size="sm"

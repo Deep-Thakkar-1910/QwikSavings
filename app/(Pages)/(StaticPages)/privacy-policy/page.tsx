@@ -16,10 +16,10 @@ const PrivacyPolicyPage = () => {
     <section className="mb-10 flex w-full flex-col items-center gap-y-4 lg:items-start lg:gap-y-6">
       <div className="mx-auto mt-2 flex w-full max-w-screen-xl flex-col items-start px-4 sm:px-8 sm:text-2xl lg:mt-0 lg:flex-row lg:px-12 2xl:px-0">
         <div className="flex w-full flex-col gap-5 pl-6 text-lg text-app-main sm:pl-10 lg:sticky lg:top-32 lg:ml-10 lg:h-screen lg:w-1/3 lg:p-5 lg:pl-0">
-          <div className="text-xl font-semibold text-black dark:text-slate-200">
+          <div className="text-xl font-semibold text-black">
             About QwikSavings.com
           </div>
-          <Separator className="h-1 w-full max-w-32 bg-neutral-400 dark:bg-neutral-200 lg:max-w-full" />
+          <Separator className="h-1 w-full max-w-32 bg-neutral-400 lg:max-w-full" />
           <Link
             href="/about-us"
             className="w-fit cursor-pointer text-start duration-300 hover:underline"
@@ -66,10 +66,10 @@ const PrivacyPolicyPage = () => {
           </h2>
 
           <div className="mt-10 flex flex-col gap-2 lg:pl-2">
-            <div className="text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl">
+            <div className="text-start text-xl font-semibold text-black sm:text-2xl">
               Introduction
             </div>
-            <div className="text-start text-zinc-700 dark:text-neutral-300 sm:text-justify">
+            <div className="text-start text-zinc-700 sm:text-justify">
               This policy is to make aware all the visitors of our site about
               what information we collect, use, and store provided by the user.
               By &apos;user&apos; or &apos;you/r&apos; we mean someone who uses
@@ -81,10 +81,10 @@ const PrivacyPolicyPage = () => {
             </div>
           </div>
           <div className="flex flex-col gap-2 lg:pl-2">
-            <div className="mt-4 text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl">
+            <div className="mt-4 text-start text-xl font-semibold text-black sm:text-2xl">
               Privacy Notice
             </div>
-            <div className="flex flex-col gap-3 hyphens-auto text-start text-zinc-700 dark:text-neutral-300 sm:text-justify">
+            <div className="flex flex-col gap-3 hyphens-auto text-start text-zinc-700 sm:text-justify">
               <div>
                 This privacy notice for QwikSavings (
                 <span className="font-semibold">
@@ -114,7 +114,7 @@ const PrivacyPolicyPage = () => {
                   marketing, or events
                 </li>
               </ul>
-              <span className="font-semibold text-zinc-700 dark:text-neutral-300">
+              <span className="font-semibold text-zinc-700">
                 Questions or concerns?
               </span>
               <div>
@@ -134,7 +134,7 @@ const PrivacyPolicyPage = () => {
           <div className="flex flex-col gap-4 lg:pl-2">
             <div className="text-lg font-semibold">Summary of Key Points</div>
 
-            <span className="text-start font-semibold italic text-zinc-700 dark:text-neutral-300 lg:text-justify">
+            <span className="text-start font-semibold italic text-zinc-700 lg:text-justify">
               This summary provides key points from our privacy notice, but you
               can find out more details about any of these topics by clicking
               the link following each key point or by using our table of
@@ -153,7 +153,7 @@ const PrivacyPolicyPage = () => {
               to go directly to our table of contents.
             </span>
 
-            <span className="text-start text-zinc-700 dark:text-neutral-300 lg:text-justify">
+            <span className="text-start text-zinc-700 lg:text-justify">
               <span className="font-semibold">
                 What personal information do we process?
               </span>{" "}
@@ -174,21 +174,21 @@ const PrivacyPolicyPage = () => {
               to learn more
             </span>
 
-            <span className="text-start text-zinc-700 dark:text-neutral-300 lg:text-justify">
+            <span className="text-start text-zinc-700 lg:text-justify">
               <span className="font-semibold">
                 Do we process any sensitive personal information?
               </span>
               We do not process sensitive personal information.
             </span>
 
-            <span className="text-start text-zinc-700 dark:text-neutral-300 lg:text-justify">
+            <span className="text-start text-zinc-700 lg:text-justify">
               <span className="font-semibold">
                 Do we receive any information from third parties?
               </span>
               We do not receive any information from third parties.
             </span>
 
-            <span className="text-start text-zinc-700 dark:text-neutral-300 lg:text-justify">
+            <span className="text-start text-zinc-700 lg:text-justify">
               <span className="font-semibold">
                 How do we process your information?
               </span>
@@ -210,7 +210,7 @@ const PrivacyPolicyPage = () => {
               to learn more.
             </span>
 
-            <span className="text-start text-zinc-700 dark:text-neutral-300 lg:text-justify">
+            <span className="text-start text-zinc-700 lg:text-justify">
               <span className="font-semibold">
                 In what situations and with which parties do we share personal
                 information?
@@ -230,7 +230,7 @@ const PrivacyPolicyPage = () => {
               to learn more.
             </span>
 
-            <span className="text-start text-zinc-700 dark:text-neutral-300 lg:text-justify">
+            <span className="text-start text-zinc-700 lg:text-justify">
               <span className="font-semibold">
                 How do we keep your information safe?
               </span>
@@ -255,7 +255,7 @@ const PrivacyPolicyPage = () => {
               to learn more.
             </span>
 
-            <span className="text-start text-zinc-700 dark:text-neutral-300 lg:text-justify">
+            <span className="text-start text-zinc-700 lg:text-justify">
               <span className="font-semibold">What are your rights?</span>
               Depending on where you are located geographically, the applicable
               privacy law may mean you have certain rights regarding your
@@ -273,7 +273,7 @@ const PrivacyPolicyPage = () => {
               to learn more.
             </span>
 
-            <span className="text-start text-zinc-700 dark:text-neutral-300 lg:text-justify">
+            <span className="text-start text-zinc-700 lg:text-justify">
               <span className="font-semibold">
                 How do you exercise your rights?
               </span>
@@ -290,7 +290,7 @@ const PrivacyPolicyPage = () => {
               applicable data protection laws.
             </span>
 
-            <span className="text-start text-zinc-700 dark:text-neutral-300 lg:text-justify">
+            <span className="text-start text-zinc-700 lg:text-justify">
               Want to learn more about what qwiksavings does with any
               information we collect? Click{" "}
               <ScrollToLink
@@ -308,7 +308,7 @@ const PrivacyPolicyPage = () => {
           </div>
           <div className="mt-10 flex  flex-col gap-10 lg:pl-2">
             <div
-              className="text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl"
+              className="text-start text-xl font-semibold text-black sm:text-2xl"
               id="q"
             >
               TABLE OF CONTENTS
@@ -459,9 +459,9 @@ const PrivacyPolicyPage = () => {
                 </ScrollToLink>
               </li>
             </ol>
-            <div className="flex flex-col gap-2 text-justify text-zinc-700 dark:text-neutral-300">
+            <div className="flex flex-col gap-2 text-justify text-zinc-700">
               <span
-                className="mt-4 text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl"
+                className="mt-4 text-start text-xl font-semibold text-black sm:text-2xl"
                 id="q1"
               >
                 1. WHAT INFORMATION DO WE COLLECT?
@@ -471,7 +471,7 @@ const PrivacyPolicyPage = () => {
                   Personal information you disclose to us
                 </span>
                 <span>
-                  <span className="font-semibold italic text-zinc-700 dark:text-neutral-300">
+                  <span className="font-semibold italic text-zinc-700">
                     {" "}
                     In Short :{" "}
                   </span>
@@ -485,7 +485,7 @@ const PrivacyPolicyPage = () => {
                   </i>
                 </span>
                 <span>
-                  <span className="font-semibold text-zinc-700 dark:text-neutral-300">
+                  <span className="font-semibold text-zinc-700">
                     Personal Information Provided by You :{" "}
                   </span>
                   The personal information that we collect depends on the
@@ -499,7 +499,7 @@ const PrivacyPolicyPage = () => {
                   </ul>
                 </span>
                 <span>
-                  <span className="font-semibold italic text-zinc-700 dark:text-neutral-300">
+                  <span className="font-semibold italic text-zinc-700">
                     Sensitive Information.
                   </span>
                   We do not process sensitive information.
@@ -510,12 +510,12 @@ const PrivacyPolicyPage = () => {
                   to such personal information.
                 </span>
               </div>
-              <div className="flex flex-col gap-4 text-zinc-700 dark:text-neutral-300">
+              <div className="flex flex-col gap-4 text-zinc-700">
                 <span className="text-md font-semibold ">
                   Information automatically collected
                 </span>
                 <span>
-                  <span className="font-semibold italic text-zinc-700 dark:text-neutral-300">
+                  <span className="font-semibold italic text-zinc-700">
                     {" "}
                     In Short :{" "}
                   </span>{" "}
@@ -586,16 +586,16 @@ const PrivacyPolicyPage = () => {
               </div>
             </div>
           </div>
-          <div className="flex flex-col gap-2 text-zinc-700 dark:text-neutral-300">
+          <div className="flex flex-col gap-2 text-zinc-700">
             <span
-              className="mt-4 text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl"
+              className="mt-4 text-start text-xl font-semibold text-black sm:text-2xl"
               id="q2"
             >
               2. HOW DO WE PROCESS YOUR INFORMATION?
             </span>
             <div className="flex flex-col gap-4">
               <span>
-                <span className="font-semibold italic text-zinc-700 dark:text-neutral-300">
+                <span className="font-semibold italic text-zinc-700">
                   {" "}
                   In Short :{" "}
                 </span>
@@ -607,12 +607,12 @@ const PrivacyPolicyPage = () => {
                   process your information for other purposes with your consent.
                 </i>
               </span>
-              <span className="font-semibold text-zinc-700 dark:text-neutral-300">
+              <span className="font-semibold text-zinc-700">
                 We process your personal information for a variety of reasons,
                 depending on how you interact with our Services, including:
               </span>
               <span>
-                <span className="font-semibold text-zinc-700 dark:text-neutral-300">
+                <span className="font-semibold text-zinc-700">
                   To save or protect an individual&apos;s vital interest.{" "}
                 </span>
                 We may process your information when necessary to save or
@@ -621,16 +621,16 @@ const PrivacyPolicyPage = () => {
               </span>
             </div>
           </div>
-          <div className="flex flex-col gap-2 text-zinc-700 dark:text-neutral-300">
+          <div className="flex flex-col gap-2 text-zinc-700">
             <span
-              className="mt-4 text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl"
+              className="mt-4 text-start text-xl font-semibold text-black sm:text-2xl"
               id="q3"
             >
               3. WHAT LEGAL BASES DO WE RELY ON TO PROCESS YOUR INFORMATION?
             </span>
             <div className="flex flex-col gap-4">
               <span>
-                <span className="font-semibold italic text-zinc-700 dark:text-neutral-300">
+                <span className="font-semibold italic text-zinc-700">
                   {" "}
                   In Short :{" "}
                 </span>
@@ -645,7 +645,7 @@ const PrivacyPolicyPage = () => {
                 </i>
               </span>
               <div className="flex flex-col gap-4">
-                <span className="font-semibold italic text-zinc-700 underline dark:text-neutral-300">
+                <span className="font-semibold italic text-zinc-700 underline">
                   If you are located in the EU or UK, this section applies to
                   you.
                 </span>
@@ -659,7 +659,7 @@ const PrivacyPolicyPage = () => {
                 <ul className="ml-5 flex list-disc flex-col gap-2">
                   <li>
                     <span>
-                      <span className="font-semibold text-zinc-700 dark:text-neutral-300">
+                      <span className="font-semibold text-zinc-700">
                         Consent.{" "}
                       </span>
                       We may process your information if you have given us
@@ -681,7 +681,7 @@ const PrivacyPolicyPage = () => {
                   </li>
                   <li>
                     <span>
-                      <span className="font-semibold text-zinc-700 dark:text-neutral-300">
+                      <span className="font-semibold text-zinc-700">
                         Legal Obligations.{" "}
                       </span>
                       We may process your information where we believe it is
@@ -694,7 +694,7 @@ const PrivacyPolicyPage = () => {
                   </li>
                   <li>
                     <span>
-                      <span className="font-semibold text-zinc-700 dark:text-neutral-300">
+                      <span className="font-semibold text-zinc-700">
                         {" "}
                         Vital Interests.{" "}
                       </span>
@@ -707,7 +707,7 @@ const PrivacyPolicyPage = () => {
                 </ul>
               </div>
               <div className="flex flex-col gap-4">
-                <span className="font-semibold italic text-zinc-700 underline dark:text-neutral-300">
+                <span className="font-semibold italic text-zinc-700 underline">
                   If you are located in Canada, this section applies to you.
                 </span>
                 <span>
@@ -792,16 +792,16 @@ const PrivacyPolicyPage = () => {
               </div>
             </div>
           </div>
-          <div className="flex flex-col gap-2 text-zinc-700 dark:text-neutral-300">
+          <div className="flex flex-col gap-2 text-zinc-700">
             <span
-              className="mt-4 text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl"
+              className="mt-4 text-start text-xl font-semibold text-black sm:text-2xl"
               id="q4"
             >
               4. WHEN AND WITH WHOM DO WE SHARE YOUR PERSONAL INFORMATION?
             </span>
             <div className="flex flex-col gap-4">
               <span>
-                <span className="font-semibold italic text-zinc-700 dark:text-neutral-300">
+                <span className="font-semibold italic text-zinc-700">
                   {" "}
                   In Short :{" "}
                 </span>
@@ -816,7 +816,7 @@ const PrivacyPolicyPage = () => {
               <ul className="ml-5 flex list-disc flex-col gap-2">
                 <li>
                   <span>
-                    <span className="font-semibold text-zinc-700 dark:text-neutral-300">
+                    <span className="font-semibold text-zinc-700">
                       Business Transfers.{" "}
                     </span>
                     We may share or transfer your information in connection
@@ -829,15 +829,15 @@ const PrivacyPolicyPage = () => {
             </div>
           </div>
           <div
-            className="flex flex-col gap-2 text-zinc-700 dark:text-neutral-300"
+            className="flex flex-col gap-2 text-zinc-700"
             id="q5"
           >
-            <span className="mt-4 text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl">
+            <span className="mt-4 text-start text-xl font-semibold text-black sm:text-2xl">
               5. WHAT IS OUR STANCE ON THIRD-PARTY WEBSITES?
             </span>
             <div className="flex flex-col gap-4">
               <span>
-                <span className="font-semibold italic text-zinc-700 dark:text-neutral-300">
+                <span className="font-semibold italic text-zinc-700">
                   {" "}
                   In Short :{" "}
                 </span>
@@ -870,15 +870,15 @@ const PrivacyPolicyPage = () => {
             </div>
           </div>
           <div
-            className="flex flex-col gap-2 text-zinc-700 dark:text-neutral-300"
+            className="flex flex-col gap-2 text-zinc-700"
             id="q6"
           >
-            <span className="mt-4 text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl">
+            <span className="mt-4 text-start text-xl font-semibold text-black sm:text-2xl">
               6. DO WE USE COOKIES AND OTHER TRACKING TECHNOLOGIES?
             </span>
             <div className="flex flex-col gap-4">
               <span>
-                <span className="font-semibold italic text-zinc-700 dark:text-neutral-300">
+                <span className="font-semibold italic text-zinc-700">
                   {" "}
                   In Short :{" "}
                 </span>
@@ -895,16 +895,16 @@ const PrivacyPolicyPage = () => {
               </span>
             </div>
           </div>
-          <div className="flex flex-col gap-2 text-zinc-700 dark:text-neutral-300">
+          <div className="flex flex-col gap-2 text-zinc-700">
             <span
-              className="mt-4 text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl"
+              className="mt-4 text-start text-xl font-semibold text-black sm:text-2xl"
               id="q7"
             >
               7. HOW LONG DO WE KEEP YOUR INFORMATION?
             </span>
             <div className="flex flex-col gap-4">
               <span>
-                <span className="font-semibold italic text-zinc-700 dark:text-neutral-300">
+                <span className="font-semibold italic text-zinc-700">
                   {" "}
                   In Short :{" "}
                 </span>
@@ -929,16 +929,16 @@ const PrivacyPolicyPage = () => {
               </span>
             </div>
           </div>
-          <div className="flex flex-col gap-2 text-zinc-700 dark:text-neutral-300">
+          <div className="flex flex-col gap-2 text-zinc-700">
             <span
-              className="mt-4 text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl"
+              className="mt-4 text-start text-xl font-semibold text-black sm:text-2xl"
               id="q8"
             >
               8. HOW DO WE KEEP YOUR INFORMATION SAFE?
             </span>
             <div className="flex flex-col gap-4">
               <span>
-                <span className="font-semibold italic text-zinc-700 dark:text-neutral-300">
+                <span className="font-semibold italic text-zinc-700">
                   {" "}
                   In Short :{" "}
                 </span>
@@ -964,16 +964,16 @@ const PrivacyPolicyPage = () => {
               </span>
             </div>
           </div>
-          <div className="flex flex-col gap-2 text-zinc-700 dark:text-neutral-300">
+          <div className="flex flex-col gap-2 text-zinc-700">
             <span
-              className="mt-4 text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl"
+              className="mt-4 text-start text-xl font-semibold text-black sm:text-2xl"
               id="q9"
             >
               9. WHAT ARE YOUR PRIVACY RIGHTS?
             </span>
             <div className="flex flex-col gap-4">
               <span>
-                <span className="font-semibold italic text-zinc-700 dark:text-neutral-300">
+                <span className="font-semibold italic text-zinc-700">
                   {" "}
                   In Short :{" "}
                 </span>
@@ -1096,9 +1096,9 @@ const PrivacyPolicyPage = () => {
               </span>
             </div>
           </div>
-          <div className="flex flex-col gap-2 text-zinc-700 dark:text-neutral-300">
+          <div className="flex flex-col gap-2 text-zinc-700">
             <span
-              className="mt-4 text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl"
+              className="mt-4 text-start text-xl font-semibold text-black sm:text-2xl"
               id="q10"
             >
               10. CONTROLS FOR DO-NOT-TRACK FEATURES
@@ -1119,16 +1119,16 @@ const PrivacyPolicyPage = () => {
               </span>
             </div>
           </div>
-          <div className="flex flex-col gap-2 text-zinc-700 dark:text-neutral-300">
+          <div className="flex flex-col gap-2 text-zinc-700">
             <span
-              className="mt-4 text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl"
+              className="mt-4 text-start text-xl font-semibold text-black sm:text-2xl"
               id="q11"
             >
               11. DO CALIFORNIA RESIDENTS HAVE SPECIFIC PRIVACY RIGHTS?
             </span>
             <div className="flex flex-col gap-5">
               <span>
-                <span className="font-semibold italic text-zinc-700 dark:text-neutral-300">
+                <span className="font-semibold italic text-zinc-700">
                   {" "}
                   In Short :{" "}
                 </span>
@@ -1187,174 +1187,174 @@ const PrivacyPolicyPage = () => {
               </span>
             </div>
             <div className="tablebox flex flex-col gap-4">
-              <span className="text-lg font-semibold text-zinc-700 dark:text-neutral-300">
+              <span className="text-lg font-semibold text-zinc-700">
                 What categories of personal information do we collect?
               </span>
               <span className="">
                 We have collected the following categories of personal
                 information in the past twelve (12) months:
               </span>
-              <Table className="w-full border-black bg-popover dark:border-slate-200">
-                <TableHeader className="border border-black dark:border-slate-200">
-                  <TableRow className="border border-black text-center dark:border-slate-200">
-                    <TableHead className="w-[30%] border-l border-black dark:border-slate-200 lg:p-5">
+              <Table className="w-full border-black bg-popover">
+                <TableHeader className="border border-black">
+                  <TableRow className="border border-black text-center">
+                    <TableHead className="w-[30%] border-l border-black lg:p-5">
                       Category
                     </TableHead>
-                    <TableHead className="w-[50%] border-l border-black dark:border-slate-200 lg:p-5">
+                    <TableHead className="w-[50%] border-l border-black lg:p-5">
                       Examples
                     </TableHead>
-                    <TableHead className="w-[20%] border-l border-black dark:border-slate-200 lg:p-5">
+                    <TableHead className="w-[20%] border-l border-black lg:p-5">
                       Collected
                     </TableHead>
                   </TableRow>
                 </TableHeader>
-                <TableBody className="border border-black text-start dark:border-slate-200">
-                  <TableRow className="border border-black dark:border-slate-200">
-                    <TableCell className="border-l border-black dark:border-slate-200 lg:p-5">
+                <TableBody className="border border-black text-start">
+                  <TableRow className="border border-black">
+                    <TableCell className="border-l border-black lg:p-5">
                       A. Identifiers
                     </TableCell>
-                    <TableCell className="border-l border-black p-2 dark:border-slate-200 lg:p-5">
+                    <TableCell className="border-l border-black p-2 lg:p-5">
                       Contact details, such as real name, alias, postal address,
                       telephone or mobile contact number, unique personal
                       identifier, online identifier, Internet Protocol address,
                       email address, and account name
                     </TableCell>
-                    <TableCell className="border-l border-black p-2 text-center dark:border-slate-200 lg:p-5">
+                    <TableCell className="border-l border-black p-2 text-center lg:p-5">
                       NO
                     </TableCell>
                   </TableRow>
-                  <TableRow className="border border-black dark:border-slate-200">
-                    <TableCell className="border-l border-black p-2 dark:border-slate-200 lg:p-5">
+                  <TableRow className="border border-black">
+                    <TableCell className="border-l border-black p-2 lg:p-5">
                       B. Personal information categories listed in the
                       California Customer Records statute
                     </TableCell>
-                    <TableCell className="border-l border-black p-2 dark:border-slate-200 lg:p-5">
+                    <TableCell className="border-l border-black p-2 lg:p-5">
                       Name, contact information, education, employment,
                       employment history, and financial information
                     </TableCell>
-                    <TableCell className="border-l border-black p-2 text-center dark:border-slate-200 lg:p-5">
+                    <TableCell className="border-l border-black p-2 text-center lg:p-5">
                       NO
                     </TableCell>
                   </TableRow>
-                  <TableRow className="borde dark:border-slate-200r border-black">
-                    <TableCell className="border-l border-black p-2 dark:border-slate-200 lg:p-5">
+                  <TableRow className="border border-black">
+                    <TableCell className="border-l border-black p-2 lg:p-5">
                       C. Protected classification characteristics under
                       California or federal law
                     </TableCell>
-                    <TableCell className="border-l border-black p-2 dark:border-slate-200 lg:p-5">
+                    <TableCell className="border-l border-black p-2 lg:p-5">
                       Gender and date of birth
                     </TableCell>
-                    <TableCell className="border-l border-black p-2 text-center dark:border-slate-200 lg:p-5">
+                    <TableCell className="border-l border-black p-2 text-center lg:p-5">
                       NO
                     </TableCell>
                   </TableRow>
-                  <TableRow className="border border-black dark:border-slate-200">
-                    <TableCell className="border-l border-black p-2 dark:border-slate-200 lg:p-5">
+                  <TableRow className="border border-black">
+                    <TableCell className="border-l border-black p-2 lg:p-5">
                       D. Commercial information
                     </TableCell>
-                    <TableCell className="border-l border-black p-2 dark:border-slate-200 lg:p-5">
+                    <TableCell className="border-l border-black p-2 lg:p-5">
                       Transaction information, purchase history, financial
                       details, and payment information
                     </TableCell>
-                    <TableCell className="border-l border-black p-2 text-center dark:border-slate-200 lg:p-5">
+                    <TableCell className="border-l border-black p-2 text-center lg:p-5">
                       NO
                     </TableCell>
                   </TableRow>
-                  <TableRow className="border border-black dark:border-slate-200">
-                    <TableCell className="border-l border-black p-2 dark:border-slate-200 lg:p-5">
+                  <TableRow className="border border-black">
+                    <TableCell className="border-l border-black p-2 lg:p-5">
                       E. Biometric information
                     </TableCell>
-                    <TableCell className="border-l border-black p-2 dark:border-slate-200 lg:p-5">
+                    <TableCell className="border-l border-black p-2 lg:p-5">
                       Fingerprints and voiceprints
                     </TableCell>
-                    <TableCell className="border-l border-black p-2 text-center dark:border-slate-200 lg:p-5">
+                    <TableCell className="border-l border-black p-2 text-center lg:p-5">
                       NO
                     </TableCell>
                   </TableRow>
-                  <TableRow className="border border-black dark:border-slate-200">
-                    <TableCell className="border-l border-black p-2 dark:border-slate-200 lg:p-5">
+                  <TableRow className="border border-black">
+                    <TableCell className="border-l border-black p-2 lg:p-5">
                       F. Internet or other similar network activity
                     </TableCell>
-                    <TableCell className="border-l border-black p-2 dark:border-slate-200 lg:p-5">
+                    <TableCell className="border-l border-black p-2 lg:p-5">
                       Browsing history, search history, online behavior,
                       interest data, and interactions with our and other
                       websites, applications, systems, and advertisements
                     </TableCell>
-                    <TableCell className="border-l border-black p-2 text-center dark:border-slate-200 lg:p-5">
+                    <TableCell className="border-l border-black p-2 text-center lg:p-5">
                       NO
                     </TableCell>
                   </TableRow>
-                  <TableRow className="border border-black dark:border-slate-200">
-                    <TableCell className="border-l border-black p-2 dark:border-slate-200 lg:p-5">
+                  <TableRow className="border border-black">
+                    <TableCell className="border-l border-black p-2 lg:p-5">
                       G. Geolocation data
                     </TableCell>
-                    <TableCell className="border-l border-black p-2 dark:border-slate-200 lg:p-5">
+                    <TableCell className="border-l border-black p-2 lg:p-5">
                       Device location
                     </TableCell>
-                    <TableCell className="border-l border-black p-2 text-center dark:border-slate-200 lg:p-5">
+                    <TableCell className="border-l border-black p-2 text-center lg:p-5">
                       NO
                     </TableCell>
                   </TableRow>
-                  <TableRow className="border border-black dark:border-slate-200">
-                    <TableCell className="border-l border-black p-2 dark:border-slate-200 lg:p-5">
+                  <TableRow className="border border-black">
+                    <TableCell className="border-l border-black p-2 lg:p-5">
                       H. Audio, electronic, visual, thermal, olfactory, or
                       similar information
                     </TableCell>
-                    <TableCell className="border-l border-black p-2 dark:border-slate-200 lg:p-5">
+                    <TableCell className="border-l border-black p-2 lg:p-5">
                       Images and audio, video or call recordings created in
                       connection with our business activities
                     </TableCell>
-                    <TableCell className="border-l border-black p-2 text-center dark:border-slate-200 lg:p-5">
+                    <TableCell className="border-l border-black p-2 text-center lg:p-5">
                       NO
                     </TableCell>
                   </TableRow>
-                  <TableRow className="border border-black dark:border-slate-200">
-                    <TableCell className="border-l border-black p-2 dark:border-slate-200 lg:p-5">
+                  <TableRow className="border border-black">
+                    <TableCell className="border-l border-black p-2 lg:p-5">
                       I. Professional or employment-related information
                     </TableCell>
-                    <TableCell className="border-l border-black p-2 dark:border-slate-200 lg:p-5">
+                    <TableCell className="border-l border-black p-2 lg:p-5">
                       Business contact details in order to provide you our
                       Services at a business level or job title, work history,
                       and professional qualifications if you apply for a job
                       with us
                     </TableCell>
-                    <TableCell className="border-l border-black p-2 text-center dark:border-slate-200 lg:p-5">
+                    <TableCell className="border-l border-black p-2 text-center lg:p-5">
                       NO
                     </TableCell>
                   </TableRow>
-                  <TableRow className="border border-black dark:border-slate-200">
-                    <TableCell className="border-l border-black p-2 dark:border-slate-200 lg:p-5">
+                  <TableRow className="border border-black">
+                    <TableCell className="border-l border-black p-2 lg:p-5">
                       J. Education Information
                     </TableCell>
-                    <TableCell className="border-l border-black p-2 dark:border-slate-200 lg:p-5">
+                    <TableCell className="border-l border-black p-2 lg:p-5">
                       Student records and directory information
                     </TableCell>
-                    <TableCell className="border-l border-black p-2 text-center dark:border-slate-200 lg:p-5">
+                    <TableCell className="border-l border-black p-2 text-center lg:p-5">
                       NO
                     </TableCell>
                   </TableRow>
-                  <TableRow className="border border-black dark:border-slate-200">
-                    <TableCell className="border-l border-black p-2 dark:border-slate-200 lg:p-5">
+                  <TableRow className="border border-black">
+                    <TableCell className="border-l border-black p-2 lg:p-5">
                       K. Inferences drawn from other personal information
                     </TableCell>
-                    <TableCell className="border-l border-black p-2 dark:border-slate-200 lg:p-5">
+                    <TableCell className="border-l border-black p-2 lg:p-5">
                       Inferences drawn from any of the collected personal
                       information listed above to create a profile or summary
                       about, for example, an individual&apos;s preferences and
                       characteristics
                     </TableCell>
-                    <TableCell className="border-l border-black p-2 text-center dark:border-slate-200 lg:p-5">
+                    <TableCell className="border-l border-black p-2 text-center lg:p-5">
                       NO
                     </TableCell>
                   </TableRow>
-                  <TableRow className="border border-black dark:border-slate-200">
-                    <TableCell className="border-l border-black p-2 dark:border-slate-200 lg:p-5">
+                  <TableRow className="border border-black">
+                    <TableCell className="border-l border-black p-2 lg:p-5">
                       L. Sensitive Personal Information
                     </TableCell>
-                    <TableCell className="border-l border-black p-2 text-center dark:border-slate-200 lg:p-5">
+                    <TableCell className="border-l border-black p-2 text-center lg:p-5">
                       -
                     </TableCell>
-                    <TableCell className="border-l border-black p-2 text-center dark:border-slate-200 lg:p-5">
+                    <TableCell className="border-l border-black p-2 text-center lg:p-5">
                       NO
                     </TableCell>
                   </TableRow>
@@ -1375,7 +1375,7 @@ const PrivacyPolicyPage = () => {
               </ul>
             </div>
             <div className="flex flex-col gap-2">
-              <span className="text-lg font-semibold text-zinc-700 dark:text-neutral-300">
+              <span className="text-lg font-semibold text-zinc-700">
                 How do we use and share your personal information?
               </span>
               <span>
@@ -1399,7 +1399,7 @@ const PrivacyPolicyPage = () => {
               </span>
             </div>
             <div className="flex flex-col gap-2">
-              <span className="text-lg font-semibold text-zinc-700 dark:text-neutral-300">
+              <span className="text-lg font-semibold text-zinc-700">
                 Will your information be shared with anyone else?
               </span>
               <span>
@@ -1422,7 +1422,7 @@ const PrivacyPolicyPage = () => {
               </span>
             </div>
             <div className="flex flex-col gap-5">
-              <span className="text-lg font-semibold text-zinc-700 dark:text-neutral-300">
+              <span className="text-lg font-semibold text-zinc-700">
                 Your rights with respect to your personal data
               </span>
               <div className="flex flex-col gap-2">
@@ -1578,16 +1578,16 @@ const PrivacyPolicyPage = () => {
             </div>
           </div>
 
-          <div className="flex flex-col gap-2 text-zinc-700 dark:text-neutral-300">
+          <div className="flex flex-col gap-2 text-zinc-700">
             <span
-              className="mt-4 text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl"
+              className="mt-4 text-start text-xl font-semibold text-black sm:text-2xl"
               id="q12"
             >
               12. DO WE MAKE UPDATES TO THIS NOTICE?
             </span>
             <div className="flex flex-col gap-4">
               <span>
-                <span className="font-semibold italic text-zinc-700 dark:text-neutral-300">
+                <span className="font-semibold italic text-zinc-700">
                   {" "}
                   In Short :{" "}
                 </span>
@@ -1609,10 +1609,10 @@ const PrivacyPolicyPage = () => {
             </div>
           </div>
           <div
-            className="mb-10 flex flex-col gap-2 text-zinc-700 dark:text-neutral-300"
+            className="mb-10 flex flex-col gap-2 text-zinc-700"
             id="q13"
           >
-            <span className="mt-4 text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl">
+            <span className="mt-4 text-start text-xl font-semibold text-black sm:text-2xl">
               13. HOW CAN YOU CONTACT US ABOUT THIS NOTICE?
             </span>
             <div className="flex flex-col gap-4">

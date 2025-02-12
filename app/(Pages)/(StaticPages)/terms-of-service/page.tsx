@@ -8,10 +8,10 @@ const TermsOfServicePage = () => {
     <section className="mb-10 flex w-full flex-col items-center gap-y-4 lg:items-start lg:gap-y-6">
       <div className="mx-auto mt-2 flex w-full max-w-screen-xl flex-col items-start px-4 sm:px-8 sm:text-2xl lg:mt-0 lg:flex-row lg:px-12 2xl:px-0">
         <div className="flex w-full flex-col gap-5 pl-6 text-lg text-app-main sm:pl-8 lg:sticky lg:top-32 lg:ml-10 lg:h-screen lg:w-1/3 lg:p-5 lg:pl-0">
-          <div className="text-xl font-semibold text-black dark:text-slate-200">
+          <div className="text-xl font-semibold text-black">
             About QwikSavings.com
           </div>
-          <Separator className="h-1 w-full max-w-32 bg-neutral-400 dark:bg-neutral-200 lg:max-w-full" />
+          <Separator className="h-1 w-full max-w-32 bg-neutral-400 lg:max-w-full" />
           <Link
             href="/about-us"
             className="w-fit cursor-pointer text-start duration-300 hover:underline"
@@ -59,7 +59,7 @@ const TermsOfServicePage = () => {
 
           <div className="mt-10 flex flex-col gap-3 lg:pl-2">
             <div
-              className="text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl"
+              className="text-start text-xl font-semibold text-black sm:text-2xl"
               id="q"
             >
               TABLE OF CONTENTS
@@ -319,9 +319,9 @@ const TermsOfServicePage = () => {
                 </ScrollToLink>
               </li>
             </ol>
-            <div className="flex flex-col gap-2 text-justify text-lg text-zinc-700 dark:text-neutral-300 sm:text-xl">
+            <div className="flex flex-col gap-2 text-justify text-lg text-zinc-700 sm:text-xl">
               <span
-                className="mt-4 text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl"
+                className="mt-4 text-start text-xl font-semibold text-black sm:text-2xl"
                 id="q1"
               >
                 1. Agreement to Terms
@@ -395,9 +395,9 @@ const TermsOfServicePage = () => {
                 the Site.
               </span>
             </div>
-            <div className="flex flex-col gap-2 text-lg text-zinc-700 dark:text-neutral-300 sm:text-xl">
+            <div className="flex flex-col gap-2 text-lg text-zinc-700 sm:text-xl">
               <span
-                className="mt-4 text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl"
+                className="mt-4 text-start text-xl font-semibold text-black sm:text-2xl"
                 id="q2"
               >
                 2. Intellectual Property Rights
@@ -428,9 +428,9 @@ const TermsOfServicePage = () => {
                 Content and the Marks.
               </span>
             </div>
-            <div className="flex flex-col gap-2 text-lg text-zinc-700 dark:text-neutral-300 sm:text-xl">
+            <div className="flex flex-col gap-2 text-lg text-zinc-700 sm:text-xl">
               <span
-                className="mt-4 text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl"
+                className="mt-4 text-start text-xl font-semibold text-black sm:text-2xl"
                 id="q3"
               >
                 3. User Representations
@@ -453,9 +453,9 @@ const TermsOfServicePage = () => {
                 use of the Site (or any portion thereof).
               </span>
             </div>
-            <div className="flex flex-col gap-2 text-lg text-zinc-700 dark:text-neutral-300 sm:text-xl">
+            <div className="flex flex-col gap-2 text-lg text-zinc-700 sm:text-xl">
               <span
-                className="mt-4 text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl"
+                className="mt-4 text-start text-xl font-semibold text-black sm:text-2xl"
                 id="q4"
               >
                 4. Prohibited Activities
@@ -584,9 +584,9 @@ const TermsOfServicePage = () => {
                 </li>
               </ul>
             </div>
-            <div className="flex flex-col gap-2 text-lg text-zinc-700 dark:text-neutral-300 sm:text-xl">
+            <div className="flex flex-col gap-2 text-lg text-zinc-700 sm:text-xl">
               <span
-                className="mt-4 text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl"
+                className="mt-4 text-start text-xl font-semibold text-black sm:text-2xl"
                 id="q5"
               >
                 5. User Generated Contributions
@@ -687,10 +687,10 @@ const TermsOfServicePage = () => {
             </div>
 
             <div
-              className="flex flex-col gap-2 text-lg text-zinc-700 dark:text-neutral-300 sm:text-xl"
+              className="flex flex-col gap-2 text-lg text-zinc-700 sm:text-xl"
               id="q6"
             >
-              <span className="mt-4 text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl">
+              <span className="mt-4 text-start text-xl font-semibold text-black sm:text-2xl">
                 6. DO WE USE COOKIES AND OTHER TRACKING TECHNOLOGIES?
               </span>
               <span>
@@ -716,9 +716,9 @@ const TermsOfServicePage = () => {
                 action against us regarding your Contributions.
               </span>
             </div>
-            <div className="flex flex-col gap-2 text-lg text-zinc-700 dark:text-neutral-300 sm:text-xl">
+            <div className="flex flex-col gap-2 text-lg text-zinc-700 sm:text-xl">
               <span
-                className="mt-4 text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl"
+                className="mt-4 text-start text-xl font-semibold text-black sm:text-2xl"
                 id="q7"
               >
                 7. Submissions
@@ -739,9 +739,9 @@ const TermsOfServicePage = () => {
                 misappropriation of any proprietary right in your Submissions.
               </span>
             </div>
-            <div className="flex flex-col gap-2 text-lg text-zinc-700 dark:text-neutral-300 sm:text-xl">
+            <div className="flex flex-col gap-2 text-lg text-zinc-700 sm:text-xl">
               <span
-                className="mt-4 text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl"
+                className="mt-4 text-start text-xl font-semibold text-black sm:text-2xl"
                 id="q8"
               >
                 8. Advertisers
@@ -761,9 +761,9 @@ const TermsOfServicePage = () => {
                 other relationship with advertisers.
               </span>
             </div>
-            <div className="flex flex-col gap-2 text-lg text-zinc-700 dark:text-neutral-300 sm:text-xl">
+            <div className="flex flex-col gap-2 text-lg text-zinc-700 sm:text-xl">
               <span
-                className="mt-4 text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl"
+                className="mt-4 text-start text-xl font-semibold text-black sm:text-2xl"
                 id="q9"
               >
                 9. Site Management
@@ -786,9 +786,9 @@ const TermsOfServicePage = () => {
                 functioning of the Site.
               </span>
             </div>
-            <div className="flex flex-col gap-2 text-lg text-zinc-700 dark:text-neutral-300 sm:text-xl">
+            <div className="flex flex-col gap-2 text-lg text-zinc-700 sm:text-xl">
               <span
-                className="mt-4 text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl"
+                className="mt-4 text-start text-xl font-semibold text-black sm:text-2xl"
                 id="q10"
               >
                 10. Privacy Policy
@@ -823,9 +823,9 @@ const TermsOfServicePage = () => {
                 </p>
               </div>
             </div>
-            <div className="flex flex-col gap-2 text-lg text-zinc-700 dark:text-neutral-300 sm:text-xl">
+            <div className="flex flex-col gap-2 text-lg text-zinc-700 sm:text-xl">
               <span
-                className="mt-4 text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl"
+                className="mt-4 text-start text-xl font-semibold text-black sm:text-2xl"
                 id="q11"
               >
                 11.Term and Termination
@@ -855,9 +855,9 @@ const TermsOfServicePage = () => {
               </span>
             </div>
 
-            <div className="flex flex-col gap-2 text-lg text-zinc-700 dark:text-neutral-300 sm:text-xl">
+            <div className="flex flex-col gap-2 text-lg text-zinc-700 sm:text-xl">
               <span
-                className="mt-4 text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl"
+                className="mt-4 text-start text-xl font-semibold text-black sm:text-2xl"
                 id="q12"
               >
                 12.Modifications and Interruptions
@@ -888,10 +888,10 @@ const TermsOfServicePage = () => {
               </span>
             </div>
             <div
-              className="flex flex-col gap-2 text-lg text-zinc-700 dark:text-neutral-300 sm:text-xl"
+              className="flex flex-col gap-2 text-lg text-zinc-700 sm:text-xl"
               id="q13"
             >
-              <span className="mt-4 text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl">
+              <span className="mt-4 text-start text-xl font-semibold text-black sm:text-2xl">
                 13. Governing Law
               </span>
               <span>
@@ -903,10 +903,10 @@ const TermsOfServicePage = () => {
               </span>
             </div>
             <div
-              className="flex flex-col gap-2 text-lg text-zinc-700 dark:text-neutral-300 sm:text-xl"
+              className="flex flex-col gap-2 text-lg text-zinc-700 sm:text-xl"
               id="q14"
             >
-              <span className="mt-4 text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl">
+              <span className="mt-4 text-start text-xl font-semibold text-black sm:text-2xl">
                 14. Dispute Resolution
               </span>
               <span>
@@ -924,10 +924,10 @@ const TermsOfServicePage = () => {
               </span>
             </div>
             <div
-              className="flex flex-col gap-2 text-lg text-zinc-700 dark:text-neutral-300 sm:text-xl"
+              className="flex flex-col gap-2 text-lg text-zinc-700 sm:text-xl"
               id="q15"
             >
-              <span className="mt-4 text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl">
+              <span className="mt-4 text-start text-xl font-semibold text-black sm:text-2xl">
                 15. Corrections
               </span>
               <span>
@@ -940,10 +940,10 @@ const TermsOfServicePage = () => {
               </span>
             </div>
             <div
-              className="flex flex-col gap-2 text-lg text-zinc-700 dark:text-neutral-300 sm:text-xl"
+              className="flex flex-col gap-2 text-lg text-zinc-700 sm:text-xl"
               id="q16"
             >
-              <span className="mt-4 text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl">
+              <span className="mt-4 text-start text-xl font-semibold text-black sm:text-2xl">
                 16. Disclaimer
               </span>
               <span>
@@ -981,10 +981,10 @@ const TermsOfServicePage = () => {
               </span>
             </div>
             <div
-              className="flex flex-col gap-2 text-lg text-zinc-700 dark:text-neutral-300 sm:text-xl"
+              className="flex flex-col gap-2 text-lg text-zinc-700 sm:text-xl"
               id="q17"
             >
-              <span className="mt-4 text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl">
+              <span className="mt-4 text-start text-xl font-semibold text-black sm:text-2xl">
                 17. Limitations of Liability
               </span>
               <span>
@@ -1006,10 +1006,10 @@ const TermsOfServicePage = () => {
               </span>
             </div>
             <div
-              className="flex flex-col gap-2 text-lg text-zinc-700 dark:text-neutral-300 sm:text-xl"
+              className="flex flex-col gap-2 text-lg text-zinc-700 sm:text-xl"
               id="q18"
             >
-              <span className="mt-4 text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl">
+              <span className="mt-4 text-start text-xl font-semibold text-black sm:text-2xl">
                 18. Indemnification
               </span>
               <span>
@@ -1034,10 +1034,10 @@ const TermsOfServicePage = () => {
               </span>
             </div>
             <div
-              className="flex flex-col gap-2 text-lg text-zinc-700 dark:text-neutral-300 sm:text-xl"
+              className="flex flex-col gap-2 text-lg text-zinc-700 sm:text-xl"
               id="q19"
             >
-              <span className="mt-4 text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl">
+              <span className="mt-4 text-start text-xl font-semibold text-black sm:text-2xl">
                 19. User Data
               </span>
               <span>
@@ -1053,10 +1053,10 @@ const TermsOfServicePage = () => {
               </span>
             </div>
             <div
-              className="flex flex-col gap-2 text-lg text-zinc-700 dark:text-neutral-300 sm:text-xl"
+              className="flex flex-col gap-2 text-lg text-zinc-700 sm:text-xl"
               id="q20"
             >
-              <span className="mt-4 text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl">
+              <span className="mt-4 text-start text-xl font-semibold text-black sm:text-2xl">
                 20. Electronic Communications, Transactions, and Signatures
               </span>
               <span>
@@ -1078,10 +1078,10 @@ const TermsOfServicePage = () => {
               </span>
             </div>
             <div
-              className="flex flex-col gap-2 text-lg text-zinc-700 dark:text-neutral-300 sm:text-xl"
+              className="flex flex-col gap-2 text-lg text-zinc-700 sm:text-xl"
               id="q21"
             >
-              <span className="mt-4 text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl">
+              <span className="mt-4 text-start text-xl font-semibold text-black sm:text-2xl">
                 21. California Users and Residents
               </span>
               <span>
@@ -1094,10 +1094,10 @@ const TermsOfServicePage = () => {
               </span>
             </div>
             <div
-              className="flex flex-col gap-2 text-lg text-zinc-700 dark:text-neutral-300 sm:text-xl"
+              className="flex flex-col gap-2 text-lg text-zinc-700 sm:text-xl"
               id="q22"
             >
-              <span className="mt-4 text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl">
+              <span className="mt-4 text-start text-xl font-semibold text-black sm:text-2xl">
                 22. Miscellaneous
               </span>
               <span>
@@ -1125,10 +1125,10 @@ const TermsOfServicePage = () => {
               </span>
             </div>
             <div
-              className="flex flex-col gap-2 text-lg text-zinc-700 dark:text-neutral-300 sm:text-xl"
+              className="flex flex-col gap-2 text-lg text-zinc-700 sm:text-xl"
               id="q23"
             >
-              <span className="mt-4 text-start text-xl font-semibold text-black dark:text-slate-200 sm:text-2xl">
+              <span className="mt-4 text-start text-xl font-semibold text-black sm:text-2xl">
                 23.Contact Us{" "}
               </span>
               <span>

@@ -71,18 +71,18 @@ const CouponDisplay = ({
         <div className="grid grid-cols-1 gap-x-6  gap-y-4 sm:grid-cols-2 md:gap-x-8 lg:grid-cols-4 lg:gap-x-12">
           {data.map((coupon) => (
             <div
-              className="relative flex cursor-pointer flex-col items-center gap-4 rounded-lg bg-accent p-4 dark:bg-background"
+              className="relative flex cursor-pointer flex-col items-center gap-4 rounded-lg bg-accent p-4"
               key={coupon.couponId}
               onClick={() => {
                 router.push(`/admin/editcoupon/${coupon.couponId}`);
               }}
             >
               <div className="my-2 flex w-full items-center justify-center gap-x-4">
-                <Badge className="grid  w-20 place-items-center bg-blue-400/50 text-black hover:bg-blue-400/50 dark:text-slate-200">
+                <Badge className="grid  w-20 place-items-center bg-blue-400/50 text-black hover:bg-blue-400/50">
                   {coupon.type}
                 </Badge>
                 <Badge
-                  className={`grid w-20 place-items-center text-black dark:text-slate-200 ${new Date(coupon.due_date).getDate() >= new Date().getDate() ? "bg-emerald-500" : "bg-app-main"}`}
+                  className={`grid w-20 place-items-center text-black ${new Date(coupon.due_date).getDate() >= new Date().getDate() ? "bg-emerald-500" : "bg-app-main"}`}
                 >
                   {new Date(coupon.due_date).getTime() > new Date().getTime()
                     ? "Active"

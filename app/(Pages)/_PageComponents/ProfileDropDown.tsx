@@ -49,25 +49,15 @@ const ProfileDropDown = () => {
         <DropdownMenuSeparator className={`${session?.user ? "" : "hidden"}`} />
 
         {session?.user?.email && (
-          <DropdownMenuItem className="text-center sm:text-left text-sky-700 dark:text-sky-500 truncate">
+          <DropdownMenuItem className="text-center sm:text-left text-sky-700 truncate">
             <p>{session?.user?.email}</p>
           </DropdownMenuItem>
         )}
-
+{/* 
         <DropdownMenuGroup>
           <DropdownMenuSeparator className="sm:hidden" />
           <DropdownMenuLabel className="sm:hidden">Theme</DropdownMenuLabel>
           <DropdownMenuSeparator className="hidden sm:block" />
-
-          <DropdownMenuSub>
-            <DropdownMenuSubTrigger className="hidden sm:flex items-center">
-              {resolvedTheme === "dark" ? (
-                <Moon className="mr-2 size-4" />
-              ) : (
-                <Sun className="mr-2 size-4" />
-              )}
-              <span>Theme</span>
-            </DropdownMenuSubTrigger>
 
             <DropdownMenuItem
               onClick={() => setTheme("light")}
@@ -96,7 +86,7 @@ const ProfileDropDown = () => {
               </DropdownMenuItem>
             </DropdownMenuSubContent>
           </DropdownMenuSub>
-        </DropdownMenuGroup>
+        </DropdownMenuGroup> */}
 
         {session?.user && (
           <>

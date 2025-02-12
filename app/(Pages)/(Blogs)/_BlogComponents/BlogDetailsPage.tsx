@@ -96,7 +96,7 @@ const BlogDetailsPage: React.FC<BlogDetailsPageProps> = ({ blogId }) => {
                 {blocks.map((block) => (
                   <Button
                     key={block}
-                    className="!size-4 bg-neutral-500/40 text-xs font-light text-black hover:bg-neutral-500/40 dark:text-slate-200"
+                    className="!size-4 bg-neutral-500/40 text-xs font-light text-black hover:bg-neutral-500/40"
                     asChild
                   >
                     <Link href={`/stores?like=${block}`}>
@@ -165,7 +165,7 @@ const PopularItems: React.FC<PopularItemProps> = ({
             href={isStore ? `/store/${item.slug}` : `/categories/${item.slug}`}
             key={item.id}
           >
-            <Badge className="bg-neutral-500/40 font-light text-black hover:bg-neutral-500/40 dark:text-slate-200">
+            <Badge className="bg-neutral-500/40 font-light text-black hover:bg-neutral-500/40">
               {item.name}
             </Badge>
           </Link>

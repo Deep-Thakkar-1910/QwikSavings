@@ -22,7 +22,7 @@ const BreadCrumbNavigation = () => {
     <Breadcrumb
       className={`my-4 hidden place-self-start px-8 lg:block lg:px-12 ${isActiveFestival ? "mb-0 translate-y-10 transition-transform duration-200 ease-linear" : "translate-y-0 transition-transform duration-200 ease-linear"}`}
     >
-      <BreadcrumbList className="flex gap-0 text-xs text-black dark:text-slate-200 sm:text-sm lg:text-base">
+      <BreadcrumbList className="flex gap-0 text-xs text-black sm:text-sm lg:text-base">
         <BreadcrumbItem>
           <BreadcrumbLink href="/">
             {decodedPaths[0] && <Home />}
@@ -48,9 +48,9 @@ const BreadCrumbNavigation = () => {
                 >
                   {Number.isInteger(Number(path))
                     ? decodedPaths[0]?.substring(
-                        0,
-                        decodedPaths[0]?.length - 1,
-                      ) ?? ""
+                      0,
+                      decodedPaths[0]?.length - 1,
+                    ) ?? ""
                     : path}
                 </BreadcrumbLink>
               </BreadcrumbItem>

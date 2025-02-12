@@ -11,13 +11,13 @@ interface FilterBlockProps {
 const FilterBlocks = ({ filterForPage, like, setLike }: FilterBlockProps) => {
   const blocks = "abcdefghijklmnopqrstuvwxyz".split("");
   const activeBlockStyle =
-    "bg-zinc-900 text-white dark:bg-slate-200 dark:text-black";
-  ("bg-zinc-900 text-white dark:bg-slate-200 dark:text-black");
+    "bg-zinc-900 text-white";
+  ("bg-zinc-900 text-white");
 
   const commonBlockStyle = `flex size-6 cursor-pointer items-center justify-center border border-muted-foreground p-2 
   flex size-6 cursor-pointer items-center justify-center border border-muted-foreground p-2  sm:size-10 
    sm:size-10 lg:size-12 2xl:size-14
-  lg:size-12 2xl:size-14 hover:bg-zinc-900 hover:text-white dark:hover:bg-slate-200 dark:hover:text-black transition-colors duration-300 ease-in-out`;
+  lg:size-12 2xl:size-14 hover:bg-zinc-900 hover:text-white transition-colors duration-300 ease-in-out`;
 
   return (
     <div className="mx-8 flex flex-col items-center gap-4 border border-muted-foreground p-2 py-1 lg:mx-12 lg:items-start">

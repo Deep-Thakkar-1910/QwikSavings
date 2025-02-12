@@ -50,19 +50,19 @@ const page = () => {
           {AboutUs.map((ele, index) => (
             <div
               key={index}
-              className="flex h-[420px]  flex-col items-center justify-center gap-4 rounded-2xl bg-app-bg-main px-5 shadow-lg dark:bg-app-dark sm:w-96 sm:max-w-xl lg:w-full"
+              className="flex h-[420px]  flex-col items-center justify-center gap-4 rounded-2xl bg-app-bg-main px-5 shadow-lg sm:w-96 sm:max-w-xl lg:w-full"
             >
               <Image
                 src={ele.img}
                 alt={`${ele.text} Picture`}
                 width={1672}
                 height={1672}
-                className="h-3/5 w-auto mix-blend-multiply dark:mix-blend-luminosity"
+                className="h-3/5 w-auto mix-blend-multiply"
               />
-              <div className="h-1/8 text-xl font-bold dark:text-muted-foreground lg:text-2xl">
+              <div className="h-1/8 text-xl font-bold lg:text-2xl">
                 {ele.text}
               </div>
-              <div className="h-1/8 text-xl font-bold dark:text-muted-foreground lg:text-2xl">
+              <div className="h-1/8 text-xl font-bold lg:text-2xl">
                 {ele.content}
               </div>
             </div>
@@ -72,7 +72,7 @@ const page = () => {
       <div className="mx-auto w-full max-w-screen-xl px-4 py-5 text-lg sm:px-8 sm:text-2xl lg:px-12 lg:py-10 xl:px-8 2xl:px-0">
         <div className="w-full text-lg lg:ml-2 lg:p-5 lg:pt-0">
           <Image
-            className="dark m-10 ml-0 h-auto w-full mix-blend-multiply dark:mix-blend-normal lg:float-left lg:w-1/2"
+            className="m-10 ml-0 h-auto w-full mix-blend-multiply lg:float-left lg:w-1/2"
             src={"/AboutusPage/Our Mission and Vision.jpg"}
             alt="Our Mission and Vision Logo"
             width={3000}
@@ -102,7 +102,7 @@ const page = () => {
         </div>
         <div className="w-full pt-0 text-lg lg:ml-2 lg:p-5">
           <Image
-            className="h-auto w-full mix-blend-multiply dark:mix-blend-normal lg:float-right lg:m-10 lg:my-0 lg:mr-0 lg:w-[50%]"
+            className="h-auto w-full mix-blend-multiply lg:float-right lg:m-10 lg:my-0 lg:mr-0 lg:w-[50%]"
             src={"/AboutusPage/How We Make Money.jpg"}
             alt="How We Make Money Logo"
             width={3000}
@@ -130,7 +130,7 @@ const page = () => {
       <div className="mx-auto grid w-full place-items-center bg-popover px-4 text-lg sm:px-8 sm:text-2xl lg:px-12 xl:px-8 2xl:px-0">
         <div className="flex w-full max-w-screen-xl flex-col items-start justify-between pb-8 text-lg lg:ml-2 lg:flex-row lg:justify-center lg:p-5">
           <Image
-            className="h-auto w-full mix-blend-multiply dark:mix-blend-normal lg:float-left lg:m-10 lg:my-0 lg:ml-0 lg:w-2/5"
+            className="h-auto w-full mix-blend-multiply lg:float-left lg:m-10 lg:my-0 lg:ml-0 lg:w-2/5"
             src={"/AboutusPage/Contact us.jpg"}
             alt="Contact Us Logo"
             width={2000}

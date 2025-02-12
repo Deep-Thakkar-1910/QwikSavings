@@ -16,7 +16,7 @@ const HowItWorks = () => {
             src={"/HowItWorks/How it Works.jpg"}
             alt="How it Works Logo"
             width={2000}
-            className="aspect-square w-full max-w-80 object-contain mix-blend-multiply dark:mix-blend-normal lg:w-1/3 lg:max-w-full lg:-translate-y-14"
+            className="aspect-square w-full max-w-80 object-contain mix-blend-multiply lg:w-1/3 lg:max-w-full lg:-translate-y-14"
             height={2000}
           />
           <div>

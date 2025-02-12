@@ -143,7 +143,7 @@ const CategoriesSection: React.FC<CategoriesSectionProps> = ({
 
               <div className="flex w-full flex-col gap-y-0 p-4 xl:gap-y-1">
                 <div className="flex w-full items-center justify-between">
-                  <div className="-translate-x-3 -translate-y-2/3 rounded-full bg-white p-1 dark:bg-app-dark-navbar">
+                  <div className="-translate-x-3 -translate-y-2/3 rounded-full bg-white p-1">
                     {coupon.store.logo_url ? (
                       <Link href={`/store/${coupon.store.slug}`}>
                         <Image
@@ -158,7 +158,7 @@ const CategoriesSection: React.FC<CategoriesSectionProps> = ({
                       <div className="size-14 rounded-full bg-popover" />
                     )}
                   </div>
-                  <Badge className="-translate-y-2/3 bg-blue-400/50 text-black hover:bg-blue-400/50 dark:text-slate-200">
+                  <Badge className="-translate-y-2/3 bg-blue-400/50 text-black hover:bg-blue-400/50">
                     VERIFIED
                   </Badge>
                 </div>
@@ -182,7 +182,7 @@ const CategoriesSection: React.FC<CategoriesSectionProps> = ({
               {coupon.type === "Deal" && (
                 <Button
                   size={"lg"}
-                  className="w-full rounded-xl bg-app-main text-base font-semibold text-white dark:text-slate-200"
+                  className="w-full rounded-xl bg-app-main text-base font-semibold text-white"
                   onClick={() => handleCouponUse(coupon)}
                 >
                   GET DEAL
@@ -190,7 +190,7 @@ const CategoriesSection: React.FC<CategoriesSectionProps> = ({
               )}
               {coupon.type === "Coupon" && (
                 <div
-                  className="group relative grid min-h-10 w-full min-w-28 cursor-pointer overflow-hidden rounded-md bg-app-bg-main p-2 text-black dark:bg-app-dark dark:text-slate-200 sm:min-h-fit sm:min-w-40"
+                  className="group relative grid min-h-10 w-full min-w-28 cursor-pointer overflow-hidden rounded-md bg-app-bg-main p-2 text-black sm:min-h-fit sm:min-w-40"
                   onClick={() => {
                     handleCouponUse(coupon);
                   }}
@@ -278,7 +278,7 @@ const CouponDialog: React.FC<{
           <DialogTitle>Coupon Details</DialogTitle>
         </DialogHeader>
         <div className="flex flex-col items-center gap-4">
-          <div className="grid size-44 place-items-center rounded-full border border-black bg-popover p-1 dark:border-neutral-700">
+          <div className="grid size-44 place-items-center rounded-full border border-black bg-popover p-1 :border-neutral-700">
             <Image
               src={
                 constructS3Url(logoUrl) ?? "https://via.placeholder.com/100x100"
@@ -372,7 +372,7 @@ const DealDialog: React.FC<{
           <DialogTitle>About Deal</DialogTitle>
         </DialogHeader>
         <div className="flex flex-col items-center gap-4">
-          <div className="grid size-44 place-items-center rounded-full border border-black bg-popover p-1 dark:border-neutral-700">
+          <div className="grid size-44 place-items-center rounded-full border border-black bg-popover p-1">
             <Image
               src={
                 constructS3Url(logoUrl) ?? "https://via.placeholder.com/100x100"

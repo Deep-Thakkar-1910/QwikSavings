@@ -143,19 +143,19 @@ const CardStackFlipper = ({ autoplay }: { autoplay: boolean }) => {
                   />
                 </div>
 
-                <p className="mx-auto h-16 overflow-hidden text-center text-base font-medium dark:text-zinc-900">
+                <p className="mx-auto h-16 overflow-hidden text-center text-base font-medium">
                   {card.title}
                 </p>
               </div>
 
               <div
-                className="absolute bottom-5 right-5 cursor-pointer rounded-full bg-app-main p-2 text-white transition-all duration-300 ease-linear dark:text-slate-200 xl:bottom-8 "
+                className="absolute bottom-5 right-5 cursor-pointer rounded-full bg-app-main p-2 text-white transition-all duration-300 ease-linear xl:bottom-8 "
                 onClick={handleNextClick}
               >
                 <ChevronRight className="size-6" />
               </div>
               <button
-                className="ease-linearhover:shadow-md absolute bottom-5 left-5 z-10 rounded-lg bg-app-main p-1 px-5 text-lg  text-white transition-all duration-300 dark:text-slate-200 xl:bottom-8 "
+                className="ease-linearhover:shadow-md absolute bottom-5 left-5 z-10 rounded-lg bg-app-main p-1 px-5 text-lg  text-white transition-all duration-300 xl:bottom-8 "
                 onClick={() => {
                   handleCardGetClick(card);
                 }}

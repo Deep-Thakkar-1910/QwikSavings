@@ -184,7 +184,7 @@ const MultiSelectorTrigger = forwardRef<
     <div
       ref={ref}
       className={cn(
-        "flex flex-wrap gap-1 rounded-lg border border-muted !bg-app-bg-main p-1 py-2 dark:!bg-app-dark",
+        "flex flex-wrap gap-1 rounded-lg border border-muted !bg-app-bg-main p-1 py-2",
         className,
       )}
       {...props}
@@ -242,7 +242,7 @@ const MultiSelectorInput = forwardRef<
       onFocus={() => setOpen(true)}
       onClick={() => setActiveIndex(-1)}
       className={cn(
-        "ml-2 flex-1 !bg-app-bg-main outline-none placeholder:text-muted-foreground dark:!bg-app-dark",
+        "ml-2 flex-1 !bg-app-bg-main outline-none placeholder:text-muted-foreground",
         className,
         activeIndex !== -1 && "caret-transparent",
         hidePlaceholderWhenSelected && value.length > 0 && "placeholder:hidden",
@@ -276,7 +276,7 @@ const MultiSelectorList = forwardRef<
     <CommandList
       ref={ref}
       className={cn(
-        "scrollbar-thin scrollbar-track-transparent scrollbar-thumb-muted-foreground dark:scrollbar-thumb-muted scrollbar-thumb-rounded-lg absolute top-20 z-50 flex w-full flex-col gap-2 rounded-md border border-muted bg-background p-2 shadow-md transition-colors",
+        "scrollbar-thin scrollbar-track-transparent scrollbar-thumb-muted-foreground scrollbar-thumb-rounded-lg absolute top-20 z-50 flex w-full flex-col gap-2 rounded-md border border-muted bg-background p-2 shadow-md transition-colors",
         className,
       )}
     >

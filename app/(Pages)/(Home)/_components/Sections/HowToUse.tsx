@@ -12,7 +12,7 @@ const HowToUse = () => {
             return (
               <div
                 key={howToUseItem.id}
-                className="flex h-96 w-full max-w-72 flex-col items-center justify-center gap-y-4 rounded-xl bg-app-bg-main p-4 shadow-md dark:bg-background sm:max-w-96 md:max-w-full  md:last:col-span-2 lg:last:col-span-1"
+                className="flex h-96 w-full max-w-72 flex-col items-center justify-center gap-y-4 rounded-xl bg-app-bg-main p-4 shadow-md sm:max-w-96 md:max-w-full  md:last:col-span-2 lg:last:col-span-1"
               >
                 <Image
                   src={howToUseItem.image}

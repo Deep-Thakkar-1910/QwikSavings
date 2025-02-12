@@ -247,7 +247,7 @@ const EditCategoryForm = () => {
             </FormControl>
             {selectedImage && (
               <>
-                <div className="bg-neutral-700 dark:bg-app-dark">
+                <div className="bg-neutral-700">
                   <Image
                     src={selectedImage}
                     alt="Upload Image"

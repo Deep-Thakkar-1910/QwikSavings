@@ -32,7 +32,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${poppins.className} bg-app-bg-main text-black dark:bg-app-dark dark:text-slate-200`}
+        className={`${poppins.className} bg-app-bg-main text-black`}
       >
         <Providers>
           <AdminNavbar />

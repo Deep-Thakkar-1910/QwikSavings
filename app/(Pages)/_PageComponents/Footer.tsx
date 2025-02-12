@@ -32,7 +32,7 @@ const Footer = () => {
             <Link
               key={link.href}
               href={link.href}
-              className="text-base font-medium text-gray-800 transition-colors duration-300 ease-linear hover:text-app-main dark:text-muted-foreground dark:hover:text-app-main"
+              className="text-base font-medium text-gray-800 transition-colors duration-300 ease-linear hover:text-app-main "
             >
               {link.title}
             </Link>
@@ -44,7 +44,7 @@ const Footer = () => {
             <Link
               key={link.href}
               href={link.href}
-              className="text-base font-medium text-gray-800 transition-colors duration-300 ease-linear hover:text-app-main dark:text-muted-foreground dark:hover:text-app-main"
+              className="text-base font-medium text-gray-800 transition-colors duration-300 ease-linear hover:text-app-main "
             >
               {link.title}
             </Link>
@@ -67,13 +67,13 @@ const Footer = () => {
           </div>
           <p className="text-md mx-auto text-center text-muted-foreground lg:mx-0 lg:text-start">
             We&apos;ll never share your details. See our{" "}
-            <span className="font-semibold text-black dark:font-bold dark:text-muted-foreground">
+            <span className="font-semibold text-black">
               <Link href={"/privacy-policy"}>Privacy Policy.</Link>
             </span>
           </p>
         </div>
       </div>
-      <div className="mx-auto h-px w-full border-t border-dashed border-zinc-800 dark:border-muted-foreground lg:mt-4"></div>
+      <div className="mx-auto h-px w-full border-t border-dashed border-zinc-800 lg:mt-4"></div>
       <div className="mx-auto">
         <Socials />
       </div>

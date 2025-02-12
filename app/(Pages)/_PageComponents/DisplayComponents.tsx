@@ -113,21 +113,21 @@ const DisplayItems = <
                 {groupedData[char].map((item) => (
                   <div
                     key={item.storeId ?? item.categoryId}
-                    className="group relative flex max-w-80 cursor-pointer flex-col items-center rounded-lg border bg-gray-300/70 p-3 shadow-md transition-transform duration-300 ease-linear dark:bg-app-dark-navbar sm:max-w-full sm:hover:scale-105 lg:max-w-full"
+                    className="group relative flex max-w-80 cursor-pointer flex-col items-center rounded-lg border bg-gray-300/70 p-3 shadow-md transition-transform duration-300 ease-linear sm:max-w-full sm:hover:scale-105 lg:max-w-full"
                   >
                     <div className="flex w-full items-center justify-start gap-x-3 ">
                       <Link
                         href={`${item.storeId
-                            ? isAdminPath
-                              ? `/admin/editstore/${item.slug}`
-                              : `/store/${item.slug}`
-                            : isAdminPath
-                              ? `/admin/editcategory/${item.slug}`
-                              : `/categories/${item.slug}`
+                          ? isAdminPath
+                            ? `/admin/editstore/${item.slug}`
+                            : `/store/${item.slug}`
+                          : isAdminPath
+                            ? `/admin/editcategory/${item.slug}`
+                            : `/categories/${item.slug}`
                           }`}
                         className="flex flex-grow items-center gap-x-3"
                       >
-                        <div className="rounded-full border border-black bg-white p-1 dark:border-white dark:bg-black">
+                        <div className="rounded-full border border-black bg-white p-1">
                           <Image
                             src={
                               constructS3Url(item.logo_url) ??

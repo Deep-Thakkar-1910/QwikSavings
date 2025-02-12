@@ -477,7 +477,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
       <div
         className={`flex w-full ${isStore ? "items-start" : "items-center"} ${isActiveFestival ? "translate-y-8 transition-transform duration-200 ease-linear" : "translate-y-0 transition-transform duration-200 ease-linear"} gap-x-2 rounded-lg bg-popover p-4 px-4 sm:items-center sm:gap-x-4 sm:px-8 lg:hidden lg:px-12`}
       >
-        <div className="size-32 rounded-full border border-black bg-popover p-1 transition-shadow duration-200 ease-linear hover:shadow-lg dark:border-slate-200">
+        <div className="size-32 rounded-full border border-black bg-popover p-1 transition-shadow duration-200 ease-linear hover:shadow-lg">
           <Image
             src={
               constructS3Url(detailsData?.logo_url) ??
@@ -529,7 +529,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
           )}
           {/* sidebar for larger screens */}
           <aside className="hidden flex-col items-center gap-y-8 lg:flex lg:w-1/4 lg:shrink-0 2xl:shrink">
-            <div className="size-56 rounded-full border border-black bg-popover p-1 transition-shadow duration-200 ease-linear hover:shadow-lg dark:border-slate-200">
+            <div className="size-56 rounded-full border border-black bg-popover p-1 transition-shadow duration-200 ease-linear hover:shadow-lg">
               <Image
                 src={
                   constructS3Url(detailsData.logo_url) ??
@@ -627,10 +627,10 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                     smooth
                     offset={-140}
                     className={`${isStore &&
-                        detailsData.faq &&
-                        JSON.parse(detailsData?.faq)?.length > 0
-                        ? ""
-                        : "hidden"
+                      detailsData.faq &&
+                      JSON.parse(detailsData?.faq)?.length > 0
+                      ? ""
+                      : "hidden"
                       } rounded-lg border p-2`}
                   >
                     <div className="flex cursor-pointer items-center justify-between font-semibold">
@@ -713,7 +713,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                   {blocks.map((block) => (
                     <Button
                       key={block}
-                      className="!size-4 bg-neutral-400/40 text-xs font-semibold text-black hover:bg-neutral-400/40 dark:text-slate-200"
+                      className="!size-4 bg-neutral-400/40 text-xs font-semibold text-black hover:bg-neutral-400/40"
                       asChild
                     >
                       <Link href={`/stores?like=${block}`}>
@@ -791,7 +791,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                   <AccordionItem
                     key={coupon.couponId}
                     value={coupon.couponId}
-                    className="min-h-40 rounded-xl border-2 border-neutral-200 bg-popover shadow-sm dark:border-neutral-700 sm:min-h-56 sm:pt-4"
+                    className="min-h-40 rounded-xl border-2 border-neutral-200 bg-popover shadow-sm sm:min-h-56 sm:pt-4"
                   >
                     <div className="group/accordion relative flex w-full items-center justify-between gap-x-6 gap-y-4 px-2 pb-2 pt-3 sm:px-6">
                       <div className="flex items-start gap-x-2 sm:gap-x-6">
@@ -813,7 +813,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                                 coupon.type === "Deal"
                                   ? "bg-amber-500 hover:bg-amber-600"
                                   : "bg-blue-400/50 hover:bg-blue-500/50",
-                                "grid w-full place-items-center text-black dark:text-slate-200 ",
+                                "grid w-full place-items-center text-black ",
                               )}
                             >
                               {coupon.type === "Coupon" ? "Code" : "Deal"}
@@ -834,8 +834,8 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                       <div className="flex flex-col items-end gap-5">
                         <Heart
                           className={`absolute right-2 top-2 size-5 cursor-pointer text-app-main transition-all duration-300 ease-linear sm:-top-1 ${bookmarkedCoupons.includes(coupon.couponId)
-                              ? "fill-app-main text-app-main"
-                              : "opacity-100 group-hover/accordion:opacity-100 lg:opacity-0 lg:hover:fill-app-main"
+                            ? "fill-app-main text-app-main"
+                            : "opacity-100 group-hover/accordion:opacity-100 lg:opacity-0 lg:hover:fill-app-main"
                             }`}
                           onClick={() => handleBookmark(coupon.couponId)}
                         />
@@ -887,7 +887,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                         {coupon.type === "Deal" && (
                           <>
                             <Button
-                              className="hidden min-h-12 w-56 rounded-xl bg-app-main text-base font-semibold text-white dark:text-slate-200 sm:block md:w-64"
+                              className="hidden min-h-12 w-56 rounded-xl bg-app-main text-base font-semibold text-white sm:block md:w-64"
                               onClick={() => {
                                 handleCouponUse(
                                   coupon.couponId,
@@ -913,7 +913,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                         {coupon.type === "Coupon" && (
                           <>
                             <div
-                              className="group relative hidden !min-h-12 w-56 cursor-pointer overflow-hidden rounded-xl bg-app-bg-main p-2 dark:bg-app-dark sm:grid sm:min-h-fit md:w-64"
+                              className="group relative hidden !min-h-12 w-56 cursor-pointer overflow-hidden rounded-xl bg-app-bg-main p-2 sm:grid sm:min-h-fit md:w-64"
                               onClick={() => {
                                 handleCouponUse(
                                   coupon.couponId,
@@ -931,7 +931,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                               {/* wrapper */}
                               <div className="absolute left-0 top-0 h-full w-full">
                                 <div className="polygon-clip h-full w-full rounded-xl bg-app-main font-semibold transition-all duration-200 ease-linear group-hover:w-11/12">
-                                  <p className="absolute inset-0 grid place-items-center font-semibold text-white dark:text-slate-200">
+                                  <p className="absolute inset-0 grid place-items-center font-semibold text-white">
                                     GET CODE
                                   </p>
                                 </div>
@@ -1030,7 +1030,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                     <AccordionItem
                       key={coupon.couponId}
                       value={coupon.couponId}
-                      className="min-h-40 rounded-xl border-2 border-neutral-200 bg-popover shadow-sm dark:border-neutral-700 sm:min-h-56 sm:pt-4"
+                      className="min-h-40 rounded-xl border-2 border-neutral-200 bg-popover shadow-sm sm:min-h-56 sm:pt-4"
                     >
                       <div className="group/accordion relative flex w-full items-center justify-between gap-x-6 gap-y-4 px-2 pb-2 pt-3 text-muted-foreground sm:px-6">
                         <div className="flex items-start gap-6 sm:flex-row">
@@ -1049,7 +1049,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                               />
                               <Badge
                                 className={
-                                  "grid w-full place-items-center bg-neutral-500 text-black hover:bg-neutral-500 dark:text-slate-200"
+                                  "grid w-full place-items-center bg-neutral-500 text-black hover:bg-neutral-500"
                                 }
                               >
                                 {coupon.type === "Coupon" ? "Code" : "Deal"}
@@ -1069,8 +1069,8 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                         <div className="flex flex-col items-end gap-4">
                           <Heart
                             className={`absolute right-2 top-2 size-5 cursor-pointer text-app-main transition-all duration-300 ease-linear sm:-top-1 ${bookmarkedCoupons.includes(coupon.couponId)
-                                ? "fill-app-main text-app-main"
-                                : "opacity-100 group-hover/accordion:opacity-100 lg:opacity-0 lg:hover:fill-app-main"
+                              ? "fill-app-main text-app-main"
+                              : "opacity-100 group-hover/accordion:opacity-100 lg:opacity-0 lg:hover:fill-app-main"
                               }`}
                             onClick={() => handleBookmark(coupon.couponId)}
                           />
@@ -1127,7 +1127,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
                                     coupon,
                                   );
                                 }}
-                                className="group relative hidden !min-h-12 w-56 cursor-pointer overflow-hidden rounded-md bg-app-bg-main p-2 dark:bg-app-dark sm:grid md:w-64"
+                                className="group relative hidden !min-h-12 w-56 cursor-pointer overflow-hidden rounded-md bg-app-bg-main p-2 sm:grid md:w-64"
                               >
                                 <p
                                   className={`place-self-end text-base font-semibold uppercase tracking-normalst ${!coupon.coupon_code && "min-h-5"
@@ -1218,7 +1218,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
             )}
             {/* About for mobile */}
             <div
-              className={`${commonStyles} ${detailsData.description ? "lg:hidden" : "hidden"} border-2 border-neutral-200 dark:border-neutral-700`}
+              className={`${commonStyles} ${detailsData.description ? "lg:hidden" : "hidden"} border-2 border-neutral-200`}
             >
               <h2 className="mb-2 text-xl font-bold">About</h2>
               <p>{detailsData.description}</p>
@@ -1230,7 +1230,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
               JSON.parse(detailsData?.faq)?.length > 0 && (
                 <section
                   id="faqs"
-                  className={`${commonStyles} border-2 border-neutral-200 dark:border-neutral-700 xl:w-[97%]`}
+                  className={`${commonStyles} border-2 border-neutral-200 xl:w-[97%]`}
                 >
                   <h2 className="mb-4 w-full text-xl font-bold sm:text-2xl lg:text-3xl">
                     FAQS
@@ -1271,7 +1271,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
             {isStore && (
               <section
                 id="moreabout"
-                className={`${commonStyles} ${!detailsData.moreAbout && "hidden"} border-2 border-neutral-200 dark:border-neutral-700 xl:w-[97%]`}
+                className={`${commonStyles} ${!detailsData.moreAbout && "hidden"} border-2 border-neutral-200 xl:w-[97%]`}
               >
                 <div className={`w-full`}>
                   <h2 className="mb-4 text-xl font-bold sm:text-2xl lg:text-3xl">
@@ -1287,7 +1287,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ fetchFrom }) => {
             {isStore && (
               <section
                 id="hints"
-                className={`${commonStyles} ${!detailsData.hint && "hidden"} border-2 border-neutral-200 dark:border-neutral-700 xl:w-[97%]`}
+                className={`${commonStyles} ${!detailsData.hint && "hidden"} border-2 border-neutral-200 xl:w-[97%]`}
               >
                 <div className={`w-full`}>
                   <h2 className="mb-4 text-xl font-bold sm:text-2xl lg:text-3xl">
@@ -1365,7 +1365,7 @@ const PopularItems: React.FC<PopularItemProps> = ({
   isHidden,
 }) => {
   const commonStyles =
-    "w-full rounded-lg bg-popover p-4 shadow-lg border-2 border-neutral-200 dark:border-neutral-700 lg:border-0 rounded-xl";
+    "w-full rounded-lg bg-popover p-4 shadow-lg border-2 border-neutral-200 lg:border-0 rounded-xl";
 
   return (
     <div className={`${commonStyles} ${isHidden ? "lg:hidden" : ""}`}>
@@ -1379,7 +1379,7 @@ const PopularItems: React.FC<PopularItemProps> = ({
               }
               key={item.id}
             >
-              <Badge className="bg-neutral-400/40 font-medium text-black hover:bg-neutral-400/40 dark:text-slate-200">
+              <Badge className="bg-neutral-400/40 font-medium text-black hover:bg-neutral-400/40">
                 {item.name}
               </Badge>
             </Link>
@@ -1423,7 +1423,7 @@ const CouponDialog: React.FC<{
           <DialogTitle>Coupon Details</DialogTitle>
         </DialogHeader>
         <div className="flex flex-col items-center gap-4">
-          <div className="grid size-44 place-items-center rounded-full border border-black bg-popover p-1 dark:border-neutral-700">
+          <div className="grid size-44 place-items-center rounded-full border border-black bg-popover p-1">
             <Image
               src={
                 constructS3Url(logoUrl) ?? "https://via.placeholder.com/100x100"
@@ -1517,7 +1517,7 @@ const DealDialog: React.FC<{
           <DialogTitle>About Deal</DialogTitle>
         </DialogHeader>
         <div className="flex flex-col items-center gap-4">
-          <div className="grid size-44 place-items-center rounded-full border border-black bg-popover p-1 dark:border-neutral-700">
+          <div className="grid size-44 place-items-center rounded-full border border-black bg-popover p-1">
             <Image
               src={
                 constructS3Url(logoUrl) ?? "https://via.placeholder.com/100x100"

@@ -54,7 +54,7 @@ import axios from "@/app/api/axios/axios";
 
 type InputType = z.infer<typeof CreateUserCouponFormSchema>;
 
-const CreateUserCouponForm = ({}) => {
+const CreateUserCouponForm = ({ }) => {
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   // Use the 'categories' and 'stores' state variables in your code as needed
@@ -164,7 +164,7 @@ const CreateUserCouponForm = ({}) => {
                     placeholder="Coupon title"
                     {...field}
                     type="text"
-                    className="rounded-lg !bg-app-bg-main dark:!bg-app-dark"
+                    className="rounded-lg !bg-app-bg-main"
                   />
                 </FormControl>
                 <FormMessage />
@@ -182,7 +182,7 @@ const CreateUserCouponForm = ({}) => {
                   <Textarea
                     placeholder="Coupon Description"
                     {...field}
-                    className="rounded-lg bg-app-bg-main dark:bg-app-dark"
+                    className="rounded-lg bg-app-bg-main"
                   />
                 </FormControl>
                 <FormMessage />
@@ -203,7 +203,7 @@ const CreateUserCouponForm = ({}) => {
                     placeholder="https://example.com"
                     {...field}
                     type="url"
-                    className="rounded-lg !bg-app-bg-main dark:!bg-app-dark"
+                    className="rounded-lg !bg-app-bg-main"
                   />
                 </FormControl>
                 <FormMessage />
@@ -224,7 +224,7 @@ const CreateUserCouponForm = ({}) => {
                   defaultValue={field.value}
                 >
                   <FormControl>
-                    <SelectTrigger className="rounded-lg !bg-app-bg-main dark:!bg-app-dark">
+                    <SelectTrigger className="rounded-lg !bg-app-bg-main">
                       <SelectValue placeholder="Select a Type" />
                     </SelectTrigger>
                   </FormControl>
@@ -269,7 +269,7 @@ const CreateUserCouponForm = ({}) => {
                 <Popover>
                   <PopoverTrigger
                     asChild
-                    className="rounded-lg !bg-app-bg-main dark:!bg-app-dark"
+                    className="rounded-lg !bg-app-bg-main"
                   >
                     <FormControl>
                       <Button
@@ -282,9 +282,9 @@ const CreateUserCouponForm = ({}) => {
                       >
                         {field.value
                           ? categories.find(
-                              (category) =>
-                                `${category.categoryId}` === field.value,
-                            )?.name
+                            (category) =>
+                              `${category.categoryId}` === field.value,
+                          )?.name
                           : "Select a Category"}
                         <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                       </Button>
@@ -351,7 +351,7 @@ const CreateUserCouponForm = ({}) => {
                 <Popover>
                   <PopoverTrigger
                     asChild
-                    className="rounded-lg !bg-app-bg-main dark:!bg-app-dark"
+                    className="rounded-lg !bg-app-bg-main"
                   >
                     <FormControl>
                       <Button
@@ -364,8 +364,8 @@ const CreateUserCouponForm = ({}) => {
                       >
                         {field.value
                           ? stores.find(
-                              (store) => `${store.storeId}` === field.value,
-                            )?.name
+                            (store) => `${store.storeId}` === field.value,
+                          )?.name
                           : "Select a store"}
                         <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                       </Button>
@@ -429,7 +429,7 @@ const CreateUserCouponForm = ({}) => {
                 <Popover>
                   <PopoverTrigger
                     asChild
-                    className="rounded-lg !bg-app-bg-main dark:!bg-app-dark"
+                    className="rounded-lg !bg-app-bg-main"
                   >
                     <FormControl>
                       <Button
