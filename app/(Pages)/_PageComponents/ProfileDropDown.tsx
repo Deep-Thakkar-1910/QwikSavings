@@ -53,7 +53,7 @@ const ProfileDropDown = () => {
             <p>{session?.user?.email}</p>
           </DropdownMenuItem>
         )}
-{/* 
+        {/* 
         <DropdownMenuGroup>
           <DropdownMenuSeparator className="sm:hidden" />
           <DropdownMenuLabel className="sm:hidden">Theme</DropdownMenuLabel>

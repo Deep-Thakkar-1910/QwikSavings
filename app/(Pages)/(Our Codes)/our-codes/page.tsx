@@ -9,14 +9,14 @@ const OurCodesPage = () => {
         <h1 className="text-center text-xl font-bold sm:text-2xl lg:text-start">
           Gift Card, If Not Code
         </h1>
-        <div className="mt-28 flex flex-col items-center justify-end gap-6 text-lg lg:flex-row-reverse">
+        <div className="mt-20 flex flex-col items-center justify-end gap-6 text-lg lg:flex-row-reverse">
           <div className="flex w-full flex-col items-center lg:w-1/2">
             <Image
               src={"/OurCodes/Hand-Tested-Codes.png"}
               alt="Our code Picture"
               width={5326}
               height={4776}
-              className="size-full max-w-96 "
+              className="size-full w-[550px] "
             />
             {/* <p className="mx-auto text-center text-base font-bold sm:text-xl  lg:place-self-end lg:text-end">
               All of Our Codes are Hand-Tested By Real People
@@ -117,14 +117,14 @@ const OurCodesPage = () => {
         <h1 className="text-center text-xl font-bold sm:text-2xl lg:text-start">
           Acceptable Codes
         </h1>
-        <div className="mt-6 flex flex-col items-center justify-end gap-6 lg:flex-row-reverse">
+        <div className="flex flex-col items-center justify-end gap-6 lg:flex-row-reverse">
           <div className="flex w-full flex-col items-center lg:w-1/2">
             <Image
               src={"/OurCodes/Hand-Tested-Codes.png"}
               alt="Hand Tested Picture"
               width={5326}
               height={4776}
-              className="size-full max-w-96 lg:max-w-full"
+              className="size-full max-w-96 lg:max-w-lg"
             />
             {/* <p className="mx-auto text-center text-base font-bold sm:text-xl  lg:place-self-end lg:text-end">
               All of Our Codes are Hand-Tested By Real People
@@ -162,41 +162,32 @@ const OurCodesPage = () => {
             Codes&quot; guarantee:
           </p>
         </div>
-        <div className="mt-6 flex flex-col items-center justify-end gap-6 lg:flex-row-reverse">
-          <div className="flex flex-col gap-y-6 text-center text-lg  tracking-tighter sm:text-justify lg:w-1/2">
-            <h2 className="mt-6 font-bold tracking-normal">1. Deals</h2>
-            <p className="mt-2">
-              Deals which do not require a code to secure the saving. These can
-              be identified by the &quot;Get Deal&quot; button.
-            </p>
+        <div className="mt-6 flex flex-col items-center justify-between gap-6 lg:flex-row-reverse w-full">
+          <div className="w-full">
+            <div className="flex flex-col gap-y-6 text-center text-lg  tracking-tighter sm:text-justify ">
+              <h2 className="mt-6 font-bold tracking-normal">1. Deals</h2>
+              <p className="mt-2">
+                Deals which do not require a code to secure the saving. These can
+                be identified by the &quot;Get Deal&quot; button.
+              </p>
+            </div>
+            <div className="flex flex-col gap-y-6 text-center text-lg  tracking-tighter sm:text-justify ">
+              <h2 className="mt-6 font-bold tracking-normal">2. Safe Deals</h2>
+              <p className="mt-2">
+                Certain &quot;Sale&quot; offers don&apos;t need a code for the
+                discount. You&apos;ll notice these by the &quot;Get Deal&quot;
+                button, allowing you to access the discount directly without
+                entering a code during your purchase.
+              </p>
+            </div>
           </div>
-          <div className="flex w-full flex-col items-center lg:w-1/2">
+          <div className="flex w-full flex-col items-center lg:w-full">
             <Image
               src={"/OurCodes/Hand-Tested-Codes.png"}
               alt="Hand Tested Picture"
               width={5326}
               height={4776}
-              className="size-full max-w-96 lg:max-w-full"
-            />
-          </div>
-        </div>
-        <div className="mt-6 flex flex-col items-center justify-end gap-6 lg:flex-row-reverse">
-          <div className="flex flex-col gap-y-6 text-center text-lg  tracking-tighter sm:text-justify lg:w-1/2">
-            <h2 className="mt-6 font-bold tracking-normal">2. Safe Deals</h2>
-            <p className="mt-2">
-              Certain &quot;Sale&quot; offers don&apos;t need a code for the
-              discount. You&apos;ll notice these by the &quot;Get Deal&quot;
-              button, allowing you to access the discount directly without
-              entering a code during your purchase.
-            </p>
-          </div>
-          <div className="flex w-full flex-col items-center lg:w-1/2">
-            <Image
-              src={"/OurCodes/Hand-Tested-Codes.png"}
-              alt="Hand Tested Picture"
-              width={5326}
-              height={4776}
-              className="size-full max-w-96 lg:max-w-full"
+              className="size-full max-w-96 lg:max-w-lg"
             />
           </div>
         </div>
